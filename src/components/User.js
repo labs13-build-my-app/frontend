@@ -22,7 +22,6 @@ const useStyles = makeStyles({
 
 function SimpleCard() {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
 
   const [users, setUsers] = useState([]);
   useEffect(() => {
