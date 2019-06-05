@@ -6,7 +6,8 @@ export const initialState = {
   isSignedIn: null,
   user: {
     id: null,
-    name: "",
+    firstName: "",
+    lastName: "",
     profilePictureURL: "",
     email: "",
     sub: null,
@@ -15,7 +16,9 @@ export const initialState = {
       twitter: "",
       github: ""
     },
-    roleType: {},
+    developer: {},
+    projectOwner: {},
+    admin: {},
     messages: {
       subscribed: [{}]
     }
@@ -24,16 +27,18 @@ export const initialState = {
 };
 
 export const reducer = (state, action) => {
-  console.log({ action });
+  console.log(action.payload);
   switch (action.type) {
     case "FETCH_USER_SUCCESS":
+      console.log(state);
       return {
         ...state,
+        role: action.payload.role,
         user: {
           ...state.user,
           id: action.payload.id,
-          name: action.payload.name,
-          profilePicutreURL: action.payload.profilePicutreURL
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName
         }
       };
     default:
