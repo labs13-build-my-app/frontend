@@ -9,10 +9,10 @@ const home = ({ history }) => {
 
   const signup = async e => {
     // e.preventDefault();
-    const auth = new Auth();
-    const route = await auth.login(history, "loading");
-    route();
-    // history.push("/loading");
+    // const auth = new Auth();
+    // const route = await auth.login(history, "loading");
+    // route();
+    // // history.push("/loading");
   };
 
   const login = async e => {
