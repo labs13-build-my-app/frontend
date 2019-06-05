@@ -1,38 +1,33 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import Admin from "./Admin";
-import ProjectOwner from "./ProjectOwner";
-import Developer from "./Developer";
 
-const Dashboard = ({ dispatch, user, role, history }) => {
+const Dashboard = ({ dispatch, projects, role, history }) => {
   useEffect(() => {
-    retrieveUser();
+    retrieve();
   }, []);
 
   const displayBasedOnRole = () => {
-    if (role === "Admin") {
-      return <Admin role={role} user={user} />;
-    } else if (role === "Project Owner") {
-      return <ProjectOwner role={role} user={user} />;
+    if (role === "Project Owner") {
+      // may add another condition to route here if not logged on
+      return <Proposals role={role} projects={projects} />;
     } else if (role === "Developer") {
-      return <Developer role={role} user={user} />;
+      // may add another condition to route here if not logged on
+      return <Plans role={role} projects={projects} />;
     } else {
       return <h1>Loading</h1>;
     }
   };
 
-  const retrieveUser = () => {
+  const retrieveProjects = () => {
     const connection = true ? "http://localhost:8000" : heroku;
     const heroku = "https://build-my-app.herokuapp.com";
     let endpoint = "";
-    if (role === "Admin") {
-      endpoint = `${connection}/api/account/admin/dashboard-admin`;
-    } else if (role === "Project Owner") {
-      endpoint = `${connection}/api/account/project-owner/dashboard-project-owner`;
+    if (role === "Project Owner") {
+      endpoint = `${connection}/api/projects/proposal-list`;
     } else if (role === "Developer") {
-      endpoint = `${connection}/api/account/developer/dashboard-developer`;
+      endpoint = `${connection}/api/projects/plan-list`;
     } else {
-      history.push("/home");
+      history.push("/signup");
     }
     if (role === "Admin" || role === "Project Owner" || role === "Developer")
       axios
