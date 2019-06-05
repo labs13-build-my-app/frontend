@@ -1,29 +1,80 @@
-import React, { useState, useEffect, useReducer } from "react";
-import { reducer, initialState } from "./store/reducer.js";
+import React, { useEffect, useReducer } from "react";
+import store from "./store";
+import { Route, withRouter, Redirect } from "react-router";
 import axios from "axios";
+import Home from "./components/Home";
+import Dashboard from "./components/dashboard/Dashboard";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 import User from "./components/User";
-import Auth from "./components/Auth/Auth";
-import { Route } from "react-router";
-import "./App.css";
-import Dashboard from "./components/Dashboard";
 import Callback from "./components/Auth/Callback";
-import Authenticated from "./components/Auth/Authenticated";
-const auth = new Auth();
 
-const App = () => {
-  const [state, dispatch] = useReducer(reducer, initialState);
-  console.log("hello");
+// import "./App.css";
+
+const App = ({ history }) => {
+  const [state, dispatch] = useReducer(store.reducer, store.initialState);
+
+  useEffect(() => {
+    const login = () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const headers = {
+          authorization: token
+        };
+        axios
+          .get("http://localhost:8000/api/account/onboarding/login", headers)
+          .then(res => {
+            dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data.role });
+            history.pushState("/dashboard");
+          })
+          .catch(err => {
+            console.log(err);
+            dispatch({ type: "LOGIN_USER_FAILURE" });
+          });
+      }
+    };
+    login();
+  }, [history]);
+
   return (
     <div className="App">
-      {/* <User /> */}
-      <Dashboard user={state.user} dispatch={dispatch} />
-      hello world
-      {/* <button onClick={() => auth.login()}>Login Here</button>
-      <button onClick={() => auth.logout()}>Log Out Here</button>
-      <Route exact path="/callback" component={Callback} />
-      <Route path="/authenticated" component={Authenticated} /> */}
+      <Route exact path={"/"} render={() => <Redirect to={"/home"} />} />
+      <Route path={"/home"} render={props => <Home {...props} />} />
+      <Route
+        path="/callback"
+        render={props => (
+          <Callback
+            {...props}
+            dispatch={dispatch}
+            token={state.token}
+            login={state.login}
+          />
+        )}
+      />
+      <Route
+        path={"/signup"}
+        render={props => <Signup {...props} dispatch={dispatch} />}
+      />
+      <Route
+        path={"/login"}
+        render={props => (
+          <Login {...props} dispatch={dispatch} login={state.login} />
+        )}
+      />
+      <Route path={"/get-users-test"} componet={User} />
+      <Route
+        path={"/dashboard"}
+        render={props => (
+          <Dashboard
+            {...props}
+            user={state.user}
+            dispatch={dispatch}
+            role={state.role}
+          />
+        )}
+      />
     </div>
   );
 };
 
-export default App;
+export default withRouter(App);
