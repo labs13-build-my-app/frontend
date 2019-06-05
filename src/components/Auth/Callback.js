@@ -1,20 +1,22 @@
 import React, { useEffect } from "react";
 import Auth from "./Auth";
 
-const Callback = props => {
-  const auth = new Auth();
+const Callback = ({ history, dispatch, token, login }) => {
   useEffect(() => {
-    const random = async () => {
-      try {
-        await auth.handleAuthentication();
-        props.history.push("/authenticated");
-        console.log(localStorage.getItem("token"));
-      } catch (err) {
-        console.log(err);
-      }
+    const auth = new Auth();
+    const loginUser = () => {
+      auth.handleAuthentication(dispatch);
     };
-    random();
-  }, [auth, props.history]);
+    if (token && login) {
+      history.push("/dashboard");
+    } else if (token) {
+      history.push("/signup");
+    } else {
+      loginUser();
+    }
+  }, [history, dispatch, token, login]);
+
+  console.log(token);
 
   return (
     <div>

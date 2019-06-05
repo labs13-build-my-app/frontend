@@ -30,10 +30,14 @@ export default class Auth {
     this.auth0.authorize();
   }
 
-  handleAuthentication() {
+  handleAuthentication(dispatch) {
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         this.setSession(authResult);
+        dispatch({
+          type: "LOGIN_USER",
+          payload: localStorage.getItem("token")
+        });
       } else if (err) {
         history.replace("/");
         console.log(err);
