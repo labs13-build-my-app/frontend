@@ -35,7 +35,7 @@ const Dashboard = ({ dispatch, user, role, history, match }) => {
           });
     };
     retrieveUser();
-  }, [history, dispatch, role]);
+  }, [history, dispatch, role, match]);
 
   const displayBasedOnRole = () => {
     const check = match.params.role;

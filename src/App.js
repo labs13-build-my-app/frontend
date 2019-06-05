@@ -7,12 +7,14 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
+import Auth from "./components/Auth/Auth";
 
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
 
 // import "./App.css";
+const auth = new Auth();
 
 const App = ({ history }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
@@ -41,6 +43,7 @@ const App = ({ history }) => {
 
   return (
     <div className="App">
+      <button onClick={() => auth.logout()}>Logout</button>
       <Route exact path={"/"} render={() => <Redirect to={"/home"} />} />
       <Route path={"/home"} render={props => <Home {...props} />} />
       <Route
