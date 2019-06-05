@@ -52,13 +52,12 @@ export default class Auth {
 
   setSession(authResult) {
     localStorage.setItem("isLoggedIn", "true");
-
+    localStorage.setItem("token", authResult.idToken);
     // Set the time that the access token will expire at
     let expiresAt = authResult.expiresIn * 1000 + new Date().getTime();
     this.accessToken = authResult.accessToken;
     this.idToken = authResult.idToken;
     this.expiresAt = expiresAt;
-    localStorage.setItem("token", this.idToken);
   }
 
   renewSession() {
@@ -93,6 +92,7 @@ export default class Auth {
 
     // Remove isLoggedIn flag from localStorage
     localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
 
     this.auth0.logout({
       returnTo: window.location.origin
