@@ -1,28 +1,51 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
+import Admin from "./Admin";
+import ProjectOwner from "./ProjectOwner";
+import Developer from "./Developer";
 
-const Dashboard = ({ dispatch, user }) => {
+const Dashboard = ({ dispatch, user, role, history }) => {
   useEffect(() => {
     retrieveUser();
   }, []);
 
-  const retrieveUser = () => {
-    axios
-      .get("http://localhost:8000/api/account/developer/dashboard-developer")
-      .then(res => {
-        console.log(res.data);
-        dispatch({ type: "FETCH_USER_SUCCESS", payload: res.data });
-      });
+  const displayBasedOnRole = () => {
+    if (role === "Admin") {
+      return <Admin role={role} user={user} />;
+    } else if (role === "Project Owner") {
+      return <ProjectOwner role={role} user={user} />;
+    } else if (role === "Developer") {
+      return <Developer role={role} user={user} />;
+    } else {
+      return <h1>Loading</h1>;
+    }
   };
-  console.log(user.profilePicutreURL);
-  return (
-    <div>
-      <h1>{user.id}</h1>
-      <h1>{user.name}</h1>
-      <img src={user.profilePicutreURL} />
-      <button onClick={() => retrieveUser()}>update user</button>
-    </div>
-  );
+
+  const retrieveUser = () => {
+    const connection = true ? "http://localhost:8000" : heroku;
+    const heroku = "https://build-my-app.herokuapp.com";
+    let endpoint = "";
+    if (role === "Admin") {
+      endpoint = `${connection}/api/account/admin/dashboard-admin`;
+    } else if (role === "Project Owner") {
+      endpoint = `${connection}/api/account/project-owner/dashboard-project-owner`;
+    } else if (role === "Developer") {
+      endpoint = `${connection}/api/account/developer/dashboard-developer`;
+    } else {
+      history.push("/home");
+    }
+    if (role === "Admin" || role === "Project Owner" || role === "Developer")
+      axios
+        .get(`${endpoint}/${1}`)
+        .then(res => {
+          console.log(res.data);
+          dispatch({ type: "FETCH_USER_SUCCESS", payload: res.data });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+  };
+  return displayBasedOnRole();
 };
 
 export default Dashboard;

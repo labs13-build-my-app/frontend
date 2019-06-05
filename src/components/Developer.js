@@ -1,0 +1,13 @@
+import React from "react";
+
+const Developer = ({ user, role }) => {
+  return (
+    <div>
+      <h1>{user.id}</h1>
+      <h1>{user.firstName}</h1>
+      <h1>{user.lastName}</h1>
+      <h1>{role}</h1>
+    </div>
+  );
+};
+export default Developer;
