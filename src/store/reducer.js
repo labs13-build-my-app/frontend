@@ -1,5 +1,4 @@
 const reducer = (state, action) => {
-  console.log({ action });
   switch (action.type) {
     case "LOGIN":
       console.log("here");
@@ -13,13 +12,15 @@ const reducer = (state, action) => {
         token: localStorage.getItem("token")
       };
     case "FETCH_USER_SUCCESS":
+      console.log(state);
       return {
         ...state,
+        role: action.payload.role,
         user: {
           ...state.user,
           id: action.payload.id,
-          name: action.payload.name,
-          profilePicutreURL: action.payload.profilePicutreURL
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName
         }
       };
     default:
