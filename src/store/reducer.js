@@ -1,31 +1,17 @@
-export const initialState = {
-  fetch: false,
-  error: false,
-  role: "",
-  token: null,
-  isSignedIn: null,
-  user: {
-    id: null,
-    name: "",
-    profilePictureURL: "",
-    email: "",
-    sub: null,
-    socialMedia: {
-      linkedIn: "",
-      twitter: "",
-      github: ""
-    },
-    roleType: {},
-    messages: {
-      subscribed: [{}]
-    }
-  },
-  search: {}
-};
-
-export const reducer = (state, action) => {
+const reducer = (state, action) => {
   console.log({ action });
   switch (action.type) {
+    case "LOGIN":
+      console.log("here");
+      return {
+        ...state,
+        login: true
+      };
+    case "LOGIN_USER":
+      return {
+        ...state,
+        token: localStorage.getItem("token")
+      };
     case "FETCH_USER_SUCCESS":
       return {
         ...state,
@@ -40,3 +26,5 @@ export const reducer = (state, action) => {
       return state;
   }
 };
+
+export default reducer;
