@@ -27,7 +27,7 @@ const Dashboard = ({ dispatch, projects, role, history }) => {
     } else if (role === "Developer") {
       endpoint = `${connection}/api/projects/plan-list`;
     } else {
-      history.push("/home");
+      history.push("/signup");
     }
     if (role === "Admin" || role === "Project Owner" || role === "Developer")
       axios

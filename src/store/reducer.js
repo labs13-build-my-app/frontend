@@ -11,6 +11,12 @@ const reducer = (state, action) => {
         ...state,
         token: localStorage.getItem("token")
       };
+    case "FETCH_ROLE_SUCCESS":
+      console.log(action.payload);
+      return {
+        ...state,
+        role: action.payload
+      };
     case "FETCH_USER_SUCCESS":
       console.log(state);
       return {

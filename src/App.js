@@ -1,12 +1,15 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
-import { Route, withRouter, Redirect } from "react-router";
+import { Route, withRouter, Redirect, Link } from "react-router";
 import axios from "axios";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
+
+import "./App.css";
+
 import Callback from "./components/Auth/Callback";
 
 // import "./App.css";
@@ -43,12 +46,7 @@ const App = ({ history }) => {
       <Route
         path="/callback"
         render={props => (
-          <Callback
-            {...props}
-            dispatch={dispatch}
-            token={state.token}
-            login={state.login}
-          />
+          <Callback {...props} dispatch={dispatch} state={state} />
         )}
       />
       <Route
@@ -62,8 +60,13 @@ const App = ({ history }) => {
         )}
       />
       <Route path={"/get-users-test"} componet={User} />
+
+      {/* <Link to="/login">
+        <button>Login Here</button>
+      </Link> */}
+
       <Route
-        path={"/dashboard"}
+        path={"/dashboard/:role"}
         render={props => (
           <Dashboard
             {...props}
@@ -73,6 +76,7 @@ const App = ({ history }) => {
           />
         )}
       />
+      <Route path={"/home"} render={() => <div>Home</div>} />
     </div>
   );
 };

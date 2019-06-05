@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import Auth from "./Auth/Auth";
-import axios from "axios";
 
 const Login = ({ dispatch }) => {
   useEffect(() => {
-    dispatch({ type: "LOGIN" });
+    // dispatch({ type: "LOGIN" });
     const auth = new Auth();
     auth.login();
   }, []);
@@ -15,4 +14,5 @@ const Login = ({ dispatch }) => {
     </div>
   );
 };
+
 export default Login;
