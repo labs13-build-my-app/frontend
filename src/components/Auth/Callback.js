@@ -38,8 +38,8 @@ const Callback = ({ history, dispatch, state }) => {
             updateRole(() =>
               dispatch({ type: "FETCH_ROLE_SUCCESS", payload: res.data.role })
             );
+            history.push(`/dashboard/${res.data.role}`);
           })
-          .then(() => history.push("/dashboard/Admin"))
           .catch(err => console.log("CATCH ERR", err));
       } else if (err) {
         history.replace("/home");
