@@ -32,7 +32,7 @@ const Dashboard = ({ dispatch, user, role, history }) => {
     } else if (role === "Developer") {
       endpoint = `${connection}/api/account/developer/dashboard-developer`;
     } else {
-      history.push("/home");
+      history.push("/signup");
     }
     if (role === "Admin" || role === "Project Owner" || role === "Developer")
       axios
