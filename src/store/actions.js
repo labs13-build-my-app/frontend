@@ -1,7 +1,10 @@
 import axios from "axios";
 export const FETCH_START = "FETCH_START";
+export const LOGIN_USER = "LOGIN_USER";
+export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const FETCH_ROLE_SUCCESS = "FETCH_ROLE_SUCCESS";
 export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
+export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 
 export const fetchUser = endpoint => dispatch => {
@@ -34,7 +37,7 @@ export const fetchRole = token => dispatch => {
       });
     })
     .catch(err => {
-      dispatch({ type: "FETCH_USER_FAILURE", payload: { signup: true } });
+      dispatch({ type: FETCH_USER_FAILURE, payload: { signup: true } });
       console.log("CATCH ERR", err);
     });
 };

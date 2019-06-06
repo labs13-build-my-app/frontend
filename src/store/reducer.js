@@ -1,13 +1,20 @@
-import { FETCH_START } from "./actions";
+import {
+  FETCH_START,
+  FETCH_USER_FAILURE,
+  RECORD_URL_LOCATION,
+  LOGIN_USER,
+  FETCH_ROLE_SUCCESS,
+  FETCH_USER_SUCCESS
+} from "./actions";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "FETCH_USER_FAILURE":
+    case FETCH_USER_FAILURE:
       return {
         ...state,
         signup: action.payload.signup
       };
-    case "RECORD_URL_LOCATION":
+    case RECORD_URL_LOCATION:
       return {
         ...state,
         location: action.payload
@@ -17,17 +24,17 @@ const reducer = (state, action) => {
         ...state,
         fetch: true
       };
-    case "LOGIN_USER":
+    case LOGIN_USER:
       return {
         ...state,
         token: localStorage.getItem("token")
       };
-    case "FETCH_ROLE_SUCCESS":
+    case FETCH_ROLE_SUCCESS:
       return {
         ...state,
         role: action.payload
       };
-    case "FETCH_USER_SUCCESS":
+    case FETCH_USER_SUCCESS:
       return {
         ...state,
         fetch: false,
