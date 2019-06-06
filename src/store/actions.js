@@ -9,8 +9,15 @@ export const FETCH_FAILURE = "FETCH_FAILURE";
 
 export const fetchUser = endpoint => dispatch => {
   dispatch({ type: FETCH_START });
-  axios
-    .get(endpoint)
+  console.log("getting user");
+  axios({
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: endpoint
+  })
     .then(res => {
       console.log(res);
       dispatch({
@@ -18,7 +25,7 @@ export const fetchUser = endpoint => dispatch => {
         payload: res.data.user
       });
     })
-    .catch(err => dispatch({ type: FETCH_FAILURE, payload: err }));
+    .catch(err => console.log(err)); //dispatch({ type: FETCH_USER_FAILURE, payload: err }
 };
 
 export const fetchRole = token => dispatch => {
@@ -31,9 +38,10 @@ export const fetchRole = token => dispatch => {
     url: "http://localhost:8000/api/account/onboarding/login"
   })
     .then(res => {
+      console.log(res);
       return dispatch({
         type: FETCH_ROLE_SUCCESS,
-        payload: res.data.role
+        payload: res.data
       });
     })
     .catch(err => {

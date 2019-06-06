@@ -19,6 +19,7 @@ const auth = new Auth();
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
   const { role, user, login, token, isSignedIn, signup } = state;
+  console.log(state);
 
   useEffect(() => {
     dispatch({
