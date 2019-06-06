@@ -3,8 +3,9 @@ const initialState = {
   error: false,
   role: "",
   token: null,
-  login: true,
-  isSignedIn: null,
+  isSignedIn: false,
+  signup: false,
+  location: "/home",
   user: {
     id: null,
     name: "",

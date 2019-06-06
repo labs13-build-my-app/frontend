@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { Route, withRouter, Redirect, Link } from "react-router";
-import axios from "axios";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
@@ -12,34 +11,34 @@ import Auth from "./components/Auth/Auth";
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
+let count = 0;
 
 // import "./App.css";
 const auth = new Auth();
 
-const App = ({ history }) => {
+const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
+  const { role, user, login, token, isSignedIn, signup } = state;
 
   useEffect(() => {
+    dispatch({
+      type: "RECORD_URL_LOCATION",
+      payload: history.location.pathname
+    });
+    const token = localStorage.getItem("token");
     const login = () => {
       const token = localStorage.getItem("token");
-      if (token) {
-        const headers = {
-          authorization: token
-        };
-        axios
-          .get("http://localhost:8000/api/account/onboarding/login", headers)
-          .then(res => {
-            dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data.role });
-            history.pushState("/dashboard");
-          })
-          .catch(err => {
-            console.log(err);
-            dispatch({ type: "LOGIN_USER_FAILURE" });
-          });
+      if (signup && token) {
+        history.push("/signup");
+      } else if (!role && token && !signup) {
+        history.push("/callback");
+      } else if (role) {
+        const path = history.location.pathname;
+        history.push(path);
       }
     };
     login();
-  }, [history]);
+  }, [history, role, user, signup]);
 
   return (
     <div className="App">
@@ -49,7 +48,7 @@ const App = ({ history }) => {
       <Route
         path="/callback"
         render={props => (
-          <Callback {...props} dispatch={dispatch} state={state} />
+          <Callback {...props} dispatch={dispatch} role={role} />
         )}
       />
       <Route
@@ -58,24 +57,20 @@ const App = ({ history }) => {
       />
       <Route
         path={"/login"}
-        render={props => (
-          <Login {...props} dispatch={dispatch} login={state.login} />
-        )}
+        render={props => <Login {...props} dispatch={dispatch} login={login} />}
       />
       <Route path={"/get-users-test"} componet={User} />
-
-      {/* <Link to="/login">
-        <button>Login Here</button>
-      </Link> */}
 
       <Route
         path={"/dashboard"}
         render={props => (
           <Dashboard
             {...props}
-            user={state.user}
+            user={user}
             dispatch={dispatch}
-            role={state.role}
+            role={role}
+            isSignedIn={isSignedIn}
+            token={token}
           />
         )}
       />
