@@ -33,5 +33,8 @@ export const fetchRole = token => dispatch => {
         payload: res.data.role
       });
     })
-    .catch(err => console.log("CATCH ERR", err));
+    .catch(err => {
+      dispatch({ type: "FETCH_USER_FAILURE", payload: { signup: true } });
+      console.log("CATCH ERR", err);
+    });
 };

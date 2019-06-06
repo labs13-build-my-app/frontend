@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
+import Auth from "./Auth/Auth";
 import axios from "axios";
 
 const Signup = ({ dispatch, history }) => {
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      // dispatch({ type: "SIGNUP", payload: { signup: true, role: role } });
+      const auth = new Auth();
+      auth.login();
+    }
+  }, []);
 
   // const signupHandler = e => {
   //   e.preventDefault();
@@ -33,16 +40,24 @@ const Signup = ({ dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
-    axios({
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: "http://localhost:8000/api/account/onboarding/signup",
-      data: { role, firstName, lastName }
-    }).then(res => console.log(res));
+    console.log("here signup");
+    dispatch({ type: "FETCH_ROLE_SUCCESS", payload: role });
+    history.push("/callback");
+    // axios({
+    //   method: "post",
+    //   headers: {
+    //     "content-type": "application/json",
+    //     Authorization: localStorage.getItem("token")
+    //   },
+    //   url: "http://localhost:8000/api/account/onboarding/signup",
+    //   data: { role, firstName, lastName }
+    // })
+    //   .then(res => console.log(res, "here"))
+    //   .catch(err => console.log(err));
   };
+  if (!localStorage.getItem("token")) {
+    return <div>loading...</div>;
+  }
   return (
     <div>
       <h2>signup form</h2>

@@ -2,6 +2,11 @@ import { FETCH_START } from "./actions";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "FETCH_USER_FAILURE":
+      return {
+        ...state,
+        signup: action.payload.signup
+      };
     case "RECORD_URL_LOCATION":
       return {
         ...state,

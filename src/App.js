@@ -18,24 +18,27 @@ const auth = new Auth();
 
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
-  console.log("count", ++count, state);
+  const { role, user, login, token, isSignedIn, signup } = state;
 
   useEffect(() => {
     dispatch({
       type: "RECORD_URL_LOCATION",
       payload: history.location.pathname
     });
+    const token = localStorage.getItem("token");
     const login = () => {
       const token = localStorage.getItem("token");
-      if (!state.role && token) {
+      if (signup && token) {
+        history.push("/signup");
+      } else if (!role && token && !signup) {
         history.push("/callback");
-      } else if (state.role) {
+      } else if (role) {
         const path = history.location.pathname;
         history.push(path);
       }
     };
     login();
-  }, [history, state.role, state.user]);
+  }, [history, role, user, signup]);
 
   return (
     <div className="App">
@@ -45,7 +48,7 @@ const App = ({ history, match }) => {
       <Route
         path="/callback"
         render={props => (
-          <Callback {...props} dispatch={dispatch} role={state.role} />
+          <Callback {...props} dispatch={dispatch} role={role} />
         )}
       />
       <Route
@@ -54,9 +57,7 @@ const App = ({ history, match }) => {
       />
       <Route
         path={"/login"}
-        render={props => (
-          <Login {...props} dispatch={dispatch} login={state.login} />
-        )}
+        render={props => <Login {...props} dispatch={dispatch} login={login} />}
       />
       <Route path={"/get-users-test"} componet={User} />
 
@@ -65,11 +66,11 @@ const App = ({ history, match }) => {
         render={props => (
           <Dashboard
             {...props}
-            user={state.user}
+            user={user}
             dispatch={dispatch}
-            role={state.role}
-            isSignedIn={state.isSignedIn}
-            token={state.token}
+            role={role}
+            isSignedIn={isSignedIn}
+            token={token}
           />
         )}
       />
