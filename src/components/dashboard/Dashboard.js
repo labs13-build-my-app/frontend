@@ -5,6 +5,7 @@ import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
 
 const Dashboard = ({ dispatch, user, role, history, match }) => {
+  console.log("here dash");
   useEffect(() => {
     const retrieveUser = () => {
       const heroku = "https://build-my-app.herokuapp.com";
@@ -12,9 +13,7 @@ const Dashboard = ({ dispatch, user, role, history, match }) => {
       const connection = true ? local : heroku;
       let endpoint = "";
 
-      const check = match.params.role;
-      console.log(match);
-      if (check === "Admin") {
+      if (role === "Admin") {
         endpoint = `${connection}/api/account/admin/dashboard-admin`;
       } else if (role === "Project Owner") {
         endpoint = `${connection}/api/account/project-owner/dashboard-project-owner`;
@@ -34,12 +33,14 @@ const Dashboard = ({ dispatch, user, role, history, match }) => {
             console.log(err);
           });
     };
-    retrieveUser();
+    if (role) {
+      console.log("here");
+      retrieveUser();
+    }
   }, [history, dispatch, role, match]);
 
   const displayBasedOnRole = () => {
-    const check = match.params.role;
-    if (check === "Admin") {
+    if (role === "Admin") {
       console.log(user);
       return <Admin role={role} user={user} />;
     } else if (role === "Project Owner") {

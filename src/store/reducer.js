@@ -1,5 +1,10 @@
 const reducer = (state, action) => {
   switch (action.type) {
+    case "TESTING_CB":
+      return {
+        ...state,
+        error: action.payload
+      };
     case "LOGIN":
       console.log("here");
       return {

@@ -19,6 +19,18 @@ const auth = new Auth();
 const App = ({ history }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
 
+  // const testingCB = (route, cb) => {
+  //   dispatch({ type: "TESTING_CB", payload: "oh shit it works... I hope" });
+  //   cb(route);
+  // };
+
+  // testingCB("./login", route => {
+  //   console.log(state);
+  //   history.push(route);
+  // });
+  // // dispatch({ type: "TESTING_CB", payload: "oh shit it works... I hope" });
+  // // console.log(state);
+
   useEffect(() => {
     const login = () => {
       const token = localStorage.getItem("token");
@@ -49,7 +61,7 @@ const App = ({ history }) => {
       <Route
         path="/callback"
         render={props => (
-          <Callback {...props} dispatch={dispatch} state={state} />
+          <Callback {...props} dispatch={dispatch} role={state.role} />
         )}
       />
       <Route
@@ -69,7 +81,7 @@ const App = ({ history }) => {
       </Link> */}
 
       <Route
-        path={"/dashboard/:role"}
+        path={"/dashboard"}
         render={props => (
           <Dashboard
             {...props}

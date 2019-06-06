@@ -12,42 +12,48 @@ const auth = new auth0.WebAuth({
   scope: "openid profile"
 });
 
-const Callback = ({ history, dispatch, state }) => {
+const Callback = ({ history, dispatch, role }) => {
+  console.log("callback component", localStorage.getItem("token"));
   useEffect(() => {
     // retrive data Auth0 and parse into token
+    const getToken = () => {
+      auth.parseHash((err, authResult) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          localStorage.setItem("token", authResult.idToken);
+          localStorage.setItem("isLoggedIn", "true");
 
-    const updateRole = cb => {
-      return cb();
-    };
-    auth.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        localStorage.setItem("token", authResult.idToken);
-        localStorage.setItem("isLoggedIn", "true");
-
-        // send token  to server and server decodes and then check for user
-        // response is role if role user exist, if no role user no exist
-        axios({
-          method: "GET",
-          headers: {
-            "content-type": "application/json",
-            Authorization: authResult.idToken
-          },
-          url: "http://localhost:8000/api/account/login"
-        })
-          .then(res => {
-            updateRole(() =>
-              dispatch({ type: "FETCH_ROLE_SUCCESS", payload: res.data.role })
-            );
-            history.push(`/dashboard/${res.data.role}`);
+          // send token  to server and server decodes and then check for user
+          // response is role if role user exist, if no role user no exist
+          axios({
+            method: "GET",
+            headers: {
+              "content-type": "application/json",
+              Authorization: authResult.idToken
+            },
+            url: "http://localhost:8000/api/account/login"
           })
-          .catch(err => console.log("CATCH ERR", err));
-      } else if (err) {
-        history.replace("/home");
-        console.log(err);
-        alert(`Error: ${err.error}. Check the console for further details.`);
-      }
-    });
-  }, [history, dispatch]);
+            .then(res => {
+              console.log("making a response");
+              return dispatch({
+                type: "FETCH_ROLE_SUCCESS",
+                payload: res.data.role
+              });
+            })
+            .catch(err => console.log("CATCH ERR", err));
+        } else if (err) {
+          history.replace("/home");
+          console.log(err);
+          alert(`Error: ${err.error}. Check the console for further details.`);
+        }
+      });
+    };
+
+    if (role) {
+      history.push(`/dashboard`);
+    } else {
+      getToken();
+    }
+  }, [history, dispatch, role]);
 
   return (
     <div>
