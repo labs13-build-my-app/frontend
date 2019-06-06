@@ -3,8 +3,7 @@ const initialState = {
   error: false,
   role: "",
   token: null,
-  login: true,
-  isSignedIn: null,
+  isSignedIn: false,
   user: {
     id: null,
     name: "",

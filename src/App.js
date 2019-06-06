@@ -19,39 +19,32 @@ const auth = new Auth();
 const App = ({ history }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
 
-  // const testingCB = (route, cb) => {
-  //   dispatch({ type: "TESTING_CB", payload: "oh shit it works... I hope" });
-  //   cb(route);
-  // };
-
-  // testingCB("./login", route => {
-  //   console.log(state);
-  //   history.push(route);
-  // });
-  // // dispatch({ type: "TESTING_CB", payload: "oh shit it works... I hope" });
-  // // console.log(state);
-
   useEffect(() => {
     const login = () => {
       const token = localStorage.getItem("token");
-      if (token) {
-        const headers = {
-          authorization: token
-        };
-        axios
-          .get("http://localhost:8000/api/account/onboarding/login", headers)
-          .then(res => {
-            dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data.role });
-            history.pushState("/dashboard");
-          })
-          .catch(err => {
-            console.log(err);
-            dispatch({ type: "LOGIN_USER_FAILURE" });
-          });
+
+      if (!state.role && token) {
+        console.log("here my friend");
+        history.push("/callback");
+        // const headers = {
+        //   authorization: token
+        // };
+        // axios
+        //   .get("http://localhost:8000/api/account/onboarding/login", headers)
+        //   .then(res => {
+        //     dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data.role });
+        //     history.pushState("/dashboard");
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //     dispatch({ type: "LOGIN_USER_FAILURE" });
+        //   });
+      } else if (state.role) {
+        history.push("dashboard");
       }
     };
     login();
-  }, [history]);
+  }, [history, state.role]);
 
   return (
     <div className="App">
@@ -76,10 +69,6 @@ const App = ({ history }) => {
       />
       <Route path={"/get-users-test"} componet={User} />
 
-      {/* <Link to="/login">
-        <button>Login Here</button>
-      </Link> */}
-
       <Route
         path={"/dashboard"}
         render={props => (
@@ -88,6 +77,8 @@ const App = ({ history }) => {
             user={state.user}
             dispatch={dispatch}
             role={state.role}
+            isSignedIn={state.isSignedIn}
+            token={state.token}
           />
         )}
       />

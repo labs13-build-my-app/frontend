@@ -1,15 +1,11 @@
+import { FETCH_START } from "./actions";
+
 const reducer = (state, action) => {
   switch (action.type) {
-    case "TESTING_CB":
+    case FETCH_START:
       return {
         ...state,
-        error: action.payload
-      };
-    case "LOGIN":
-      console.log("here");
-      return {
-        ...state,
-        login: true
+        fetch: true
       };
     case "LOGIN_USER":
       return {
@@ -23,10 +19,10 @@ const reducer = (state, action) => {
         role: action.payload
       };
     case "FETCH_USER_SUCCESS":
-      console.log(state);
       return {
         ...state,
-        role: action.payload.role,
+        fetch: false,
+        isSignedIn: true,
         user: {
           ...state.user,
           id: action.payload.id,

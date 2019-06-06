@@ -3,6 +3,7 @@ import axios from "axios";
 import Auth from "./Auth";
 import auth0 from "auth0-js";
 import history from "./history";
+import { fetchRole } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
@@ -13,10 +14,10 @@ const auth = new auth0.WebAuth({
 });
 
 const Callback = ({ history, dispatch, role }) => {
-  console.log("callback component", localStorage.getItem("token"));
   useEffect(() => {
     // retrive data Auth0 and parse into token
     const getToken = () => {
+      console.log("getting token");
       auth.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           localStorage.setItem("token", authResult.idToken);
@@ -24,22 +25,7 @@ const Callback = ({ history, dispatch, role }) => {
 
           // send token  to server and server decodes and then check for user
           // response is role if role user exist, if no role user no exist
-          axios({
-            method: "GET",
-            headers: {
-              "content-type": "application/json",
-              Authorization: authResult.idToken
-            },
-            url: "http://localhost:8000/api/account/login"
-          })
-            .then(res => {
-              console.log("making a response");
-              return dispatch({
-                type: "FETCH_ROLE_SUCCESS",
-                payload: res.data.role
-              });
-            })
-            .catch(err => console.log("CATCH ERR", err));
+          fetchRole(authResult.idToken)(dispatch);
         } else if (err) {
           history.replace("/home");
           console.log(err);
@@ -47,10 +33,14 @@ const Callback = ({ history, dispatch, role }) => {
         }
       });
     };
-
+    const token = localStorage.getItem("token");
     if (role) {
       history.push(`/dashboard`);
+    } else if (token && !role) {
+      console.log("fetching role");
+      fetchRole(token)(dispatch);
     } else {
+      console.log("is this being invoked on refresh");
       getToken();
     }
   }, [history, dispatch, role]);
