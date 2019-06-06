@@ -4,11 +4,15 @@ import { useInput } from "./customhooks/index";
 
 const CreateProjectForm = () => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    axios
-      .post(
-        "http://localhost:8000/api/projects/create-project-project-owner",
-        state
-      )
+    axios({
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+        Authorization: localStorage.getItem("token")
+      },
+      url: "http://localhost:8000/api/projects/create-project-project-owner",
+      data: state
+    })
       .then(res => {
         console.log(res);
       })
