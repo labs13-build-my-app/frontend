@@ -17,7 +17,6 @@ const Callback = ({ history, dispatch, role }) => {
   useEffect(() => {
     // retrive data Auth0 and parse into token
     const getToken = () => {
-      console.log("getting token");
       auth.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           localStorage.setItem("token", authResult.idToken);
@@ -28,19 +27,16 @@ const Callback = ({ history, dispatch, role }) => {
           fetchRole(authResult.idToken)(dispatch);
         } else if (err) {
           history.replace("/home");
-          console.log(err);
           alert(`Error: ${err.error}. Check the console for further details.`);
         }
       });
     };
     const token = localStorage.getItem("token");
-    if (role) {
+    if (role && token) {
       history.push(`/dashboard`);
     } else if (token && !role) {
-      console.log("fetching role");
       fetchRole(token)(dispatch);
     } else {
-      console.log("is this being invoked on refresh");
       getToken();
     }
   }, [history, dispatch, role]);

@@ -4,6 +4,7 @@ const initialState = {
   role: "",
   token: null,
   isSignedIn: false,
+  location: "/home",
   user: {
     id: null,
     name: "",

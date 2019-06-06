@@ -9,6 +9,7 @@ export const fetchUser = endpoint => dispatch => {
   axios
     .get(endpoint)
     .then(res => {
+      console.log(res);
       dispatch({
         type: FETCH_USER_SUCCESS,
         payload: res.data.user

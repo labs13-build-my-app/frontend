@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { Route, withRouter, Redirect, Link } from "react-router";
-import axios from "axios";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
@@ -12,39 +11,31 @@ import Auth from "./components/Auth/Auth";
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
+let count = 0;
 
 // import "./App.css";
 const auth = new Auth();
 
-const App = ({ history }) => {
+const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
+  console.log("count", ++count, state);
 
   useEffect(() => {
+    dispatch({
+      type: "RECORD_URL_LOCATION",
+      payload: history.location.pathname
+    });
     const login = () => {
       const token = localStorage.getItem("token");
-
       if (!state.role && token) {
-        console.log("here my friend");
         history.push("/callback");
-        // const headers = {
-        //   authorization: token
-        // };
-        // axios
-        //   .get("http://localhost:8000/api/account/onboarding/login", headers)
-        //   .then(res => {
-        //     dispatch({ type: "LOGIN_USER_SUCCESS", payload: res.data.role });
-        //     history.pushState("/dashboard");
-        //   })
-        //   .catch(err => {
-        //     console.log(err);
-        //     dispatch({ type: "LOGIN_USER_FAILURE" });
-        //   });
       } else if (state.role) {
-        history.push("dashboard");
+        const path = history.location.pathname;
+        history.push(path);
       }
     };
     login();
-  }, [history, state.role]);
+  }, [history, state.role, state.user]);
 
   return (
     <div className="App">

@@ -6,6 +6,7 @@ import Developer from "./Developer";
 import { fetchUser } from "../../store/actions";
 
 const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
+  console.log(user);
   useEffect(() => {
     const retrieveUser = () => {
       const heroku = "https://build-my-app.herokuapp.com";
@@ -27,9 +28,7 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
     };
     if (role && !isSignedIn) {
       retrieveUser();
-    } else if (!isSignedIn && localStorage.getItem("token")) {
-      console.log("entering Dashboard", role, isSignedIn);
-      history.push("/home");
+      history.push("/dashboard");
     }
   }, [history, dispatch, role, isSignedIn, token]);
 
@@ -41,6 +40,7 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
     } else if (role === "Developer" && isSignedIn) {
       return <Developer role={role} user={user} />;
     } else {
+      console.log("yolo", role, isSignedIn);
       return <h1>Loading</h1>;
     }
   };

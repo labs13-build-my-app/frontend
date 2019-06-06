@@ -2,6 +2,11 @@ import { FETCH_START } from "./actions";
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "RECORD_URL_LOCATION":
+      return {
+        ...state,
+        location: action.payload
+      };
     case FETCH_START:
       return {
         ...state,
@@ -13,7 +18,6 @@ const reducer = (state, action) => {
         token: localStorage.getItem("token")
       };
     case "FETCH_ROLE_SUCCESS":
-      console.log(action.payload);
       return {
         ...state,
         role: action.payload
