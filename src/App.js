@@ -69,7 +69,7 @@ const App = ({ history }) => {
       </Link> */}
 
       <Route
-        path={"/dashboard/:role"}
+        path={"/dashboard"}
         render={props => (
           <Dashboard
             {...props}

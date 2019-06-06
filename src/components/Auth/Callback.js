@@ -32,13 +32,16 @@ const Callback = ({ history, dispatch, state }) => {
             "content-type": "application/json",
             Authorization: authResult.idToken
           },
-          url: "http://localhost:8000/api/account/login"
+          url: "http://localhost:8000/api/account/onboarding/login"
         })
           .then(res => {
-            updateRole(() =>
-              dispatch({ type: "FETCH_ROLE_SUCCESS", payload: res.data.role })
-            );
-            history.push(`/dashboard/${res.data.role}`);
+            console.log(res.data);
+            dispatch({ type: "FETCH_ROLE_SUCCESS", payload: res.data.role });
+            history.push(`/dashboard`);
+            // // updateRole(() =>
+            // //   dispatch({ type: "FETCH_ROLE_SUCCESS", payload: res.data.role })
+            // // );
+            // history.push(`/dashboard`);
           })
           .catch(err => console.log("CATCH ERR", err));
       } else if (err) {
