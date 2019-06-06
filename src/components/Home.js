@@ -12,6 +12,7 @@ const home = ({ history }) => {
     // const auth = new Auth();
     // const route = await auth.login(history, "loading");
     // route();
+
     history.push("/signup");
   };
 
