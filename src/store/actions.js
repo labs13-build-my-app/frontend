@@ -38,3 +38,17 @@ export const fetchRole = token => dispatch => {
       console.log("CATCH ERR", err);
     });
 };
+
+export const signup = user => dispatch => {
+  axios({
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: "http://localhost:8000/api/account/onboarding/signup",
+    data: user
+  })
+    .then(res => console.log(res, "here"))
+    .catch(err => console.log(err));
+};
