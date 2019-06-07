@@ -20,7 +20,7 @@ const auth = new Auth();
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
   const { role, user, login, token, isSignedIn, signup } = state;
-
+  console.log("STATE", state);
   useEffect(() => {
     dispatch({
       type: "RECORD_URL_LOCATION",
@@ -76,7 +76,10 @@ const App = ({ history, match }) => {
         )}
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
-      <Route path={"/test"} render={() => <CreateProjectForm />} />
+      <Route
+        path={"/create-project-form"}
+        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
+      />
     </div>
   );
 };

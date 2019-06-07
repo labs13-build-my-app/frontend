@@ -1,81 +1,55 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { useInput } from "./customhooks/index";
+import { useInput } from "../../utils/customhooks/index";
+import { createProject } from "../../store/actions";
 
-const CreateProjectForm = () => {
+const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    axios({
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: "http://localhost:8000/api/projects/create-project-project-owner",
-      data: state
-    })
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error.message);
-      });
+    createProject(state)(dispatch);
+    history.push("/test"); // <<< push to projects page
   });
-  // const [projects, setProject] = useState({})
-  // const [project, , handleChanges] = useInput({})
-
-  // const addProject = () => {
-  //   const newproject = [
-  //     ...projects
-  //     // { add new project object }
-  //   ];
-  //   setProject(newproject);
-  // };
-
   return (
     <div>
       <h2>Add Project</h2>
       <form onSubmit={handleSubmit}>
+        <label>Name</label>
         <input
           onChange={handleInputChange}
           name="name"
           type="text"
           value={state.name}
+          required
         />
+        <label>Description</label>
         <input
           onChange={handleInputChange}
-          name="decription"
+          name="description"
           type="text"
-          value={state.decription}
+          value={state.description}
+          required
         />
+        <label>Image Url</label>
         <input
           onChange={handleInputChange}
           name="image_url"
           type="text"
           value={state.image_url}
+          required
         />
+        <label>Budget</label>
         <input
           onChange={handleInputChange}
           name="budget"
           type="text"
           value={state.budget}
+          required
         />
+        <label>Due Date</label>
         <input
           onChange={handleInputChange}
           name="dueDate"
           type="text"
           value={state.dueDate}
-        />
-        <input
-          onChange={handleInputChange}
-          name="projectStatus"
-          type="text"
-          value={state.projectStatus}
-        />
-        <input
-          onChange={handleInputChange}
-          name="paymentStatus"
-          type="text"
-          value={state.paymentStatus}
+          required
         />
         <button type="submit">Submit</button>
       </form>
