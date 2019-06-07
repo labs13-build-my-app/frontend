@@ -27,6 +27,7 @@ const Signup = ({ dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
+    // dispatch({ type: "USER_SIGN_UP_SUCCESS" });
     dispatch({ type: "FETCH_ROLE_SUCCESS", payload: role });
     signup({
       role,

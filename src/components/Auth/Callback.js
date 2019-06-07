@@ -24,6 +24,7 @@ const Callback = ({ history, dispatch, role }) => {
 
           // send token  to server and server decodes and then check for user
           // response is role if role user exist, if no role user no exist
+          console.log("FETCHING ROLE CALLBACK");
           fetchRole(authResult.idToken)(dispatch);
         } else if (err) {
           history.replace("/home");
