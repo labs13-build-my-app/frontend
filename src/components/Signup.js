@@ -3,8 +3,36 @@ import Auth from "./Auth/Auth";
 import axios from "axios";
 import { sign } from "crypto";
 import { signup } from "../store/actions";
+import clsx from 'clsx';
+import { makeStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+
+const useStyles = makeStyles(theme => ({
+  container: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  textField: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+  },
+  dense: {
+    marginTop: theme.spacing(2),
+  },
+  menu: {
+    width: 200,
+  },
+}));
 
 const Signup = ({ dispatch, history }) => {
+  const classes = useStyles();
+  const [values, setValues] = React.useState({
+    name: 'Cat in the Hat',
+    age: '',
+    multiline: 'Controlled',
+    currency: 'EUR',
+  });
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -63,6 +91,16 @@ const Signup = ({ dispatch, history }) => {
           type="text"
           value={firstName}
         />
+        <TextField
+          id="first-name"
+          label="First Name"
+          className={classes.textField}
+          value={firstName}
+          onChange={event => changeHandler(event, setFirstName)}
+          type="text"
+          margin="normal"
+          variant="outlined"
+        />        
         <div>lastName</div>
         <input
           onChange={event => changeHandler(event, setLastName)}
