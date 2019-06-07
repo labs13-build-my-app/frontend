@@ -4,7 +4,8 @@ import {
   RECORD_URL_LOCATION,
   LOGIN_USER,
   FETCH_ROLE_SUCCESS,
-  FETCH_USER_SUCCESS
+  FETCH_USER_SUCCESS,
+  CREATE_PROJECT_SUCCESS
 } from "./actions";
 
 const reducer = (state, action) => {
@@ -44,6 +45,15 @@ const reducer = (state, action) => {
           id: action.payload.id,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName
+        }
+      };
+    case CREATE_PROJECT_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+        user: {
+          ...state.user,
+          project: [...state.user.project, action.payload]
         }
       };
     default:

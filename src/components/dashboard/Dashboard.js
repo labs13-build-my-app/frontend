@@ -15,6 +15,7 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
       let userAccountEndpoint = "";
 
       if (role === "Admin") {
+        console.log("hererere");
         userAccountEndpoint = `${connection}/api/account/admin/dashboard-admin`;
       } else if (role === "Project Owner") {
         userAccountEndpoint = `${connection}/api/account/project-owner/dashboard-project-owner`;

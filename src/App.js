@@ -8,7 +8,7 @@ import Login from "./components/Login";
 import User from "./components/User";
 import Auth from "./components/Auth/Auth";
 import CreatePlan from "./components/CreatePlan";
-
+import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
@@ -20,7 +20,7 @@ const auth = new Auth();
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
   const { role, user, login, token, isSignedIn, signup } = state;
-
+  console.log("STATE", state);
   useEffect(() => {
     dispatch({
       type: "RECORD_URL_LOCATION",
@@ -77,6 +77,10 @@ const App = ({ history, match }) => {
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
       <Route path={"/test"} render={() => <CreatePlan />} />
+      <Route
+        path={"/create-project-form"}
+        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
+      />
     </div>
   );
 };
