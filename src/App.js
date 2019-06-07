@@ -10,6 +10,7 @@ import Auth from "./components/Auth/Auth";
 import Projects from "./components/projects/Projects";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
+import Project from "./components/projects/Project";
 
 import "./App.css";
 
@@ -88,8 +89,13 @@ const App = ({ history, match }) => {
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
       />
       <Route
+        exact
         path={"/projects"}
-        render={() => <Projects dispatch={dispatch} />}
+        render={props => <Projects dispatch={dispatch} {...props} />}
+      />
+      <Route
+        path={"/projects/project/:id"}
+        render={props => <Project dispatch={dispatch} {...props} />}
       />
     </div>
   );

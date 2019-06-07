@@ -2,24 +2,39 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 const Project = props => {
-  // const [project, setProject] = useState([]);
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:8000/api/projects/project/:id")
-  //     .then(res => {
-  //       setProjects(res.data.projects);
-  //     });
-  // }, []);
+  const [project, setProject] = useState([]);
+  // let projectData;
+  // if (props.history.location === "/projects") {
+  //   projectData = props;
+  // } else {
+  //   projectData = project;
+  // }
 
+  // console.log(props);
+  useEffect(() => {
+    if (!props.match.params.id) {
+      setProject(props);
+    }
+    if (props.match.params.id) {
+      axios
+        .get(
+          `http://localhost:8000/api/projects/project/${props.match.params.id}`
+        )
+        .then(res => {
+          setProject(res.data);
+        });
+    }
+  }, [props.match]);
+  // console.log(project);
   return (
     <div className="Projects">
-      <div className="Book-Top">
+      <div>
         <h3 className="ProjectTitle">{props.name}</h3>
       </div>
       <div>
-        <p>{props.description}</p>
-        <p>{props.budget}</p>
-        <p>{props.dueDate}</p>
+        <p>{project.description}</p>
+        <p>{project.budget}</p>
+        <p>{project.dueDate}</p>
       </div>
     </div>
   );

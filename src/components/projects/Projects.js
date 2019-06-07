@@ -3,7 +3,7 @@ import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 
-const Projects = () => {
+const Projects = props => {
   const [projects, setProjects] = useState([]);
   useEffect(() => {
     axios.get("http://localhost:8000/api/projects/").then(res => {
@@ -16,10 +16,11 @@ const Projects = () => {
       {projects.map(project => (
         <Link
           className="project-link"
-          to={`/project/${project.id}`}
+          to={`/projects/project/${project.id}`}
           key={project.id}
         >
           <Project
+            {...props}
             name={project.name}
             description={project.description}
             budget={project.budget}
@@ -27,6 +28,13 @@ const Projects = () => {
             key={project.id}
           />
         </Link>
+
+        // <div key={project.id}>
+        //   <div>{project.name}</div>
+        //   <div>{project.description}</div>
+        //   <div>{project.budget}</div>
+        //   <div>{project.dueDate}</div>
+        // </div>
       ))}
     </div>
   );
