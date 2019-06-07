@@ -1,7 +1,7 @@
 const initialState = {
   fetch: false,
   error: false,
-  role: "",
+  role: "Project Owner",
   token: null,
   isSignedIn: false,
   signup: false,
@@ -18,6 +18,8 @@ const initialState = {
       github: ""
     },
     roleType: {},
+    project: [{}],
+    plan: [{}],
     messages: {
       subscribed: [{}]
     }
