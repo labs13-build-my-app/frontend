@@ -7,8 +7,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
 import Auth from "./components/Auth/Auth";
+import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
-
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
@@ -76,6 +76,7 @@ const App = ({ history, match }) => {
         )}
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
+      <Route path={"/create-plan"} render={() => <CreatePlan />} />
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
