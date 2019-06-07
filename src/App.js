@@ -7,8 +7,12 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
 import Auth from "./components/Auth/Auth";
+
+
+import Projects from "./components/projects/Projects";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
+
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
@@ -29,9 +33,13 @@ const App = ({ history, match }) => {
     const token = localStorage.getItem("token");
     const login = () => {
       const token = localStorage.getItem("token");
-      if (signup && token) {
+      console.log("APP", signup, token, role);
+      if (signup && token && role) {
+        history.push("/dashboard");
+      } else if (signup && token) {
         history.push("/signup");
       } else if (!role && token && !signup) {
+        console.log("CALLBACK ON APP");
         history.push("/callback");
       } else if (role) {
         const path = history.location.pathname;
@@ -80,6 +88,10 @@ const App = ({ history, match }) => {
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
+      />
+      <Route
+        path={"/projects"}
+        render={() => <Projects dispatch={dispatch} />}
       />
     </div>
   );

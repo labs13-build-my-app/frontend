@@ -46,6 +46,7 @@ export const fetchRole = token => dispatch => {
       });
     })
     .catch(err => {
+      console.log(err);
       dispatch({ type: FETCH_USER_FAILURE, payload: { signup: true } });
       console.log("CATCH ERR", err);
     });
@@ -61,7 +62,13 @@ export const signup = user => dispatch => {
     url: "http://localhost:8000/api/account/onboarding/signup",
     data: user
   })
-    .then(res => console.log(res, "here"))
+    .then(res => {
+      dispatch({
+        type: FETCH_ROLE_SUCCESS,
+        payload: res.data
+      });
+      // fetchUser()
+    })
     .catch(err => console.log(err));
 };
 

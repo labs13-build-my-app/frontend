@@ -33,7 +33,7 @@ const reducer = (state, action) => {
     case FETCH_ROLE_SUCCESS:
       return {
         ...state,
-        role: action.payload
+        role: action.payload.role
       };
     case FETCH_USER_SUCCESS:
       return {
@@ -55,6 +55,11 @@ const reducer = (state, action) => {
           ...state.user,
           project: [...state.user.project, action.payload]
         }
+      };
+    case "USER_SIGN_UP_SUCCESS":
+      return {
+        ...state,
+        signup: false
       };
     default:
       return state;

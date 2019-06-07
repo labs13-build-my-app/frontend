@@ -1,7 +1,7 @@
 const initialState = {
   fetch: false,
   error: false,
-  role: "Project Owner",
+  role: "",
   token: null,
   isSignedIn: false,
   signup: false,

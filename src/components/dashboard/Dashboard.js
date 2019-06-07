@@ -25,7 +25,8 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
         history.push("/home");
       }
       if (role === "Admin" || role === "Project Owner" || role === "Developer")
-        fetchUser(userAccountEndpoint)(dispatch);
+        console.log("HERE IN DASHBOARD ADMIN");
+      fetchUser(userAccountEndpoint)(dispatch);
     };
     if (role && !isSignedIn) {
       retrieveUser();
