@@ -76,7 +76,7 @@ const App = ({ history, match }) => {
         )}
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
-      <Route path={"/test"} render={() => <CreatePlan />} />
+      <Route path={"/create-plan"} render={() => <CreatePlan />} />
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
