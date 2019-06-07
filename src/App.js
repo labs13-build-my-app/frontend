@@ -9,7 +9,7 @@ import User from "./components/User";
 import Auth from "./components/Auth/Auth";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Projects from "./components/projects/Projects";
-
+import CreatePlan from "./components/CreatePlan";
 import "./App.css";
 
 import Callback from "./components/Auth/Callback";
@@ -77,6 +77,7 @@ const App = ({ history, match }) => {
         )}
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
+      <Route path={"/create-plan"} render={() => <CreatePlan />} />
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
