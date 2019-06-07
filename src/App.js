@@ -7,6 +7,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
 import Auth from "./components/Auth/Auth";
+import CreatePlan from "./components/CreatePlan";
 
 import "./App.css";
 
@@ -75,6 +76,7 @@ const App = ({ history, match }) => {
         )}
       />
       <Route path={"/home"} render={() => <div>Home</div>} />
+      <Route path={"/test"} render={() => <CreatePlan />} />
     </div>
   );
 };
