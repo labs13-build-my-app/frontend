@@ -29,9 +29,13 @@ const App = ({ history, match }) => {
     const token = localStorage.getItem("token");
     const login = () => {
       const token = localStorage.getItem("token");
-      if (signup && token) {
+      console.log("APP", signup, token, role);
+      if (signup && token && role) {
+        history.push("/dashboard");
+      } else if (signup && token) {
         history.push("/signup");
       } else if (!role && token && !signup) {
+        console.log("CALLBACK ON APP");
         history.push("/callback");
       } else if (role) {
         const path = history.location.pathname;
