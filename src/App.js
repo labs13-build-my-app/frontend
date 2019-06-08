@@ -13,7 +13,6 @@ import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<
 import Callback from "./components/Auth/Callback";
 import NavContainer from "./components/NavContainer";
 import "./App.css";
-import { saveToken } from "./store/actions";
 
 // const useAppState = () => {
 //   const [state, dispatch] = useReducer(store.reducer, store.initialState);
@@ -27,7 +26,7 @@ import { saveToken } from "./store/actions";
 
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
-  const { role, user, login, token, isSignedIn, signup } = state;
+  const { role, user, login, token, isSignedIn, signup, location } = state;
   console.log("STATE", state);
   useEffect(() => {
     // saves current url location in state after every location change or refresh
@@ -41,6 +40,11 @@ const App = ({ history, match }) => {
     // if token in local storage, token on state will update after first render
     if (!token && localStorage.getItem("token")) {
       saveToken(true)(dispatch);
+    } else if (token === null) {
+      saveToken(false)(dispatch);
+    }
+
+    if (role && token) {
     }
 
     const login = () => {
@@ -93,16 +97,20 @@ const App = ({ history, match }) => {
 
       <Route
         path={"/dashboard"}
-        render={props => (
-          <Dashboard
-            {...props}
-            user={user}
-            dispatch={dispatch}
-            role={role}
-            isSignedIn={isSignedIn}
-            token={token}
-          />
-        )}
+        render={props =>
+          token === false ? (
+            <Redirect to={"/home"} />
+          ) : (
+            <Dashboard
+              {...props}
+              user={user}
+              dispatch={dispatch}
+              role={role}
+              isSignedIn={isSignedIn}
+              token={token}
+            />
+          )
+        }
       />
 
       <Route path={"/create-plan"} render={() => <CreatePlan />} />
