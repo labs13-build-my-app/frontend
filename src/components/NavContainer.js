@@ -34,11 +34,11 @@ const NavContainer = ({ isSignedIn, token }) => {
   }, [isSignedIn, token]);
   return (
     <nav>
-      <div clasName={"logo"}>Logo</div>
+      <div className={"logo"}>Logo</div>
       <ul>
         {nav.map(link => {
           return (
-            <li>
+            <li key={link.label}>
               <Link
                 onClick={link.callback ? link.callback : null}
                 to={link.route}

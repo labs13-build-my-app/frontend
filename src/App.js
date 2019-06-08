@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { Route, withRouter, Redirect, Link } from "react-router";
-import { saveToken } from "./store/actions";
+import { saveToken, locationRestore } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
@@ -29,12 +29,15 @@ const App = ({ history, match }) => {
   const { role, user, login, token, isSignedIn, signup, location } = state;
   console.log("STATE", state);
   useEffect(() => {
-    // saves current url location in state after every location change or refresh
-    if (history.location.pathname !== location) {
-      dispatch({
-        type: "RECORD_URL_LOCATION",
-        payload: history.location.pathname
-      });
+    // saves current url location in state after every refresh
+    const { pathname } = history.location.pathname;
+    if (
+      pathname !== location &&
+      pathname !== "/login" &&
+      pathname !== "/signup" &&
+      token === null
+    ) {
+      locationRestore(history.location.pathname)(dispatch);
     }
 
     // if token in local storage, token on state will update after first render
@@ -46,22 +49,24 @@ const App = ({ history, match }) => {
 
     if (role && token) {
     }
-
+    // this was originaly part of the login process.
+    // might not be working as intended anymore.
+    // but this might be useful in some compacity.
+    // reviewing what it does.
     const login = () => {
-      if (signup && token && role) {
-        history.push("/dashboard");
-      } else if (signup && token) {
-        history.push("/signup");
-      } else if (!role && token && !signup) {
-        console.log("CALLBACK ON APP");
-        history.push("/callback");
-      } else if (role) {
-        const path = history.location.pathname;
+      // might remove signup var, don't see the point
+      if (isSignedIn) {
+        // probably better to pass in isSignedin to test condition
+        const path = pathname;
         history.push(path);
+      } else if (token && role) {
+        history.push("/dashboard");
+      } else if (!role && token) {
+        history.push("/login");
       }
     };
     login();
-  }, [token, history.location.pathname, role, user, signup]);
+  }, [token, history.location.pathname, role, user, isSignedIn]);
 
   return (
     <div className="App">
@@ -95,7 +100,13 @@ const App = ({ history, match }) => {
           role ? (
             <Redirect to={"/dashboard"} />
           ) : (
-            <Login {...props} dispatch={dispatch} login={login} />
+            <Login
+              {...props}
+              dispatch={dispatch}
+              login={login}
+              role={role}
+              token={token}
+            />
           )
         }
       />
@@ -127,7 +138,7 @@ const App = ({ history, match }) => {
 
       <Route
         path={"/projects"}
-        render={() => <Projects dispatch={dispatch} />}
+        render={props => <Projects {...props} dispatch={dispatch} />}
       />
     </div>
   );

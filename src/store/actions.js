@@ -97,3 +97,10 @@ export const createProject = project => dispatch => {
       console.log(error.message);
     });
 };
+
+export const locationRestore = location => dispatch => {
+  dispatch({
+    type: "RECORD_URL_LOCATION",
+    payload: location
+  });
+};
