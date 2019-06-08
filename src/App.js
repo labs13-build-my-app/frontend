@@ -68,7 +68,13 @@ const App = ({ history, match }) => {
 
       <Route
         path={"/signup"}
-        render={props => <Signup {...props} dispatch={dispatch} />}
+        render={props =>
+          isSignedIn ? (
+            <Redirect to="/dashboard" />
+          ) : (
+            <Signup {...props} dispatch={dispatch} />
+          )
+        }
       />
 
       <Route
