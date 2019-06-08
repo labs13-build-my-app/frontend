@@ -1,4 +1,5 @@
 const initialState = {
+  isLoading: true,
   fetch: false,
   error: false,
   role: "",

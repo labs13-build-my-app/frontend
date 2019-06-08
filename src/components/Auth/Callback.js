@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import auth0 from "auth0-js";
-import { fetchRole } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
@@ -38,7 +37,7 @@ const Callback = ({ history, dispatch, token, isSignedIn }) => {
     } else {
       getToken();
     }
-  }, [history, dispatch, token]);
+  }, [history, token, isSignedIn]);
 
   return (
     <div>

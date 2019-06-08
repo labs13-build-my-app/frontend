@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import axios from "axios";
 import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";

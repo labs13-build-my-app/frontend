@@ -1,4 +1,5 @@
 import axios from "axios";
+export const LOADING_COMPLETE = "LOADING_COMPLETE";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const FETCH_START = "FETCH_START";
 export const LOGIN_USER = "LOGIN_USER";
@@ -103,4 +104,8 @@ export const locationRestore = location => dispatch => {
     type: "RECORD_URL_LOCATION",
     payload: location
   });
+};
+
+export const completeLoadingApp = () => dispatch => {
+  dispatch({ type: "LOADING_COMPLETE" });
 };

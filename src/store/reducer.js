@@ -1,4 +1,5 @@
 import {
+  LOADING_COMPLETE,
   TOKEN_EXIST,
   FETCH_START,
   FETCH_USER_FAILURE,
@@ -11,6 +12,11 @@ import {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case LOADING_COMPLETE:
+      return {
+        ...state,
+        isLoading: false
+      };
     case TOKEN_EXIST:
       return {
         ...state,

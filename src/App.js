@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
-import { Route, withRouter, Redirect, Link } from "react-router";
+import { Route, withRouter, Redirect } from "react-router";
 import { saveToken, locationRestore } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
@@ -26,7 +26,16 @@ import "./App.css";
 
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
-  const { role, user, login, token, isSignedIn, newUser, location } = state;
+  const {
+    role,
+    user,
+    login,
+    token,
+    isSignedIn,
+    newUser,
+    location,
+    isLoading
+  } = state;
   console.log("STATE", state);
   // step one app renders with loading
   // step two after first render location updates with current location of url
@@ -63,21 +72,22 @@ const App = ({ history, match }) => {
     // reviewing what it does.
     const handleLoadingAccount = () => {
       if (isSignedIn) {
-        console.log("should pass to path", pathname);
+        console.log("should pass to path", location);
         // probably better to pass in isSignedin to test condition
-        const path = pathname;
-        history.push(path);
-      } else if (token && role) {
+        history.push(location);
+      } else if (role) {
         history.push("/dashboard");
       } else if (newUser) {
         console.log("new user");
         history.push("/signup");
-      } else if (!role && token) {
+      } else if (!role) {
         history.push("/login");
       }
     };
-    handleLoadingAccount();
-  }, [token, history.location.pathname, role, user, newUser, isSignedIn]);
+    if (token && isLoading) {
+      handleLoadingAccount();
+    }
+  }, [token, isLoading, location, role, newUser, isSignedIn, history]);
 
   if (token === null) return <h1>Loading...</h1>;
 
