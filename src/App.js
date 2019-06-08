@@ -26,7 +26,7 @@ import "./App.css";
 
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
-  const { role, user, login, token, isSignedIn, signup, location } = state;
+  const { role, user, login, token, isSignedIn, newUser, location } = state;
   console.log("STATE", state);
   useEffect(() => {
     // saves current url location in state after every refresh
@@ -35,8 +35,11 @@ const App = ({ history, match }) => {
       pathname !== location &&
       pathname !== "/login" &&
       pathname !== "/signup" &&
+      pathname !== "/callback" &&
+      pathname !== undefined &&
       token === null
     ) {
+      console.log("please no callback here", pathname);
       locationRestore(history.location.pathname)(dispatch);
     }
 
@@ -61,12 +64,15 @@ const App = ({ history, match }) => {
         history.push(path);
       } else if (token && role) {
         history.push("/dashboard");
+      } else if (newUser) {
+        console.log("new user");
+        history.push("/signup");
       } else if (!role && token) {
         history.push("/login");
       }
     };
     login();
-  }, [token, history.location.pathname, role, user, isSignedIn]);
+  }, [token, history.location.pathname, role, user, newUser, isSignedIn]);
 
   return (
     <div className="App">
