@@ -3,7 +3,7 @@ import Auth from "./Auth/Auth";
 import { Link } from "react-router-dom";
 const auth = new Auth();
 
-const NavContainer = ({ isSignedIn }) => {
+const NavContainer = ({ isSignedIn, token }) => {
   const [nav, setNav] = useState([]);
   useEffect(() => {
     if (isSignedIn) {
@@ -19,11 +19,19 @@ const NavContainer = ({ isSignedIn }) => {
         { route: "/home", label: "Home" },
         { route: "/projects", label: "Projects" },
         { route: "/profile/developer", label: "Developer" },
-        { route: "/login", label: "Login", callback: () => auth.login() },
-        { route: "/signup", label: "Signup" }
+        {
+          route: "/login",
+          label: "Login",
+          callback: !token ? () => auth.login() : null
+        },
+        {
+          route: "/signup",
+          label: "Signup",
+          callback: !token ? () => auth.login() : null
+        }
       ]);
     }
-  }, [isSignedIn]);
+  }, [isSignedIn, token]);
   return (
     <nav>
       <div clasName={"logo"}>Logo</div>

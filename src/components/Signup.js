@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Auth from "./Auth/Auth";
-import axios from "axios";
-import { sign } from "crypto";
 import { signup } from "../store/actions";
-import clsx from "clsx";
+import Auth from "./Auth/Auth";
+import clsx from "clsx"; // whats this??? we need this???
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
+const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
@@ -25,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Signup = ({ dispatch, history }) => {
+const Signup = ({ token, dispatch, history }) => {
   const classes = useStyles();
   const [values, setValues] = React.useState({
     name: "Cat in the Hat",
@@ -44,11 +43,10 @@ const Signup = ({ dispatch, history }) => {
   const [twitter, setTwitter] = useState("");
 
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      const auth = new Auth();
+    if (!token) {
       auth.login();
     }
-  }, []);
+  }, [token, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;

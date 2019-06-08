@@ -39,7 +39,7 @@ export const fetchRole = token => dispatch => {
     method: "GET",
     headers: {
       "content-type": "application/json",
-      Authorization: token
+      Authorization: localStorage.getItem("token")
     },
     url: "http://localhost:8000/api/account/onboarding/login"
   })

@@ -65,7 +65,7 @@ const App = ({ history, match }) => {
 
   return (
     <div className="App">
-      <NavContainer isSignedIn={isSignedIn} />
+      <NavContainer isSignedIn={isSignedIn} token={token} />
 
       <Route exact path={"/"} render={() => <Redirect to={"/home"} />} />
 
@@ -74,7 +74,7 @@ const App = ({ history, match }) => {
       <Route
         path="/callback"
         render={props => (
-          <Callback {...props} dispatch={dispatch} role={role} />
+          <Callback {...props} dispatch={dispatch} role={role} token={token} />
         )}
       />
 
@@ -91,7 +91,13 @@ const App = ({ history, match }) => {
 
       <Route
         path={"/login"}
-        render={props => <Login {...props} dispatch={dispatch} login={login} />}
+        render={props =>
+          role ? (
+            <Redirect to={"/dashboard"} />
+          ) : (
+            <Login {...props} dispatch={dispatch} login={login} />
+          )
+        }
       />
       <Route path={"/get-users-test"} componet={User} />
 

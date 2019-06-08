@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
-import axios from "axios";
-import Auth from "./Auth";
 import auth0 from "auth0-js";
-import history from "./history";
 import { fetchRole } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
@@ -13,7 +10,7 @@ const auth = new auth0.WebAuth({
   scope: "openid profile"
 });
 
-const Callback = ({ history, dispatch, role }) => {
+const Callback = ({ history, dispatch, token, isSignedIn }) => {
   useEffect(() => {
     // retrive data Auth0 and parse into token
     const getToken = () => {
@@ -25,22 +22,23 @@ const Callback = ({ history, dispatch, role }) => {
           // send token  to server and server decodes and then check for user
           // response is role if role user exist, if no role user no exist
           console.log("FETCHING ROLE CALLBACK");
-          fetchRole(authResult.idToken)(dispatch);
+          // fetchRole(authResult.idToken)(dispatch);
+          history.push("/login");
         } else if (err) {
           history.replace("/home");
           alert(`Error: ${err.error}. Check the console for further details.`);
         }
       });
     };
-    const token = localStorage.getItem("token");
-    if (role && token) {
+    if (isSignedIn) {
       history.push(`/dashboard`);
-    } else if (token && !role) {
-      fetchRole(token)(dispatch);
+    } else if (token) {
+      history.push("/login");
+      // fetchRole(token)(dispatch);
     } else {
       getToken();
     }
-  }, [history, dispatch, role]);
+  }, [history, dispatch, token]);
 
   return (
     <div>

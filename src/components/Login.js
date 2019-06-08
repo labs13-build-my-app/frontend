@@ -1,18 +1,17 @@
 import React, { useEffect } from "react";
-import Auth from "./Auth/Auth";
+import { fetchRole } from "../store/actions";
 
-const Login = ({ dispatch }) => {
+const Login = ({ role, token, dispatch, history }) => {
+  console.log(history.location.pathname);
   useEffect(() => {
-    // dispatch({ type: "LOGIN" });
-    const auth = new Auth();
-    auth.login();
-  }, []);
+    if (!role && token) {
+      fetchRole()(dispatch);
+    } else {
+      history.push("/home");
+    }
+  }, [role, token, dispatch, history]);
 
-  return (
-    <div>
-      <h2>this is the login component</h2>
-    </div>
-  );
+  return <div>Loading...</div>;
 };
 
 export default Login;
