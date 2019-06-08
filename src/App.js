@@ -6,7 +6,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
-import Auth from "./components/Auth/Auth";
 import Projects from "./components/projects/Projects";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
@@ -23,7 +22,6 @@ import "./App.css";
 //   })
 //   return { dispatch, state, role, user, token, isSignedIn, signup, login };
 // };
-const auth = new Auth();
 
 const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
@@ -55,20 +53,24 @@ const App = ({ history, match }) => {
 
   return (
     <div className="App">
-      <NavContainer />
-      <button onClick={() => auth.logout()}>Logout</button>
+      <NavContainer isSignedIn={isSignedIn} />
+
       <Route exact path={"/"} render={() => <Redirect to={"/home"} />} />
+
       <Route path={"/home"} render={props => <Home {...props} />} />
+
       <Route
         path="/callback"
         render={props => (
           <Callback {...props} dispatch={dispatch} role={role} />
         )}
       />
+
       <Route
         path={"/signup"}
         render={props => <Signup {...props} dispatch={dispatch} />}
       />
+
       <Route
         path={"/login"}
         render={props => <Login {...props} dispatch={dispatch} login={login} />}
@@ -88,12 +90,13 @@ const App = ({ history, match }) => {
           />
         )}
       />
-      {/* <Route path={"/home"} render={() => <div>Home</div>} /> */}
+
       <Route path={"/create-plan"} render={() => <CreatePlan />} />
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
       />
+
       <Route
         path={"/projects"}
         render={() => <Projects dispatch={dispatch} />}
