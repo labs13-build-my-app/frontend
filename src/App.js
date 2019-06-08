@@ -28,6 +28,12 @@ const App = ({ history, match }) => {
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
   const { role, user, login, token, isSignedIn, newUser, location } = state;
   console.log("STATE", state);
+  // step one app renders with loading
+  // step two after first render location updates with current location of url
+  // and token updates true or false if token
+  // if no token do nothing
+  // if token check for user on database
+  // if user on database return role
   useEffect(() => {
     // saves current url location in state after every refresh
     const { pathname } = history.location.pathname;
@@ -39,7 +45,6 @@ const App = ({ history, match }) => {
       pathname !== undefined &&
       token === null
     ) {
-      console.log("please no callback here", pathname);
       locationRestore(history.location.pathname)(dispatch);
     }
 
@@ -74,6 +79,8 @@ const App = ({ history, match }) => {
     login();
   }, [token, history.location.pathname, role, user, newUser, isSignedIn]);
 
+  if (token === null) return <h1>Loading...</h1>;
+
   return (
     <div className="App">
       <NavContainer isSignedIn={isSignedIn} token={token} />
@@ -95,7 +102,7 @@ const App = ({ history, match }) => {
           isSignedIn ? (
             <Redirect to="/dashboard" />
           ) : (
-            <Signup {...props} dispatch={dispatch} />
+            <Signup {...props} dispatch={dispatch} token={token} />
           )
         }
       />

@@ -51,8 +51,8 @@ export const fetchRole = token => dispatch => {
       });
     })
     .catch(err => {
-      console.log(err);
-      dispatch({ type: FETCH_USER_FAILURE, payload: { signup: true } });
+      console.log("failed to fine role, here in catch");
+      dispatch({ type: FETCH_USER_FAILURE, payload: { newUser: true } });
       console.log("CATCH ERR", err);
     });
 };

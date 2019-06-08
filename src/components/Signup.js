@@ -44,6 +44,7 @@ const Signup = ({ token, dispatch, history }) => {
 
   useEffect(() => {
     if (!token) {
+      console.log("in here", token);
       auth.login();
     }
   }, [token, history]);

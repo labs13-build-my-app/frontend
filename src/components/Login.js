@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { fetchRole } from "../store/actions";
 
 const Login = ({ role, token, dispatch, history }) => {
+  console.log("here, in login");
   useEffect(() => {
     if (!role && token) {
       console.log("should be fetching role");

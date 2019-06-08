@@ -19,7 +19,7 @@ const reducer = (state, action) => {
     case FETCH_USER_FAILURE:
       return {
         ...state,
-        signup: action.payload.signup
+        newUser: action.payload.newUser
       };
     case RECORD_URL_LOCATION:
       return {
