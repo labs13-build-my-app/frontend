@@ -34,9 +34,9 @@ const App = ({ history, match }) => {
   // if no token do nothing
   // if token check for user on database
   // if user on database return role
+  const { pathname } = history.location;
+  // saves current url location in state after every refresh after first render
   useEffect(() => {
-    // saves current url location in state after every refresh
-    const { pathname } = history.location.pathname;
     if (
       pathname !== location &&
       pathname !== "/login" &&
@@ -45,25 +45,25 @@ const App = ({ history, match }) => {
       pathname !== undefined &&
       token === null
     ) {
-      locationRestore(history.location.pathname)(dispatch);
+      locationRestore(pathname)(dispatch);
     }
-
-    // if token in local storage, token on state will update after first render
+  }, [token, location, pathname]);
+  // if token in local storage, token on state will update after first render
+  useEffect(() => {
     if (!token && localStorage.getItem("token")) {
       saveToken(true)(dispatch);
     } else if (token === null) {
       saveToken(false)(dispatch);
     }
-
-    if (role && token) {
-    }
+  }, [token]);
+  useEffect(() => {
     // this was originaly part of the login process.
     // might not be working as intended anymore.
     // but this might be useful in some compacity.
     // reviewing what it does.
-    const login = () => {
-      // might remove signup var, don't see the point
+    const handleLoadingAccount = () => {
       if (isSignedIn) {
+        console.log("should pass to path", pathname);
         // probably better to pass in isSignedin to test condition
         const path = pathname;
         history.push(path);
@@ -76,7 +76,7 @@ const App = ({ history, match }) => {
         history.push("/login");
       }
     };
-    login();
+    handleLoadingAccount();
   }, [token, history.location.pathname, role, user, newUser, isSignedIn]);
 
   if (token === null) return <h1>Loading...</h1>;
