@@ -3,35 +3,35 @@ import Auth from "./Auth/Auth";
 import axios from "axios";
 import { sign } from "crypto";
 import { signup } from "../store/actions";
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+import clsx from "clsx";
+import { makeStyles } from "@material-ui/core/styles";
+import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   dense: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   menu: {
-    width: 200,
-  },
+    width: 200
+  }
 }));
 
 const Signup = ({ dispatch, history }) => {
   const classes = useStyles();
   const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
+    name: "Cat in the Hat",
+    age: "",
+    multiline: "Controlled",
+    currency: "EUR"
   });
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -42,6 +42,7 @@ const Signup = ({ dispatch, history }) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
+
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       const auth = new Auth();
@@ -100,7 +101,7 @@ const Signup = ({ dispatch, history }) => {
           type="text"
           margin="normal"
           variant="outlined"
-        />        
+        />
         <div>lastName</div>
         <input
           onChange={event => changeHandler(event, setLastName)}

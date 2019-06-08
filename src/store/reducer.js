@@ -1,4 +1,5 @@
 import {
+  TOKEN_EXIST,
   FETCH_START,
   FETCH_USER_FAILURE,
   RECORD_URL_LOCATION,
@@ -10,6 +11,11 @@ import {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case TOKEN_EXIST:
+      return {
+        ...state,
+        token: action.payload
+      };
     case FETCH_USER_FAILURE:
       return {
         ...state,

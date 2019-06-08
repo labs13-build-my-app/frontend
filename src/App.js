@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { Route, withRouter, Redirect, Link } from "react-router";
+import { saveToken } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
@@ -12,6 +13,7 @@ import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<
 import Callback from "./components/Auth/Callback";
 import NavContainer from "./components/NavContainer";
 import "./App.css";
+import { saveToken } from "./store/actions";
 
 // const useAppState = () => {
 //   const [state, dispatch] = useReducer(store.reducer, store.initialState);
@@ -28,14 +30,20 @@ const App = ({ history, match }) => {
   const { role, user, login, token, isSignedIn, signup } = state;
   console.log("STATE", state);
   useEffect(() => {
-    dispatch({
-      type: "RECORD_URL_LOCATION",
-      payload: history.location.pathname
-    });
+    // saves current url location in state after every location change or refresh
+    if (history.location.pathname !== location) {
+      dispatch({
+        type: "RECORD_URL_LOCATION",
+        payload: history.location.pathname
+      });
+    }
+
+    // if token in local storage, token on state will update after first render
+    if (!token && localStorage.getItem("token")) {
+      saveToken(true)(dispatch);
+    }
 
     const login = () => {
-      const token = localStorage.getItem("token");
-
       if (signup && token && role) {
         history.push("/dashboard");
       } else if (signup && token) {
@@ -49,7 +57,7 @@ const App = ({ history, match }) => {
       }
     };
     login();
-  }, [history, role, user, signup]);
+  }, [token, history.location.pathname, role, user, signup]);
 
   return (
     <div className="App">

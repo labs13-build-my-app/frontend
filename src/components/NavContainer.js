@@ -19,8 +19,8 @@ const NavContainer = ({ isSignedIn }) => {
         { route: "/home", label: "Home" },
         { route: "/projects", label: "Projects" },
         { route: "/profile/developer", label: "Developer" },
-        { route: "/login", label: "Login" },
-        { route: "/signup", label: "Signup", callback: () => auth.login() }
+        { route: "/login", label: "Login", callback: () => auth.login() },
+        { route: "/signup", label: "Signup" }
       ]);
     }
   }, [isSignedIn]);

@@ -1,4 +1,5 @@
 import axios from "axios";
+export const TOKEN_EXIST = "TOKEN_EXIST";
 export const FETCH_START = "FETCH_START";
 export const LOGIN_USER = "LOGIN_USER";
 export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
@@ -7,6 +8,10 @@ export const FETCH_USER_SUCCESS = "FETCH_USER_SUCCESS";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const CREATE_PROJECT_SUCCESS = "CREATE_PROJECT_SUCCESS";
+
+export const saveToken = state => dispatch => {
+  dispatch({ type: "TOKEN_EXIST", payload: state });
+};
 
 export const fetchUser = endpoint => dispatch => {
   dispatch({ type: FETCH_START });
