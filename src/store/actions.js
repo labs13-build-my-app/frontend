@@ -2,6 +2,7 @@ import axios from "axios";
 export const LOADING_COMPLETE = "LOADING_COMPLETE";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const FETCH_START = "FETCH_START";
+export const USER_SIGNUP = "USER_SIGNUP";
 export const LOGIN_USER = "LOGIN_USER";
 export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const FETCH_ROLE_SUCCESS = "FETCH_ROLE_SUCCESS";
@@ -70,10 +71,17 @@ export const fetchUser = token => dispatch => {
   })
     .then(res => {
       console.log(res);
-      return dispatch({
-        type: FETCH_USER_SUCCESS,
-        payload: res.data
-      });
+      if (!res.data.sub) {
+        dispatch({
+          type: USER_SIGNUP,
+          payload: { newUser: true }
+        });
+      } else {
+        dispatch({
+          type: FETCH_USER_SUCCESS,
+          payload: res.data
+        });
+      }
     })
     .catch(err => {
       dispatch({ type: FETCH_USER_FAILURE });
@@ -95,11 +103,12 @@ export const signup = user => dispatch => {
     data: user
   })
     .then(res => {
+      console.log(res);
+      console.log(user);
       dispatch({
-        type: FETCH_ROLE_SUCCESS,
+        type: FETCH_USER_SUCCESS,
         payload: res.data
       });
-      // fetchUser()
     })
     .catch(err => console.log(err));
 };

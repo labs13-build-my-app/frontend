@@ -55,8 +55,6 @@ const Signup = ({ token, dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
-    // dispatch({ type: "USER_SIGN_UP_SUCCESS" });
-    dispatch({ type: "FETCH_ROLE_SUCCESS", payload: role });
     signup({
       role,
       firstName,
@@ -68,7 +66,7 @@ const Signup = ({ token, dispatch, history }) => {
       gitHub,
       twitter
     })(dispatch);
-    history.push("/dashbaord");
+    history.push("/dashboard");
   };
   if (!localStorage.getItem("token")) {
     return <div>loading...</div>;

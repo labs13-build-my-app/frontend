@@ -70,7 +70,7 @@ const App = ({ history, match }) => {
     const handleLoadingProcess = () => {
       if (!role) {
         // step 6 send token to server retrive user info and role and set to state
-        fetchUser(localStorage.getItem("token"));
+        fetchUser(localStorage.getItem("token"))(dispatch);
         // step 7 (b) if ID check user exist on database
         // (b) is login process
         // Step 8 (b) if user exist on database send client role and basic user info
@@ -87,7 +87,7 @@ const App = ({ history, match }) => {
         console.log("new user");
         history.push("/signup");
       } else if (!role) {
-        history.push("/login");
+        // history.push("/login");
       }
     };
 

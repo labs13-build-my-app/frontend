@@ -20,7 +20,7 @@ const NavContainer = ({ isSignedIn, token }) => {
         { route: "/projects", label: "Projects" },
         { route: "/profile/developer", label: "Developer" },
         {
-          route: "/login",
+          route: token ? "/signup" : "/login",
           label: "Login",
           callback: !token ? () => auth.login() : null
         },

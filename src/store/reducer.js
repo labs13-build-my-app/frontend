@@ -4,6 +4,7 @@ import {
   FETCH_START,
   FETCH_USER_FAILURE,
   RECORD_URL_LOCATION,
+  USER_SIGNUP,
   LOGIN_USER,
   FETCH_ROLE_SUCCESS,
   FETCH_USER_SUCCESS,
@@ -27,7 +28,7 @@ const reducer = (state, action) => {
     case FETCH_USER_FAILURE:
       return {
         ...state,
-        newUser: action.payload.newUser
+        newUser: true
       };
     case RECORD_URL_LOCATION:
       return {
@@ -38,6 +39,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         fetch: true
+      };
+    case USER_SIGNUP:
+      return {
+        ...state,
+        newUser: true
       };
     case LOGIN_USER:
       return {
