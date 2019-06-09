@@ -25,17 +25,9 @@ import "./App.css";
 // };
 
 const App = ({ history, match }) => {
+  // step 1 set initial state
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
-  const {
-    role,
-    user,
-    login,
-    token,
-    isSignedIn,
-    newUser,
-    location,
-    isLoading
-  } = state;
+  const { role, user, token, isSignedIn, newUser, location, isLoading } = state;
   console.log("STATE", state);
   // step one app renders with loading
   // step two after first render location updates with current location of url
@@ -44,7 +36,9 @@ const App = ({ history, match }) => {
   // if token check for user on database
   // if user on database return role
   const { pathname } = history.location;
-  // saves current url location in state after every refresh after first render
+
+  // step 3 set location from history.location.pathname  -- ex. location: “/dashboard”
+  // on second render
   useEffect(() => {
     if (
       pathname !== location &&
@@ -57,26 +51,27 @@ const App = ({ history, match }) => {
       locationRestore(pathname)(dispatch);
     }
   }, [token, location, pathname]);
-  // if token in local storage, token on state will update after first render
+
+  // step 4 token is set to false or true if in localstorage -- ex. token: false
+  // on second render
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
+      // step 5 (b) if token send token to server  -- token: true
+      // will render a 3rd time after this
       saveToken(true)(dispatch);
     } else if (token === null) {
+      // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
+      // will render a 3rd time after this
       saveToken(false)(dispatch);
     }
   }, [token]);
+
   useEffect(() => {
-    // this was originaly part of the login process.
-    // might not be working as intended anymore.
-    // but this might be useful in some compacity.
-    // reviewing what it does.
-    const handleLoadingAccount = () => {
+    const handleLoadingProcess = () => {
       if (isSignedIn) {
-        console.log("should pass to path", location);
-        // probably better to pass in isSignedin to test condition
         history.push(location);
-      } else if (role) {
-        history.push("/dashboard");
+        // } else if (role) {
+        //   history.push("/dashboard");
       } else if (newUser) {
         console.log("new user");
         history.push("/signup");
@@ -84,22 +79,37 @@ const App = ({ history, match }) => {
         history.push("/login");
       }
     };
+
     if (token && isLoading) {
-      handleLoadingAccount();
+      // step 5 (b) --> continue process request to server
+      handleLoadingProcess();
+    } else if (!token && !isLoading) {
+      // Step 5 (a) -b route to homepage  --> step 5 (a) completed
+      history.push("/home");
     }
   }, [token, isLoading, location, role, newUser, isSignedIn, history]);
 
+  // step 2 first render
   if (token === null) return <h1>Loading...</h1>;
 
   return (
     <div className="App">
-      <NavContainer isSignedIn={isSignedIn} token={token} />
-
-      <Route exact path={"/"} render={() => <Redirect to={"/home"} />} />
-
-      <Route path={"/home"} render={props => <Home {...props} />} />
-
       <Route
+        path={"/"}
+        render={props => (
+          <Home
+            {...props}
+            isSignedIn={isSignedIn}
+            token={token}
+            role={role}
+            dispatch={dispatch}
+          />
+        )}
+      />
+
+      {/* <Route path={"/home"} render={props => <Home {...props} />} /> */}
+
+      {/* <Route
         path="/callback"
         render={props => (
           <Callback {...props} dispatch={dispatch} role={role} token={token} />
@@ -132,8 +142,7 @@ const App = ({ history, match }) => {
             />
           )
         }
-      />
-      <Route path={"/get-users-test"} componet={User} />
+      /> */}
 
       <Route
         path={"/dashboard"}
@@ -163,6 +172,8 @@ const App = ({ history, match }) => {
         path={"/projects"}
         render={props => <Projects {...props} dispatch={dispatch} />}
       />
+
+      <Route path={"/get-users-test"} componet={User} />
     </div>
   );
 };

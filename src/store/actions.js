@@ -10,8 +10,14 @@ export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const CREATE_PROJECT_SUCCESS = "CREATE_PROJECT_SUCCESS";
 
-export const saveToken = state => dispatch => {
-  dispatch({ type: "TOKEN_EXIST", payload: state });
+export const saveToken = token => dispatch => {
+  if (token)
+    dispatch({ type: TOKEN_EXIST, payload: { token: true, isLoading: true } });
+  else
+    dispatch({
+      type: TOKEN_EXIST,
+      payload: { token: false, isLoading: false }
+    });
 };
 
 export const fetchUser = endpoint => dispatch => {

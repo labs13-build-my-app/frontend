@@ -20,7 +20,8 @@ const reducer = (state, action) => {
     case TOKEN_EXIST:
       return {
         ...state,
-        token: action.payload
+        token: action.payload.token,
+        isLoading: action.payload.isLoading
       };
     case FETCH_USER_FAILURE:
       return {
