@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { signup } from "../store/actions";
 import Auth from "./Auth/Auth";
-import clsx from "clsx"; // whats this??? we need this???
+// import clsx from "clsx"; // whats this??? we need this???
 import { makeStyles } from "@material-ui/core/styles";
-import MenuItem from "@material-ui/core/MenuItem";
+// import MenuItem from "@material-ui/core/MenuItem";
 import TextField from "@material-ui/core/TextField";
 
 const auth = new Auth();
@@ -26,12 +26,12 @@ const useStyles = makeStyles(theme => ({
 
 const Signup = ({ token, dispatch, history }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: "Cat in the Hat",
-    age: "",
-    multiline: "Controlled",
-    currency: "EUR"
-  });
+  // const [values, setValues] = React.useState({
+  //   name: "Cat in the Hat",
+  //   age: "",
+  //   multiline: "Controlled",
+  //   currency: "EUR"
+  // });
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");

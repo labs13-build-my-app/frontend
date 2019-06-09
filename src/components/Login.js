@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { fetchRole, fetchUser } from "../store/actions";
+// import { fetchRole, fetchUser } from "../store/actions";
 
 const Login = ({ role, token, dispatch, history }) => {
   // useEffect(() => {

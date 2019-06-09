@@ -1,13 +1,13 @@
 import {
   LOADING_COMPLETE,
+  FETCH_DEVELOPER_SUCCESS,
+  FETCH_PROJECT_OWNER_SUCCESS,
   TOKEN_EXIST,
   FETCH_START,
   FETCH_USER_FAILURE,
   RECORD_URL_LOCATION,
   USER_SIGNUP,
-  LOGIN_USER,
-  FETCH_ROLE_SUCCESS,
-  FETCH_USER_SUCCESS,
+  // LOGIN_USER,
   FETCH_DASHBOARD_SUCCESS,
   CREATE_PROJECT_SUCCESS
 } from "./actions";
@@ -45,17 +45,12 @@ const reducer = (state, action) => {
         ...state,
         newUser: true
       };
-    case LOGIN_USER:
-      return {
-        ...state,
-        token: localStorage.getItem("token")
-      };
-    case FETCH_ROLE_SUCCESS:
-      return {
-        ...state,
-        role: action.payload.role
-      };
-    case FETCH_USER_SUCCESS:
+    // case LOGIN_USER:
+    //   return {
+    //     ...state,
+    //     token: action.payload.token
+    //   };
+    case FETCH_DEVELOPER_SUCCESS:
       return {
         ...state,
         fetch: false,
@@ -73,10 +68,32 @@ const reducer = (state, action) => {
             github: action.payload.gitHub,
             twitter: action.payload.twitter
           },
-          roleSpecificUserDetails: {
+          developerDetails: {
             skills: action.payload.skills,
             devType: action.payload.devType
           }
+        }
+      };
+    case FETCH_PROJECT_OWNER_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+
+        isSignedIn: true,
+        isLoading: false,
+        role: action.payload.role,
+        user: {
+          ...state.user,
+          id: action.payload.id,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          email: action.payload.email,
+          userSocialMedia: {
+            linkedIn: action.payload.linkedIn,
+            github: action.payload.gitHub,
+            twitter: action.payload.twitter
+          },
+          projectOwnerDetails: {}
         }
       };
     case FETCH_DASHBOARD_SUCCESS:
@@ -97,11 +114,6 @@ const reducer = (state, action) => {
           ...state.user,
           project: [...state.user.project, action.payload]
         }
-      };
-    case "USER_SIGN_UP_SUCCESS":
-      return {
-        ...state,
-        signup: false
       };
     default:
       return state;

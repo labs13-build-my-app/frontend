@@ -9,7 +9,8 @@ const initialState = {
   location: "/home",
   user: {
     id: null,
-    name: "",
+    firstName: "",
+    lastName: "",
     profilePictureURL: "",
     email: "",
     sub: null,
@@ -17,15 +18,14 @@ const initialState = {
       linkedIn: "",
       twitter: "",
       github: ""
-    },
-    roleSpecificUserDetails: {},
-    project: [{}],
-    plan: [{}],
-    messages: {
-      subscribed: [{}]
     }
-  },
-  search: {}
+    // project: [{}],
+    // plan: [{}],
+    // messages: {
+    //   subscribed: [{}]
+    // }
+  }
+  // search: {}
 };
 
 export default initialState;
