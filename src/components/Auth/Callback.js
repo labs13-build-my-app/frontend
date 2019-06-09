@@ -21,8 +21,7 @@ const Callback = ({ history, dispatch, token, isSignedIn }) => {
           saveToken(localStorage.getItem("token"))(dispatch);
 
           // send token  to server and server decodes and then check for user
-          // response is role if role user exist, if no role user no exist
-          console.log("FETCHING ROLE CALLBACK");
+          // response is role if role user exist, if no role user no exis
           fetchUser(authResult.idToken)(dispatch);
           // history.push("/login");
         } else if (err) {
