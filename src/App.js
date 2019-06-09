@@ -11,18 +11,12 @@ import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<
 
 import "./App.css";
 
-const App = ({ history, match }) => {
+const App = ({ history }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.reducer, store.initialState);
   const { role, user, token, isSignedIn, newUser, location, isLoading } = state;
-  console.log("STATE", state);
-  // step one app renders with loading
-  // step two after first render location updates with current location of url
-  // and token updates true or false if token
-  // if no token do nothing
-  // if token check for user on database
-  // if user on database return role
   const { pathname } = history.location;
+  console.log("STATE", state);
 
   // step 3 set location from history.location.pathname  -- ex. location: “/dashboard”
   // on second render
@@ -57,20 +51,15 @@ const App = ({ history, match }) => {
     const handleLoadingProcess = () => {
       if (!role) {
         // step 6 send token to server retrive user info and role and set to state
-        fetchUser(localStorage.getItem("token"))(dispatch);
         // step 7 (b) if ID check user exist on database
         // (b) is login process
         // Step 8 (b) if user exist on database send client role and basic user info
-        // Step 9 (b) Step 15 (a)  client sets role and basic user info to state -- ex. role:”Project Owner” user: {basic info}
-        // Step 10 (b) Step 16 (a) client sets state isSignedIn to true and isLoading to false -- isSignedIn: true, isLoading: false
+        fetchUser(localStorage.getItem("token"))(dispatch);
+      } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
-      } else if (isSignedIn) {
         history.push(location);
-        // } else if (role) {
-        //   history.push("/dashboard");
       } else if (newUser) {
-        console.log("new user");
         history.push("/signup");
       }
     };

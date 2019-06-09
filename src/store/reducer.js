@@ -2,12 +2,12 @@ import {
   LOADING_COMPLETE,
   FETCH_DEVELOPER_SUCCESS,
   FETCH_PROJECT_OWNER_SUCCESS,
+  FETCH_ADMIN_SUCCESS,
   TOKEN_EXIST,
   FETCH_START,
   FETCH_USER_FAILURE,
   RECORD_URL_LOCATION,
   USER_SIGNUP,
-  // LOGIN_USER,
   FETCH_DASHBOARD_SUCCESS,
   CREATE_PROJECT_SUCCESS
 } from "./actions";
@@ -45,11 +45,6 @@ const reducer = (state, action) => {
         ...state,
         newUser: true
       };
-    // case LOGIN_USER:
-    //   return {
-    //     ...state,
-    //     token: action.payload.token
-    //   };
     case FETCH_DEVELOPER_SUCCESS:
       return {
         ...state,
@@ -94,6 +89,22 @@ const reducer = (state, action) => {
             twitter: action.payload.twitter
           },
           projectOwnerDetails: {}
+        }
+      };
+    case FETCH_ADMIN_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+        isSignedIn: true,
+        isLoading: false,
+        role: action.payload.role,
+        user: {
+          ...state.user,
+          id: action.payload.id,
+          firstName: action.payload.firstName,
+          lastName: action.payload.lastName,
+          email: action.payload.email,
+          adminDetails: {}
         }
       };
     case FETCH_DASHBOARD_SUCCESS:

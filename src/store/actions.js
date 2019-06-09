@@ -2,15 +2,19 @@ import axios from "axios";
 export const LOADING_COMPLETE = "LOADING_COMPLETE";
 export const FETCH_DEVELOPER_SUCCESS = "FETCH_DEVELOPER_SUCCESS";
 export const FETCH_PROJECT_OWNER_SUCCESS = "FETCH_PROJECT_OWNER_SUCCESS";
+export const FETCH_ADMIN_SUCCESS = "FETCH_ADMIN_SUCCESS";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const FETCH_START = "FETCH_START";
 export const USER_SIGNUP = "USER_SIGNUP";
-// // export const LOGIN_USER = "LOGIN_USER";
 export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
 export const FETCH_DASHBOARD_SUCCESS = "FETCH_DASHBOARD_SUCCESS";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const CREATE_PROJECT_SUCCESS = "CREATE_PROJECT_SUCCESS";
+
+const heroku = "https://build-my-app.herokuapp.com";
+const local = "http://localhost:8000";
+const connection = true ? local : heroku;
 
 export const locationRestore = location => dispatch => {
   dispatch({
@@ -50,10 +54,11 @@ export const fetchUser = token => dispatch => {
       "content-type": "application/json",
       Authorization: token
     },
-    url: "http://localhost:8000/api/account/onboarding/login"
+    url: `${connection}/api/account/onboarding/login`
   })
     .then(res => {
-      console.log(res);
+      // Step 9 (b) Step 15 (a)  client sets role and basic user info to state -- ex. role:”Project Owner” user: {basic info}
+      // Step 10 (b) Step 16 (a) client sets state isSignedIn to true and isLoading to false -- isSignedIn: true, isLoading: false
       if (!res.data.sub) {
         dispatch({
           type: USER_SIGNUP,
@@ -68,6 +73,11 @@ export const fetchUser = token => dispatch => {
         } else if (res.data.role === "Project Owner") {
           dispatch({
             type: FETCH_PROJECT_OWNER_SUCCESS,
+            payload: res.data
+          });
+        } else if (res.data.role === "Admin") {
+          dispatch({
+            type: FETCH_ADMIN_SUCCESS,
             payload: res.data
           });
         }
@@ -90,7 +100,7 @@ export const signup = user => dispatch => {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     },
-    url: "http://localhost:8000/api/account/onboarding/signup",
+    url: `${connection}/api/account/onboarding/signup`,
     data: user
   })
     .then(res => {
@@ -121,7 +131,7 @@ export const fetchDashboard = endpoint => dispatch => {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     },
-    url: endpoint
+    url: `${connection}${endpoint}`
   })
     .then(res => {
       console.log(res);
@@ -144,7 +154,7 @@ export const createProject = project => dispatch => {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     },
-    url: "http://localhost:8000/api/projects/create-project-project-owner",
+    url: `${connection}/api/projects/create-project-project-owner`,
     data: project
   })
     .then(res => {
