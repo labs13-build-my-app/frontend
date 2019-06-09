@@ -6,10 +6,13 @@ import Login from "./Login";
 import NavContainer from "./NavContainer";
 // import Auth from "./Auth/Auth";
 
-const home = ({ isSignedIn, token, role, dispatch }) => {
+const home = ({ isSignedIn, isLoading, token, role, dispatch }) => {
   // useEffect(() => {});
 
   if (token === null) return <h1>Loading...2.0</h1>;
+  if (token && isLoading) {
+    return <Login />;
+  }
 
   console.log(token);
 

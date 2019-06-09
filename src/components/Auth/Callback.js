@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import auth0 from "auth0-js";
+import { fetchUser } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
@@ -17,12 +18,13 @@ const Callback = ({ history, dispatch, token, isSignedIn }) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           localStorage.setItem("token", authResult.idToken);
           localStorage.setItem("isLoggedIn", "true");
+          dispatch({ type: "TOKEN_EXIST", payload: { token: true } });
 
           // send token  to server and server decodes and then check for user
           // response is role if role user exist, if no role user no exist
           console.log("FETCHING ROLE CALLBACK");
-          // fetchRole(authResult.idToken)(dispatch);
-          history.push("/login");
+          fetchUser(authResult.idToken)(dispatch);
+          // history.push("/login");
         } else if (err) {
           history.replace("/home");
           alert(`Error: ${err.error}. Check the console for further details.`);
@@ -32,8 +34,7 @@ const Callback = ({ history, dispatch, token, isSignedIn }) => {
     if (isSignedIn) {
       history.push(`/dashboard`);
     } else if (token) {
-      history.push("/login");
-      // fetchRole(token)(dispatch);
+      fetchUser(localStorage.getItem("token"))(dispatch);
     } else {
       getToken();
     }

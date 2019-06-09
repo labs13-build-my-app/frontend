@@ -2,19 +2,18 @@ import React, { useEffect } from "react";
 import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
-import { fetchUser } from "../../store/actions";
+import { fetchDashboard } from "../../store/actions";
 
-const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
+const Dashboard = ({ dispatch, user, role, isSignedIn, history }) => {
   console.log(user);
   useEffect(() => {
-    const retrieveUser = () => {
+    const fetchUserDashboardData = () => {
       const heroku = "https://build-my-app.herokuapp.com";
       const local = "http://localhost:8000";
       const connection = true ? local : heroku;
       let userAccountEndpoint = "";
 
       if (role === "Admin") {
-        console.log("hererere");
         userAccountEndpoint = `${connection}/api/account/admin/dashboard-admin`;
       } else if (role === "Project Owner") {
         userAccountEndpoint = `${connection}/api/account/project-owner/dashboard-project-owner`;
@@ -25,13 +24,13 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
       }
       if (role === "Admin" || role === "Project Owner" || role === "Developer")
         console.log("HERE IN DASHBOARD ADMIN");
-      fetchUser(userAccountEndpoint)(dispatch);
+      fetchDashboard(userAccountEndpoint)(dispatch);
     };
-    if (role && !isSignedIn) {
-      retrieveUser();
+    if (isSignedIn) {
+      fetchUserDashboardData();
       history.push("/dashboard");
     }
-  }, [history, dispatch, role, isSignedIn, token]);
+  }, [history, dispatch, role, isSignedIn]);
 
   const displayBasedOnRole = () => {
     if (role === "Admin" && isSignedIn) {
@@ -41,7 +40,6 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history, token }) => {
     } else if (role === "Developer" && isSignedIn) {
       return <Developer role={role} user={user} />;
     } else {
-      console.log("yolo", role, isSignedIn);
       return <h1>Loading</h1>;
     }
   };

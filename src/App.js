@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { Route, withRouter, Redirect } from "react-router";
-import { saveToken, locationRestore } from "./store/actions";
+import { saveToken, locationRestore, fetchUser } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import Signup from "./components/Signup";
@@ -68,6 +68,17 @@ const App = ({ history, match }) => {
 
   useEffect(() => {
     const handleLoadingProcess = () => {
+      if (!role) {
+        // step 6 send token to server retrive user info and role and set to state
+        fetchUser(localStorage.getItem("token"));
+        // step 7 (b) if ID check user exist on database
+        // (b) is login process
+        // Step 8 (b) if user exist on database send client role and basic user info
+        // Step 9 (b) Step 15 (a)  client sets role and basic user info to state -- ex. role:”Project Owner” user: {basic info}
+        // Step 10 (b) Step 16 (a) client sets state isSignedIn to true and isLoading to false -- isSignedIn: true, isLoading: false
+        // Step 11 (b) client routes user to location from state
+        // Step 12 (b) data is loaded for specific url view
+      }
       if (isSignedIn) {
         history.push(location);
         // } else if (role) {

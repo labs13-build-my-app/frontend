@@ -7,6 +7,7 @@ import {
   LOGIN_USER,
   FETCH_ROLE_SUCCESS,
   FETCH_USER_SUCCESS,
+  FETCH_DASHBOARD_SUCCESS,
   CREATE_PROJECT_SUCCESS
 } from "./actions";
 
@@ -20,8 +21,8 @@ const reducer = (state, action) => {
     case TOKEN_EXIST:
       return {
         ...state,
-        token: action.payload.token,
-        isLoading: action.payload.isLoading
+        token: action.payload.token
+        // isLoading: false
       };
     case FETCH_USER_FAILURE:
       return {
@@ -53,11 +54,33 @@ const reducer = (state, action) => {
         ...state,
         fetch: false,
         isSignedIn: true,
+        isLoading: false,
+        role: action.payload.role,
         user: {
           ...state.user,
           id: action.payload.id,
           firstName: action.payload.firstName,
-          lastName: action.payload.lastName
+          lastName: action.payload.lastName,
+          email: action.payload.email,
+          userSocialMedia: {
+            linkedIn: action.payload.linkedIn,
+            github: action.payload.gitHub,
+            twitter: action.payload.twitter
+          },
+          roleSpecificUserDetails: {
+            skills: action.payload.skills,
+            devType: action.payload.devType
+          }
+        }
+      };
+    case FETCH_DASHBOARD_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+        error: false,
+        user: {
+          ...state.user,
+          dashboardData: action.payload
         }
       };
     case CREATE_PROJECT_SUCCESS:

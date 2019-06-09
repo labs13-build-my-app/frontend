@@ -2,10 +2,10 @@ const initialState = {
   isLoading: true,
   fetch: false,
   error: false,
-  role: "",
   token: null,
   isSignedIn: false,
   newUser: false,
+  role: "",
   location: "/home",
   user: {
     id: null,
@@ -13,12 +13,12 @@ const initialState = {
     profilePictureURL: "",
     email: "",
     sub: null,
-    socialMedia: {
+    userSocialMedia: {
       linkedIn: "",
       twitter: "",
       github: ""
     },
-    roleType: {},
+    roleSpecificUserDetails: {},
     project: [{}],
     plan: [{}],
     messages: {
