@@ -10,15 +10,11 @@ import ProjectsContainer from "./components/projects/ProjectsContainer";
 import ProfileContainer from "./components/profiles/ProfileContainer";
 
 import Auth from "./components/Auth/Auth";
-<<<<<<< HEAD
-import CreateProjectForm from "./components/projects/CreateProjectForm";
-=======
 import Projects from "./components/projects/Projects";
 
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Project from "./components/projects/Project";
->>>>>>> master
 
 import "./App.css";
 // complete routing
