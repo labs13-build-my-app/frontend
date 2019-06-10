@@ -113,8 +113,21 @@ const App = ({ history }) => {
       />
 
       <Route
+        path={"/dashboard/settings"}
+        render={props =>
+          isSignedIn === false ? (
+            <Redirect to={"/home"} />
+          ) : (
+            <h1>settings page</h1>
+          )
+        }
+      />
+
+      <Route
         path={"/projects"}
-        render={props => <ProjectsContainer {...props} dispatch={dispatch} />}
+        render={props => (
+          <ProjectsContainer {...props} dispatch={dispatch} role={role} />
+        )}
       />
 
       <Route
@@ -128,12 +141,12 @@ const App = ({ history }) => {
       /> */}
 
       {
-        // I think this should render in dashboard view
+        // this will moved to projects view
       }
       <Route path={"/create-plan"} render={() => <CreatePlan />} />
 
       {
-        // I think this should render in dashboard view
+        // this will be moved to dashboard view for project owner
       }
       <Route
         path={"/create-project-form"}

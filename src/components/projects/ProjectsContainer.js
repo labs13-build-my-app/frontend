@@ -1,25 +1,27 @@
 import React, { useEffect, useReducer } from "react";
+import Projects from "./Projects";
+import ProjectView from "./ProjectView";
+// import Plan from "./Plans"
 import store from "../../store";
 import { Route } from "react-router";
 
-const ProjectsContainer = () => {
+const ProjectsContainer = ({ role }) => {
   const [projects, projectsDispatch] = useReducer(
-    store.usersReducer,
+    store.projectsReducer,
     store.initialState
   );
   return (
     <div>
       {/* public routes */}
+      <Route exact path={"/projects"} render={props => <Projects />} />
       <Route
-        exact
-        path={"/projects"}
-        render={() => <div>list of projects</div>}
+        path={"/projects/:project_id"}
+        render={props => <ProjectView {...props} role={role} />}
       />
-      <Route exact path={"/projects/:project_id"} render={() => <Project />} />
       <Route
         exact
-        path={"/projects/:project_id/:plan_id"}
-        render={() => <div>project owner page view</div>}
+        path={"/projects/view-plan/:project_id/:plan_id"}
+        render={props => <div>plan page view to project</div>}
       />
     </div>
   );

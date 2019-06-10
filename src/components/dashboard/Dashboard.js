@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Route, Redirect } from "react-router";
 import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
@@ -39,7 +40,7 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history }) => {
     }
   };
 
-  return displayBasedOnRole();
+  return <div>{displayBasedOnRole()}</div>;
 };
 
 export default Dashboard;
