@@ -280,7 +280,7 @@ export const profileReducer = (state, action) => {
       };
     case FETCH_PORJECT_OWNER_VIEW_SUCCESS:
       return {
-        developerView: {
+        projectOwnerView: {
           id: action.payload.id,
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
@@ -294,10 +294,46 @@ export const profileReducer = (state, action) => {
       };
     default: {
       return {
-        developers: [{}],
-        developerView: {},
-        projectOwners: [{}],
-        projectOwnerView: {}
+        developers: [
+          {
+            id: null,
+            firstName: "",
+            lastName: "",
+            email: "",
+            profileImageURL: "",
+            skills: "",
+            role: "",
+            devType: "",
+            created_at: null,
+            updated_at: null
+          }
+        ],
+        developerView: {
+          id: null,
+          firstName: "",
+          lastName: "",
+          profileImageURL: "",
+          email: "",
+          skills: "",
+          devType: "",
+          linkedIn: "",
+          github: "",
+          twitter: "",
+          role: "",
+          feedback: [] // this comes from projects completed, might need to be adjusted
+        },
+        // projectOwners: [{}],
+        projectOwnerView: {
+          id: null,
+          firstName: "",
+          lastName: "",
+          profileImageURL: "",
+          email: "",
+          linkedIn: "",
+          github: "",
+          twitter: "",
+          role: ""
+        }
       };
     }
   }
