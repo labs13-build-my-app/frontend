@@ -5,7 +5,8 @@ import { saveToken, locationRestore, fetchUser } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import User from "./components/User";
-import Projects from "./components/projects/Projects";
+import ProjectsContainer from "./components/projects/ProjectsContainer";
+import ProfileContainer from "./components/profiles/ProfileContainer";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
 
@@ -121,10 +122,10 @@ const App = ({ history }) => {
         render={props => <ProfileContainer {...props} dispatch={dispatch} />}
       />
 
-      <Route
+      {/* <Route
         path={"/admin"}
         render={props => <Admin {...props} dispatch={dispatch} />}
-      />
+      /> */}
 
       {
         // I think this should render in dashboard view
