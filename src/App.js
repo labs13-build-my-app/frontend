@@ -5,10 +5,16 @@ import { saveToken, locationRestore, fetchUser } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import User from "./components/User";
+
 import ProjectsContainer from "./components/projects/ProjectsContainer";
 import ProfileContainer from "./components/profiles/ProfileContainer";
+
+import Auth from "./components/Auth/Auth";
+import Projects from "./components/projects/Projects";
+
 import CreatePlan from "./components/CreatePlan";
-import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
+import CreateProjectForm from "./components/projects/CreateProjectForm";
+import Project from "./components/projects/Project";
 
 import "./App.css";
 // complete routing
@@ -158,6 +164,16 @@ const App = ({ history }) => {
         // only for testing
       }
       <Route path={"/get-users-test"} componet={User} />
+
+      <Route
+        exact
+        path={"/projects"}
+        render={props => <Projects dispatch={dispatch} {...props} />}
+      />
+      <Route
+        path={"/projects/project/:id"}
+        render={props => <Project dispatch={dispatch} {...props} />}
+      />
     </div>
   );
 };
