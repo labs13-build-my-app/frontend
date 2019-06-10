@@ -1,31 +1,62 @@
-import React, { useEffect } from "react";
-import Auth from "./Auth/Auth";
+import React from "react";
+import { Route, Redirect } from "react-router";
+import Callback from "./Auth/Callback";
+import Signup from "./Signup";
+// import Login from "./Login";
+import NavContainer from "./NavContainer";
+// import Auth from "./Auth/Auth";
 
-const home = ({ history }) => {
-  //   useEffect(() => {});
+const home = ({ isSignedIn, isLoading, token, role, dispatch }) => {
+  // useEffect(() => {});
 
-  //   <Route exact path="/callback" component={Callback} />
-  //   <Route path="/authenticated" component={Authenticated} />
+  if (token === null) return <h1>Loading...2.0</h1>;
+  // if (token && isLoading) {
+  //   return <Login />;
+  // }
 
-  const signup = async e => {
-    // e.preventDefault();
-    // const auth = new Auth();
-    // const route = await auth.login(history, "loading");
-    // route();
-
-    history.push("/signup");
-  };
-
-  const login = async e => {
-    e.preventDefault();
-    history.push("/login");
-  };
+  console.log(token);
 
   return (
     <div>
-      <button onClick={e => signup(e)}>signup Here</button>
-      <button onClick={e => login(e)}>Login Here</button>
-      {/* <button onClick={() => auth.logout()}>Log Out Here</button> */}
+      <NavContainer isSignedIn={isSignedIn} token={token} />
+
+      <Route
+        path="/callback"
+        render={props =>
+          token ? (
+            <Redirect to={"/dashboard"} />
+          ) : (
+            <Callback
+              {...props}
+              dispatch={dispatch}
+              role={role}
+              token={token}
+            />
+          )
+        }
+      />
+
+      <Route
+        path={"/signup"}
+        render={props =>
+          isSignedIn ? (
+            <Redirect to="/dashboard" />
+          ) : (
+            <Signup {...props} dispatch={dispatch} token={token} />
+          )
+        }
+      />
+
+      {/* <Route
+        path={"/login"}
+        render={props =>
+          role ? (
+            <Redirect to={"/dashboard"} />
+          ) : (
+            <Login {...props} dispatch={dispatch} role={role} token={token} />
+          )
+        }
+      /> */}
     </div>
   );
 };

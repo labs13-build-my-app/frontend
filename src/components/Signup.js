@@ -1,38 +1,37 @@
 import React, { useState, useEffect } from "react";
-import Auth from "./Auth/Auth";
-import axios from "axios";
-import { sign } from "crypto";
 import { signup } from "../store/actions";
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
-import TextField from '@material-ui/core/TextField';
+import Auth from "./Auth/Auth";
+// import clsx from "clsx"; // whats this??? we need this???
+import { makeStyles } from "@material-ui/core/styles";
+// import MenuItem from "@material-ui/core/MenuItem";
+import TextField from "@material-ui/core/TextField";
 
+const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   dense: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   menu: {
-    width: 200,
-  },
+    width: 200
+  }
 }));
 
-const Signup = ({ dispatch, history }) => {
+const Signup = ({ token, dispatch, history }) => {
   const classes = useStyles();
-  const [values, setValues] = React.useState({
-    name: 'Cat in the Hat',
-    age: '',
-    multiline: 'Controlled',
-    currency: 'EUR',
-  });
+  // const [values, setValues] = React.useState({
+  //   name: "Cat in the Hat",
+  //   age: "",
+  //   multiline: "Controlled",
+  //   currency: "EUR"
+  // });
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -42,12 +41,13 @@ const Signup = ({ dispatch, history }) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
+
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      const auth = new Auth();
+    if (!token) {
+      console.log("in here", token);
       auth.login();
     }
-  }, []);
+  }, [token, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;
@@ -55,8 +55,6 @@ const Signup = ({ dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
-    // dispatch({ type: "USER_SIGN_UP_SUCCESS" });
-    dispatch({ type: "FETCH_ROLE_SUCCESS", payload: role });
     signup({
       role,
       firstName,
@@ -68,7 +66,7 @@ const Signup = ({ dispatch, history }) => {
       gitHub,
       twitter
     })(dispatch);
-    history.push("/dashbaord");
+    history.push("/dashboard");
   };
   if (!localStorage.getItem("token")) {
     return <div>loading...</div>;
@@ -100,7 +98,7 @@ const Signup = ({ dispatch, history }) => {
           type="text"
           margin="normal"
           variant="outlined"
-        />        
+        />
         <div>lastName</div>
         <input
           onChange={event => changeHandler(event, setLastName)}
