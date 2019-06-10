@@ -1,30 +1,31 @@
 const initialState = {
+  isLoading: true,
   fetch: false,
   error: false,
-  role: "Project Owner",
   token: null,
   isSignedIn: false,
-  signup: false,
+  newUser: false,
+  role: "",
   location: "/home",
   user: {
     id: null,
-    name: "",
+    firstName: "",
+    lastName: "",
     profilePictureURL: "",
     email: "",
     sub: null,
-    socialMedia: {
+    userSocialMedia: {
       linkedIn: "",
       twitter: "",
       github: ""
-    },
-    roleType: {},
-    project: [{}],
-    plan: [{}],
-    messages: {
-      subscribed: [{}]
     }
-  },
-  search: {}
+    // project: [{}],
+    // plan: [{}],
+    // messages: {
+    //   subscribed: [{}]
+    // }
+  }
+  // search: {}
 };
 
 export default initialState;
