@@ -10,7 +10,7 @@ const ProjectView = ({ role }) => {
 
       {role ? (
         <Route
-          path={"/projects/:project_id/create-plan"}
+          path={"/projects/:project_id/create-plan-modal"}
           render={props => {
             const path = props.match.params.project_id;
             return role !== "Developer" ? (

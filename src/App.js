@@ -81,6 +81,7 @@ const App = ({ history }) => {
 
   return (
     <div className="App">
+      {/* should move routes into a container component to reduce cluter in app component */}
       <Route
         path={"/"}
         render={props => (
