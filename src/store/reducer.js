@@ -1,15 +1,34 @@
 import {
-  LOADING_COMPLETE,
-  FETCH_DEVELOPER_SUCCESS,
-  FETCH_PROJECT_OWNER_SUCCESS,
-  FETCH_ADMIN_SUCCESS,
-  TOKEN_EXIST,
   FETCH_START,
+  FETCH_FAILURE,
   FETCH_USER_FAILURE,
-  RECORD_URL_LOCATION,
+  FETCH_PORJECT_OWNER_VIEW_SUCCESS,
+  FETCH_DEVELOPER_VIEW_SUCCESS,
+  FETCH_PLAN_VIEW_SUCCESS,
+  FETCH_PROJECT_VIEW_SUCCESS,
+  FETCH_DEVELOPERS_SUCCESS,
+  FETCH_PROJECTS_SUCCESS,
+  FETCH_PROJECT_OWNER_DASHBOARD_SUCCESS,
+  FETCH_DEVELOPER_DASHBOARD_SUCCESS,
+  FETCH_ADMIN_DASHBOARD_SUCCESS,
+  FETCH_ADMIN_SUCCESS,
+  FETCH_PROJECT_OWNER_SUCCESS,
+  FETCH_DEVELOPER_SUCCESS,
+  // FETCH_PROJECT_OWNERS_SUCCES,
+  // FETCH_PLANS_SUCCES,
+  CREATE_PROJECT_SUCCESS,
+  CREATE_PLAN_SUCCESS,
+  UPDATE_PROJECT_SUCCESS,
+  UPDATE_PLAN_SUCCESS,
+  DELETE_PLAN_SUCCESS,
+  DELETE_PROJECT_SUCCESS,
+  DELETE_PROJECT_OWNER_SUCCESS,
+  DELETE_DEVELOPER_SUCCESS,
+  DELETE_ADMIN_SUCCESS,
   USER_SIGNUP,
-  FETCH_DASHBOARD_SUCCESS,
-  CREATE_PROJECT_SUCCESS
+  RECORD_URL_LOCATION,
+  TOKEN_EXIST,
+  LOADING_COMPLETE
 } from "./actions";
 
 export const usersReducer = (state, action) => {
@@ -107,7 +126,27 @@ export const usersReducer = (state, action) => {
           adminDetails: {}
         }
       };
-    case FETCH_DASHBOARD_SUCCESS:
+    case FETCH_ADMIN_DASHBOARD_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+        error: false,
+        user: {
+          ...state.user,
+          dashboardData: action.payload
+        }
+      };
+    case FETCH_DEVELOPER_DASHBOARD_SUCCESS:
+      return {
+        ...state,
+        fetch: false,
+        error: false,
+        user: {
+          ...state.user,
+          dashboardData: action.payload
+        }
+      };
+    case FETCH_PROJECT_OWNER_DASHBOARD_SUCCESS:
       return {
         ...state,
         fetch: false,
