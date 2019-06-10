@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { Route } from "react-router";
 import Developers from "./DeveloperList";
 
-const ProfileContainer = () => {
+const ProfileContainer = ({ dispatch }) => {
   return (
     <div>
       {/* public routes */}
@@ -10,7 +10,7 @@ const ProfileContainer = () => {
       <Route
         exact
         path={"/profile/developers"}
-        render={props => <Developers />}
+        render={props => <Developers dispatch={dispatch} />}
       />
       <Route
         exact
