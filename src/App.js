@@ -7,7 +7,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import User from "./components/User";
 import Auth from "./components/Auth/Auth";
-import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
+import CreateProjectForm from "./components/projects/CreateProjectForm";
 
 import "./App.css";
 
