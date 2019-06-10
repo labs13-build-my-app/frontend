@@ -10,7 +10,7 @@ const NavContainer = ({ isSignedIn, token }) => {
       setNav([
         { route: "/dashboard", label: "Home" },
         { route: "/projects", label: "Projects" },
-        { route: "/profile/developer", label: "Developer" },
+        { route: "/profile/developer", label: "Developers" },
         { route: "/profile", label: "Profile" },
         { route: "/home", label: "Logout", callback: () => auth.logout() }
       ]);
@@ -18,7 +18,7 @@ const NavContainer = ({ isSignedIn, token }) => {
       setNav([
         { route: "/home", label: "Home" },
         { route: "/projects", label: "Projects" },
-        { route: "/profile/developer", label: "Developer" },
+        { route: "/profile/developer", label: "Developers" },
         {
           route: token ? "/signup" : "/login",
           label: "Login",
@@ -34,7 +34,7 @@ const NavContainer = ({ isSignedIn, token }) => {
   }, [isSignedIn, token]);
   return (
     <nav>
-      <div className={"logo"}>Logo</div>
+      <div className={"logo"}>Build My App</div>
       <ul>
         {nav.map(link => {
           return (

@@ -187,7 +187,7 @@ export const projectsReducer = (state, action) => {
 
       return {
         // needs to updated to include pagination in state
-        projects: [...projects, ...paginatedProjects]
+        projects: [...state.projects, ...paginatedProjects]
       };
     // case FETCH_PLANS_SUCCESS:
     //   // NOT PART OF MVP GOALS
@@ -292,7 +292,7 @@ export const profileReducer = (state, action) => {
       });
       // Implement pagination
       return {
-        developers: [...developers, paginatedDevelopers]
+        developers: [...state.developers, paginatedDevelopers]
       };
     // case FETCH_PROJECT_OWNERS_SUCCESS:
     //   // NOT PART OF MVP GOALS

@@ -10,10 +10,12 @@ import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm"; // <<<<<<<MB
 
 import "./App.css";
-
+// complete routing
+// must implement propTypes for testing
+// review state and actions
 const App = ({ history }) => {
   // step 1 set initial state
-  const [state, dispatch] = useReducer(store.reducer, store.initialState);
+  const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
   const { role, user, token, isSignedIn, newUser, location, isLoading } = state;
   const { pathname } = history.location;
   console.log("STATE", state);
@@ -109,18 +111,37 @@ const App = ({ history }) => {
         }
       />
 
+      <Route
+        path={"/projects"}
+        render={props => <ProjectsContainer {...props} dispatch={dispatch} />}
+      />
+
+      <Route
+        path={"/profile"}
+        render={props => <ProfileContainer {...props} dispatch={dispatch} />}
+      />
+
+      <Route
+        path={"/admin"}
+        render={props => <Admin {...props} dispatch={dispatch} />}
+      />
+
+      {
+        // I think this should render in dashboard view
+      }
       <Route path={"/create-plan"} render={() => <CreatePlan />} />
 
+      {
+        // I think this should render in dashboard view
+      }
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
       />
 
-      <Route
-        path={"/projects"}
-        render={props => <Projects {...props} dispatch={dispatch} />}
-      />
-
+      {
+        // only for testing
+      }
       <Route path={"/get-users-test"} componet={User} />
     </div>
   );
