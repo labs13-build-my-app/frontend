@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 
-const Developers = () => {
+const Developers = ({ history }) => {
   const useStyles = makeStyles(theme => ({
     card: {
       maxWidth: 400,
@@ -57,7 +57,11 @@ const Developers = () => {
                   <p>Developer Name: {dev.firstName}</p>
                   <p>Proficiency: {dev.devType}</p>
                   <p>Skills: {dev.skills}</p>
-                  <Button variant="outlined" className={classes.button}>
+                  <Button
+                    variant="outlined"
+                    className={classes.button}
+                    onClick={() => history.push(`/profile/developer/${dev.id}`)}
+                  >
                     See More
                   </Button>
                 </CardContent>
