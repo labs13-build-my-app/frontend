@@ -1,10 +1,48 @@
-import React, { useState, useEffect } from "react";
-import { signup } from "../store/actions";
+import React, { useState, useEffect} from "react";
+import styled from "styled-components";
 import Auth from "./Auth/Auth";
-// import clsx from "clsx"; // whats this??? we need this???
-import { makeStyles } from "@material-ui/core/styles";
-// import MenuItem from "@material-ui/core/MenuItem";
-import TextField from "@material-ui/core/TextField";
+import { signup } from "../store/actions";
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import './Signup.css';
+
+const Button = styled.button`
+  background-color: #3F51B5;
+  border: 1px solid #3F51B5;
+  color: white;
+  font-size: 1.5rem;
+  padding: 10px 25px;
+  margin: 15px auto;
+  font-weight: bold;
+  border-radius: 25px;
+
+  &:hover{
+    background: white;
+    color: #3F51B5;
+  }
+`;
+
+
+const SignupForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border: 1px lightgrey solid;
+  border-radius: 20px;
+  margin: 25px auto;
+  padding: 15px 10px;
+  width: 700px;
+  box-shadow: 10px 10px 10px grey;
+  div{
+    display: flex;
+  }
+`;
+
 
 const auth = new Auth();
 const useStyles = makeStyles(theme => ({
@@ -19,19 +57,21 @@ const useStyles = makeStyles(theme => ({
   dense: {
     marginTop: theme.spacing(2)
   },
-  menu: {
-    width: 200
-  }
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
 }));
 
 const Signup = ({ token, dispatch, history }) => {
   const classes = useStyles();
-  // const [values, setValues] = React.useState({
-  //   name: "Cat in the Hat",
-  //   age: "",
-  //   multiline: "Controlled",
-  //   currency: "EUR"
-  // });
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -73,22 +113,27 @@ const Signup = ({ token, dispatch, history }) => {
   }
   return (
     <div>
-      <h2>signup form</h2>
-      <form onSubmit={submitHandler}>
-        <div>role</div>
-        <input
-          onChange={event => changeHandler(event, setRole)}
-          name="role"
-          type="text"
-          value={role}
-        />
-        <div>firstName</div>
-        <input
-          onChange={event => changeHandler(event, setFirstName)}
-          name="firstName"
-          type="text"
-          value={firstName}
-        />
+      <SignupForm className={classes.root} onSubmit={submitHandler}>
+        <h2>Profile Setup</h2>
+        <div className="role">
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="age-simple">Sign Up As</InputLabel>
+            <Select
+              className={classes.select}
+              value={role}
+              onChange={event => changeHandler(event, setRole)}
+              inputProps={{
+                name: 'age',
+                id: 'age-simple',
+              }}
+            >
+              <MenuItem value=""></MenuItem>
+              <MenuItem value={'Developer'}>Developer</MenuItem>
+              <MenuItem value={'Project Owner'}>Project Owner</MenuItem>
+            </Select>
+          </FormControl>
+      </div>
+        <div className="general-info">
         <TextField
           id="first-name"
           label="First Name"
@@ -98,58 +143,94 @@ const Signup = ({ token, dispatch, history }) => {
           type="text"
           margin="normal"
           variant="outlined"
-        />
-        <div>lastName</div>
-        <input
-          onChange={event => changeHandler(event, setLastName)}
-          name="lastName"
-          type="text"
+        />        
+        <TextField
+          id="last-name"
+          label="Last Name"
+          className={classes.textField}
           value={lastName}
-        />
-        <div>email</div>
-        <input
-          onChange={event => changeHandler(event, setEmail)}
-          name="email"
+          onChange={event => changeHandler(event, setLastName)}
           type="text"
+          margin="normal"
+          variant="outlined"
+        />        
+        <TextField
+          id="email"
+          label="E-Mail"
+          className={classes.textField}
           value={email}
-        />
-        <div>skills</div>
-        <input
-          onChange={event => changeHandler(event, setSkills)}
-          name="skills"
+          onChange={event => changeHandler(event, setEmail)}
           type="text"
-          value={skills}
+          margin="normal"
+          variant="outlined"
         />
-        <div>devType</div>
-        <input
-          onChange={event => changeHandler(event, setDevType)}
-          name="devType"
-          type="text"
-          value={devType}
-        />
-        <div>linkedIn</div>
-        <input
-          onChange={event => changeHandler(event, setLinkedIn)}
-          name="linkedIn"
-          type="text"
-          value={linkedIn}
-        />
-        <div>gitHub</div>
-        <input
-          onChange={event => changeHandler(event, setGitHub)}
-          name="gitHub"
-          type="text"
+      </div>
+      {role === 'Developer' 
+        ? <div className="dev-info">
+          <TextField
+            id="skills"
+            label="Skills"
+            className={classes.textField}
+            value={skills}
+            onChange={event => changeHandler(event, setSkills)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="name-simple">Dev Type</InputLabel>
+            <Select
+              value={devType}
+              onChange={event => changeHandler(event, setDevType)}
+              inputProps={{
+                name: 'devType',
+                id: 'name-simple',
+              }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value='Web'>Web</MenuItem>
+              <MenuItem value='iOS'>iOS</MenuItem>
+              <MenuItem value='Android'>Android</MenuItem>
+            </Select>
+          </FormControl>
+          </div>
+          : null}
+        <div className="socialmedia-info">
+          <TextField
+            id="linkedin"
+            label="LinkedIn"
+            className={classes.textField}
+            value={linkedIn}
+            onChange={event => changeHandler(event, setLinkedIn)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+        <TextField
+          id="github"
+          label="GitHub"
+          className={classes.textField}
           value={gitHub}
-        />
-        <div>twitter</div>
-        <input
-          onChange={event => changeHandler(event, setTwitter)}
-          name="twitter"
+          onChange={event => changeHandler(event, setGitHub)}
           type="text"
-          value={twitter}
+          margin="normal"
+          variant="outlined"
         />
-        <button type="submit">Submit</button>
-      </form>
+        <TextField
+          id="twitter"
+          label="Twitter"
+          className={classes.textField}
+          value={twitter}
+          onChange={event => changeHandler(event, setTwitter)}
+          type="text"
+          margin="normal"
+          variant="outlined"
+        />
+        </div>
+        <Button type="submit">Submit</Button>
+      </SignupForm>
     </div>
   );
 };
