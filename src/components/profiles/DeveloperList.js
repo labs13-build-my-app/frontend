@@ -8,14 +8,17 @@ import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 
 const Developers = () => {
-  const useStyles = makeStyles({
+  const useStyles = makeStyles(theme => ({
     card: {
-      width: 400,
+      maxWidth: 400,
       // display: "flex",
       marginBottom: 20,
       marginLeft: "auto",
       marginRight: "auto",
       padding: 10
+    },
+    button: {
+      margin: theme.spacing(1)
     },
     title: {
       fontSize: 14
@@ -23,7 +26,7 @@ const Developers = () => {
     pos: {
       marginBottom: 12
     }
-  });
+  }));
   const classes = useStyles();
   const [developers, setDevelopers] = useState([]);
   useEffect(() => {
@@ -54,6 +57,9 @@ const Developers = () => {
                   <p>Developer Name: {dev.firstName}</p>
                   <p>Proficiency: {dev.devType}</p>
                   <p>Skills: {dev.skills}</p>
+                  <Button variant="outlined" className={classes.button}>
+                    See More
+                  </Button>
                 </CardContent>
               </Card>
             </div>
