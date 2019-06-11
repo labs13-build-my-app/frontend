@@ -8,7 +8,7 @@ const Projects = props => {
   useEffect(() => {
     axios.get("http://localhost:8000/api/projects/").then(res => {
       setProjects(res.data);
-      console.log(res.data);
+      console.table(res.data);
     });
   }, []);
   return (
