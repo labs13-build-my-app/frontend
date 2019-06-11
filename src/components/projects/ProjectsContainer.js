@@ -14,7 +14,11 @@ const ProjectsContainer = ({ role }) => {
     <div>
       {/* may need to implement switch in here to render only one render */}
       {/* public routes */}
-      <Route exact path={"/projects"} render={props => <Projects />} />
+      <Route
+        exact
+        path={"/projects"}
+        render={props => <Projects {...props} />}
+      />
       <Route
         path={"/projects/:project_id"}
         render={props => <ProjectView {...props} role={role} />}
