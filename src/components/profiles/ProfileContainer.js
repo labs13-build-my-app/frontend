@@ -1,8 +1,9 @@
 import React, { useEffect, useReducer } from "react";
 import { Route } from "react-router";
 import Developers from "./DeveloperList";
+import DeveloperPageView from "./DevloperPageView";
 
-const ProfileContainer = () => {
+const ProfileContainer = ({ dispatch }) => {
   return (
     <div>
       {/* public routes */}
@@ -10,12 +11,12 @@ const ProfileContainer = () => {
       <Route
         exact
         path={"/profile/developers"}
-        render={props => <Developers />}
+        render={props => <Developers dispatch={dispatch} {...props} />}
       />
       <Route
         exact
-        path={"/profile/developer/:developer_id"}
-        render={props => <div>developer page view</div>}
+        path={"/profile/developer/:id"}
+        render={props => <DeveloperPageView {...props} />}
       />
       <Route
         exact
