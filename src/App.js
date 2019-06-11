@@ -64,6 +64,7 @@ const App = ({ history }) => {
         // (b) is login process
         // Step 8 (b) if user exist on database send client role and basic user info
         fetchUser(localStorage.getItem("token"))(dispatch);
+        // console.log(" APP FETCH times");
       } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
