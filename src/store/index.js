@@ -1,8 +1,10 @@
 import initialState from "./initialState";
-import reducer from "./reducer";
+import { usersReducer, projectsReducer, profileReducer } from "./reducer";
 
 const store = {
   initialState,
-  reducer
+  usersReducer,
+  projectsReducer,
+  profileReducer
 };
 export default store;

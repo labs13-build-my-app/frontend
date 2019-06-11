@@ -43,17 +43,19 @@ const SignupForm = styled.form`
   }
 `;
 
+
+const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(1)
   },
   dense: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(2)
   },
   root: {
     display: 'flex',
@@ -66,15 +68,10 @@ const useStyles = makeStyles(theme => ({
   selectEmpty: {
     marginTop: theme.spacing(2),
   },
-  muiSelectSelect: {
-    border: '1px red solid',
-    width: '100%',
-  }
 }));
 
-const Signup = ({ dispatch, history }) => {
+const Signup = ({ token, dispatch, history }) => {
   const classes = useStyles();
-
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -84,13 +81,13 @@ const Signup = ({ dispatch, history }) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
-  
+
   useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      const auth = new Auth();
+    if (!token) {
+      console.log("in here", token);
       auth.login();
     }
-  }, []);
+  }, [token, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;
@@ -98,7 +95,6 @@ const Signup = ({ dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
-    dispatch({ type: "FETCH_ROLE_SUCCESS", payload: role });
     signup({
       role,
       firstName,
@@ -110,7 +106,7 @@ const Signup = ({ dispatch, history }) => {
       gitHub,
       twitter
     })(dispatch);
-    history.push("/dashbaord");
+    history.push("/dashboard");
   };
   if (!localStorage.getItem("token")) {
     return <div>loading...</div>;
