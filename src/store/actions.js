@@ -31,6 +31,10 @@ export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const LOADING_COMPLETE = "LOADING_COMPLETE";
 
+export const FETCH_DEVELOPER_LIST_START = "FETCH_DEVELOPER_LIST_START";
+export const FETCH_DEVELOPER_LIST_SUCCESS = "FETCH_DEVELOPER_LIST_SUCCESS";
+export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
+
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
 const connection = true ? local : heroku;
@@ -93,7 +97,7 @@ export const fetchUser = token => dispatch => {
     .catch(err => {
       dispatch({ type: FETCH_USER_FAILURE });
       console.log(
-        "failed to fine user please try again, user may not exist, or invalid token"
+        "failed to find user please try again, user may not exist, or invalid token"
       );
       console.log("CATCH ERR", err);
     });
@@ -331,6 +335,21 @@ export const fetchPlan = planID => dispatch => {
 };
 
 export const fetchDevelopers = () => dispatch => {
+  dispatch({ type: FETCH_DEVELOPER_LIST_START });
+  console.log("FETCHING DEVS");
+  axios({
+    method: "GET",
+    url: "http://localhost:8000/api/users/developers",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    }
+  })
+    .then(developers => {
+      console.log(developers);
+    })
+    .catch(err => console.log(err));
+
   // list of developers
   // currently start from first created to last created
   // should implement from recently logged on to latest logged on
