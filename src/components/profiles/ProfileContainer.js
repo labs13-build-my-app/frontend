@@ -4,7 +4,7 @@ import { Route } from "react-router";
 import Developers from "./DeveloperList";
 import DeveloperPageView from "./DevloperPageView";
 
-const ProfileContainer = ({ dispatch, user }) => {
+const ProfileContainer = ({ dispatch, user, role }) => {
   return (
     <div>
       {/* public routes */}

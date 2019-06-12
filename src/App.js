@@ -125,6 +125,41 @@ const App = ({ history }) => {
       />
 
       <Route
+        path={"/projects"}
+        exact
+        render={props => (
+          <Projects dispatch={dispatch} {...props} isLoading={isLoading} />
+        )}
+      />
+      <Route
+        path={"/projects/project/:id"}
+        render={props => (
+          <Project dispatch={dispatch} {...props} isLoading={isLoading} />
+        )}
+      />
+
+      <Route
+        path={"/create-project-form"}
+        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
+      />
+
+      <Route path={"/create-plan"} render={() => <CreatePlan />} />
+
+      <Route
+        path={"/profile"}
+        render={props => (
+          <ProfileContainer {...props} dispatch={dispatch} user={user} />
+        )}
+      />
+
+      <Route path={"/get-users-test"} componet={User} />
+
+      {/* <Route
+        path={"/admin"}
+        render={props => <Admin {...props} dispatch={dispatch} />}
+      /> */}
+
+      {/* <Route
         path={"/dashboard"}
         render={props =>
           token === false ? (
@@ -151,52 +186,7 @@ const App = ({ history }) => {
             <h1>settings page</h1>
           )
         }
-      />
-
-      <Route
-        path={"/projects"}
-        exact
-        render={props => (
-          <Projects dispatch={dispatch} {...props} isLoading={isLoading} />
-        )}
-      />
-      <Route
-        path={"/projects/project/:id"}
-        render={props => (
-          <Project dispatch={dispatch} {...props} isLoading={isLoading} />
-        )}
-      />
-
-      <Route
-        path={"/profile"}
-        render={props => (
-          <ProfileContainer {...props} dispatch={dispatch} user={user} />
-        )}
-      />
-
-      <Route path={"/create-plan"} render={() => <CreatePlan />} />
-
-      {/* <Route
-        path={"/admin"}
-        render={props => <Admin {...props} dispatch={dispatch} />}
       /> */}
-
-      {
-        // this will moved to projects view
-      }
-
-      {
-        // this will be moved to dashboard view for project owner
-      }
-      <Route
-        path={"/create-project-form"}
-        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
-      />
-
-      {
-        // only for testing
-      }
-      <Route path={"/get-users-test"} componet={User} />
 
       {/* <Route
         path={"/projects"}
