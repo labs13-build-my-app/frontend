@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import { Route, Redirect } from "react-router";
 import axios from "axios";
 
 const Project = props => {
   const [project, setProject] = useState([]);
+  console.log("project state: ", project);
   // let projectData;
   // if (props.history.location === "/projects") {
   //   projectData = props;
@@ -25,7 +28,6 @@ const Project = props => {
         });
     }
   }, [props.match]);
-  // console.log(project);
   return (
     <div className="Projects">
       <div>
@@ -35,6 +37,25 @@ const Project = props => {
         <p>{project.description}</p>
         <p>{project.budget}</p>
         <p>{project.dueDate}</p>
+        <NavLink
+          className="create-plan"
+          to={{ pathname: "/create-plan", state: { projectid: project.id } }}
+        >
+          Apply to this project
+        </NavLink>
+        {/* {role ? (
+          <Route
+            path={"/projects/:project_id/create-plan-modal"}
+            render={props => {
+              const path = props.match.params.project_id;
+              return role !== "Developer" ? (
+                <Redirect to={`/projects/${path}`} />
+              ) : (
+                <h1>model to create plan to project</h1>
+              );
+            }}
+          />
+        ) : null} */}
       </div>
     </div>
   );
