@@ -218,6 +218,15 @@ const App = ({ history }) => {
             token={token}
           />
         )}
+      />
+
+      <Route
+        path={"/profile"}
+        render={props => <ProfileContainer {...props} dispatch={dispatch} user={user} />}
+      />
+      {/* <Route
+        path={"/admin"}
+        render={props => <Admin {...props} dispatch={dispatch} />}
       /> */}
 
       {
