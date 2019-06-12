@@ -140,9 +140,8 @@ const App = ({ history }) => {
 
       <Route
         path={"/profile"}
-        render={props => <ProfileContainer {...props} dispatch={dispatch} />}
+        render={props => <ProfileContainer {...props} dispatch={dispatch} user={user} />}
       />
-
       {/* <Route
         path={"/admin"}
         render={props => <Admin {...props} dispatch={dispatch} />}
