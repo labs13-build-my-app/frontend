@@ -18,7 +18,7 @@ const Dashboard = ({
   useEffect(() => {
     axios({
       method: "GET",
-      url: `http://localhost:8000/api/users/${match.params.id}`
+      url: `http://localhost:8000/api/users/profile/${match.params.id}`
     })
       .then(res => {
         setUser(res.data);

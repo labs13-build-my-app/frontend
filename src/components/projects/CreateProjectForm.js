@@ -5,7 +5,7 @@ import { createProject } from "../../store/actions";
 const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     createProject(state)(dispatch);
-    history.push("/test"); // <<< push to projects page
+    history.push("/test"); // <<< Need to be changed to push to PO's projects page
   });
   return (
     <div>

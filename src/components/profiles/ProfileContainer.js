@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import { Route } from "react-router";
 import Developers from "./DeveloperList";
 import DeveloperPageView from "./DevloperPageView";
-import Dashboard from '../dashboard/Dashboard';
+import Dashboard from "../dashboard/Dashboard";
 
 const ProfileContainer = ({ dispatch, user }) => {
   return (
@@ -10,7 +10,9 @@ const ProfileContainer = ({ dispatch, user }) => {
       {/* public routes */}
       <Route
         path={"/profile/:id"}
-        render={props => <Dashboard {...props} dispatch={dispatch} loggedInUser={user} />}
+        render={props => (
+          <Dashboard {...props} dispatch={dispatch} loggedInUser={user} />
+        )}
       />
       <Route
         exact
@@ -21,11 +23,6 @@ const ProfileContainer = ({ dispatch, user }) => {
         exact
         path={"/profile/developer/:id"}
         render={props => <DeveloperPageView {...props} />}
-      />
-      <Route
-        exact
-        path={"/profile/project-owner/:project_owner_id"}
-        render={props => <div>project owner page view</div>}
       />
     </div>
   );
