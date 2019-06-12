@@ -5,13 +5,9 @@ import { saveToken, locationRestore, fetchUser } from "./store/actions";
 import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 import User from "./components/User";
-
-import ProjectsContainer from "./components/projects/ProjectsContainer";
+// import ProjectsContainer from "./components/projects/ProjectsContainer";
 import ProfileContainer from "./components/profiles/ProfileContainer";
-
-import Auth from "./components/Auth/Auth";
 import Projects from "./components/projects/Projects";
-
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Project from "./components/projects/Project";
@@ -173,7 +169,9 @@ const App = ({ history }) => {
 
       <Route
         path={"/profile"}
-        render={props => <ProfileContainer {...props} dispatch={dispatch} />}
+        render={props => (
+          <ProfileContainer {...props} dispatch={dispatch} user={user} />
+        )}
       />
 
       <Route path={"/create-plan"} render={() => <CreatePlan />} />
