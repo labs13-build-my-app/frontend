@@ -50,7 +50,8 @@ export const usersReducer = (state, action) => {
         error: false,
         token: false,
         newUser: false,
-        isLoading: false
+        isLoading: false,
+        user: {}
       };
     case TOKEN_EXIST:
       return {

@@ -21,7 +21,6 @@ import "./App.css";
 // must implement propTypes for testing
 // review state and actions
 
-let count = 0;
 const App = ({ history }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
@@ -36,15 +35,6 @@ const App = ({ history }) => {
     fetch
   } = state;
   const { pathname } = history.location;
-
-  //  if pathname is callback and have token or token null redirect to root
-  // if (
-  //   (pathname === "/callback" && token) ||
-  //   (pathname === "/callback" && token === null)
-  // ) {
-  //   console.log("here");
-  //   history.push("/");
-  // }
 
   // logging state here
   console.log("STATE", state, isLoading);
@@ -131,6 +121,7 @@ const App = ({ history }) => {
             isLoading={isLoading}
             fetch={fetch}
             newUser={newUser}
+            user={user}
           />
         )}
       />
@@ -200,8 +191,8 @@ const App = ({ history }) => {
       <Route path={"/get-users-test"} componet={User} />
 
       <Route
-        exact
         path={"/projects"}
+        exact
         render={props => <Projects dispatch={dispatch} {...props} />}
       />
       <Route

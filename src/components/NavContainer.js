@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 const auth = new Auth();
 
 const NavContainer = ({ isSignedIn, token, newUser }) => {
-  console.log(newUser, "newUser");
   const [nav, setNav] = useState([]);
   useEffect(() => {
     if (token) {
@@ -41,6 +40,7 @@ const NavContainer = ({ isSignedIn, token, newUser }) => {
       ]);
     }
   }, [isSignedIn, token, newUser]);
+
   return (
     <nav
       style={{
