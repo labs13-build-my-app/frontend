@@ -13,6 +13,10 @@ const Projects = ({ match, isLoading }) => {
       });
     }
   }, [isLoading]);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div>
       {projects.map(project => (

@@ -17,6 +17,9 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
     }
   }, [match, isLoading, name, description, budget, dueDate]);
 
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div className="Projects">
       <div>
