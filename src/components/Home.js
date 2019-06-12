@@ -57,6 +57,7 @@ const Home = ({
           )
         }
       />
+
       {/* this is our signup route if isSignedIn is false it Redirects to home */}
       <Route
         path={"/signup"}
@@ -68,18 +69,6 @@ const Home = ({
           )
         }
       />
-
-      {/* this is the login component, it is currently deprecated and soon will be delete until otherwise */}
-      {/* <Route
-        path={"/login"}
-        render={props =>
-          role ? (
-            <Redirect to={"/dashboard"} />
-          ) : (
-            <Login {...props} dispatch={dispatch} role={role} token={token} />
-          )
-        }
-      /> */}
     </div>
   );
 };

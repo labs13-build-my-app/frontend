@@ -163,6 +163,16 @@ const App = ({ history }) => {
       />
 
       <Route
+        path={"/projects"}
+        exact
+        render={props => <Projects dispatch={dispatch} {...props} />}
+      />
+      <Route
+        path={"/projects/project/:id"}
+        render={props => <Project dispatch={dispatch} {...props} />}
+      />
+
+      <Route
         path={"/profile"}
         render={props => <ProfileContainer {...props} dispatch={dispatch} />}
       />
@@ -189,16 +199,6 @@ const App = ({ history }) => {
         // only for testing
       }
       <Route path={"/get-users-test"} componet={User} />
-
-      <Route
-        path={"/projects"}
-        exact
-        render={props => <Projects dispatch={dispatch} {...props} />}
-      />
-      <Route
-        path={"/projects/project/:id"}
-        render={props => <Project dispatch={dispatch} {...props} />}
-      />
     </div>
   );
 };
