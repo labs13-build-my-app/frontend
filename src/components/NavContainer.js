@@ -6,7 +6,7 @@ const auth = new Auth();
 
 const NavContainer = ({ isSignedIn, token, newUser }) => {
   const [nav, setNav] = useState([]);
-  console.log(newUser);
+  console.log("current state of new user", newUser);
   useEffect(() => {
     if (token) {
       setNav([
