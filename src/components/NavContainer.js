@@ -10,11 +10,16 @@ const NavContainer = ({ isSignedIn, token, newUser }) => {
   useEffect(() => {
     if (token) {
       setNav([
-        { route: "/dashboard", label: "Home" },
+        { route: "/home", label: "Home" },
         { route: "/projects", label: "Projects" },
         { route: "/profile/developers", label: "Developers" },
         { route: newUser ? "/signup" : "/profile", label: "Profile" },
-        { route: "/home", label: "Logout", callback: () => auth.logout() }
+        {
+          route: "/callback",
+          state: "logout",
+          label: "Logout",
+          callback: () => auth.logout()
+        }
       ]);
     } else {
       setNav([
@@ -24,13 +29,13 @@ const NavContainer = ({ isSignedIn, token, newUser }) => {
         {
           route: token ? "/signup" : "/callback",
           label: "Login",
-          state: true,
+          state: "sign on",
           callback: !token ? () => auth.login() : null
         },
         {
           route: "/signup",
           label: "Signup",
-          state: true,
+          state: "sign on",
           callback: !token ? () => auth.login() : null
         }
       ]);

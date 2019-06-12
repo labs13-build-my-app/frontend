@@ -34,7 +34,7 @@ const Home = ({
       <Route
         path="/callback"
         render={props =>
-          token ? (
+          token && props.history.location.state !== "logout" ? (
             <Redirect to={"/home"} />
           ) : (
             <Callback

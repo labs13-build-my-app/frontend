@@ -43,6 +43,15 @@ export const usersReducer = (state, action) => {
         ...state,
         isLoading: false
       };
+    case "LOGOUT":
+      return {
+        ...state,
+        fetch: false,
+        error: false,
+        token: false,
+        newUser: false,
+        isLoading: false
+      };
     case TOKEN_EXIST:
       return {
         ...state,

@@ -20,6 +20,7 @@ const Callback = ({
   isLoading,
   fetch
 }) => {
+  console.log("in callback");
   useEffect(() => {
     console.log("in useEffect");
     console.log(fetch, !token, isLoading);
@@ -30,9 +31,10 @@ const Callback = ({
       // Remove isLoggedIn flag from localStorage
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("token");
+      dispatch({ type: "LOGOUT" });
 
       // navigate to the home route
-      history.replace("/");
+      history.replace("/home");
     };
 
     // retrive data Auth0 and parse into token
@@ -62,9 +64,11 @@ const Callback = ({
       // cb();
     };
     console.log(history.location.state, "checking state in callback");
-    if (history.location.state) {
+    if (history.location.state === "sign on") {
       login();
       // getToken();
+    } else if (history.location.state === "logout") {
+      logout();
     } else {
       console.log("get token");
       getToken();
