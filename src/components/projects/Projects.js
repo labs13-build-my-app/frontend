@@ -1,16 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useReducer } from "react";
 import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 
-const Projects = props => {
+const Projects = ({ match, isLoading }) => {
   const [projects, setProjects] = useState([]);
+
   useEffect(() => {
-    axios.get("http://localhost:8000/api/projects/").then(res => {
-      setProjects(res.data);
-      console.table(res.data);
-    });
-  }, []);
+    if (!isLoading) {
+      axios.get("http://localhost:8000/api/projects/").then(res => {
+        setProjects(res.data);
+      });
+    }
+  }, [isLoading]);
+
+  if (isLoading) {
+    return <h1>Loading...</h1>;
+  }
   return (
     <div>
       {projects.map(project => (
@@ -20,21 +26,14 @@ const Projects = props => {
           key={project.id}
         >
           <Project
-            {...props}
+            match={match}
             name={project.name}
             description={project.description}
             budget={project.budget}
             dueDate={project.dueDate}
-            key={project.id}
+            isLoading={isLoading}
           />
         </Link>
-
-        // <div key={project.id}>
-        //   <div>{project.name}</div>
-        //   <div>{project.description}</div>
-        //   <div>{project.budget}</div>
-        //   <div>{project.dueDate}</div>
-        // </div>
       ))}
     </div>
   );

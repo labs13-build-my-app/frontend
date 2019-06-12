@@ -1,43 +1,63 @@
 import React, { useEffect } from "react";
 import auth0 from "auth0-js";
-import { fetchUser, saveToken } from "../../store/actions";
+import { saveToken } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
   clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-  redirectUri: "http://localhost:3000/callback",
+  redirectUri: "http://localhost:3000/callback", // maybe this can redirect to home or change this to auth?
   responseType: "token id_token",
   scope: "openid profile"
 });
 
-const Callback = ({ history, dispatch, token, isSignedIn }) => {
+const Callback = ({
+  history,
+  dispatch,
+  token,
+  isSignedIn,
+  isLoading,
+  fetch
+}) => {
   useEffect(() => {
+    // function to logout
+    const logout = () => {
+      // Remove isLoggedIn flag from localStorage
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("token");
+      dispatch({ type: "LOGOUT" });
+
+      // navigate to the home route
+      history.replace("/home");
+    };
+
     // retrive data Auth0 and parse into token
-    const getToken = () => {
+    const getToken = cb => {
       auth.parseHash((err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           localStorage.setItem("token", authResult.idToken);
           localStorage.setItem("isLoggedIn", "true");
           saveToken(localStorage.getItem("token"))(dispatch);
-
-          // send token  to server and server decodes and then check for user
-          // response is role if role user exist, if no role user no exis
-          fetchUser(authResult.idToken)(dispatch);
-          // history.push("/login");
         } else if (err) {
-          history.replace("/home");
+          // history.replace("/home");
           alert(`Error: ${err.error}. Check the console for further details.`);
         }
       });
     };
-    if (isSignedIn) {
-      history.push(`/dashboard`);
-    } else if (token) {
-      fetchUser(localStorage.getItem("token"))(dispatch);
+
+    // function to login
+    const login = () => {
+      auth.authorize();
+    };
+
+    if (history.location.state === "sign on") {
+      login();
+    } else if (history.location.state === "logout") {
+      logout();
     } else {
       getToken();
+      history.push("/");
     }
-  }, [history, token, isSignedIn, dispatch]);
+  }, [history, token, isSignedIn, dispatch, fetch]);
 
   return (
     <div>
