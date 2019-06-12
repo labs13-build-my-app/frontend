@@ -95,6 +95,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           userSocialMedia: {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
@@ -120,6 +121,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           userSocialMedia: {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
@@ -141,6 +143,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           adminDetails: {}
         }
       };
