@@ -151,7 +151,10 @@ const App = ({ history }) => {
       {
         // this will moved to projects view
       }
-      <Route path={"/create-plan"} render={() => <CreatePlan />} />
+      <Route
+        path={"/create-plan"}
+        render={props => <CreatePlan {...props} user={{ user }} />}
+      />
 
       {
         // this will be moved to dashboard view for project owner
