@@ -62,7 +62,7 @@ const App = ({ history }) => {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
       saveToken(false)(dispatch);
-    } else if (token === false) {
+      // } else if (token === false && !newUser) {
       //loadingComplete()(dispatch);
       console.log("finish loading");
       dispatch({ type: "LOADING_COMPLETE" });

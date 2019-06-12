@@ -55,6 +55,7 @@ const Callback = ({
       logout();
     } else {
       getToken();
+      history.push("/");
     }
   }, [history, token, isSignedIn, dispatch, fetch]);
 
