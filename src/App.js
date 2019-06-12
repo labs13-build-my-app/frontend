@@ -20,12 +20,34 @@ import "./App.css";
 // complete routing
 // must implement propTypes for testing
 // review state and actions
+
+let count = 0;
 const App = ({ history }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
-  const { role, user, token, isSignedIn, newUser, location, isLoading } = state;
+  const {
+    role,
+    user,
+    token,
+    isSignedIn,
+    newUser,
+    location,
+    isLoading,
+    fetch
+  } = state;
   const { pathname } = history.location;
-  console.log("STATE", state);
+
+  //  if pathname is callback and have token or token null redirect to root
+  // if (
+  //   (pathname === "/callback" && token) ||
+  //   (pathname === "/callback" && token === null)
+  // ) {
+  //   console.log("here");
+  //   history.push("/");
+  // }
+
+  // logging state here
+  console.log("STATE", state, isLoading);
 
   // step 3 set location from history.location.pathname  -- ex. location: “/dashboard”
   // on second render
@@ -34,7 +56,7 @@ const App = ({ history }) => {
       pathname !== location &&
       pathname !== "/login" &&
       pathname !== "/signup" &&
-      pathname !== "/callback" &&
+      // pathname !== "/callback" &&
       pathname !== undefined &&
       token === null
     ) {
@@ -46,6 +68,7 @@ const App = ({ history }) => {
   // on second render
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
+      console.log(token);
       // step 5 (b) if token send token to server  -- token: true
       // will render a 3rd time after this
       saveToken(true)(dispatch);
@@ -53,34 +76,42 @@ const App = ({ history }) => {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
       saveToken(false)(dispatch);
+      //loadingComplete()(dispatch);
+      dispatch({ type: "LOADING_COMPLETE" });
+    } else if (token && !isLoading) {
+      dispatch({ type: "LOADING" });
     }
   }, [token]);
 
   useEffect(() => {
     const handleLoadingProcess = () => {
+      // if(location === "/callback") {
+      //   history.push("/")
+      // }
       if (!role) {
         // step 6 send token to server retrive user info and role and set to state
         // step 7 (b) if ID check user exist on database
         // (b) is login process
         // Step 8 (b) if user exist on database send client role and basic user info
+        console.log("fetching user");
         fetchUser(localStorage.getItem("token"))(dispatch);
       } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
-        history.push(location);
-      } else if (newUser) {
-        history.push("/signup");
+        // history.push(location);
       }
     };
 
-    if (token && isLoading) {
+    if (token && isLoading && !fetch) {
       // step 5 (b) --> continue process request to server
       handleLoadingProcess();
     } else if (!token && !isLoading) {
       // Step 5 (a) -b route to homepage  --> step 5 (a) completed
-      history.push("/home");
+      // history.push("/home");
+    } else if (newUser) {
+      history.push("/signup");
     }
-  }, [token, isLoading, location, role, newUser, isSignedIn, history]);
+  }, [token, isLoading, location, role, newUser, isSignedIn, history, fetch]);
 
   // step 2 first render
   if (token === null) return <h1>Loading...</h1>;
@@ -97,6 +128,9 @@ const App = ({ history }) => {
             token={token}
             role={role}
             dispatch={dispatch}
+            isLoading={isLoading}
+            fetch={fetch}
+            newUser={newUser}
           />
         )}
       />

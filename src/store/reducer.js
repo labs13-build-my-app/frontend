@@ -36,6 +36,11 @@ export const usersReducer = (state, action) => {
     case LOADING_COMPLETE:
       return {
         ...state,
+        isLoading: true
+      };
+    case LOADING_COMPLETE:
+      return {
+        ...state,
         isLoading: false
       };
     case TOKEN_EXIST:
@@ -47,7 +52,8 @@ export const usersReducer = (state, action) => {
     case FETCH_USER_FAILURE:
       return {
         ...state,
-        newUser: true
+        fetch: false,
+        error: true
       };
     case RECORD_URL_LOCATION:
       return {
@@ -62,6 +68,9 @@ export const usersReducer = (state, action) => {
     case USER_SIGNUP:
       return {
         ...state,
+        fetch: false,
+        error: false,
+        isLoading: false,
         newUser: true
       };
     case FETCH_DEVELOPER_SUCCESS:
