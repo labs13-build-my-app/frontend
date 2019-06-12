@@ -93,7 +93,7 @@ export const fetchUser = token => dispatch => {
     .catch(err => {
       dispatch({ type: FETCH_USER_FAILURE });
       console.log(
-        "failed to fine user please try again, user may not exist, or invalid token"
+        "failed to find user please try again, user may not exist, or invalid token"
       );
       console.log("CATCH ERR", err);
     });
