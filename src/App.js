@@ -157,35 +157,17 @@ const App = ({ history }) => {
         }
       />
 
-      {/* <Route
-        path={"/projects"}
-        render={props => (
-          <ProjectsContainer
-            {...props}
-            dispatch={dispatch}
-            role={role}
-            token={token}
-          />
-        )}
-      /> */}
-
       <Route
         path={"/projects"}
         exact
         render={props => (
-          <Projects
-            dispatch={dispatch}
-            {...props}
-            isLoading={isLoading}
-            token={token}
-            role={role}
-          />
+          <Projects dispatch={dispatch} {...props} isLoading={isLoading} />
         )}
       />
       <Route
         path={"/projects/project/:id"}
         render={props => (
-          <Project dispatch={dispatch} {...props} role={role} token={token} />
+          <Project dispatch={dispatch} {...props} isLoading={isLoading} />
         )}
       />
 
@@ -193,6 +175,8 @@ const App = ({ history }) => {
         path={"/profile"}
         render={props => <ProfileContainer {...props} dispatch={dispatch} />}
       />
+
+      <Route path={"/create-plan"} render={() => <CreatePlan />} />
 
       {/* <Route
         path={"/admin"}
@@ -202,7 +186,6 @@ const App = ({ history }) => {
       {
         // this will moved to projects view
       }
-      <Route path={"/create-plan"} render={() => <CreatePlan />} />
 
       {
         // this will be moved to dashboard view for project owner
@@ -216,6 +199,18 @@ const App = ({ history }) => {
         // only for testing
       }
       <Route path={"/get-users-test"} componet={User} />
+
+      {/* <Route
+        path={"/projects"}
+        render={props => (
+          <ProjectsContainer
+            {...props}
+            dispatch={dispatch}
+            role={role}
+            token={token}
+          />
+        )}
+      /> */}
     </div>
   );
 };

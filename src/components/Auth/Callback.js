@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import Auth from "./Auth";
 import auth0 from "auth0-js";
-import { fetchUser, saveToken } from "../../store/actions";
+import { saveToken } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
@@ -10,7 +9,6 @@ const auth = new auth0.WebAuth({
   responseType: "token id_token",
   scope: "openid profile"
 });
-// const login = new Auth();
 
 const Callback = ({
   history,
@@ -20,12 +18,7 @@ const Callback = ({
   isLoading,
   fetch
 }) => {
-  console.log("in callback");
   useEffect(() => {
-    console.log("in useEffect");
-    console.log(fetch, !token, isLoading);
-    // function to login
-
     // function to logout
     const logout = () => {
       // Remove isLoggedIn flag from localStorage
@@ -44,13 +37,6 @@ const Callback = ({
           localStorage.setItem("token", authResult.idToken);
           localStorage.setItem("isLoggedIn", "true");
           saveToken(localStorage.getItem("token"))(dispatch);
-
-          // send token  to server and server decodes and then check for user
-          // response is role if role user exist, if no role user no exis
-          // fetchUser(authResult.idToken)(dispatch);
-          // history.push("/login");
-          // console.log("wowowowowwo");
-          // cb();
         } else if (err) {
           // history.replace("/home");
           alert(`Error: ${err.error}. Check the console for further details.`);
@@ -58,43 +44,18 @@ const Callback = ({
       });
     };
 
-    const login = cb => {
+    // function to login
+    const login = () => {
       auth.authorize();
-      // getToken();
-      // cb();
     };
-    console.log(history.location.state, "checking state in callback");
+
     if (history.location.state === "sign on") {
       login();
-      // getToken();
     } else if (history.location.state === "logout") {
       logout();
     } else {
-      console.log("get token");
       getToken();
-      // history.push("/");
     }
-
-    // const havetoken = localStorage.get;
-    // if (isLoading) {
-    //   console.log("start fetching", fetch, token);
-    //   dispatch({ type: "FETCH_START" });
-    // } else if (fetch) {
-    //   console.log("fetching token");
-    //   login();
-    //   // if (token || localStorage.getItem("token")) {
-    //   //   dispatch({ type: "FETCH_SUCCESS" });
-    //   //   history.push("/");
-    //   // }
-    // }
-
-    // if (isSignedIn) {
-    //   history.push(`/dashboard`);
-    // } else if (token) {
-    //   fetchUser(localStorage.getItem("token"))(dispatch);
-    // } else if (false) {
-    //   getToken();
-    // }
   }, [history, token, isSignedIn, dispatch, fetch]);
 
   return (
