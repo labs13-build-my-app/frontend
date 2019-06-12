@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const CreatePlan = () => {
+const CreatePlan = ({ history, user }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [technologiesToUse, setTechnologies] = useState("");
@@ -14,8 +14,8 @@ const CreatePlan = () => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const user_id = 2;
-    const project_id = 2;
+    const user_id = user.user.id;
+    const project_id = history.location.state.projectid;
     const planStatus = "started";
     const testData = {
       name,
