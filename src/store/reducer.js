@@ -27,16 +27,32 @@ import {
   DELETE_ADMIN_SUCCESS,
   USER_SIGNUP,
   RECORD_URL_LOCATION,
-  TOKEN_EXIST,
-  LOADING_COMPLETE
+  TOKEN_EXIST
+  // LOADING_COMPLETE
 } from "./actions";
 
 export const usersReducer = (state, action) => {
   switch (action.type) {
-    case LOADING_COMPLETE:
+    // case LOADING_COMPLETE:
+    //   return {
+    //     ...state,
+    //     isLoading: true
+    //   };
+    case "LOADING_COMPLETE":
       return {
         ...state,
         isLoading: false
+      };
+    case "LOGOUT":
+      return {
+        ...state,
+        fetch: false,
+        error: false,
+        token: false,
+        newUser: false,
+        isLoading: false,
+        role: "",
+        user: {}
       };
     case TOKEN_EXIST:
       return {
@@ -47,7 +63,8 @@ export const usersReducer = (state, action) => {
     case FETCH_USER_FAILURE:
       return {
         ...state,
-        newUser: true
+        fetch: false,
+        error: true
       };
     case RECORD_URL_LOCATION:
       return {
@@ -62,6 +79,9 @@ export const usersReducer = (state, action) => {
     case USER_SIGNUP:
       return {
         ...state,
+        fetch: false,
+        error: false,
+        isLoading: false,
         newUser: true
       };
     case FETCH_DEVELOPER_SUCCESS:
@@ -77,6 +97,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           userSocialMedia: {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
@@ -102,6 +123,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           userSocialMedia: {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
@@ -123,6 +145,7 @@ export const usersReducer = (state, action) => {
           firstName: action.payload.firstName,
           lastName: action.payload.lastName,
           email: action.payload.email,
+          profilePictureURL: action.payload.picture,
           adminDetails: {}
         }
       };
