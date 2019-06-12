@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from "react";
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { Route } from "react-router";
-import Projects from '../projects/Projects';
-import placeholder from '../../assets/images/profile-placeholder.png';
-import styled from 'styled-components';
-import { Button } from '../../styled-components';
+import Projects from "../projects/Projects";
+import placeholder from "../../assets/images/profile-placeholder.png";
+import styled from "styled-components";
+import { Button } from "../../styled-components";
 
 const Card = styled.div`
   display: flex;
@@ -22,68 +22,67 @@ const UserInfo = styled.div`
   width: 50%;
 `;
 
-const ProjectOwner = ({ user, role }) => {
+const ProjectOwner = ({ user, role, history }) => {
   const [projects, setProjects] = useState([]);
   useEffect(() => {
-    console.log('Use Effect')
+    console.log("Use Effect");
     axios({
       method: "GET",
       headers: {
         "content-type": "application/json",
-        Authorization: localStorage.getItem('token') 
+        Authorization: localStorage.getItem("token")
       },
       url: `http://localhost:8000/api/account/project-owner/project-list`
     })
       .then(res => {
-        res.data.message === 'No Projects'
+        res.data.message === "No Projects"
           ? setProjects([])
-          : setProjects(res.data)
+          : setProjects(res.data);
       })
       .catch(error => {
-        console.log('Error', error)
-      })
-  }, [])
+        console.log("Error", error);
+      });
+  }, []);
 
   return (
     <div>
-      <Card className={'card userCard'}>
-        <div style={{width: '50%'}}>    
-          <img 
-            src={
-              user.profilePictureURL 
-                ? user.profilePictureURL
-                : placeholder
-            } 
+      <Card className={"card userCard"}>
+        <div style={{ width: "50%" }}>
+          <img
+            src={user.profilePictureURL ? user.profilePictureURL : placeholder}
             style={{
-              borderRadius: '100%', 
-              width: '50%',
+              borderRadius: "100%",
+              width: "50%"
             }}
           />
         </div>
         <UserInfo>
-         <h1>{user.firstName} {user.lastName}</h1>
-         <p>{role}</p> 
+          <h1>
+            {user.firstName} {user.lastName}
+          </h1>
+          <p>{role}</p>
         </UserInfo>
       </Card>
-      {
-        projects.length === 0
-          ?  <Card className={'card projectsCard'}>
-               No Projects
-             </Card>
-          : projects.map(project => (
-              <Card className={'card projectsCard'}>
-                  {
-                    project.image_url ? 
-                    <img src={project.image_url}/>
-                    : null}
-                <h1>project.name</h1>
-                <p>project.description</p>
-              </Card>
-          )) 
-      }
-        <Button>+ Create New Project</Button>
+      {projects.length === 0 ? (
+        <Card className={"card projectsCard"}>No Projects</Card>
+      ) : (
+        projects.map(project => (
+          <Card key={project.id} className={"card projectsCard"}>
+            {project.image_url ? <img src={project.image_url} /> : null}
+            <h1 onClick={() => history.push(`/projects/project/${project.id}`)}>
+              project.name
+            </h1>{" "}
+            {/* <<< See card page */}
+            <p>project.description</p>
+            <Button>Update</Button> {/* <<< Modal form update */}
+            <Button>Delete</Button>{" "}
+            {/* <<< Modal form to delete with confirmation question to delete */}
+          </Card>
+        ))
+      )}
+      <Button>+ Create New Project</Button>
 
-          {/* <Route
+      {/* <Route
         path={"/dashboard/create-project"}
         render={props => <h1>create project model for project owner</h1>}
       /> */}

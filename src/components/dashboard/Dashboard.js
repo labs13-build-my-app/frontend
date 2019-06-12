@@ -32,11 +32,11 @@ const Dashboard = ({ dispatch, user, role, isSignedIn, history }) => {
     if (role === "Admin" && isSignedIn) {
       return <Admin role={role} user={user} />;
     } else if ("Project Owner" && isSignedIn) {
-      return <ProjectOwner role={role} user={user} />;
+      return <ProjectOwner history={history} role={role} user={user} />;
     } else if (role === "Developer" && isSignedIn) {
       return <Developer role={role} user={user} />;
     } else {
-      return <h1>Loading</h1>
+      return <h1>Loading</h1>;
     }
   };
 
