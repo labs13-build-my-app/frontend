@@ -58,6 +58,7 @@ export const saveToken = token => dispatch => {
 
 export const fetchUser = token => dispatch => {
   dispatch({ type: FETCH_START });
+  console.log("in fetch user action");
   axios({
     method: "GET",
     headers: {
@@ -67,20 +68,24 @@ export const fetchUser = token => dispatch => {
     url: `${connection}/api/account/onboarding/login`
   })
     .then(res => {
+      console.log("response", res);
       // Step 9 (b) Step 15 (a)  client sets role and basic user info to state -- ex. role:”Project Owner” user: {basic info}
       // Step 10 (b) Step 16 (a) client sets state isSignedIn to true and isLoading to false -- isSignedIn: true, isLoading: false
-      if (!res.data.sub) {
+      if (!res.data.role) {
+        console.log("sign up", res);
         dispatch({
           type: USER_SIGNUP,
           payload: { newUser: true }
         });
       } else {
         if (res.data.role === "Developer") {
+          console.log("developer login", res);
           dispatch({
             type: FETCH_DEVELOPER_SUCCESS,
             payload: res.data
           });
         } else if (res.data.role === "Project Owner") {
+          console.log("developer login", res);
           dispatch({
             type: FETCH_PROJECT_OWNER_SUCCESS,
             payload: res.data

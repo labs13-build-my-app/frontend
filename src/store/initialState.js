@@ -13,7 +13,6 @@ const initialState = {
     lastName: "",
     profilePictureURL: "",
     email: "",
-    sub: null,
     userSocialMedia: {
       linkedIn: "",
       twitter: "",
