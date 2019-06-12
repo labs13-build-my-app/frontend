@@ -39,7 +39,6 @@ export const usersReducer = (state, action) => {
     //     isLoading: true
     //   };
     case "LOADING_COMPLETE":
-      console.log("metting this condition?");
       return {
         ...state,
         isLoading: false
@@ -52,6 +51,7 @@ export const usersReducer = (state, action) => {
         token: false,
         newUser: false,
         isLoading: false,
+        role: "",
         user: {}
       };
     case TOKEN_EXIST:
