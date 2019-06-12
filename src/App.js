@@ -131,19 +131,39 @@ const App = ({ history }) => {
           <Projects dispatch={dispatch} {...props} isLoading={isLoading} />
         )}
       />
+
+      {/* <Route
+        exact
+        path={"/projects"}
+        render={props => <Projects dispatch={dispatch} {...props} />}
+      /> */}
       <Route
         path={"/projects/project/:id"}
         render={props => (
           <Project dispatch={dispatch} {...props} isLoading={isLoading} />
         )}
       />
+      {/* 
+      <Route
+        path={"/projects/project/:id"}
+        render={props => <Project dispatch={dispatch} {...props} />}
+      /> */}
 
       <Route
         path={"/create-project-form"}
         render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
       />
 
-      <Route path={"/create-plan"} render={() => <CreatePlan />} />
+      {/* <Route
+        path={"/create-project-form"}
+        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
+      /> */}
+
+      {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
+      <Route
+        path={"/create-plan"}
+        render={props => <CreatePlan {...props} user={{ user }} />}
+      />
 
       <Route
         path={"/profile"}
@@ -199,6 +219,19 @@ const App = ({ history }) => {
           />
         )}
       /> */}
+
+      {
+        // this will moved to projects view
+      }
+
+      {
+        // this will be moved to dashboard view for project owner
+      }
+
+      {
+        // only for testing
+      }
+      <Route path={"/get-users-test"} componet={User} />
     </div>
   );
 };
