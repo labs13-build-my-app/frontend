@@ -66,12 +66,14 @@ const App = ({ history }) => {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
       saveToken(false)(dispatch);
+    } else if (token === false) {
       //loadingComplete()(dispatch);
+      console.log("finish loading");
       dispatch({ type: "LOADING_COMPLETE" });
     } else if (token && !isLoading) {
       dispatch({ type: "LOADING" });
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   useEffect(() => {
     const handleLoadingProcess = () => {
@@ -155,21 +157,36 @@ const App = ({ history }) => {
         }
       />
 
-      <Route
+      {/* <Route
         path={"/projects"}
         render={props => (
-          <ProjectsContainer {...props} dispatch={dispatch} role={role} />
+          <ProjectsContainer
+            {...props}
+            dispatch={dispatch}
+            role={role}
+            token={token}
+          />
         )}
-      />
+      /> */}
 
       <Route
         path={"/projects"}
         exact
-        render={props => <Projects dispatch={dispatch} {...props} />}
+        render={props => (
+          <Projects
+            dispatch={dispatch}
+            {...props}
+            isLoading={isLoading}
+            token={token}
+            role={role}
+          />
+        )}
       />
       <Route
         path={"/projects/project/:id"}
-        render={props => <Project dispatch={dispatch} {...props} />}
+        render={props => (
+          <Project dispatch={dispatch} {...props} role={role} token={token} />
+        )}
       />
 
       <Route

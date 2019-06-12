@@ -27,18 +27,19 @@ import {
   DELETE_ADMIN_SUCCESS,
   USER_SIGNUP,
   RECORD_URL_LOCATION,
-  TOKEN_EXIST,
-  LOADING_COMPLETE
+  TOKEN_EXIST
+  // LOADING_COMPLETE
 } from "./actions";
 
 export const usersReducer = (state, action) => {
   switch (action.type) {
-    case LOADING_COMPLETE:
-      return {
-        ...state,
-        isLoading: true
-      };
-    case LOADING_COMPLETE:
+    // case LOADING_COMPLETE:
+    //   return {
+    //     ...state,
+    //     isLoading: true
+    //   };
+    case "LOADING_COMPLETE":
+      console.log("metting this condition?");
       return {
         ...state,
         isLoading: false

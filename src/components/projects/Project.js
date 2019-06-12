@@ -1,35 +1,26 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Project = props => {
+const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   const [project, setProject] = useState([]);
-  // let projectData;
-  // if (props.history.location === "/projects") {
-  //   projectData = props;
-  // } else {
-  //   projectData = project;
-  // }
 
-  // console.log(props);
   useEffect(() => {
-    if (!props.match.params.id) {
-      setProject(props);
+    if (!match.params.id) {
+      setProject({ name, description, budget, dueDate });
     }
-    if (props.match.params.id) {
+    if (match.params.id && !isLoading) {
       axios
-        .get(
-          `http://localhost:8000/api/projects/project/${props.match.params.id}`
-        )
+        .get(`http://localhost:8000/api/projects/project/${match.params.id}`)
         .then(res => {
           setProject(res.data);
         });
     }
-  }, [props.match]);
-  // console.log(project);
+  }, [match, isLoading, name, description, budget, dueDate]);
+
   return (
     <div className="Projects">
       <div>
-        <h3 className="ProjectTitle">{props.name}</h3>
+        <h3 className="ProjectTitle">{project.name}</h3>
       </div>
       <div>
         <p>{project.description}</p>
