@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import './Signup.css';
-import { Button } from '../styled-components';
+import { Button } from '../custom-styles';
 
 const SignupForm = styled.form`
   display: flex;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
-import { Button } from "../../styled-components";
+import { Button } from "../../custom-styles";
 
 const Card = styled.div`
   display: flex;
