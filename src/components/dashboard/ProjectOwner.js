@@ -169,7 +169,16 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
           </Card>
         ))
       )}
-      <Button>+ Create New Project</Button>
+      <Button
+        onClick={() =>
+          history.push({
+            state: loggedInUser.id,
+            pathname: "/create-project-form"
+          })
+        }
+      >
+        + Create New Project
+      </Button>
       <Route
         path={"/profile/:id/feedbackmodal"}
         render={() => {
