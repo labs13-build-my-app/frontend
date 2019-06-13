@@ -23,11 +23,11 @@ const ProjectsContainer = ({ role }) => {
         path={"/projects/:project_id"}
         render={props => <ProjectView {...props} role={role} />}
       />
-      <Route
+      {/* <Route
         exact
         path={"/projects/view-plan/:project_id/:plan_id"}
         render={props => <div>plan page view to project</div>}
-      />
+      /> */}
     </div>
   );
 };
