@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Route, Redirect } from "react-router";
 import axios from "axios";
+import { fetchProject } from "../../store/actions";
 
 const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   const [project, setProject] = useState([]);
@@ -19,11 +20,7 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
       setProject({ name, description, budget, dueDate });
     }
     if (match.params.id && !isLoading) {
-      axios
-        .get(`http://localhost:8000/api/projects/project/${match.params.id}`)
-        .then(res => {
-          setProject(res.data);
-        });
+      fetchProject(match.params.id)(setProject);
     }
   }, [match, isLoading, name, description, budget, dueDate]);
 

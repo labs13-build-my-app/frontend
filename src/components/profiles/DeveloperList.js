@@ -8,6 +8,7 @@ import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import { fetchDevelopers } from "../../store/actions";
 
 const Developers = ({ history }) => {
   const useStyles = makeStyles(theme => ({
@@ -50,23 +51,13 @@ const Developers = ({ history }) => {
   const classes = useStyles();
   const [developers, setDevelopers] = useState([]);
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: "http://localhost:8000/api/users/developers",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      }
-    })
-      .then(res => {
-        console.log(res.data);
-        setDevelopers(res.data);
-      })
-      .catch(err => console.log(err));
+    console.log("this is being set up for developers");
+    fetchDevelopers()(setDevelopers);
   }, []);
   if (!developers) {
     return <h1>Loading...</h1>;
   } else {
+    console.log(developers);
     return (
       <div>
         {developers.map(dev => {

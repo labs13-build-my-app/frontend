@@ -2,15 +2,14 @@ import React, { useEffect, useState, useReducer } from "react";
 import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
+import { fetchProjects } from "../../store/actions";
 
 const Projects = ({ match, isLoading }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     if (!isLoading) {
-      axios.get("http://localhost:8000/api/projects/").then(res => {
-        setProjects(res.data);
-      });
+      fetchProjects()(setProjects);
     }
   }, [isLoading]);
 

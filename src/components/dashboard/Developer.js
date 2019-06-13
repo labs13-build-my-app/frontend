@@ -4,6 +4,7 @@ import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button } from "../../styled-components";
+import { fetchDeveloperPlans } from "../../store/actions";
 
 const Card = styled.div`
   display: flex;
@@ -24,22 +25,9 @@ const UserInfo = styled.div`
 const Developer = ({ loggedInUser, user, role }) => {
   const [plans, setPlans] = useState([]);
   useEffect(() => {
-    console.log("Use Effect");
-    axios({
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: `http://localhost:8000/api/account/project-owner/project-list` // this will change
-    })
-      .then(res => {
-        res.data.message === "No Plans" ? setPlans([]) : setPlans(res.data);
-      })
-      .catch(error => {
-        console.log("Error", error);
-      });
-  }, []);
+    console.log(user.id);
+    fetchDeveloperPlans(user.id)(setPlans);
+  }, [user.id, setPlans]);
 
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>

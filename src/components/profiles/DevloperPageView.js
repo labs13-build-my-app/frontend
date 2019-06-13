@@ -4,6 +4,7 @@ import { deepPurple } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
+import { fetchDevelopers } from "../../store/actions";
 
 const DeveloperPageView = ({ match }) => {
   const useStyles = makeStyles({
@@ -21,19 +22,7 @@ const DeveloperPageView = ({ match }) => {
   const [developer, setDeveloper] = useState({});
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: `http://localhost:8000/api/users/developer/${match.params.id}`,
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      }
-    })
-      .then(res => {
-        console.log(res.data);
-        setDeveloper(res.data);
-      })
-      .catch(err => console.log(err));
+    fetchDevelopers(match.params.id)(setDeveloper);
   }, [match.params.id]);
 
   if (!developer) {
