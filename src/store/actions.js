@@ -378,11 +378,7 @@ export const fetchProfile = userId => dispatch => {
     url: `${connection}/api/users/profile/${userId}`
   })
     .then(res => {
-<<<<<<< HEAD
-      // removed <<<<<<<<<<<<<<<<<<<<<<<<<<<????????????????????
-=======
       dispatch(res.data);
->>>>>>> master
     })
     .catch(error => {
       console.log(error);
