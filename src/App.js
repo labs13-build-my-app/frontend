@@ -62,6 +62,7 @@ const App = ({ history }) => {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
       saveToken(false)(dispatch);
+      dispatch({ type: "LOADING_COMPLETE" });
     } else if (token === null && !newUser) {
       //loadingComplete()(dispatch);
       console.log("finish loading");
@@ -83,6 +84,7 @@ const App = ({ history }) => {
         // Step 8 (b) if user exist on database send client role and basic user info
         console.log("fetching user");
         fetchUser(localStorage.getItem("token"))(dispatch);
+        // console.log(" APP FETCH times");
       } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
@@ -168,7 +170,12 @@ const App = ({ history }) => {
       <Route
         path={"/profile"}
         render={props => (
-          <ProfileContainer {...props} dispatch={dispatch} user={user} />
+          <ProfileContainer
+            {...props}
+            dispatch={dispatch}
+            user={user}
+            role={role}
+          />
         )}
       />
 
