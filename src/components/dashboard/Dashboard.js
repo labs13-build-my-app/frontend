@@ -19,7 +19,9 @@ const Dashboard = ({
     console.log("this use effect");
     axios({
       method: "GET",
-      url: `http://localhost:8000/api/users/profile/${match.params.id}`
+      url: `https://build-my-app.herokuapp.com/api/users/profile/${
+        match.params.id
+      }`
     })
       .then(res => {
         console.log("dashboard response", res.data);
