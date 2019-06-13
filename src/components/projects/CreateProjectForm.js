@@ -148,6 +148,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
             label="Due Date"
             name="dueDate"
             type="date"
+            onChange={handleInputChange}
             className={classes.textField}
             InputLabelProps={{
               shrink: true
