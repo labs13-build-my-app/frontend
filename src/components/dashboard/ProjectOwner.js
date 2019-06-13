@@ -9,7 +9,6 @@ import { Button } from "../../styled-components";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
-
 const Card = styled.div`
   display: flex;
   justify-content: space-around;
@@ -122,10 +121,8 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       });
   }, []);
 
-
   console.log("Logged In User", loggedInUser);
   console.log("User", user);
-
 
   console.log("Logged In User", loggedInUser);
   console.log("User", user);
@@ -167,8 +164,6 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                 Add Feedback
               </Button>
             ) : null}
-
-            {/* <<< Modal form update ; Conditional render -> status of the project and if feedback exist or not */}
             <Button>Delete</Button>
             {/* <<< Modal form to delete with confirmation question to delete */}
           </Card>
