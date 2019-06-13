@@ -40,12 +40,19 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
         <p>{project.description}</p>
         <p>{project.budget}</p>
         <p>{project.dueDate}</p>
-        <NavLink
-          className="create-plan"
-          to={{ pathname: "/create-plan", state: { projectid: project.id } }}
-        >
-          Apply to this project
-        </NavLink>
+        {project.projectStatus === "completed" ? (
+          <p>{project.feedback}</p>
+        ) : null}
+
+        {project.projectStatus === "proposal" ? (
+          <NavLink
+            className="create-plan"
+            to={{ pathname: "/create-plan", state: { projectid: project.id } }}
+          >
+            Apply to this project
+          </NavLink>
+        ) : null}
+
         {/* {role ? (
           <Route
             path={"/projects/:project_id/create-plan-modal"}

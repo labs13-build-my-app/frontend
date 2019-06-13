@@ -54,8 +54,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
-  const handleOpen = () => {
+  const handleOpen = projectID => {
     setOpen(true);
+    history.push({
+      pathname: `/profile/${user.id}/feedbackmodal`,
+      state: projectID
+    });
   };
   const handleClose = () => {
     setOpen(false);
@@ -70,24 +74,29 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
     setState(e.target.value);
   };
   // add  axios call
-  const submitHandler = (e, projectID) => {
+  const submitHandler = e => {
     e.preventDefault();
+    console.log("HERE HISTORY", history.location.state);
     const user_id = user.id;
-    const project_id = projectID;
+    const project_id = history.location.state;
     axios({
       method: "put",
       headers: {
         "content-type": "application/json",
         Authorization: localStorage.getItem("token")
       },
-      url: `http://localhost:8000/api/projects/update-project-project-owner/${projectID}`,
+      url: `http://localhost:8000/api/account/project-owner/update-project-project-owner/${
+        history.location.state
+      }`,
       data: {
         feedback,
         user_id,
         project_id
       }
     })
-      .then(res => console.log(res.data))
+      .then(res => {
+        history.push(`/projects/project/${res.data.id}`);
+      })
       .catch(err => console.log(err));
   };
 
@@ -145,23 +154,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             {/* <<< See card page */}
             <p>{project.description}</p>
 
-            <Button onClick={handleOpen}>Add Feedback</Button>
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={open}
-              onClose={handleClose}
-            >
-              <div style={modalStyle} className={classes.paper}>
-                <form onSubmit={e => submitHandler(e, project.id)}>
-                  <imput
-                    name={"feedback"}
-                    value={feedback}
-                    onChange={e => changeHandler(e, setFeedback)}
-                  />
-                </form>
-              </div>
-            </Modal>
+            {project.projectStatus === "completed" ? (
+              <Button onClick={() => handleOpen(project.id)}>
+                Add Feedback
+              </Button>
+            ) : null}
+
             {/* <<< Modal form update ; Conditional render -> status of the project and if feedback exist or not */}
             <Button>Delete</Button>
             {/* <<< Modal form to delete with confirmation question to delete */}
@@ -169,7 +167,30 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         ))
       )}
       <Button>+ Create New Project</Button>
-
+      <Route
+        path={"/profile/:id/feedbackmodal"}
+        render={() => {
+          return (
+            <Modal
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+              open={open}
+              onClose={handleClose}
+            >
+              <div style={modalStyle} className={classes.paper}>
+                <form onSubmit={submitHandler}>
+                  <input
+                    name={"feedback"}
+                    value={feedback}
+                    onChange={e => changeHandler(e, setFeedback)}
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+              </div>
+            </Modal>
+          );
+        }}
+      />
       {/* <Route
       <div className="projects-area" style={{width: '70%', margin: '50px auto'}}>
       <h2 style={{borderBottom: '1px solid black', paddingBottom: '5px', textAlign: 'left'}}>Projects</h2>

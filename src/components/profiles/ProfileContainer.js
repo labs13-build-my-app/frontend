@@ -25,8 +25,6 @@ const ProfileContainer = ({ dispatch, user }) => {
         path={"/profile/developer/:id"}
         render={props => <DeveloperPageView {...props} />}
       />
-<<<<<<< HEAD
-=======
       <Route
         exact
         path={"/profile/project-owner/:project_owner_id"}
@@ -38,7 +36,6 @@ const ProfileContainer = ({ dispatch, user }) => {
         path={"/profile"} // /profile-card-test
         render={props => <ProfileCard {...props} user={user} />}
       />
->>>>>>> master
     </div>
   );
 };
