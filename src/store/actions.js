@@ -194,15 +194,16 @@ export const createProject = project => dispatch => {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     },
-    url: `${connection}/api/projects/create-project-project-owner`,
+    url: `${connection}/api/account/project-owner/create-project-project-owner`,
     data: project
   })
     .then(res => {
-      dispatch({
-        type: CREATE_PROJECT_SUCCESS
-        // Should there be a payload? or invoke fetch list or page for plan
-        // payload: res.data
-      });
+      console.log("ACTIONS CREATE PROJECT", res);
+      // dispatch({
+      //   type: CREATE_PROJECT_SUCCESS
+      //   // Should there be a payload? or invoke fetch list or page for plan
+      //   // payload: res.data
+      // });
     })
     .catch(error => {
       dispatch({ type: FETCH_FAILURE });

@@ -20,7 +20,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     console.log("CREATE PROJECT", state);
     createProject(state)(dispatch);
-    history.push("/test"); // <<< Need to be changed to push to PO's projects page
+    history.push(`/profile/${history.location.state}`);
   });
   const useStyles = makeStyles(theme => ({
     container: {
