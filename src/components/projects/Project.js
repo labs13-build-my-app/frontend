@@ -3,7 +3,11 @@ import { NavLink } from "react-router-dom";
 import { Route, Redirect } from "react-router";
 import axios from "axios";
 import { Card } from '../../custom-styles';
+<<<<<<< Updated upstream
 import moment from 'moment';
+=======
+import {moment} from 'moment';
+>>>>>>> Stashed changes
 
 const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   const [project, setProject] = useState([]);
