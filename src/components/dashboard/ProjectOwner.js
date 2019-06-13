@@ -4,22 +4,11 @@ import { Route } from "react-router";
 import Projects from "../projects/Projects";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
-import { Button } from "../../styled-components";
+import { Button, Card } from "../../custom-styles";
 
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
-
-const Card = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20px auto;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
-  box-shadow: lightgrey 15px 15px 15px;
-  padding: 10px;
-`;
 
 const UserInfo = styled.div`
   text-align: left;
