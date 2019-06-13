@@ -5,7 +5,15 @@ import axios from "axios";
 import { Card } from '../../custom-styles';
 import moment from 'moment';
 
-const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
+const Project = ({
+  match,
+  name,
+  description,
+  budget,
+  dueDate,
+  isLoading,
+  isSignedIn
+}) => {
   const [project, setProject] = useState([]);
 
   // let projectData;
@@ -57,7 +65,7 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
           <p>{project.feedback}</p>
         ) : null}
 
-        {project.projectStatus === "proposal" ? (
+        {project.projectStatus === "proposal" && isSignedIn ? (
           <NavLink
             style={{textDecoration: 'none'}}
             className="create-plan"
