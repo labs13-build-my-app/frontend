@@ -12,7 +12,7 @@ const Projects = ({ match, isLoading }) => {
       fetchProjects()(setProjects);
     }
   }, [isLoading]);
-
+  console.log(isLoading);
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
