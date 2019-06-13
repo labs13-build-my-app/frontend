@@ -31,7 +31,7 @@ const Developer = ({ loggedInUser, user, role }) => {
         "content-type": "application/json",
         Authorization: localStorage.getItem("token")
       },
-      url: `https://build-my-app.herokuapp.com/api/account/project-owner/project-list` // this will change
+      url: `http://localhost:8000/api/account/project-owner/project-list` // this will change
     })
       .then(res => {
         res.data.message === "No Plans" ? setPlans([]) : setPlans(res.data);

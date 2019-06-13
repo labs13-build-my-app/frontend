@@ -32,7 +32,7 @@ const ProjectOwner = ({ loggedInUser, user, role }) => {
         "content-type": "application/json",
         Authorization: localStorage.getItem("token")
       },
-      url: `https://build-my-app.herokuapp.com/api/account/project-owner/project-list`
+      url: `http://localhost:8000/api/account/project-owner/project-list`
     })
       .then(res => {
         res.data.message === "No Projects"
