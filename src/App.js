@@ -103,6 +103,7 @@ const App = ({ history }) => {
     } else if (newUser) {
       history.push("/signup");
     } else if (isSignedIn && location === "/callback") {
+      console.log("asd;lfkjas;dlfhaslkjdghasl;dkfjslka;dfhal;sdhfasljdhfl");
       history.push({
         pathname: `/profile/${user.id}`
       });
