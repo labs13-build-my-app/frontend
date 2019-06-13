@@ -3,7 +3,7 @@ import { useInput } from "../../utils/customhooks/index";
 import { createProject } from "../../store/actions";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import { Button } from "../../styled-components";
+import { Button } from "../../custom-styles";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 
