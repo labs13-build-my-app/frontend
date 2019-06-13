@@ -3,7 +3,7 @@ import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 
-const Projects = ({ match, isLoading }) => {
+const Projects = ({ match, isLoading, isSignedIn }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -32,6 +32,7 @@ const Projects = ({ match, isLoading }) => {
             budget={project.budget}
             dueDate={project.dueDate}
             isLoading={isLoading}
+            isSignedIn={isSignedIn}
           />
         </Link>
       ))}
