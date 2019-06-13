@@ -14,16 +14,16 @@ import {
   updateProject
 } from "../../store/actions";
 
-const Card = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20px auto;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
-  box-shadow: lightgrey 15px 15px 15px;
-  padding: 10px;
-`;
+// const Card = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   margin: 20px auto;
+//   border: 1px solid lightgrey;
+//   border-radius: 15px;
+//   box-shadow: lightgrey 15px 15px 15px;
+//   padding: 10px;
+// `;
 
 const UserInfo = styled.div`
   text-align: left;
