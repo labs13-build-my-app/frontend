@@ -24,13 +24,13 @@ const UserInfo = styled.div`
   width: 50%;
 `;
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
+// function rand() {
+//   return Math.round(Math.random() * 20) - 10;
+// }
 
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 50;
+  const left = 50;
 
   return {
     top: `${top}%`,
@@ -179,7 +179,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             >
               <div style={modalStyle} className={classes.paper}>
                 <form onSubmit={submitHandler}>
-                  <input
+                  <textarea
+                    style={{
+                      width: "400px",
+                      height: "300px",
+                      marginBottom: "10px"
+                    }}
                     name={"feedback"}
                     value={feedback}
                     onChange={e => changeHandler(e, setFeedback)}
