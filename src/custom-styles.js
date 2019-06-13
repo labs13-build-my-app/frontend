@@ -28,3 +28,10 @@ export const Card = styled.div`
   padding: 10px;
 `;
 
+export const PageTitle = styled.h1`
+  text-align: left;
+  border-bottom: 1px black solid;
+  width: 80%;
+  padding-bottom: 5px;
+  margin: 5px auto;
+`;

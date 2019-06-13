@@ -2,6 +2,8 @@ import React, { useEffect, useState, useReducer } from "react";
 import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
+import { PageTitle } from "../../custom-styles";
+
 
 const Projects = ({ match, isLoading }) => {
   const [projects, setProjects] = useState([]);
@@ -19,8 +21,11 @@ const Projects = ({ match, isLoading }) => {
   }
   return (
     <div>
+      <PageTitle>All Projects</PageTitle> 
+      <div style={{width: '80%', margin: '0 auto'}}>
       {projects.map(project => (
         <Link
+          style={{textDecoration: 'none'}}
           className="project-link"
           to={`/projects/project/${project.id}`}
           key={project.id}
@@ -35,6 +40,7 @@ const Projects = ({ match, isLoading }) => {
           />
         </Link>
       ))}
+      </div>
     </div>
   );
 };
