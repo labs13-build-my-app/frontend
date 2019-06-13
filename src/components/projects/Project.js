@@ -3,7 +3,15 @@ import { NavLink } from "react-router-dom";
 import { Route, Redirect } from "react-router";
 import axios from "axios";
 
-const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
+const Project = ({
+  match,
+  name,
+  description,
+  budget,
+  dueDate,
+  isLoading,
+  isSignedIn
+}) => {
   const [project, setProject] = useState([]);
 
   // let projectData;
@@ -43,7 +51,7 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
           <p>{project.feedback}</p>
         ) : null}
 
-        {project.projectStatus === "proposal" ? (
+        {project.projectStatus === "proposal" && isSignedIn ? (
           <NavLink
             className="create-plan"
             to={{ pathname: "/create-plan", state: { projectid: project.id } }}
