@@ -62,14 +62,15 @@ const App = ({ history }) => {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
       saveToken(false)(dispatch);
-      dispatch({ type: "LOADING_COMPLETE" });
+      // dispatch({ type: "LOADING_COMPLETE" });
     } else if (token === null && !newUser) {
       //loadingComplete()(dispatch);
       console.log("finish loading");
       dispatch({ type: "LOADING_COMPLETE" });
-    } else if (token && !isLoading) {
-      dispatch({ type: "LOADING" });
     }
+    // else if (token && !isLoading) {
+    // dispatch({ type: "LOADING" });
+    // }
   }, [token, dispatch]);
 
   useEffect(() => {
@@ -88,11 +89,12 @@ const App = ({ history }) => {
       } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
-        // history.push(location);
+        console.log("should this route to profile page?");
+        history.push(location);
       }
     };
 
-    if (token && isLoading && !fetch) {
+    if (token && isLoading) {
       // step 5 (b) --> continue process request to server
       handleLoadingProcess();
     } else if (!token && !isLoading) {
@@ -100,8 +102,14 @@ const App = ({ history }) => {
       // history.push("/home");
     } else if (newUser) {
       history.push("/signup");
+    } else if (isSignedIn && location === "/callback") {
+      history.push({
+        pathname: `/profile/${user.id}`
+      });
     }
   }, [token, isLoading, location, role, newUser, isSignedIn, history, fetch]);
+
+  console.log(location);
 
   // step 2 first render
   if (token === null) return <h1>Loading...</h1>;
