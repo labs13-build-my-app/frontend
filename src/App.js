@@ -138,7 +138,12 @@ const App = ({ history }) => {
         path={"/projects"}
         exact
         render={props => (
-          <Projects dispatch={dispatch} {...props} isLoading={isLoading} />
+          <Projects
+            dispatch={dispatch}
+            {...props}
+            isSignedIn={isSignedIn}
+            isLoading={isLoading}
+          />
         )}
       />
 

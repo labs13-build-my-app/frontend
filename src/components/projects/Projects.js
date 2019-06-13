@@ -3,8 +3,9 @@ import axios from "axios";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 import { fetchProjects } from "../../store/actions";
+import { PageTitle } from "../../custom-styles";
 
-const Projects = ({ match, isLoading }) => {
+const Projects = ({ match, isLoading, isSignedIn }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -18,22 +19,27 @@ const Projects = ({ match, isLoading }) => {
   }
   return (
     <div>
-      {projects.map(project => (
-        <Link
-          className="project-link"
-          to={`/projects/project/${project.id}`}
-          key={project.id}
-        >
-          <Project
-            match={match}
-            name={project.name}
-            description={project.description}
-            budget={project.budget}
-            dueDate={project.dueDate}
-            isLoading={isLoading}
-          />
-        </Link>
-      ))}
+      <PageTitle>All Projects</PageTitle>
+      <div style={{ width: "80%", margin: "0 auto" }}>
+        {projects.map(project => (
+          <Link
+            style={{ textDecoration: "none" }}
+            className="project-link"
+            to={`/projects/project/${project.id}`}
+            key={project.id}
+          >
+            <Project
+              match={match}
+              name={project.name}
+              description={project.description}
+              budget={project.budget}
+              dueDate={project.dueDate}
+              isLoading={isLoading}
+              isSignedIn={isSignedIn}
+            />
+          </Link>
+        ))}
+      </div>
     </div>
   );
 };
