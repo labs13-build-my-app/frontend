@@ -36,6 +36,7 @@ const Dashboard = ({
   };
 
   console.log("Dashboard logged in user", loggedInUser);
+  console.log("Dashboard user", user);
 
   return <div>{displayBasedOnRole()}</div>;
 };

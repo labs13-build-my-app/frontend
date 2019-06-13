@@ -372,15 +372,13 @@ export const completeLoadingApp = () => dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
 };
 
-export const fetchProfile = (userId, fromatDate, formatBudget) => dispatch => {
+export const fetchProfile = userId => dispatch => {
   axios({
     method: "GET",
     url: `${connection}/api/users/profile/${userId}`
   })
     .then(res => {
-      const newDueDate = fromatDate(res.data.dueDate);
-      const newBudget = formatBudget(res.data.budget);
-      dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+      dispatch(res.data);
     })
     .catch(error => {
       console.log(error);
