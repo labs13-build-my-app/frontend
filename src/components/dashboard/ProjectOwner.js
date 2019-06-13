@@ -9,6 +9,22 @@ import { Button, Card } from "../../custom-styles";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 
+import {
+  fecthProjectOwnerProjectsList,
+  updateProject
+} from "../../store/actions";
+
+// const Card = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   margin: 20px auto;
+//   border: 1px solid lightgrey;
+//   border-radius: 15px;
+//   box-shadow: lightgrey 15px 15px 15px;
+//   padding: 10px;
+// `;
+
 const UserInfo = styled.div`
   text-align: left;
   width: 50%;
@@ -69,45 +85,16 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
     console.log("HERE HISTORY", history.location.state);
     const user_id = user.id;
     const project_id = history.location.state;
-    axios({
-      method: "put",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: `http://localhost:8000/api/account/project-owner/update-project-project-owner/${
-        history.location.state
-      }`,
-      data: {
-        feedback,
-        user_id,
-        project_id
-      }
-    })
-      .then(res => {
-        history.push(`/projects/project/${res.data.id}`);
-      })
-      .catch(err => console.log(err));
+    updateProject(history.location.state, {
+      feedback,
+      user_id,
+      project_id
+    })(history);
   };
 
   useEffect(() => {
     console.log("Use Effect");
-    axios({
-      method: "GET",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: `http://localhost:8000/api/projects/project-list/${user.id}`
-    })
-      .then(res => {
-        res.data.message === "No Projects"
-          ? setProjects([])
-          : setProjects(res.data);
-      })
-      .catch(error => {
-        console.log("Error", error);
-      });
+    fecthProjectOwnerProjectsList()(setProjects);
   }, []);
 
   console.log("Logged In User", loggedInUser);

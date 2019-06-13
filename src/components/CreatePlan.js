@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { createNewPlan } from "../store/actions";
 
 const CreatePlan = ({ history, user }) => {
   const [name, setName] = useState("");
@@ -27,26 +28,16 @@ const CreatePlan = ({ history, user }) => {
       user_id,
       project_id
     };
-    axios({
-      method: "post",
-      headers: {
-        "content-type": "application/json",
-        Authorization: localStorage.getItem("token")
-      },
-      url: "http://localhost:8000/api/plans/createplan",
-      data: {
-        name,
-        description,
-        technologiesToUse,
-        budget,
-        dueDate,
-        planStatus,
-        user_id,
-        project_id
-      }
-    })
-      .then(res => console.log(res, "here"))
-      .catch(err => console.log(err, testData));
+    createNewPlan({
+      name,
+      description,
+      technologiesToUse,
+      budget,
+      dueDate,
+      planStatus,
+      user_id,
+      project_id
+    })();
   };
 
   return (

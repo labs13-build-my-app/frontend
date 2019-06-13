@@ -211,29 +211,29 @@ export const createProject = project => dispatch => {
     });
 };
 
-export const updateProject = (project, id) => dispatch => {
-  dispatch({ type: FETCH_START });
-  axios({
-    method: "PUT",
-    headers: {
-      "content-type": "application/json",
-      Authorization: localStorage.getItem("token")
-    },
-    url: `${connection}/api/account/project-owner/update-profile-project-owner/${id}`,
-    data: project
-  })
-    .then(res => {
-      dispatch({
-        type: UPDATE_PROJECT_SUCCESS
-        // Should there be a payload? or invoke fetch list or page for plan
-        // payload: res.data
-      });
-    })
-    .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
-      console.log(error.message);
-    });
-};
+// export const updateProject = (project, id) => dispatch => {
+//   dispatch({ type: FETCH_START });
+//   axios({
+//     method: "PUT",
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: localStorage.getItem("token")
+//     },
+//     url: `${connection}/api/account/project-owner/update-profile-project-owner/${id}`,
+//     data: project
+//   })
+//     .then(res => {
+//       dispatch({
+//         type: UPDATE_PROJECT_SUCCESS
+//         // Should there be a payload? or invoke fetch list or page for plan
+//         // payload: res.data
+//       });
+//     })
+//     .catch(error => {
+//       dispatch({ type: FETCH_FAILURE });
+//       console.log(error.message);
+//     });
+// };
 
 export const deleteProject = (project, id) => dispatch => {
   dispatch({ type: FETCH_START });
@@ -327,32 +327,33 @@ export const deletePlan = project => dispatch => {
     });
 };
 
-export const fetchProfile = userID => dispatch => {
-  // developer profile page view
-  // project owner profile page view
-};
+// export const fetchProfile = userID => dispatch => {
+//   // developer profile page view
+//   // project owner profile page view
+// };
 
-export const fetchProject = projectID => dispatch => {
-  // project owners project page view
-};
+// export const fetchProject = projectID => dispatch => {
+//   // project owners project page view
+// };
 
-export const fetchPlan = planID => dispatch => {
-  // developers plan to a project page view
-};
+// export const fetchPlan = planID => dispatch => {
+//   // developers plan to a project page view
+// };
 
 export const fetchDevelopers = () => dispatch => {
-  dispatch({ type: FETCH_DEVELOPER_LIST_START });
+  // dispatch({ type: FETCH_DEVELOPER_LIST_START });
   console.log("FETCHING DEVS");
   axios({
     method: "GET",
-    url: "http://localhost:8000/api/users/developers",
+    url: `${connection}/api/users/list-developers`,
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     }
   })
-    .then(developers => {
-      console.log(developers);
+    .then(res => {
+      dispatch(res.data);
+      console.log("response for developers list", res);
     })
     .catch(err => console.log(err));
 
@@ -361,12 +362,141 @@ export const fetchDevelopers = () => dispatch => {
   // should implement from recently logged on to latest logged on
 };
 
-export const fectchProjects = () => dispatch => {
-  // list of projects
-  // list from recently created to first created
-  // should only list in proposal stage
-};
+// export const fectchProjects = () => dispatch => {
+//   // list of projects
+//   // list from recently created to first created
+//   // should only list in proposal stage
+// };
 
 export const completeLoadingApp = () => dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
+};
+
+export const fetchProfile = (userId, fromatDate, formatBudget) => dispatch => {
+  axios({
+    method: "GET",
+    url: `${connection}/api/users/profile/${userId}`
+  })
+    .then(res => {
+      const newDueDate = fromatDate(res.data.dueDate);
+      const newBudget = formatBudget(res.data.budget);
+      dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+    })
+    .catch(error => {
+      console.log(error);
+    });
+};
+
+export const fetchDeveloperPlans = developerId => dispatch => {
+  axios({
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/projects/plan-list-developer/${developerId}` // <<< change to retrive plans
+  })
+    .then(res => {
+      res.data.message === "No Plans" ? dispatch([]) : dispatch(res.data);
+    })
+    .catch(error => {
+      console.log("Error", error);
+    });
+};
+
+export const fecthProjectOwnerProjectsList = projectOwnerId => dispatch => {
+  axios({
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/projects/project-list/${projectOwnerId}` // <<< change to retrive plans
+  })
+    .then(res => {
+      res.data.message === "No Projects" ? dispatch([]) : dispatch(res.data);
+    })
+    .catch(error => {
+      console.log("Error", error);
+    });
+};
+
+// export const fetchDevelopers = () => dispatch => {
+//   axios({
+//     method: "GET",
+//     url: "http://localhost:8000/api/users/developers",
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: localStorage.getItem("token")
+//     }
+//   })
+//     .then(res => {
+//       console.log(res.data);
+//       dispatch(res.data);
+//     })
+//     .catch(err => console.log(err));
+// };
+
+export const fetchDeveloper = developerId => dispatch => {
+  axios({
+    method: "GET",
+    url: `${connection}/api/users/user-developer/${developerId}`,
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    }
+  })
+    .then(res => {
+      console.log(res.data);
+      dispatch(res.data);
+    })
+    .catch(err => console.log(err));
+};
+
+export const fetchProject = projectId => dispatch => {
+  axios
+    .get(`${connection}/api/projects/project/${projectId}`)
+    .then(res => {
+      dispatch(res.data);
+    })
+    .catch(err => console.log(err));
+};
+
+export const fetchProjects = () => dispatch => {
+  axios
+    .get(`${connection}/api/projects/`)
+    .then(res => {
+      dispatch(res.data);
+    })
+    .catch(err => console.log(err));
+};
+
+export const updateProject = (projectId, project, history) => dispatch => {
+  axios({
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/project-owner/update-project-project-owner/${projectId}`,
+    data: project
+  })
+    .then(res => {
+      dispatch.push(`/projects/project/${res.data.id}`);
+    })
+    .catch(err => console.log(err));
+};
+
+export const createNewPlan = plan => dispatch => {
+  axios({
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/plans/createplan`, // <<< might need to change
+    data: plan
+  })
+    .then(res => console.log(res, "here"))
+    .catch(err => console.log(err));
 };
