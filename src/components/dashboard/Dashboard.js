@@ -6,32 +6,45 @@ import Developer from "./Developer";
 import { fetchDashboard } from "../../store/actions";
 import axios from "axios";
 
-const Dashboard = ({ match, dispatch, loggedInUser, role, isSignedIn, history }) => {
+const Dashboard = ({
+  match,
+  dispatch,
+  loggedInUser,
+  role,
+  isSignedIn,
+  history
+}) => {
   const [user, setUser] = useState({});
   useEffect(() => {
     axios({
-        method: "GET",
-        url: `http://localhost:8000/api/users/${match.params.id}`,
-      })
+      method: "GET",
+      url: `http://localhost:8000/api/users/profile/${match.params.id}`
+    })
       .then(res => {
-        setUser(res.data)
+        setUser(res.data);
       })
       .catch(error => {
-        console.log(error)
-      })
-  }, [setUser])
+        console.log(error);
+      });
+  }, [setUser]);
 
   const displayBasedOnRole = () => {
     if (user.role === "Project Owner") {
-      return <ProjectOwner user={user} loggedInUser={loggedInUser} />;
+      return (
+        <ProjectOwner
+          history={history}
+          user={user}
+          loggedInUser={loggedInUser}
+        />
+      );
     } else if (user.role === "Developer") {
       return <Developer user={user} loggedInUser={loggedInUser} />;
     } else {
-      return <h1>Loading</h1>
+      return <h1>Loading</h1>;
     }
   };
-  
-  console.log('Dashboard logged in user', loggedInUser)
+
+  console.log("Dashboard logged in user", loggedInUser);
 
   return <div>{displayBasedOnRole()}</div>;
 };
