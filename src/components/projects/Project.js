@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Route, Redirect } from "react-router";
 import axios from "axios";
+import { Card } from '../../custom-styles';
 
 const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   const [project, setProject] = useState([]);
@@ -32,11 +33,11 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   }
 
   return (
-    <div className="Projects">
-      <div>
-        <h3 className="ProjectTitle">{project.name}</h3>
+    <Card style={{width: '80%', color: 'black'}}>
+      <div style={{width: '25%'}}>
+        <h3 style={{color: 'black'}} className="ProjectTitle">{project.name}</h3>
       </div>
-      <div>
+      <div style={{width: '75%'}}>
         <p>{project.description}</p>
         <p>{project.budget}</p>
         <p>{project.dueDate}</p>
@@ -46,6 +47,7 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
 
         {project.projectStatus === "proposal" ? (
           <NavLink
+            style={{textDecoration: 'none'}}
             className="create-plan"
             to={{ pathname: "/create-plan", state: { projectid: project.id } }}
           >
@@ -67,7 +69,7 @@ const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
           />
         ) : null} */}
       </div>
-    </div>
+    </Card>
   );
 };
 
