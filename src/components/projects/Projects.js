@@ -13,7 +13,7 @@ const Projects = ({ match, isLoading }) => {
       });
     }
   }, [isLoading]);
-
+  console.log(isLoading);
   if (isLoading) {
     return <h1>Loading...</h1>;
   }

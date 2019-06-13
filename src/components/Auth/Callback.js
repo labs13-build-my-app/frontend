@@ -25,6 +25,7 @@ const Callback = ({
       localStorage.removeItem("isLoggedIn");
       localStorage.removeItem("token");
       dispatch({ type: "LOGOUT" });
+      console.log("log1");
 
       // navigate to the home route
       history.replace("/home");
