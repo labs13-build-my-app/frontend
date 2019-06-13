@@ -32,8 +32,7 @@ const Project = ({
   };
   const formatBudget = (
     budgetInCents //function to format cents to dollars
-  ) =>
-    `$${budgetInCents / 100}`; //return a string with a $ and a . for the remaining cents
+  ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
   useEffect(() => {
     if (!match.params.id) {
