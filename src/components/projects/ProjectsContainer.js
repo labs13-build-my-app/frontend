@@ -38,11 +38,11 @@ const ProjectsContainer = ({ role, match, isLoading, isSignedIn }) => {
           />
         )}
       />
-      <Route
+      {/* <Route
         exact
         path={"/projects/view-plan/:project_id/:plan_id"}
         render={props => <div>plan page view to project</div>}
-      />
+      /> */}
     </div>
   );
 };

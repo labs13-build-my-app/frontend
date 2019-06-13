@@ -451,11 +451,17 @@ export const fetchDeveloper = developerId => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const fetchProject = projectId => dispatch => {
+export const fetchProject = (
+  projectId,
+  formatDate,
+  formatBudget
+) => dispatch => {
   axios
     .get(`${connection}/api/projects/project/${projectId}`)
     .then(res => {
-      dispatch(res.data);
+      const newDueDate = formatDate(res.data.dueDate);
+      const newBudget = formatBudget(res.data.budget);
+      dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
     })
     .catch(err => console.log(err));
 };

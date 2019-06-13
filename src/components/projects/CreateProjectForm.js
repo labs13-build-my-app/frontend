@@ -19,7 +19,8 @@ const StyledCard = styled.form`
 const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     console.log("CREATE PROJECT", state);
-    createProject(state)(dispatch);
+    const budgetDisplay = { ...state, budget: state.budget * 100 };
+    createProject(budgetDisplay)(dispatch);
     history.push(`/profile/${history.location.state}`);
   });
   const useStyles = makeStyles(theme => ({

@@ -94,7 +94,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
 
   useEffect(() => {
     console.log("Use Effect");
-    fecthProjectOwnerProjectsList()(setProjects);
+    fecthProjectOwnerProjectsList(user.id)(setProjects);
   }, []);
 
   console.log("Logged In User", loggedInUser);
