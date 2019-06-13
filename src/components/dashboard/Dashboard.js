@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router";
 import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
-import { fetchDashboard } from "../../store/actions";
+import { fetchDashboard, fetchProfile } from "../../store/actions";
 import axios from "axios";
 
 const Dashboard = ({
@@ -16,29 +16,19 @@ const Dashboard = ({
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    console.log("this use effect");
-    axios({
-      method: "GET",
+    fetchProfile(match.params.id)(setUser);
+  }, [setUser, history.location.state, match.params.id]);
 
-      url: `http://localhost:8000/api/users/profile/${match.params.id}`
-    })
-      .then(res => {
-        setUser(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-  }, [setUser, history.location.state]);
-  console.log("user", user);
-  console.log(history.location.state);
   const displayBasedOnRole = () => {
     if (user.role === "Project Owner") {
-      return <ProjectOwner           history={history}
+      return (
+        <ProjectOwner
+          history={history}
           user={user}
-          loggedInUser={loggedInUser} />;
+          loggedInUser={loggedInUser}
+        />
+      );
     } else if (user.role === "Developer" || history.location.state) {
-
       return <Developer user={user} loggedInUser={loggedInUser} />;
     } else {
       return <h1>Loading</h1>;

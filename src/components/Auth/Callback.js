@@ -56,7 +56,8 @@ const Callback = ({
       logout();
     } else {
       getToken();
-      history.push("/");
+      history.push("/profile");
+      // dispatch({ type: "LOADING" });
     }
   }, [history, token, isSignedIn, dispatch, fetch]);
 
