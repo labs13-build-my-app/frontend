@@ -7,7 +7,6 @@ import { Card } from '../../custom-styles';
 const Project = ({ match, name, description, budget, dueDate, isLoading }) => {
   const [project, setProject] = useState([]);
 
-  console.log("project state: ", project);
   // let projectData;
   // if (props.history.location === "/projects") {
   //   projectData = props;
