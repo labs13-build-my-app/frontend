@@ -169,7 +169,12 @@ const App = ({ history }) => {
       <Route
         path={"/profile"}
         render={props => (
-          <ProfileContainer {...props} dispatch={dispatch} user={user} />
+          <ProfileContainer
+            {...props}
+            dispatch={dispatch}
+            user={user}
+            role={role}
+          />
         )}
       />
 

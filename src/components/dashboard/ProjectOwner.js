@@ -5,8 +5,10 @@ import Projects from "../projects/Projects";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button } from "../../styled-components";
+
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
+
 
 const Card = styled.div`
   display: flex;
@@ -120,6 +122,11 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       });
   }, []);
 
+
+  console.log("Logged In User", loggedInUser);
+  console.log("User", user);
+
+
   console.log("Logged In User", loggedInUser);
   console.log("User", user);
   console.log("Projects", projects);
@@ -142,6 +149,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
           <p>{role}</p>
         </UserInfo>
       </Card>
+
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
@@ -220,8 +228,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         ? <Button style={{margin: '50px auto'}}>+ Create New Project</Button>
         : null
       }    
+
       </div>
-          {/* <Route
+      {/* <Route
         path={"/dashboard/create-project"}
         render={props => <h1>create project model for project owner</h1>}
       /> */}

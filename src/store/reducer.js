@@ -51,6 +51,7 @@ export const usersReducer = (state, action) => {
         token: false,
         newUser: false,
         isLoading: false,
+        isSignedIn: false,
         role: "",
         user: {}
       };

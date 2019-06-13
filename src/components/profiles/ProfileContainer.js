@@ -5,7 +5,7 @@ import Developers from "./DeveloperList";
 import DeveloperPageView from "./DevloperPageView";
 import Dashboard from "../dashboard/Dashboard";
 
-const ProfileContainer = ({ dispatch, user }) => {
+const ProfileContainer = ({ history, dispatch, user }) => {
   return (
     <div>
       {/* public routes */}
