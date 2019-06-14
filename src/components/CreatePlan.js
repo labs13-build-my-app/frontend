@@ -15,7 +15,7 @@ const CreatePlan = ({ history, user }) => {
 
   const submitHandler = e => {
     e.preventDefault();
-    const user_id = user.user.id;
+    const user_id = user.id;
     const project_id = history.location.state.projectid;
     const planStatus = "started";
     const testData = {
@@ -28,16 +28,21 @@ const CreatePlan = ({ history, user }) => {
       user_id,
       project_id
     };
-    createNewPlan({
-      name,
-      description,
-      technologiesToUse,
-      budget,
-      dueDate,
-      planStatus,
-      user_id,
+    createNewPlan(
+      {
+        name,
+        description,
+        technologiesToUse,
+        budget,
+        dueDate,
+        planStatus,
+        user_id,
+        project_id
+      },
       project_id
-    })();
+    )();
+
+    history.push(`/profile/${user.id}`);
   };
 
   return (

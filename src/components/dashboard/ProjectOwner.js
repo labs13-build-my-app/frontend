@@ -13,6 +13,20 @@ import {
   fecthProjectOwnerProjectsList,
   updateProject
 } from "../../store/actions";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import {
+  FaGithub,
+  FaTwitter,
+  FaLinkedin,
+  FaUser,
+  FaEnvelope,
+  FaDev,
+  FaBook
+} from "react-icons/fa";
 
 // const Card = styled.div`
 //   display: flex;
@@ -29,6 +43,10 @@ const UserInfo = styled.div`
   text-align: left;
   width: 50%;
 `;
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 // function rand() {
 //   return Math.round(Math.random() * 20) - 10;
@@ -82,7 +100,6 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   // add  axios call
   const submitHandler = e => {
     e.preventDefault();
-    console.log("HERE HISTORY", history.location.state);
     const user_id = user.id;
     const project_id = history.location.state;
     updateProject(history.location.state, {
@@ -93,16 +110,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   };
 
   useEffect(() => {
-    console.log("Use Effect");
     fecthProjectOwnerProjectsList(user.id)(setProjects);
   }, []);
 
-  console.log("Logged In User", loggedInUser);
-  console.log("User", user);
-
-  console.log("Logged In User", loggedInUser);
-  console.log("User", user);
-  console.log("Projects", projects);
+  const displayOnlyOnLoggedInUser = () => {
+    return loggedInUser.id === user.id ? null : { display: "none" };
+  };
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -116,10 +129,51 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
           />
         </div>
         <UserInfo>
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
-          <p>{role}</p>
+          <List component="userInfo" aria-label="Dashboard user info list">
+            <ListItem>
+              <ListItemIcon>
+                <FaUser />
+              </ListItemIcon>
+              <ListItemText>
+                {user.firstName} {user.lastName}
+              </ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <FaEnvelope />
+              </ListItemIcon>
+              <ListItemText>{user.email}</ListItemText>
+            </ListItem>
+
+            <Divider />
+            <ListItem>
+              <ListItemIcon>
+                <FaGithub />
+              </ListItemIcon>
+              <ListItemLink href={`https://github.com/${user.gitHub}`}>
+                <ListItemText primary={`${user.gitHub}`} />
+              </ListItemLink>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <FaLinkedin />
+              </ListItemIcon>
+              <ListItemLink
+                href={`https://www.linkedin.com/in/${user.linkedIn}`}
+              >
+                <ListItemText primary={`${user.linkedIn}`} />
+              </ListItemLink>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <FaTwitter />
+              </ListItemIcon>
+              <ListItemLink href={`https://twitter.com/${user.twitter}`}>
+                <ListItemText primary={`${user.twitter}`} />
+              </ListItemLink>
+            </ListItem>
+          </List>
         </UserInfo>
       </Card>
 
@@ -136,16 +190,23 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             <p>{project.description}</p>
 
             {project.projectStatus === "completed" ? (
-              <Button onClick={() => handleOpen(project.id)}>
+              // hide when loggedIn !== user
+              <Button
+                style={displayOnlyOnLoggedInUser()}
+                onClick={() => handleOpen(project.id)}
+              >
                 Add Feedback
               </Button>
             ) : null}
-            <Button>Delete</Button>
+            {/* // hide when loggedIn !== user */}
+            <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
             {/* <<< Modal form to delete with confirmation question to delete */}
           </Card>
         ))
       )}
+      {/* // hide when loggedIn !== user */}
       <Button
+        style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
             state: loggedInUser.id,

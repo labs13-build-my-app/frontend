@@ -5,6 +5,20 @@ import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button } from "../../custom-styles";
 import { fetchDeveloperPlans, getDeveloperFeedback } from "../../store/actions";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import {
+  FaGithub,
+  FaTwitter,
+  FaLinkedin,
+  FaUser,
+  FaEnvelope,
+  FaDev,
+  FaBook
+} from "react-icons/fa";
 
 const Card = styled.div`
   display: flex;
@@ -21,6 +35,10 @@ const UserInfo = styled.div`
   text-align: left;
   width: 50%;
 `;
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
@@ -45,9 +63,65 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           />
         </div>
         <UserInfo>
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
+          <List component="userInfo" aria-label="Dashboard user info list">
+            <ListItem>
+              <ListItemIcon>
+                <FaUser />
+              </ListItemIcon>
+              <ListItemText>
+                {user.firstName} {user.lastName}
+              </ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <FaEnvelope />
+              </ListItemIcon>
+              <ListItemText>{user.email}</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <FaDev />
+              </ListItemIcon>
+              <ListItemText>{user.devType}</ListItemText>
+            </ListItem>
+
+            <ListItem>
+              <ListItemIcon>
+                <FaBook />
+              </ListItemIcon>
+              <ListItemText>{user.skills}</ListItemText>
+            </ListItem>
+
+            <Divider />
+            <ListItem>
+              <ListItemIcon>
+                <FaGithub />
+              </ListItemIcon>
+              <ListItemLink href={`https://github.com/${user.gitHub}`}>
+                <ListItemText primary={`${user.gitHub}`} />
+              </ListItemLink>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <FaLinkedin />
+              </ListItemIcon>
+              <ListItemLink
+                href={`https://www.linkedin.com/in/${user.linkedIn}`}
+              >
+                <ListItemText primary={`${user.linkedIn}`} />
+              </ListItemLink>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon>
+                <FaTwitter />
+              </ListItemIcon>
+              <ListItemLink href={`https://twitter.com/${user.twitter}`}>
+                <ListItemText primary={`${user.twitter}`} />
+              </ListItemLink>
+            </ListItem>
+          </List>
           <p>{role}</p>
         </UserInfo>
       </Card>
@@ -65,16 +139,22 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
           plans.map(plan => (
-            <Card key={plan.id} className={"card plansCard"}>
+            <Card
+              key={plan.id}
+              className={"card plansCard"}
+              onClick={() => history.push(`/projects/plan/${plan.id}`)}
+            >
               {plan.image_url ? <img src={plan.image_url} /> : null}
               <h1>{plan.name}</h1>
               <p>{plan.description}</p>
+              <p>{plan.planStatus}</p>
             </Card>
           ))
         )}
-        {user.id === loggedInUser.id ? (
+        {/* maybe move this button on project */}
+        {/* {user.id === loggedInUser.id ? (
           <Button style={{ margin: "50px auto" }}>+ Create New plan</Button>
-        ) : null}
+        ) : null} */}
       </div>
       <div className="projectsFeedback">
         {feedbacks.length === 0 ? (

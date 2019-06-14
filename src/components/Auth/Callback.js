@@ -47,7 +47,9 @@ const Callback = ({
 
     // function to login
     const login = () => {
-      auth.authorize();
+      auth.authorize({
+        prompt: "login"
+      });
     };
 
     if (history.location.state === "sign on") {

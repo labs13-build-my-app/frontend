@@ -11,13 +11,14 @@ import Projects from "./components/projects/Projects";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Project from "./components/projects/Project";
+import Plan from "./components/projects/Plan";
 
 import "./App.css";
 // complete routing
 // must implement propTypes for testing
 // review state and actions
 
-const App = ({ history }) => {
+const App = ({ history, match }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
   const {
@@ -58,6 +59,7 @@ const App = ({ history }) => {
       // step 5 (b) if token send token to server  -- token: true
       // will render a 3rd time after this
       saveToken(true)(dispatch);
+      // dispatch({ type: "LOADING_COMPLETE" })
     } else if (token === null) {
       // step 5 (a) if no token stop loading process, set isLoading to false -- isLoading: false
       // will render a 3rd time after this
@@ -147,7 +149,12 @@ const App = ({ history }) => {
           />
         )}
       />
-
+      <Route
+        path={"/projects/plan/:plan_id"}
+        render={props => (
+          <Plan {...props} isLoading={isLoading} isSignedIn={isSignedIn} />
+        )}
+      />
       {/* <Route
         exact
         path={"/projects"}
@@ -156,7 +163,13 @@ const App = ({ history }) => {
       <Route
         path={"/projects/project/:id"}
         render={props => (
-          <Project dispatch={dispatch} {...props} isLoading={isLoading} />
+          <Project
+            dispatch={dispatch}
+            {...props}
+            isSignedIn={isSignedIn}
+            isLoading={isLoading}
+            role={role}
+          />
         )}
       />
       {/* 
@@ -178,7 +191,7 @@ const App = ({ history }) => {
       {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
       <Route
         path={"/create-plan"}
-        render={props => <CreatePlan {...props} user={{ user }} />}
+        render={props => <CreatePlan {...props} user={user} />}
       />
 
       <Route

@@ -16,6 +16,7 @@ const Dashboard = ({
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
+    console.log();
     fetchProfile(match.params.id)(setUser);
   }, [setUser, history.location.state, match.params.id]);
 

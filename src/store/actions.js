@@ -491,14 +491,14 @@ export const updateProject = (projectId, project, history) => dispatch => {
     .catch(err => console.log(err));
 };
 
-export const createNewPlan = plan => dispatch => {
+export const createNewPlan = (plan, project_id) => dispatch => {
   axios({
     method: "post",
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     },
-    url: `${connection}/api/plans/createplan`, // <<< might need to change
+    url: `${connection}/api/account/developer/submit-plan-developer/${project_id}`, // <<< might need to change
     data: plan
   })
     .then(res => console.log(res, "here"))
@@ -509,6 +509,24 @@ export const getDeveloperFeedback = developer_id => dispatch => {
   axios({
     method: "get",
     url: `${connection}/api/projects/developer-feedback/${developer_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
+export const listProjectPlans = project_id => dispatch => {
+  axios({
+    method: "get",
+    url: `${connection}/api/projects/plan-list-project/${project_id}` // <<< might need to change
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
+export const fetchPlan = plan_id => dispatch => {
+  axios({
+    method: "get",
+    url: `${connection}/api/projects/plan-view/${plan_id}`
   })
     .then(res => dispatch(res.data))
     .catch(err => console.log(err));
