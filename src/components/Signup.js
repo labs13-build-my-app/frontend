@@ -1,15 +1,15 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Auth from "./Auth/Auth";
 import { signup } from "../store/actions";
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import './Signup.css';
-import { Button } from '../custom-styles';
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import "./Signup.css";
+import { Button } from "../custom-styles";
 
 const SignupForm = styled.form`
   display: flex;
@@ -22,11 +22,10 @@ const SignupForm = styled.form`
   padding: 15px 10px;
   width: 700px;
   box-shadow: 10px 10px 10px grey;
-  div{
+  div {
     display: flex;
   }
 `;
-
 
 const auth = new Auth();
 const useStyles = makeStyles(theme => ({
@@ -42,19 +41,19 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
+    display: "flex",
+    flexWrap: "wrap"
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
+    marginTop: theme.spacing(2)
+  }
 }));
 
-const Signup = ({ token, dispatch, history }) => {
+const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
   const classes = useStyles();
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -68,7 +67,6 @@ const Signup = ({ token, dispatch, history }) => {
 
   useEffect(() => {
     if (!token) {
-      console.log("in here", token);
       auth.login();
     }
   }, [token, history]);
@@ -90,9 +88,14 @@ const Signup = ({ token, dispatch, history }) => {
       gitHub,
       twitter
     })(dispatch);
-    history.push("/dashboard");
+    // new user is still set to true
+    // need to set newUser to false after signup
+    // should not push to dashboard
+    // should push to profile page
+    // history.push("/dashboard");
   };
-  if (!localStorage.getItem("token")) {
+
+  if (isSignedIn || isLoading || !localStorage.getItem("token")) {
     return <div>loading...</div>;
   }
   return (
@@ -107,80 +110,80 @@ const Signup = ({ token, dispatch, history }) => {
               value={role}
               onChange={event => changeHandler(event, setRole)}
               inputProps={{
-                name: 'age',
-                id: 'age-simple',
+                name: "age",
+                id: "age-simple"
               }}
             >
-              <MenuItem value=""></MenuItem>
-              <MenuItem value={'Developer'}>Developer</MenuItem>
-              <MenuItem value={'Project Owner'}>Project Owner</MenuItem>
+              <MenuItem value="" />
+              <MenuItem value={"Developer"}>Developer</MenuItem>
+              <MenuItem value={"Project Owner"}>Project Owner</MenuItem>
             </Select>
           </FormControl>
-      </div>
+        </div>
         <div className="general-info">
-        <TextField
-          id="first-name"
-          label="First Name"
-          className={classes.textField}
-          value={firstName}
-          onChange={event => changeHandler(event, setFirstName)}
-          type="text"
-          margin="normal"
-          variant="outlined"
-        />        
-        <TextField
-          id="last-name"
-          label="Last Name"
-          className={classes.textField}
-          value={lastName}
-          onChange={event => changeHandler(event, setLastName)}
-          type="text"
-          margin="normal"
-          variant="outlined"
-        />        
-        <TextField
-          id="email"
-          label="E-Mail"
-          className={classes.textField}
-          value={email}
-          onChange={event => changeHandler(event, setEmail)}
-          type="text"
-          margin="normal"
-          variant="outlined"
-        />
-      </div>
-      {role === 'Developer' 
-        ? <div className="dev-info">
           <TextField
-            id="skills"
-            label="Skills"
+            id="first-name"
+            label="First Name"
             className={classes.textField}
-            value={skills}
-            onChange={event => changeHandler(event, setSkills)}
+            value={firstName}
+            onChange={event => changeHandler(event, setFirstName)}
             type="text"
             margin="normal"
             variant="outlined"
           />
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="name-simple">Dev Type</InputLabel>
-            <Select
-              value={devType}
-              onChange={event => changeHandler(event, setDevType)}
-              inputProps={{
-                name: 'devType',
-                id: 'name-simple',
-              }}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value='Web'>Web</MenuItem>
-              <MenuItem value='iOS'>iOS</MenuItem>
-              <MenuItem value='Android'>Android</MenuItem>
-            </Select>
-          </FormControl>
+          <TextField
+            id="last-name"
+            label="Last Name"
+            className={classes.textField}
+            value={lastName}
+            onChange={event => changeHandler(event, setLastName)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="email"
+            label="E-Mail"
+            className={classes.textField}
+            value={email}
+            onChange={event => changeHandler(event, setEmail)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+        </div>
+        {role === "Developer" ? (
+          <div className="dev-info">
+            <TextField
+              id="skills"
+              label="Skills"
+              className={classes.textField}
+              value={skills}
+              onChange={event => changeHandler(event, setSkills)}
+              type="text"
+              margin="normal"
+              variant="outlined"
+            />
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="name-simple">Dev Type</InputLabel>
+              <Select
+                value={devType}
+                onChange={event => changeHandler(event, setDevType)}
+                inputProps={{
+                  name: "devType",
+                  id: "name-simple"
+                }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value="Web">Web</MenuItem>
+                <MenuItem value="iOS">iOS</MenuItem>
+                <MenuItem value="Android">Android</MenuItem>
+              </Select>
+            </FormControl>
           </div>
-          : null}
+        ) : null}
         <div className="socialmedia-info">
           <TextField
             id="linkedin"
@@ -192,26 +195,26 @@ const Signup = ({ token, dispatch, history }) => {
             margin="normal"
             variant="outlined"
           />
-        <TextField
-          id="github"
-          label="GitHub"
-          className={classes.textField}
-          value={gitHub}
-          onChange={event => changeHandler(event, setGitHub)}
-          type="text"
-          margin="normal"
-          variant="outlined"
-        />
-        <TextField
-          id="twitter"
-          label="Twitter"
-          className={classes.textField}
-          value={twitter}
-          onChange={event => changeHandler(event, setTwitter)}
-          type="text"
-          margin="normal"
-          variant="outlined"
-        />
+          <TextField
+            id="github"
+            label="GitHub"
+            className={classes.textField}
+            value={gitHub}
+            onChange={event => changeHandler(event, setGitHub)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="twitter"
+            label="Twitter"
+            className={classes.textField}
+            value={twitter}
+            onChange={event => changeHandler(event, setTwitter)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
         </div>
         <Button type="submit">Submit</Button>
       </SignupForm>

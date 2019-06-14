@@ -16,7 +16,6 @@ const Dashboard = ({
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    console.log();
     fetchProfile(match.params.id)(setUser);
   }, [setUser, history.location.state, match.params.id]);
 
@@ -27,17 +26,15 @@ const Dashboard = ({
           history={history}
           user={user}
           loggedInUser={loggedInUser}
+          role={role}
         />
       );
     } else if (user.role === "Developer" || history.location.state) {
-      return <Developer user={user} loggedInUser={loggedInUser} />;
+      return <Developer user={user} loggedInUser={loggedInUser} role={role} />;
     } else {
       return <h1>Loading</h1>;
     }
   };
-
-  console.log("Dashboard logged in user", loggedInUser);
-  console.log("Dashboard user", user);
 
   return <div>{displayBasedOnRole()}</div>;
 };

@@ -54,7 +54,6 @@ const App = ({ history }) => {
   // on second render
   useEffect(() => {
     if (!token && localStorage.getItem("token")) {
-      console.log("token is going to be set to true", token);
       // step 5 (b) if token send token to server  -- token: true
       // will render a 3rd time after this
       saveToken(true)(dispatch);
@@ -66,7 +65,6 @@ const App = ({ history }) => {
       dispatch({ type: "LOADING_COMPLETE" });
     } else if (token === null && !newUser) {
       //loadingComplete()(dispatch);
-      console.log("finish loading");
       dispatch({ type: "LOADING_COMPLETE" });
     }
     // else if (token && !isLoading) {
@@ -76,21 +74,16 @@ const App = ({ history }) => {
 
   useEffect(() => {
     const handleLoadingProcess = () => {
-      // if(location === "/callback") {
-      //   history.push("/")
-      // }
       if (!role) {
         // step 6 send token to server retrive user info and role and set to state
         // step 7 (b) if ID check user exist on database
         // (b) is login process
         // Step 8 (b) if user exist on database send client role and basic user info
-        console.log("fetching user");
         fetchUser(localStorage.getItem("token"))(dispatch);
         // console.log(" APP FETCH times");
       } else if (isSignedIn) {
         // Step 11 (b) client routes user to location from state
         // Step 12 (b) data is loaded for specific url view
-        console.log("should this route to profile page?");
         history.push(location);
       }
     };
@@ -104,7 +97,6 @@ const App = ({ history }) => {
     } else if (newUser) {
       history.push("/signup");
     } else if (isSignedIn && location === "/callback") {
-      console.log("asd;lfkjas;dlfhaslkjdghasl;dkfjslka;dfhal;sdhfasljdhfl");
       history.push({
         pathname: `/profile/${user.id}`
       });

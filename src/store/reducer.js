@@ -91,6 +91,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         isSignedIn: true,
         isLoading: false,
+        newUser: false,
         role: action.payload.role,
         user: {
           ...state.user,
@@ -114,7 +115,7 @@ export const usersReducer = (state, action) => {
       return {
         ...state,
         fetch: false,
-
+        newUser: false,
         isSignedIn: true,
         isLoading: false,
         role: action.payload.role,
@@ -139,6 +140,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         isSignedIn: true,
         isLoading: false,
+        newUser: false,
         role: action.payload.role,
         user: {
           ...state.user,

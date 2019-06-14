@@ -2,9 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router";
 import Callback from "./Auth/Callback";
 import Signup from "./Signup";
-// import Login from "./Login";
 import NavContainer from "./NavContainer";
-// import Auth from "./Auth/Auth";
 
 const Home = ({
   isSignedIn,
@@ -19,9 +17,6 @@ const Home = ({
   // useEffect(() => {});
 
   if (token === null) return <h1>Loading...2.0</h1>;
-  // if (token && isLoading) {
-  //   return <Login />;
-  // }
 
   return (
     <div>
@@ -35,11 +30,10 @@ const Home = ({
         newUser={newUser}
       />
 
-      {/* <ProfileCard user={user} /> */}
-
       {/* can add a marketing Routing component for home */}
 
       {/* this is our auth route that calls auth0 for token */}
+
       <Route
         path="/callback"
         render={props =>
@@ -52,7 +46,7 @@ const Home = ({
               role={role}
               token={token}
               isLoading={isLoading}
-              fetch
+              fetch={fetch}
             />
           )
         }
@@ -65,7 +59,13 @@ const Home = ({
           isSignedIn ? (
             <Redirect to="/home" />
           ) : (
-            <Signup {...props} dispatch={dispatch} token={token} />
+            <Signup
+              {...props}
+              dispatch={dispatch}
+              token={token}
+              isSignedIn={isSignedIn}
+              isLoading={isLoading}
+            />
           )
         }
       />

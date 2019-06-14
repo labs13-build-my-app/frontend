@@ -5,7 +5,7 @@ import Developers from "./DeveloperList";
 import DeveloperPageView from "./DevloperPageView";
 import Dashboard from "../dashboard/Dashboard";
 
-const ProfileContainer = ({ history, dispatch, user }) => {
+const ProfileContainer = ({ history, dispatch, user, role }) => {
   return (
     <div>
       <Switch>
@@ -14,17 +14,26 @@ const ProfileContainer = ({ history, dispatch, user }) => {
         <Route
           exact
           path={"/profile/developers"}
-          render={props => <Developers dispatch={dispatch} {...props} />}
+          render={props => (
+            <Developers dispatch={dispatch} {...props} role={role} />
+          )}
         />
         <Route
           exact
           path={"/profile/developer/:id"}
-          render={props => <DeveloperPageView {...props} user={user} />}
+          render={props => (
+            <DeveloperPageView {...props} user={user} role={role} />
+          )}
         />
         <Route
           path={"/profile/:id"} // = developers
           render={props => (
-            <Dashboard {...props} dispatch={dispatch} loggedInUser={user} />
+            <Dashboard
+              {...props}
+              dispatch={dispatch}
+              loggedInUser={user}
+              role={role}
+            />
           )}
         />
         <Route
