@@ -37,7 +37,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = true ? local : heroku;
+const connection = false ? local : heroku;
 
 export const locationRestore = location => dispatch => {
   dispatch({
@@ -529,5 +529,19 @@ export const fetchPlan = plan_id => dispatch => {
     url: `${connection}/api/projects/plan-view/${plan_id}`
   })
     .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
+export const acceptPlan = (project_id, plan) => dispatch => {
+  axios({
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/project-owner/accept-plan/${project_id}`,
+    data: plan
+  })
+    .then(res => console.log(res, "here"))
     .catch(err => console.log(err));
 };

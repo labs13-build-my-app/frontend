@@ -5,7 +5,7 @@ import ProjectView from "./ProjectView";
 import store from "../../store";
 import { Route, Switch } from "react-router";
 
-const ProjectsContainer = ({ role, match, isLoading, isSignedIn }) => {
+const ProjectsContainer = ({ role, match, isLoading, isSignedIn, history }) => {
   const [projects, projectsDispatch] = useReducer(
     store.projectsReducer,
     store.initialState

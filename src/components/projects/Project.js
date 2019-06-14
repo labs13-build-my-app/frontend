@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Route, Redirect } from "react-router";
 import axios from "axios";
-import { fetchProject, listProjectPlans } from "../../store/actions";
+import {
+  fetchProject,
+  listProjectPlans,
+  acceptPlan
+} from "../../store/actions";
 
 import { Card } from "../../custom-styles";
 import moment from "moment";
@@ -15,7 +19,9 @@ const Project = ({
   dueDate,
   isLoading,
   isSignedIn,
-  role
+  role,
+  history,
+  location
 }) => {
   const [project, setProject] = useState([]);
 
@@ -54,6 +60,12 @@ const Project = ({
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+
+  const clickHandler = (e, id, status) => {
+    e.preventDefault();
+    acceptPlan(match.params.id, { planStatus: status, id: id })();
+    window.location.reload();
+  };
 
   console.log(projectPlans);
   return (
@@ -121,6 +133,25 @@ const Project = ({
                   <p>Can Deliver by {plan.dueDate}</p>
                   <p>Plan Status: {plan.planStatus}</p>
                 </div>
+                {/* Conditional rendering dependent on if PO is the user viewing project
+                Conditional rendering dependent on if plan status is proposal */}
+                <button
+                  type={"submit"}
+                  onClick={e => {
+                    return clickHandler(e, plan.id, "selected");
+                  }}
+                >
+                  Accept
+                </button>
+                {/* decline should remove card from dashboard */}
+                <button
+                  type={"submit"}
+                  onClick={e => {
+                    return clickHandler(e, plan.id, "declined");
+                  }}
+                >
+                  Decline
+                </button>
               </Card>
             );
           })}
