@@ -40,7 +40,7 @@ const Home = ({
       {/* can add a marketing Routing component for home */}
 
       {/* this is our auth route that calls auth0 for token */}
-      <Route
+      {/* <Route
         path="/callback"
         render={props =>
           token && props.history.location.state !== "logout" ? (
@@ -56,7 +56,7 @@ const Home = ({
             />
           )
         }
-      />
+      /> */}
 
       {/* this is our signup route if isSignedIn is false it Redirects to home */}
       <Route
