@@ -115,7 +115,7 @@ const Project = ({
         </div>
       </Card>
       <div className={"project-plans"}>
-        {projectPlans.length &&
+        {projectPlans &&
           projectPlans.map(plan => {
             return (
               <Card style={{ width: "80%", color: "black" }}>
