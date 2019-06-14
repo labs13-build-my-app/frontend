@@ -11,13 +11,14 @@ import Projects from "./components/projects/Projects";
 import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Project from "./components/projects/Project";
+import Plan from "./components/projects/Plan";
 
 import "./App.css";
 // complete routing
 // must implement propTypes for testing
 // review state and actions
 
-const App = ({ history }) => {
+const App = ({ history, match }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
   const {
@@ -140,7 +141,12 @@ const App = ({ history }) => {
           />
         )}
       />
-
+      <Route
+        path={"/projects/plan/:plan_id"}
+        render={props => (
+          <Plan {...props} isLoading={isLoading} isSignedIn={isSignedIn} />
+        )}
+      />
       {/* <Route
         exact
         path={"/projects"}

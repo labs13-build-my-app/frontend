@@ -84,9 +84,9 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
       email,
       skills,
       devType,
-      linkedIn,
-      gitHub,
-      twitter
+      linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
+      gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
+      twitter: twitter.split("/")[twitter.split("/").length - 1]
     })(dispatch);
     // new user is still set to true
     // need to set newUser to false after signup
