@@ -4,7 +4,7 @@ import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button } from "../../custom-styles";
-import { fetchDeveloperPlans } from "../../store/actions";
+import { fetchDeveloperPlans, getDeveloperFeedback } from "../../store/actions";
 
 const Card = styled.div`
   display: flex;
@@ -22,13 +22,16 @@ const UserInfo = styled.div`
   width: 50%;
 `;
 
-const Developer = ({ loggedInUser, user, role }) => {
+const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
+  const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
     console.log(user.id);
     fetchDeveloperPlans(user.id)(setPlans);
+    getDeveloperFeedback(user.id)(setfeedback);
   }, [user.id, setPlans]);
 
+  console.log("feedbacks", feedbacks);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -62,7 +65,7 @@ const Developer = ({ loggedInUser, user, role }) => {
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
           plans.map(plan => (
-            <Card className={"card plansCard"}>
+            <Card key={plan.id} className={"card plansCard"}>
               {plan.image_url ? <img src={plan.image_url} /> : null}
               <h1>{plan.name}</h1>
               <p>{plan.description}</p>
@@ -72,6 +75,32 @@ const Developer = ({ loggedInUser, user, role }) => {
         {user.id === loggedInUser.id ? (
           <Button style={{ margin: "50px auto" }}>+ Create New plan</Button>
         ) : null}
+      </div>
+      <div className="projectsFeedback">
+        {feedbacks.length === 0 ? (
+          <Card className={"card plansCard"}>No Feedback</Card>
+        ) : (
+          feedbacks.map(feedback => (
+            <Card key={feedback.planID} className={"card plansCard"}>
+              <h1
+                onClick={() =>
+                  history.push(`/projects/project/${feedback.projectID}`)
+                }
+              >
+                {feedback.projectName}
+              </h1>
+              <p
+                onClick={() =>
+                  history.push(`/profile/${feedback.projectOwnerID}`)
+                }
+              >
+                {feedback.projectOwnerFirstName}
+                {""} {feedback.projectOwnerLastName}
+              </p>
+              <p>{feedback.feedback}</p>
+            </Card>
+          ))
+        )}
       </div>
     </div>
   );

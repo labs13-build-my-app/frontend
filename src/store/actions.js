@@ -504,3 +504,12 @@ export const createNewPlan = plan => dispatch => {
     .then(res => console.log(res, "here"))
     .catch(err => console.log(err));
 };
+
+export const getDeveloperFeedback = developer_id => dispatch => {
+  axios({
+    method: "get",
+    url: `${connection}/api/projects/developer-feedback/${developer_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
