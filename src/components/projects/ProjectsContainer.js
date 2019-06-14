@@ -3,46 +3,50 @@ import Projects from "./Projects";
 import ProjectView from "./ProjectView";
 // import Plan from "./Plans"
 import store from "../../store";
-import { Route } from "react-router";
+import { Route, Switch } from "react-router";
 
 const ProjectsContainer = ({ role, match, isLoading, isSignedIn }) => {
   const [projects, projectsDispatch] = useReducer(
     store.projectsReducer,
     store.initialState
   );
+  console.log("projectsContainerLog");
   return (
     <div>
-      {/* may need to implement switch in here to render only one render */}
-      {/* public routes */}
-      <Route
-        exact
-        path={"/projects"}
-        render={props => (
-          <Projects
-            {...props}
-            match={match}
-            isLoading={isLoading}
-            isSignedIn={isSignedIn}
-          />
-        )}
-      />
-      <Route
-        path={"/projects/:project_id"}
-        render={props => (
-          <ProjectView
-            {...props}
-            role={role}
-            match={match}
-            isLoading={isLoading}
-            isSignedIn={isSignedIn}
-          />
-        )}
-      />
-      {/* <Route
+      <Switch>
+        {/* may need to implement switch in here to render only one render */}
+        {/* public routes */}
+        <Route
+          exact
+          path={"/projects"}
+          render={props => (
+            <Projects
+              {...props}
+              match={match}
+              isLoading={isLoading}
+              isSignedIn={isSignedIn}
+            />
+          )}
+        />
+
+        <Route
+          path={"/projects/:project_id"}
+          render={props => (
+            <ProjectView
+              {...props}
+              role={role}
+              match={match}
+              isLoading={isLoading}
+              isSignedIn={isSignedIn}
+            />
+          )}
+        />
+        {/* <Route
         exact
         path={"/projects/view-plan/:project_id/:plan_id"}
         render={props => <div>plan page view to project</div>}
       /> */}
+      </Switch>
     </div>
   );
 };

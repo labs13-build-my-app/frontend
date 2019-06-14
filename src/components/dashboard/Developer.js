@@ -40,7 +40,7 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
-const Developer = ({ loggedInUser, user, role }) => {
+const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   useEffect(() => {
     console.log(user.id);
@@ -136,7 +136,10 @@ const Developer = ({ loggedInUser, user, role }) => {
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
           plans.map(plan => (
-            <Card className={"card plansCard"}>
+            <Card
+              className={"card plansCard"}
+              onClick={() => history.push(`/projects/plan/${plan.id}`)}
+            >
               {plan.image_url ? <img src={plan.image_url} /> : null}
               <h1>{plan.name}</h1>
               <p>{plan.description}</p>
