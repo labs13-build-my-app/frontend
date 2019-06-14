@@ -14,7 +14,8 @@ const Project = ({
   budget,
   dueDate,
   isLoading,
-  isSignedIn
+  isSignedIn,
+  role
 }) => {
   const [project, setProject] = useState([]);
 
@@ -25,39 +26,31 @@ const Project = ({
   //   projectData = project;
   // }
 
-  const formatDate = unixDate => {
-    //function to format unix date
-    const date = new Date(Number(unixDate)); //make date string into date object
-    return moment(date).format("MMMM Do YYYY"); //return formatted date object
-  };
-  const formatBudget = (
-    budgetInCents //function to format cents to dollars
-  ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
-
   useEffect(() => {
+    const formatDate = unixDate => {
+      //function to format unix date
+      const date = new Date(Number(unixDate)); //make date string into date object
+      return moment(date).format("MMMM Do YYYY"); //return formatted date object
+    };
+    const formatBudget = (
+      budgetInCents //function to format cents to dollars
+    ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
     if (!match.params.id) {
       const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
       setProject({ name, description, budget: newBudget, dueDate: newDueDate });
     }
     if (match.params.id && !isLoading) {
+      console.log("this should be be happeing here", match.params.id);
       fetchProject(match.params.id, formatDate, formatBudget)(setProject);
     }
-  }, [
-    match,
-    isLoading,
-    name,
-    description,
-    budget,
-    dueDate,
-    formatDate,
-    formatBudget
-  ]);
+  }, [match, isLoading, name, description, budget, dueDate]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
+  console.log(role, isSignedIn, project.projectStatus);
   return (
     <Card style={{ width: "80%", color: "black" }}>
       <div style={{ width: "25%" }}>
@@ -73,7 +66,9 @@ const Project = ({
           <p>{project.feedback}</p>
         ) : null}
 
-        {project.projectStatus === "proposal" && isSignedIn ? (
+        {project.projectStatus === "proposal" &&
+        isSignedIn &&
+        role === "Developer" ? (
           <NavLink
             style={{ textDecoration: "none" }}
             className="create-plan"

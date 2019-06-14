@@ -157,7 +157,13 @@ const App = ({ history }) => {
       <Route
         path={"/projects/project/:id"}
         render={props => (
-          <Project dispatch={dispatch} {...props} isLoading={isLoading} />
+          <Project
+            dispatch={dispatch}
+            {...props}
+            isSignedIn={isSignedIn}
+            isLoading={isLoading}
+            role={role}
+          />
         )}
       />
       {/* 
