@@ -19,7 +19,6 @@ import {
   FaDev,
   FaBook
 } from "react-icons/fa";
-import Typography from "@material-ui/core/Typography";
 
 const Card = styled.div`
   display: flex;
