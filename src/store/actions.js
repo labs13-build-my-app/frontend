@@ -522,3 +522,17 @@ export const fetchPlan = plan_id => dispatch => {
     .then(res => dispatch(res.data))
     .catch(err => console.log(err));
 };
+
+export const acceptPlan = (project_id, plan) => dispatch => {
+  axios({
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/project-owner/accept-plan/${project_id}`,
+    data: plan
+  })
+    .then(res => console.log(res, "here"))
+    .catch(err => console.log(err));
+};

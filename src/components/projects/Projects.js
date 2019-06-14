@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { fetchProjects } from "../../store/actions";
 import { PageTitle } from "../../custom-styles";
 
-const Projects = ({ match, isLoading, isSignedIn, role }) => {
+const Projects = ({ match, isLoading, isSignedIn, role, history }) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -39,6 +39,7 @@ const Projects = ({ match, isLoading, isSignedIn, role }) => {
                 isLoading={isLoading}
                 isSignedIn={isSignedIn}
                 role={role}
+                history={history}
               />
             </Link>
           ))}

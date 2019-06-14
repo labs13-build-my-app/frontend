@@ -7,6 +7,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "../../custom-styles";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -34,7 +35,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Plan = ({ match, isLoading, isSignedIn, role }) => {
-  const { fullScreen } = props;
+  // const { fullScreen } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [plan, setPlan] = useState([]);
