@@ -3,6 +3,7 @@ import store from "./store";
 import { Route, withRouter, Redirect } from "react-router";
 import { saveToken, locationRestore, fetchUser } from "./store/actions";
 import Home from "./components/Home";
+import Callback from "./components/Auth/Callback";
 import Dashboard from "./components/dashboard/Dashboard";
 import User from "./components/User";
 // import ProjectsContainer from "./components/projects/ProjectsContainer";
@@ -72,7 +73,7 @@ const App = ({ history }) => {
     // else if (token && !isLoading) {
     // dispatch({ type: "LOADING" });
     // }
-  }, [token, dispatch]);
+  }, [token, dispatch, newUser]);
 
   useEffect(() => {
     const handleLoadingProcess = () => {
@@ -109,7 +110,17 @@ const App = ({ history }) => {
         pathname: `/profile/${user.id}`
       });
     }
-  }, [token, isLoading, location, role, newUser, isSignedIn, history, fetch]);
+  }, [
+    token,
+    isLoading,
+    location,
+    role,
+    newUser,
+    isSignedIn,
+    history,
+    fetch,
+    user.id
+  ]);
 
   console.log(location);
 
@@ -135,7 +146,19 @@ const App = ({ history }) => {
           />
         )}
       />
-
+      <Route
+        path="/callback"
+        render={props => (
+          <Callback
+            {...props}
+            dispatch={dispatch}
+            role={role}
+            token={token}
+            isLoading={isLoading}
+            fetch
+          />
+        )}
+      />
       <Route
         path={"/projects"}
         exact
