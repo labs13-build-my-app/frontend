@@ -505,6 +505,15 @@ export const createNewPlan = (plan, project_id) => dispatch => {
     .catch(err => console.log(err));
 };
 
+export const getDeveloperFeedback = developer_id => dispatch => {
+  axios({
+    method: "get",
+    url: `${connection}/api/projects/developer-feedback/${developer_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
 export const listProjectPlans = project_id => dispatch => {
   axios({
     method: "get",
