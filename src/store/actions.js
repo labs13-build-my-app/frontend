@@ -513,3 +513,12 @@ export const listProjectPlans = project_id => dispatch => {
     .then(res => dispatch(res.data))
     .catch(err => console.log(err));
 };
+
+export const fetchPlan = plan_id => dispatch => {
+  axios({
+    method: "get",
+    url: `${connection}/api/projects/plan-view/${plan_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};

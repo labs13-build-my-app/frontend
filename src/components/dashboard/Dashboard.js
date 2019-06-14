@@ -30,7 +30,9 @@ const Dashboard = ({
         />
       );
     } else if (user.role === "Developer" || history.location.state) {
-      return <Developer user={user} loggedInUser={loggedInUser} />;
+      return (
+        <Developer user={user} loggedInUser={loggedInUser} history={history} />
+      );
     } else {
       return <h1>Loading</h1>;
     }
