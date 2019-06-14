@@ -185,7 +185,7 @@ const App = ({ history }) => {
       {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
       <Route
         path={"/create-plan"}
-        render={props => <CreatePlan {...props} user={{ user }} />}
+        render={props => <CreatePlan {...props} user={user} />}
       />
 
       <Route
