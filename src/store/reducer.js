@@ -58,8 +58,8 @@ export const usersReducer = (state, action) => {
     case TOKEN_EXIST:
       return {
         ...state,
-        token: action.payload.token
-        // isLoading: false
+        token: action.payload.token,
+        isLoading: action.payload.token ? true : false
       };
     case FETCH_USER_FAILURE:
       return {

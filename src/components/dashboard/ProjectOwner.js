@@ -82,7 +82,6 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   // add  axios call
   const submitHandler = e => {
     e.preventDefault();
-    console.log("HERE HISTORY", history.location.state);
     const user_id = user.id;
     const project_id = history.location.state;
     updateProject(history.location.state, {
@@ -93,16 +92,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   };
 
   useEffect(() => {
-    console.log("Use Effect");
     fecthProjectOwnerProjectsList(user.id)(setProjects);
   }, []);
 
-  console.log("Logged In User", loggedInUser);
-  console.log("User", user);
-
-  console.log("Logged In User", loggedInUser);
-  console.log("User", user);
-  console.log("Projects", projects);
+  const displayOnlyOnLoggedInUser = () => {
+    return loggedInUser.id === user.id ? null : { display: "none" };
+  };
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -136,16 +131,23 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             <p>{project.description}</p>
 
             {project.projectStatus === "completed" ? (
-              <Button onClick={() => handleOpen(project.id)}>
+              // hide when loggedIn !== user
+              <Button
+                style={displayOnlyOnLoggedInUser()}
+                onClick={() => handleOpen(project.id)}
+              >
                 Add Feedback
               </Button>
             ) : null}
-            <Button>Delete</Button>
+            {/* // hide when loggedIn !== user */}
+            <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
             {/* <<< Modal form to delete with confirmation question to delete */}
           </Card>
         ))
       )}
+      {/* // hide when loggedIn !== user */}
       <Button
+        style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
             state: loggedInUser.id,

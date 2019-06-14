@@ -4,7 +4,7 @@ import { deepPurple } from "@material-ui/core/colors";
 import Avatar from "@material-ui/core/Avatar";
 import Grid from "@material-ui/core/Grid";
 import axios from "axios";
-import { fetchDevelopers } from "../../store/actions";
+import { fetchDeveloper } from "../../store/actions";
 
 const DeveloperPageView = ({ match }) => {
   const useStyles = makeStyles({
@@ -22,7 +22,7 @@ const DeveloperPageView = ({ match }) => {
   const [developer, setDeveloper] = useState({});
 
   useEffect(() => {
-    fetchDevelopers(match.params.id)(setDeveloper);
+    fetchDeveloper(match.params.id)(setDeveloper);
   }, [match.params.id]);
 
   if (!developer) {

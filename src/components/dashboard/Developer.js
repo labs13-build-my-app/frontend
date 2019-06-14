@@ -66,12 +66,14 @@ const Developer = ({ loggedInUser, user, role }) => {
               {plan.image_url ? <img src={plan.image_url} /> : null}
               <h1>{plan.name}</h1>
               <p>{plan.description}</p>
+              <p>{plan.planStatus}</p>
             </Card>
           ))
         )}
-        {user.id === loggedInUser.id ? (
+        {/* maybe move this button on project */}
+        {/* {user.id === loggedInUser.id ? (
           <Button style={{ margin: "50px auto" }}>+ Create New plan</Button>
-        ) : null}
+        ) : null} */}
       </div>
     </div>
   );
