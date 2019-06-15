@@ -8,6 +8,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import "./Signup.css";
 import { Button } from "../custom-styles";
 
@@ -49,7 +50,10 @@ const useStyles = makeStyles(theme => ({
     minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(1)
+  },
+  selectMenu: {
+    width: "100%"
   }
 }));
 
@@ -65,11 +69,17 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
 
-  useEffect(() => {
-    if (!token) {
-      auth.login();
-    }
-  }, [token, history]);
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     auth.login();
+  //   }
+  // }, [token, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;
@@ -94,7 +104,7 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
     // should push to profile page
     // history.push("/dashboard");
   };
-
+  console.log(isSignedIn, isLoading, localStorage.getItem("token"));
   if (isSignedIn || isLoading || !localStorage.getItem("token")) {
     return <div>loading...</div>;
   }
@@ -103,18 +113,25 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
       <SignupForm className={classes.root} onSubmit={submitHandler}>
         <h2>Profile Setup</h2>
         <div className="role">
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="age-simple">Sign Up As</InputLabel>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel ref={inputLabel} htmlFor="role-type">
+              Sign up As
+            </InputLabel>
             <Select
-              className={classes.select}
+              className={classes.selectMenu}
               value={role}
               onChange={event => changeHandler(event, setRole)}
-              inputProps={{
-                name: "age",
-                id: "age-simple"
-              }}
+              input={
+                <OutlinedInput
+                  labelWidth={labelWidth}
+                  name="age"
+                  id="role-type"
+                />
+              }
             >
-              <MenuItem value="" />
+              <MenuItem value=" ">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value={"Developer"}>Developer</MenuItem>
               <MenuItem value={"Project Owner"}>Project Owner</MenuItem>
             </Select>
