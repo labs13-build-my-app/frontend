@@ -76,7 +76,7 @@ const Developers = ({ history }) => {
                 <Button
                   variant="outlined"
                   className={classes.button}
-                  onClick={() => history.push(`/profile/developer/${dev.id}`)}
+                  onClick={() => history.push(`/profile/${dev.id}`)}
                 >
                   View Profile
                 </Button>
