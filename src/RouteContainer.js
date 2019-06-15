@@ -1,5 +1,10 @@
 import React from "react";
-import { Route, withRouter, Redirect } from "react-router";
+import { Route, Redirect } from "react-router";
+import Home from "./components/Home";
+import ProfileContainer from "./components/profiles/ProfileContainer";
+import Projects from "./components/projects/Projects";
+import Project from "./components/projects/Project";
+// import Plan from "./components/projects/plan";
 
 const RouteContainer = ({
   isLoading,
@@ -23,9 +28,15 @@ const RouteContainer = ({
     user,
     dispatch
   };
+
+  const CTA = <h1>CTA</h1>;
   return (
     <>
-      <Route path={"/"} render={props => <Home {...props} {...state} />} />
+      {/* Home component can be renamed to Dashboard */}
+      {/* <Route path={"/"} render={props => <Home {...props} {...state} />} /> */}
+
+      {/* can add a marketing Routing component for home */}
+      {/* <Route path={"/home"} component={CTA} /> */}
 
       <Route
         path={"/profile/:user_id"}
@@ -38,14 +49,14 @@ const RouteContainer = ({
       />
 
       <Route
-        path={"/projects/project/:project_id"}
+        path={"/project/:project_id"}
         render={props => <Project {...props} {...state} />}
       />
 
-      <Route
-        path={"/projects/plan/:plan_id"}
+      {/* <Route
+        path={"/plan/:plan_id"}
         render={props => <Plan {...props} {...state} />}
-      />
+      /> */}
     </>
   );
 };

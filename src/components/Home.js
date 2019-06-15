@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router";
 import Callback from "./Auth/Callback";
 import Signup from "./Signup";
 import NavContainer from "./NavContainer";
+import CreateProjectForm from "./projects/CreateProjectForm";
 
 const Home = ({
   isLoading,
@@ -58,9 +59,7 @@ const Home = ({
           render={props => <CreateProjectForm {...props} {...state} />}
         />
       ) : (
-        {
-          /*  might need to change project_id maybe the project_id comes from history or from state*/
-        }(<Redirect to={"/project/:project_id"} />)
+        <Redirect to={"/project/:project_id"} />
       )}
 
       {/*  404 page not found not home */}

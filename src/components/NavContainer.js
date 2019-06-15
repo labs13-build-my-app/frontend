@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import styled from 'styled-components';
 import Auth from "./Auth/Auth";
 import { Link } from "react-router-dom";
-const auth = new Auth();
+// const auth = new Auth();
 
 const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
@@ -24,8 +24,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
         {
           route: "/callback",
           state: "logout",
-          label: "Logout",
-          callback: () => auth.logout()
+          label: "Logout"
         }
       ]);
     } else {
@@ -36,14 +35,12 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
         {
           route: token ? "/signup" : "/callback",
           label: "Login",
-          state: "sign on",
-          callback: !token ? () => auth.login() : null
+          state: "sign on"
         },
         {
           route: "/signup",
           label: "Signup",
-          state: "sign on",
-          callback: !token ? () => auth.login() : null
+          state: "sign on"
         }
       ]);
     }

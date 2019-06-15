@@ -33,6 +33,11 @@ import {
 
 export const usersReducer = (state, action) => {
   switch (action.type) {
+    case "LOADING_STATUS":
+      return {
+        ...state,
+        ...action.payload
+      };
     // case LOADING_COMPLETE:
     //   return {
     //     ...state,
