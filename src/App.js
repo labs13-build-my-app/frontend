@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { withRouter } from "react-router";
-import { saveToken, locationRestore, fetchUser } from "./store/actions";
+import { locationRestore, fetchUser } from "./store/actions";
 import RouteContainer from "./RouteContainer";
 
 import "./App.css";
@@ -19,13 +19,13 @@ const App = ({ history, match }) => {
   const {
     role,
     userID,
-    user,
+    // user,
     isToken,
     isSignedIn,
     isNewUser,
     location,
-    isLoading,
-    fetch
+    isLoading
+    // fetch
   } = state;
   const { pathname } = history.location;
 
@@ -39,7 +39,7 @@ const App = ({ history, match }) => {
       pathname !== "/signup" &&
       // pathname !== "/callback" &&
       pathname !== undefined &&
-      isToken === null
+      isToken === false
     ) {
       locationRestore(pathname)(dispatch);
     }
@@ -64,7 +64,7 @@ const App = ({ history, match }) => {
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
         // step 2
-        // fetch user
+        // fetchUser() ; I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
       } else if (isToken && isLoading && role && !isSignedIn) {
         dispatch({
           type: "LOADING_STATUS",
@@ -82,7 +82,7 @@ const App = ({ history, match }) => {
           pathname: `/profile/${userID}`
         });
       } else if (!isToken && !localStorage.getItem("token") && !isLoading) {
-        history.push("/home"); // could push to dynamic location
+        history.push(location); // could push to dynamic location
       }
     };
     loadApp();
@@ -98,81 +98,10 @@ const App = ({ history, match }) => {
     dispatch
   ]);
 
-  // step 2 first render
-  // if (isLoading) return <h1>Loading...</h1>;
-  // if (!isLoading) return <h1>Loading complete</h1>;
-
   return (
     <div className="App">
       <RouteContainer {...state} />
       {/* should move routes into a container component to reduce cluter in app component */}
-      {/* <Route
-        path={"/"}
-        render={props => (
-          <Home
-            {...props}
-            isSignedIn={isSignedIn}
-            isToken={isToken}
-            role={role}
-            dispatch={dispatch}
-            isLoading={isLoading}
-            fetch={fetch}
-            isNewUser={isNewUser}
-            user={user}
-          />
-        )}
-      /> */}
-
-      {/* <Route
-        path={"/projects"}
-        exact
-        render={props => (
-          <Projects
-            dispatch={dispatch}
-            {...props}
-            isSignedIn={isSignedIn}
-            isLoading={isLoading}
-          />
-        )}
-      /> */}
-      {/* <Route
-        path={"/projects/plan/:plan_id"}
-        render={props => (
-          <Plan {...props} isLoading={isLoading} isSignedIn={isSignedIn} />
-        )}
-      /> */}
-      {/* <Route
-        exact
-        path={"/projects"}
-        render={props => <Projects dispatch={dispatch} {...props} />}
-      /> */}
-      {/* <Route
-        path={"/projects/project/:id"}
-        render={props => (
-          <Project
-            dispatch={dispatch}
-            {...props}
-            isSignedIn={isSignedIn}
-            isLoading={isLoading}
-            role={role}
-          />
-        )}
-      /> */}
-      {/* 
-      <Route
-        path={"/projects/project/:id"}
-        render={props => <Project dispatch={dispatch} {...props} />}
-      /> */}
-
-      {/* <Route
-        path={"/create-project-form"}
-        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
-      /> */}
-
-      {/* <Route
-        path={"/create-project-form"}
-        render={props => <CreateProjectForm dispatch={dispatch} {...props} />}
-      /> */}
 
       {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
       {/* <Route
@@ -180,17 +109,6 @@ const App = ({ history, match }) => {
         render={props => <CreatePlan {...props} user={user} />}
       /> */}
 
-      {/* <Route
-        path={"/profile"}
-        render={props => (
-          <ProfileContainer
-            {...props}
-            dispatch={dispatch}
-            user={user}
-            role={role}
-          />
-        )}
-      /> */}
       {/* 
       <Route path={"/get-users-test"} componet={User} /> */}
 
@@ -199,67 +117,6 @@ const App = ({ history, match }) => {
         render={props => <Admin {...props} dispatch={dispatch} />}
       /> */}
 
-      {/* <Route
-        path={"/dashboard"}
-        render={props =>
-          isToken === false ? (
-            <Redirect to={"/home"} />
-          ) : (
-            <Dashboard
-              {...props}
-              user={user}
-              dispatch={dispatch}
-              role={role}
-              isSignedIn={isSignedIn}
-              isToken={isToken}
-            />
-          )
-        }
-      />
-
-      <Route
-        path={"/dashboard/settings"}
-        render={props =>
-          isSignedIn === false ? (
-            <Redirect to={"/home"} />
-          ) : (
-            <h1>settings page</h1>
-          )
-        }
-      /> */}
-
-      {/* <Route
-        path={"/projects"}
-        render={props => (
-          <ProjectsContainer
-            {...props}
-            dispatch={dispatch}
-            role={role}
-            isToken={isToken}
-          />
-        )}
-      />
-
-      <Route
-        path={"/profile"}
-        render={props => <ProfileContainer {...props} dispatch={dispatch} user={user} />}
-      />
-      {/* <Route
-        path={"/admin"}
-        render={props => <Admin {...props} dispatch={dispatch} />}
-      /> */}
-
-      {
-        // this will moved to projects view
-      }
-
-      {
-        // this will be moved to dashboard view for project owner
-      }
-
-      {
-        // only for testing
-      }
       {/* <Route path={"/get-users-test"} componet={User} /> */}
     </div>
   );

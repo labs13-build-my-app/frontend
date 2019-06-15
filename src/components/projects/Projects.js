@@ -5,7 +5,19 @@ import { Link } from "react-router-dom";
 import { fetchProjects } from "../../store/actions";
 import { PageTitle } from "../../custom-styles";
 
-const Projects = ({ match, isLoading, isSignedIn, role, history }) => {
+const Projects = ({
+  isLoading,
+  isToken,
+  isSignedIn,
+  isNewUser,
+  fetch,
+  error,
+  role,
+  user,
+  dispatch,
+  match,
+  history
+}) => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
@@ -13,10 +25,11 @@ const Projects = ({ match, isLoading, isSignedIn, role, history }) => {
       fetchProjects()(setProjects);
     }
   }, [isLoading]);
-  console.log(isLoading);
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div>
       <PageTitle>All Projects</PageTitle>
