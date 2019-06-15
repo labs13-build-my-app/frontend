@@ -29,34 +29,39 @@ const RouteContainer = ({
     dispatch
   };
 
-  const CTA = <h1>CTA</h1>;
+  console.log(isLoading);
   return (
     <>
       {/* Home component can be renamed to Dashboard */}
-      {/* <Route path={"/"} render={props => <Home {...props} {...state} />} /> */}
+      <Route path={"/"} render={props => <Home {...props} {...state} />} />
 
       {/* can add a marketing Routing component for home */}
-      {/* <Route path={"/home"} component={CTA} /> */}
+      {!isLoading ? (
+        <>
+          <Route path={"/home"} render={() => <h1>home component</h1>} />
+          <Route
+            path={"/profile/:user_id"}
+            render={props => <ProfileContainer {...props} {...state} />}
+          />
 
-      <Route
-        path={"/profile/:user_id"}
-        render={props => <ProfileContainer {...props} {...state} />}
-      />
+          <Route
+            path={"/projects/proposls"}
+            render={props => <Projects {...props} {...state} />}
+          />
 
-      <Route
-        path={"/projects/proposls"}
-        render={props => <Projects {...props} {...state} />}
-      />
+          <Route
+            path={"/project/:project_id"}
+            render={props => <Project {...props} {...state} />}
+          />
 
-      <Route
-        path={"/project/:project_id"}
-        render={props => <Project {...props} {...state} />}
-      />
-
-      {/* <Route
-        path={"/plan/:plan_id"}
-        render={props => <Plan {...props} {...state} />}
-      /> */}
+          {/* <Route
+            path={"/plan/:plan_id"}
+            render={props => <Plan {...props} {...state} />}
+          /> */}
+        </>
+      ) : (
+        <h1>isLoading</h1>
+      )}
     </>
   );
 };

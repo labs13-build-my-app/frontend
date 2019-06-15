@@ -28,7 +28,6 @@ const Home = ({
     dispatch
   };
   // if (isLoading) return <h1>Loading...2.0</h1>; wrong place for loading
-  const CTA = <h1>CTA</h1>;
 
   return (
     <div>
@@ -49,21 +48,17 @@ const Home = ({
             render={props => <Signup {...props} {...state} />}
           />
         </>
-      ) : (
-        <Redirect to={"/home"} />
-      )}
+      ) : null}
 
       {role === "Project Owner" ? (
         <Route
           path={"create-project-form"}
           render={props => <CreateProjectForm {...props} {...state} />}
         />
-      ) : (
-        <Redirect to={"/project/:project_id"} />
-      )}
+      ) : null}
 
       {/*  404 page not found not home */}
-      <Redirect to={"/home"} />
+      {/* <Redirect to={"/home"} /> */}
     </div>
   );
 };

@@ -47,11 +47,9 @@ const App = ({ history, match }) => {
 
   useEffect(() => {
     const loadApp = () => {
-      console.log("app should be loading");
       if (!isToken && localStorage.getItem("token")) {
         dispatch({ type: "LOADING_STATUS", payload: { isToken: true } });
       } else if (!isToken && !localStorage.getItem("token") && isLoading) {
-        console.log("app finished loading");
         dispatch({
           type: "LOADING_STATUS",
           payload: {
@@ -100,15 +98,13 @@ const App = ({ history, match }) => {
     dispatch
   ]);
 
-  console.log(location);
-
   // step 2 first render
-  if (isLoading) return <h1>Loading...</h1>;
-  if (!isLoading) return <h1>Loading complete</h1>;
+  // if (isLoading) return <h1>Loading...</h1>;
+  // if (!isLoading) return <h1>Loading complete</h1>;
 
   return (
     <div className="App">
-      <RouteContainer />
+      <RouteContainer {...state} />
       {/* should move routes into a container component to reduce cluter in app component */}
       {/* <Route
         path={"/"}
