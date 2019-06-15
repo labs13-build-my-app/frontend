@@ -13,7 +13,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
         { route: "/home", label: "Home" },
         { route: "/projects/proposals", label: "Projects" },
         {
-          route: "/profile/developers",
+          route: "/developers",
           label: "Developers"
         },
         {
@@ -31,7 +31,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
       setNav([
         { route: "/home", label: "Home" },
         { route: "/projects/proposals", label: "Projects" },
-        { route: "/profile/developers", label: "Developers" },
+        { route: "/developers", label: "Developers" },
         {
           route: token ? "/signup" : "/callback",
           label: "Login",

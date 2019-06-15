@@ -19,14 +19,11 @@ const Project = ({
   dueDate,
   isLoading,
   isSignedIn,
-  role,
-  history,
-  location
+  role
 }) => {
   const [project, setProject] = useState([]);
 
   useEffect(() => {
-    console.log(match.params.project_id);
     const formatDate = unixDate => {
       //function to format unix date
       const date = new Date(Number(unixDate)); //make date string into date object
@@ -42,19 +39,15 @@ const Project = ({
       setProject({ name, description, budget: newBudget, dueDate: newDueDate });
     }
     if (match.params.project_id && !isLoading) {
-      console.log("here");
       fetchProject(match.params.project_id, formatDate, formatBudget)(
         setProject
       );
     }
-  }, [match, isLoading, name, description, budget, dueDate]);
+  }, [match.params.project_id, isLoading, name, description, budget, dueDate]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    // there seems to be a bug here on the deployed route
-
     if (match.params.project_id && !isLoading) {
-      console.log(match.params.project_id);
       listProjectPlans(match.params.project_id)(setProjectPlans);
     }
   }, [match.params.project_id, isLoading]);
@@ -66,7 +59,7 @@ const Project = ({
   const clickHandler = (e, id, status) => {
     e.preventDefault();
     acceptPlan(match.params.id, { planStatus: status, id: id })();
-    window.location.reload();
+    window.location.reload(); // need to change this. this might be giving us a bug
   };
 
   return (

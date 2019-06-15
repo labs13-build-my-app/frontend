@@ -2,6 +2,7 @@ import React from "react";
 import { Route } from "react-router";
 import Home from "./components/Home";
 import ProfileContainer from "./components/profiles/ProfileContainer";
+import Developers from "./components/profiles/DeveloperList";
 import Projects from "./components/projects/Projects";
 import Project from "./components/projects/Project";
 import Plan from "./components/projects/Plan";
@@ -38,9 +39,15 @@ const RouteContainer = ({
       {!isLoading ? (
         <>
           <Route path={"/home"} render={() => <h1>home component</h1>} />
+
           <Route
             path={"/profile/:user_id"}
             render={props => <ProfileContainer {...props} {...state} />}
+          />
+
+          <Route
+            path={"/developers"}
+            render={props => <Developers {...props} {...state} />}
           />
 
           <Route

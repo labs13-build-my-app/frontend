@@ -11,13 +11,14 @@ const ProfileContainer = ({ history, dispatch, user, role }) => {
       <Switch>
         {/* public routes */}
 
-        <Route
+        {/* <Route
           exact
           path={"/profile/developers"}
           render={props => (
             <Developers dispatch={dispatch} {...props} role={role} />
           )}
-        />
+        /> */}
+
         <Route
           exact
           path={"/profile/developer/:id"}
