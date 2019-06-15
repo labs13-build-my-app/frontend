@@ -1,10 +1,10 @@
 import React from "react";
-import { Route, Redirect } from "react-router";
+import { Route } from "react-router";
 import Home from "./components/Home";
 import ProfileContainer from "./components/profiles/ProfileContainer";
 import Projects from "./components/projects/Projects";
 import Project from "./components/projects/Project";
-// import Plan from "./components/projects/plan";
+import Plan from "./components/projects/Plan";
 
 const RouteContainer = ({
   isLoading,
@@ -29,7 +29,6 @@ const RouteContainer = ({
     dispatch
   };
 
-  console.log(isLoading);
   return (
     <>
       {/* Home component can be renamed to Dashboard */}
@@ -54,13 +53,13 @@ const RouteContainer = ({
             render={props => <Project {...props} {...state} />}
           />
 
-          {/* <Route
+          <Route
             path={"/plan/:plan_id"}
             render={props => <Plan {...props} {...state} />}
-          /> */}
+          />
         </>
       ) : (
-        <h1>isLoading</h1>
+        <h1>Loading... </h1>
       )}
     </>
   );
