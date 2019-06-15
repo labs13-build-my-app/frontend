@@ -5,70 +5,66 @@ import Signup from "./Signup";
 import NavContainer from "./NavContainer";
 
 const Home = ({
-  isSignedIn,
   isLoading,
-  token,
-  role,
-  dispatch,
+  isToken,
+  isSignedIn,
+  isNewUser,
   fetch,
-  newUser,
-  user
+  error,
+  role,
+  user,
+  dispatch
 }) => {
-  // useEffect(() => {});
-
-  if (token === null) return <h1>Loading...2.0</h1>;
+  const state = {
+    isLoading,
+    isToken,
+    isSignedIn,
+    isNewUser,
+    fetch,
+    error,
+    role,
+    user,
+    dispatch
+  };
+  // if (isLoading) return <h1>Loading...2.0</h1>; wrong place for loading
+  const CTA = <h1>CTA</h1>;
 
   return (
     <div>
       {/* can implement a componet to to conditionall render when in loading state to render a loading status */}
       {/* this is our navigation component always render or can be conditionally rendered when isloading is false */}
-      <NavContainer
-        isSignedIn={isSignedIn}
-        user={user}
-        role={role}
-        token={token}
-        newUser={newUser}
-      />
+      <NavContainer {...state} />
 
-      {/* can add a marketing Routing component for home */}
+      {!isSignedIn && !isLoading ? (
+        <>
+          {/* this is our auth route that calls auth0 for token */}
+          <Route
+            path="/callback"
+            render={props => <Callback {...props} {...state} />}
+          />
+          {/* this is our auth route that takes us to our signup page */}
+          <Route
+            path={"signup"}
+            render={props => <Signup {...props} {...state} />}
+          />
+        </>
+      ) : (
+        <Redirect to={"/home"} />
+      )}
 
-      {/* this is our auth route that calls auth0 for token */}
+      {role === "Project Owner" ? (
+        <Route
+          path={"create-project-form"}
+          render={props => <CreateProjectForm {...props} {...state} />}
+        />
+      ) : (
+        {
+          /*  might need to change project_id maybe the project_id comes from history or from state*/
+        }(<Redirect to={"/project/:project_id"} />)
+      )}
 
-      <Route
-        path="/callback"
-        render={props =>
-          token && props.history.location.state !== "logout" ? (
-            <Redirect to={"/home"} />
-          ) : (
-            <Callback
-              {...props}
-              dispatch={dispatch}
-              role={role}
-              token={token}
-              isLoading={isLoading}
-              fetch={fetch}
-            />
-          )
-        }
-      />
-
-      {/* this is our signup route if isSignedIn is false it Redirects to home */}
-      <Route
-        path={"/signup"}
-        render={props =>
-          isSignedIn ? (
-            <Redirect to="/home" />
-          ) : (
-            <Signup
-              {...props}
-              dispatch={dispatch}
-              token={token}
-              isSignedIn={isSignedIn}
-              isLoading={isLoading}
-            />
-          )
-        }
-      />
+      {/*  404 page not found not home */}
+      <Redirect to={"/home"} />
     </div>
   );
 };
