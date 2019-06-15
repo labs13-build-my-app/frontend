@@ -44,7 +44,7 @@ const RouteContainer = ({
           />
 
           <Route
-            path={"/projects/proposls"}
+            path={"/projects/proposals"}
             render={props => <Projects {...props} {...state} />}
           />
 

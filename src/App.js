@@ -64,7 +64,11 @@ const App = ({ history, match }) => {
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
         // step 2
-        // fetchUser() ; I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
+        dispatch({
+          type: "LOADING_STATUS",
+          payload: { isLoading: false, isNewUser: true }
+        });
+        // fetchUser()(dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
       } else if (isToken && isLoading && role && !isSignedIn) {
         dispatch({
           type: "LOADING_STATUS",
@@ -76,6 +80,7 @@ const App = ({ history, match }) => {
           }
         });
       } else if (isToken && !isLoading && !role && !isSignedIn && isNewUser) {
+        console.log("going to sign up?");
         history.push("/signup");
       } else if (isSignedIn && location === "/callback") {
         history.push({

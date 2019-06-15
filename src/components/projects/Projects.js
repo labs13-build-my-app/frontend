@@ -7,18 +7,17 @@ import { PageTitle } from "../../custom-styles";
 
 const Projects = ({
   isLoading,
-  isToken,
   isSignedIn,
-  isNewUser,
   fetch,
   error,
   role,
   user,
-  dispatch,
   match,
   history
 }) => {
+  const props = { history, match, role, isLoading, isSignedIn };
   const [projects, setProjects] = useState([]);
+  console.log(projects);
 
   useEffect(() => {
     if (!isLoading) {
@@ -26,7 +25,7 @@ const Projects = ({
     }
   }, [isLoading]);
 
-  if (isLoading) {
+  if (!projects) {
     return <h1>Loading...</h1>;
   }
 
@@ -40,19 +39,15 @@ const Projects = ({
             <Link
               style={{ textDecoration: "none" }}
               className="project-link"
-              to={`/projects/project/${project.id}`}
+              to={`/project/${project.id}`}
               key={project.id}
             >
               <Project
-                match={match}
+                {...props}
                 name={project.name}
                 description={project.description}
                 budget={project.budget}
                 dueDate={project.dueDate}
-                isLoading={isLoading}
-                isSignedIn={isSignedIn}
-                role={role}
-                history={history}
               />
             </Link>
           ))}

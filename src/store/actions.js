@@ -37,7 +37,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = false ? local : heroku;
+const connection = true ? local : heroku;
 
 export const locationRestore = location => dispatch => {
   dispatch({
@@ -517,7 +517,7 @@ export const getDeveloperFeedback = developer_id => dispatch => {
 export const listProjectPlans = project_id => dispatch => {
   axios({
     method: "get",
-    url: `${connection}/api/projects/plan-list-project/${project_id}` // <<< might need to change
+    url: `${connection}/api/projects/plan-list-project/${project_id}` // <<< might need to change there is a bug here
   })
     .then(res => dispatch(res.data))
     .catch(err => console.log(err));

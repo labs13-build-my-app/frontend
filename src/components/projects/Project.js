@@ -25,14 +25,8 @@ const Project = ({
 }) => {
   const [project, setProject] = useState([]);
 
-  // let projectData;
-  // if (props.history.location === "/projects") {
-  //   projectData = props;
-  // } else {
-  //   projectData = project;
-  // }
-
   useEffect(() => {
+    console.log(match.params.project_id);
     const formatDate = unixDate => {
       //function to format unix date
       const date = new Date(Number(unixDate)); //make date string into date object
@@ -41,21 +35,29 @@ const Project = ({
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
-    if (!match.params.id) {
+
+    if (!match.params.project_id && !isLoading) {
       const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
       setProject({ name, description, budget: newBudget, dueDate: newDueDate });
     }
-    if (match.params.id && !isLoading) {
-      console.log("this should be be happeing here", match.params.id);
-      fetchProject(match.params.id, formatDate, formatBudget)(setProject);
+    if (match.params.project_id && !isLoading) {
+      console.log("here");
+      fetchProject(match.params.project_id, formatDate, formatBudget)(
+        setProject
+      );
     }
   }, [match, isLoading, name, description, budget, dueDate]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    listProjectPlans(match.params.id)(setProjectPlans);
-  }, [match.params.id]);
+    // there seems to be a bug here on the deployed route
+
+    if (match.params.project_id && !isLoading) {
+      console.log(match.params.project_id);
+      listProjectPlans(match.params.project_id)(setProjectPlans);
+    }
+  }, [match.params.project_id, isLoading]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -67,7 +69,6 @@ const Project = ({
     window.location.reload();
   };
 
-  console.log(projectPlans);
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>

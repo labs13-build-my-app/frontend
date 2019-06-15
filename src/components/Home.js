@@ -44,7 +44,7 @@ const Home = ({
           />
           {/* this is our auth route that takes us to our signup page */}
           <Route
-            path={"signup"}
+            path={"/signup"}
             render={props => <Signup {...props} {...state} />}
           />
         </>

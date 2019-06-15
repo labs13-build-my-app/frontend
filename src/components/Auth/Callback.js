@@ -5,7 +5,7 @@ import { saveToken } from "../../store/actions";
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
   clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-  redirectUri: "https://build-my-app-fe.onrender.com/callback", // maybe this can redirect to home or change this to auth?
+  redirectUri: "http://localhost:3000/callback", // maybe this can redirect to home or change this to auth?
   responseType: "token id_token",
   scope: "openid profile"
 });

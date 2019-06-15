@@ -11,7 +11,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
     if (token) {
       setNav([
         { route: "/home", label: "Home" },
-        { route: "/projects", label: "Projects" },
+        { route: "/projects/proposals", label: "Projects" },
         {
           route: "/profile/developers",
           label: "Developers"
@@ -30,7 +30,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
     } else {
       setNav([
         { route: "/home", label: "Home" },
-        { route: "/projects", label: "Projects" },
+        { route: "/projects/proposals", label: "Projects" },
         { route: "/profile/developers", label: "Developers" },
         {
           route: token ? "/signup" : "/callback",
