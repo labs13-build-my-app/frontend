@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { createNewPlan } from "../store/actions";
+import { createNewPlan } from "../../store/actions";
 
 const CreatePlan = ({ history, user }) => {
   const [name, setName] = useState("");

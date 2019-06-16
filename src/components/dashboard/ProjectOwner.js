@@ -209,8 +209,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
-            state: loggedInUser.id,
-            pathname: "/create-project-form"
+            state: { modal: true, projectOwner_id: loggedInUser.id }
           })
         }
       >

@@ -29,9 +29,11 @@ const App = ({ history, match }) => {
     // fetch
   } = state;
   const { pathname } = history.location;
+  const { modal } = history.location.state || false;
 
   // logging state here
-  console.log("STATE", state, isLoading, history.location.state);
+  console.log("STATE", state, isLoading, history.location.state, pathname);
+  console.log(typeof history.location.state);
 
   useEffect(() => {
     if (
@@ -87,7 +89,8 @@ const App = ({ history, match }) => {
       } else if (
         isSignedIn &&
         location === "/callback" &&
-        history.location.state !== "logout"
+        history.location.state !== "logout" &&
+        !modal
       ) {
         history.push({
           pathname: `/profile/${user.id}`
@@ -122,13 +125,18 @@ const App = ({ history, match }) => {
     location,
     history,
     history.location.state,
+    modal,
     dispatch
   ]);
 
   return (
     <div className="App">
       <RouteContainer {...{ ...state, dispatch }} />
-      <ModalContainer />
+      {modal ? (
+        <ModalContainer
+          {...{ ...state, ...history.location.state, dispatch, history, match }}
+        />
+      ) : null}
     </div>
   );
 };

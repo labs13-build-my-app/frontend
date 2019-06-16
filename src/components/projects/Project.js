@@ -83,8 +83,7 @@ const Project = ({
               style={{ textDecoration: "none" }}
               className="create-plan"
               to={{
-                pathname: "/create-plan",
-                state: { projectid: project.id }
+                state: { project_id: project.id, modal: true }
               }}
             >
               Apply to this project

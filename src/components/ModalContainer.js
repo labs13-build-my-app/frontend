@@ -1,4 +1,16 @@
 import React from "react";
+import CreateProjectForm from "./projects/CreateProjectForm";
+import CreatePlanForm from "./projects/CreatePlanForm";
+
+// background: green;
+// position: absolute;
+// max-width: 50%;
+// min-height: 60%;
+// top: 50%;
+// left: 50%;
+// transform: translate(-50%, -50%);
+// border-radius: 10px;
+// padding: 40px;
 
 const ModalContainer = ({
   isLoading,
@@ -9,7 +21,9 @@ const ModalContainer = ({
   error,
   role,
   user,
-  dispatch
+  dispatch,
+  history,
+  match
 }) => {
   const state = {
     isLoading,
@@ -20,12 +34,16 @@ const ModalContainer = ({
     error,
     role,
     user,
-    dispatch
+    dispatch,
+    history,
+    match
   };
 
   return (
     <>
-      <h1>container to handle modals</h1>
+      {role === "Project Owner" ? <CreateProjectForm {...state} /> : null}
+      {role === "Developer" ? <CreatePlanForm {...state} /> : null}
+      {isNewUser ? <h1>modal for signup</h1> : null}
     </>
   );
 };
