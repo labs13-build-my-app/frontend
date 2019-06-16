@@ -28,27 +28,37 @@ const useStyles = makeStyles(theme => ({
   icon: {
     margin: theme.spacing(2),
   },
-  selected: {
-      color: '#4085FC',
-      borderLeft: '5px solid #4085FC',
-      marginLeft: 0,
+  selectedLink: {
+    display: 'flex',
+    alignItems: 'center',
+    textDecoration: 'none',
+    marginLeft: '5px',
+    color: '#4085FC',
+    borderLeft: '5px solid #4085FC',
+    marginLeft: 0
+  },
+  navBar: {
+    width: '305px',
+    position: 'fixed', 
+    minHeight: '100vh', 
+    textAlign: 'left', 
+    backgroundImage: 'linear-gradient(to top right, #B1CAF8, #B1CAF8)'
+  },
+  logo: { 
+    width: "245px", 
+    height: "auto", 
+    margin: '45px 0 75px',
+    marginLeft: '25px', 
+    marginRight: '15px'
   }
 }));
-
-const StyledLink = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  color: white;
-  text-decoration: none;
-`;
 
 const auth = new Auth();
 
 const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
   const [active, setActive] = useState('Home');
-  const [hovered, setHovered] = useState('');
+  //need to set initial active tab to current page. Maybe get current URL path and match to .route in navLinks and then set active to that .label
 
   const classes = useStyles();
 
@@ -93,10 +103,10 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
   }, [isSignedIn, token, newUser]);
 
   return (
-    <div style={{position: 'fixed', minHeight: '100vh', width: '20%', textAlign: 'left', backgroundImage: 'linear-gradient(to top right, #B1CAF8, #B1CAF8'}} className="nav-bar">
+    <div className={classes.navBar}>
       <img
         src={require("../assets/images/logo.png")}
-        style={{ width: "65%", height: "auto", margin: '45px auto 40px 75px' }}
+        className={classes.logo}
       />
       <nav
         style={{
@@ -108,11 +118,11 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
       >
         {nav.map(link => {
           return (
-              <Link
+            <Link
+              className={(active === link.label ? classes.selectedLink : classes.link)}
+              onClick={() => setActive(link.label)}
                 to={{ pathname: link.route, state: link.state }}
-                className={classes.link}
               >
-                <hr className={classes.indicator}/>
                 <Icon className={clsx(classes.icon, link.icon)} style={{marginLeft: '40px'}}/>
                 {link.label}
               </Link>
