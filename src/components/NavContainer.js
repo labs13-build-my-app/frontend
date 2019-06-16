@@ -4,11 +4,11 @@ import Auth from "./Auth/Auth";
 import { Link } from "react-router-dom";
 // const auth = new Auth();
 
-const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
+const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
   console.log("current state of new user", newUser);
   useEffect(() => {
-    if (token) {
+    if (isToken) {
       setNav([
         { route: "/home", label: "Home" },
         { route: "/projects/proposals", label: "Projects" },
@@ -22,7 +22,7 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
           state: { id: user.id, role }
         },
         {
-          route: "/callback",
+          route: "/",
           state: "logout",
           label: "Logout"
         }
@@ -33,18 +33,13 @@ const NavContainer = ({ isSignedIn, token, newUser, user, role }) => {
         { route: "/projects/proposals", label: "Projects" },
         { route: "/developers", label: "Developers" },
         {
-          route: token ? "/signup" : "/callback",
-          label: "Login",
-          state: "sign on"
-        },
-        {
-          route: "/signup",
-          label: "Signup",
+          route: isToken ? "/signup" : "/callback",
+          label: "Login/Signup",
           state: "sign on"
         }
       ]);
     }
-  }, [isSignedIn, token, newUser]);
+  }, [isSignedIn, isToken, newUser]);
 
   return (
     <nav

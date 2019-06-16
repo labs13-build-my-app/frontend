@@ -14,7 +14,8 @@ const Home = ({
   error,
   role,
   user,
-  dispatch
+  dispatch,
+  history
 }) => {
   const state = {
     isLoading,
@@ -27,7 +28,10 @@ const Home = ({
     user,
     dispatch
   };
+
   // if (isLoading) return <h1>Loading...2.0</h1>; wrong place for loading
+
+  console.log(history.location.state);
 
   return (
     <div>
@@ -35,7 +39,7 @@ const Home = ({
       {/* this is our navigation component always render or can be conditionally rendered when isloading is false */}
       <NavContainer {...state} />
 
-      {!isSignedIn && !isLoading ? (
+      {(!isSignedIn && !isLoading) || history.location.state === "logout" ? (
         <>
           {/* this is our auth route that calls auth0 for token */}
           <Route

@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
+const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const classes = useStyles();
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -75,11 +75,11 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  // useEffect(() => {
-  //   if (!token) {
-  //     auth.login();
-  //   }
-  // }, [token, history]);
+  useEffect(() => {
+    if (!isToken) {
+      auth.login();
+    }
+  }, [isToken, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;
@@ -104,7 +104,6 @@ const Signup = ({ token, dispatch, history, isSignedIn, isLoading }) => {
     // should push to profile page
     // history.push("/dashboard");
   };
-  console.log(isSignedIn, isLoading, localStorage.getItem("token"));
   if (isSignedIn || isLoading || !localStorage.getItem("token")) {
     return <div>loading...</div>;
   }

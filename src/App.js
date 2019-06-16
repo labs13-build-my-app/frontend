@@ -19,7 +19,7 @@ const App = ({ history, match }) => {
   const {
     role,
     userID,
-    // user,
+    user,
     isToken,
     isSignedIn,
     isNewUser,
@@ -30,7 +30,7 @@ const App = ({ history, match }) => {
   const { pathname } = history.location;
 
   // logging state here
-  console.log("STATE", state, isLoading);
+  console.log("STATE", state, isLoading, history.location.state);
 
   useEffect(() => {
     if (
@@ -46,10 +46,13 @@ const App = ({ history, match }) => {
   }, [isToken, location, pathname]);
 
   useEffect(() => {
+    console.log("going into this use effect");
     const loadApp = () => {
       if (!isToken && localStorage.getItem("token")) {
+        console.log("step 1");
         dispatch({ type: "LOADING_STATUS", payload: { isToken: true } });
       } else if (!isToken && !localStorage.getItem("token") && isLoading) {
+        console.log("step 2");
         dispatch({
           type: "LOADING_STATUS",
           payload: {
@@ -64,12 +67,14 @@ const App = ({ history, match }) => {
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
         // step 2
-        dispatch({
-          type: "LOADING_STATUS",
-          payload: { isLoading: false, isNewUser: true }
-        });
-        // fetchUser()(dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
+        console.log("step 3");
+        // dispatch({
+        //   type: "LOADING_STATUS",
+        //   payload: { isLoading: false, isNewUser: true }
+        // });
+        fetchUser(localStorage.getItem("token"))(dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
       } else if (isToken && isLoading && role && !isSignedIn) {
+        console.log("step 4");
         dispatch({
           type: "LOADING_STATUS",
           payload: {
@@ -82,12 +87,33 @@ const App = ({ history, match }) => {
       } else if (isToken && !isLoading && !role && !isSignedIn && isNewUser) {
         console.log("going to sign up?");
         history.push("/signup");
-      } else if (isSignedIn && location === "/callback") {
+      } else if (
+        isSignedIn &&
+        location === "/callback" &&
+        history.location.state !== "logout"
+      ) {
+        console.log("step 6");
         history.push({
-          pathname: `/profile/${userID}`
+          pathname: `/profile/${user.id}`
         });
       } else if (!isToken && !localStorage.getItem("token") && !isLoading) {
-        history.push(location); // could push to dynamic location
+        console.log("step 7");
+        // history.push(location); // could push to dynamic location
+      } else if (history.location.state === "logout") {
+        console.log("this should logout in app");
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("token");
+        history.replace("/home");
+        dispatch({
+          type: "LOADING_STATUS",
+          payload: {
+            isSignedIn: false,
+            isLoading: false,
+            isToken: false,
+            role: "",
+            user: {}
+          }
+        });
       }
     };
     loadApp();
@@ -100,12 +126,13 @@ const App = ({ history, match }) => {
     userID,
     location,
     history,
+    history.location.state,
     dispatch
   ]);
 
   return (
     <div className="App">
-      <RouteContainer {...state} />
+      <RouteContainer {...{ ...state, dispatch }} />
       {/* should move routes into a container component to reduce cluter in app component */}
 
       {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
