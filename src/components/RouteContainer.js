@@ -1,11 +1,11 @@
 import React from "react";
 import { Route } from "react-router";
-import Home from "./components/Home";
-import ProfileContainer from "./components/profiles/ProfileContainer";
-import Developers from "./components/profiles/DeveloperList";
-import Projects from "./components/projects/Projects";
-import Project from "./components/projects/Project";
-import Plan from "./components/projects/Plan";
+import Home from "./Home";
+import ProfileContainer from "./profiles/ProfileContainer";
+import Developers from "./profiles/DeveloperList";
+import Projects from "./projects/Projects";
+import Project from "./projects/Project";
+import Plan from "./projects/Plan";
 
 const RouteContainer = ({
   isLoading,

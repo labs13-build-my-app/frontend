@@ -2,8 +2,8 @@ import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { withRouter } from "react-router";
 import { locationRestore, fetchUser } from "./store/actions";
-// import RouteContainer from "./components/RouteContainer";
-// import ModalContainer from "./components/ModalContainer";
+import RouteContainer from "./components/RouteContainer";
+import ModalContainer from "./components/ModalContainer";
 
 import "./App.css";
 
@@ -127,8 +127,8 @@ const App = ({ history, match }) => {
 
   return (
     <div className="App">
-      {/* <RouteContainer {...{ ...state, dispatch }} />
-      <ModalContainer /> */}
+      <RouteContainer {...{ ...state, dispatch }} />
+      <ModalContainer />
     </div>
   );
 };
