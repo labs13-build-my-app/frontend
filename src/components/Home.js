@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect } from "react-router";
+import { Route } from "react-router";
 import Callback from "./Auth/Callback";
 import Signup from "./Signup";
 import NavContainer from "./NavContainer";

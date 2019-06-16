@@ -1,7 +1,6 @@
-import React, { useEffect, useReducer } from "react";
+import React from "react";
 import ProfileCard from "../ProfileCard";
 import { Route, Switch } from "react-router";
-import Developers from "./DeveloperList";
 import DeveloperPageView from "./DevloperPageView";
 import Dashboard from "../dashboard/Dashboard";
 

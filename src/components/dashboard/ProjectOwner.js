@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Route } from "react-router";
-import Projects from "../projects/Projects";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button, Card } from "../../custom-styles";
 
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-
 import {
   fecthProjectOwnerProjectsList,
   updateProject
@@ -23,9 +20,9 @@ import {
   FaTwitter,
   FaLinkedin,
   FaUser,
-  FaEnvelope,
-  FaDev,
-  FaBook
+  FaEnvelope
+  // FaDev,
+  // FaBook
 } from "react-icons/fa";
 
 // const Card = styled.div`
@@ -111,7 +108,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
 
   useEffect(() => {
     fecthProjectOwnerProjectsList(user.id)(setProjects);
-  }, []);
+  }, [user.id]);
 
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };
@@ -122,6 +119,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         <div style={{ width: "50%" }}>
           <img
             src={user.profilePictureURL ? user.profilePictureURL : placeholder}
+            alt={"avatar"}
             style={{
               borderRadius: "100%",
               width: "50%"
@@ -182,7 +180,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       ) : (
         projects.map(project => (
           <Card key={project.id} className={"card projectsCard"}>
-            {project.image_url ? <img src={project.image_url} /> : null}
+            {project.image_url ? (
+              <img src={project.image_url} alt={"avatar"} />
+            ) : null}
             <h1 onClick={() => history.push(`/projects/project/${project.id}`)}>
               {project.name}
             </h1>

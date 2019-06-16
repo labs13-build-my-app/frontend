@@ -111,6 +111,7 @@ const App = ({ history, match }) => {
     };
     loadApp();
   }, [
+    user.id,
     isToken,
     isLoading,
     isSignedIn,

@@ -1,5 +1,4 @@
-import React, { useEffect, useState, useReducer } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 import { fetchProjects } from "../../store/actions";
@@ -17,7 +16,6 @@ const Projects = ({
 }) => {
   const props = { history, match, role, isLoading, isSignedIn };
   const [projects, setProjects] = useState([]);
-  console.log(projects);
 
   useEffect(() => {
     if (!isLoading) {

@@ -144,7 +144,7 @@ export const signup = user => dispatch => {
 
 export const fetchDashboard = endpoint => dispatch => {
   dispatch({ type: FETCH_START });
-  console.log("getting user Dashboard details");
+
   axios({
     method: "GET",
     headers: {
@@ -154,8 +154,7 @@ export const fetchDashboard = endpoint => dispatch => {
     url: `${connection}${endpoint}`
   })
     .then(res => {
-      console.log(res);
-      if (res.data.role == "Admin") {
+      if (res.data.role === "Admin") {
         dispatch({
           // res.data
           // list of projests with accepted plan and developer

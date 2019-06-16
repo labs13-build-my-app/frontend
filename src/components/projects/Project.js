@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Route, Redirect } from "react-router";
-import axios from "axios";
 import {
   fetchProject,
   listProjectPlans,

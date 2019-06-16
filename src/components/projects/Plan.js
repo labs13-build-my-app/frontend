@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { fetchPlan } from "../../store/actions";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -7,7 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "../../custom-styles";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -36,18 +35,18 @@ const useStyles = makeStyles(theme => ({
 
 const Plan = ({ match, isLoading, isSignedIn, role }) => {
   // const { fullScreen } = props;
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [plan, setPlan] = useState([]);
   const [planStatus, setPlanStatus] = useState([]);
 
-  function handleClickOpen() {
-    setOpen(true);
-  }
+  // function handleClickOpen() {
+  //   setOpen(true);
+  // }
 
-  function handleClose() {
-    setOpen(false);
-  }
+  // function handleClose() {
+  //   setOpen(false);
+  // }
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;

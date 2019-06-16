@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import auth0 from "auth0-js";
-import { saveToken } from "../../store/actions";
 
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
@@ -42,7 +41,7 @@ const Callback = ({ history, dispatch, isToken, isSignedIn, fetch }) => {
     } else {
       getToken();
     }
-  }, [history.location.state, isToken, isSignedIn, dispatch, fetch]);
+  }, [history.location.state, history, isToken, isSignedIn, dispatch, fetch]);
 
   return (
     <div>

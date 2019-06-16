@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Route, Redirect } from "react-router";
-import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
-import { fetchDashboard, fetchProfile } from "../../store/actions";
-import axios from "axios";
+import { fetchProfile } from "../../store/actions";
 
 const Dashboard = ({
   match,

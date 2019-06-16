@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import styled from 'styled-components';
-import Auth from "./Auth/Auth";
 import { Link } from "react-router-dom";
-// const auth = new Auth();
 
 const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
@@ -38,7 +35,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
         }
       ]);
     }
-  }, [isSignedIn, isToken, newUser]);
+  }, [isSignedIn, isToken, newUser, role, user.id]);
 
   return (
     <nav
@@ -51,6 +48,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
     >
       <img
         src={require("../assets/images/logo.png")}
+        alt="logo"
         style={{ width: "25%", height: "auto", maxWidth: 385 }}
       />
       <ul
