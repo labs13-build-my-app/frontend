@@ -27,14 +27,6 @@ const Home = ({
     <div>
       {/* can implement a componet to to conditionall render when in loading state to render a loading status */}
       {/* this is our navigation component always render or can be conditionally rendered when isloading is false */}
-      <NavContainer
-        isSignedIn={isSignedIn}
-        user={user}
-        role={role}
-        token={token}
-        newUser={newUser}
-      />
-
       {/* <ProfileCard user={user} /> */}
 
       {/* can add a marketing Routing component for home */}

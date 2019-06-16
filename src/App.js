@@ -13,7 +13,7 @@ import CreatePlan from "./components/CreatePlan";
 import CreateProjectForm from "./components/projects/CreateProjectForm";
 import Project from "./components/projects/Project";
 import Plan from "./components/projects/Plan";
-
+import NavBar from "./components/NavContainer"; 
 import "./App.css";
 // complete routing
 // must implement propTypes for testing
@@ -129,8 +129,9 @@ const App = ({ history, match }) => {
   if (token === null) return <h1>Loading...</h1>;
 
   return (
-    <div className="App">
+    <div className="App" style={{display: 'flex'}}>
       {/* should move routes into a container component to reduce cluter in app component */}
+      <NavBar style={{width: '20%'}}/>
       <Route
         path={"/"}
         render={props => (

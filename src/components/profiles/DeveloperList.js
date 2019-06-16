@@ -57,7 +57,7 @@ const Developers = ({ history }) => {
   } else {
     console.log(developers);
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {developers.map(dev => {
           const initials = dev.firstName.charAt(0) + dev.lastName.charAt(0);
           return (

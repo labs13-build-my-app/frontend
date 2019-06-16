@@ -12,7 +12,7 @@ const ProjectsContainer = ({ role, match, isLoading, isSignedIn, history }) => {
   );
   console.log("projectsContainerLog");
   return (
-    <div>
+    <div style={{marginLeft: '20%', width: '80%'}}>
       <Switch>
         {/* may need to implement switch in here to render only one render */}
         {/* public routes */}
