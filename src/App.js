@@ -46,13 +46,10 @@ const App = ({ history, match }) => {
   }, [isToken, location, pathname]);
 
   useEffect(() => {
-    console.log("going into this use effect");
     const loadApp = () => {
       if (!isToken && localStorage.getItem("token")) {
-        console.log("step 1");
         dispatch({ type: "LOADING_STATUS", payload: { isToken: true } });
       } else if (!isToken && !localStorage.getItem("token") && isLoading) {
-        console.log("step 2");
         dispatch({
           type: "LOADING_STATUS",
           payload: {
@@ -66,15 +63,8 @@ const App = ({ history, match }) => {
           // history.push("/home");
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
-        // step 2
-        console.log("step 3");
-        // dispatch({
-        //   type: "LOADING_STATUS",
-        //   payload: { isLoading: false, isNewUser: true }
-        // });
         fetchUser(localStorage.getItem("token"))(dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
       } else if (isToken && isLoading && role && !isSignedIn) {
-        console.log("step 4");
         dispatch({
           type: "LOADING_STATUS",
           payload: {
@@ -84,23 +74,26 @@ const App = ({ history, match }) => {
             isNewUser: false
           }
         });
-      } else if (isToken && !isLoading && !role && !isSignedIn && isNewUser) {
-        console.log("going to sign up?");
+      } else if (
+        isToken &&
+        !isLoading &&
+        !role &&
+        !isSignedIn &&
+        isNewUser &&
+        history.location.state !== "logout"
+      ) {
         history.push("/signup");
       } else if (
         isSignedIn &&
         location === "/callback" &&
         history.location.state !== "logout"
       ) {
-        console.log("step 6");
         history.push({
           pathname: `/profile/${user.id}`
         });
       } else if (!isToken && !localStorage.getItem("token") && !isLoading) {
-        console.log("step 7");
         // history.push(location); // could push to dynamic location
       } else if (history.location.state === "logout") {
-        console.log("this should logout in app");
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("token");
         history.replace("/home");
@@ -133,23 +126,6 @@ const App = ({ history, match }) => {
   return (
     <div className="App">
       <RouteContainer {...{ ...state, dispatch }} />
-      {/* should move routes into a container component to reduce cluter in app component */}
-
-      {/* <Route path={"/create-plan"} render={() => <CreatePlan />} /> */}
-      {/* <Route
-        path={"/create-plan"}
-        render={props => <CreatePlan {...props} user={user} />}
-      /> */}
-
-      {/* 
-      <Route path={"/get-users-test"} componet={User} /> */}
-
-      {/* <Route
-        path={"/admin"}
-        render={props => <Admin {...props} dispatch={dispatch} />}
-      /> */}
-
-      {/* <Route path={"/get-users-test"} componet={User} /> */}
     </div>
   );
 };

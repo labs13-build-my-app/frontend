@@ -88,7 +88,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         error: false,
         isLoading: false,
-        newUser: true
+        isNewUser: true
       };
     case FETCH_DEVELOPER_SUCCESS:
       return {

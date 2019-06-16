@@ -31,8 +31,6 @@ const Home = ({
 
   // if (isLoading) return <h1>Loading...2.0</h1>; wrong place for loading
 
-  console.log(history.location.state);
-
   return (
     <div>
       {/* can implement a componet to to conditionall render when in loading state to render a loading status */}

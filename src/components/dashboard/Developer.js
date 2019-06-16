@@ -44,12 +44,10 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
-    console.log(user.id);
     fetchDeveloperPlans(user.id)(setPlans);
     getDeveloperFeedback(user.id)(setfeedback);
   }, [user.id, setPlans]);
 
-  console.log("feedbacks", feedbacks);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>

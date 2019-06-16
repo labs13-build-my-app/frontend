@@ -49,7 +49,6 @@ const Developers = ({ history }) => {
   const classes = useStyles();
   const [developers, setDevelopers] = useState([]);
   useEffect(() => {
-    console.log("this is being set up for developers");
     fetchDevelopers()(setDevelopers);
   }, []);
   if (!developers) {

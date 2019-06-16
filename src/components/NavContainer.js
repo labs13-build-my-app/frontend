@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 
 const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
-  console.log("current state of new user", newUser);
   useEffect(() => {
     if (isToken) {
       setNav([

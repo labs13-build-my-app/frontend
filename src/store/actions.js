@@ -75,7 +75,7 @@ export const fetchUser = token => dispatch => {
         console.log("sign up", res);
         dispatch({
           type: USER_SIGNUP,
-          payload: { newUser: true }
+          payload: { isNewUser: true }
         });
       } else {
         if (res.data.role === "Developer") {

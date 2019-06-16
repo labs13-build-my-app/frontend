@@ -22,6 +22,7 @@ const Callback = ({ history, dispatch, isToken, isSignedIn, fetch }) => {
             type: "LOADING_STATUS",
             payload: { isToken: true, isLoading: true, role: "" }
           });
+          history.push("/");
         } else if (err) {
           // history.replace("/home");
           alert(`Error: ${err.error}. Check the console for further details.`);

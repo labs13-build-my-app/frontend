@@ -10,7 +10,7 @@ const ProjectsContainer = ({ role, match, isLoading, isSignedIn, history }) => {
     store.projectsReducer,
     store.initialState
   );
-  console.log("projectsContainerLog");
+
   return (
     <div>
       <Switch>
