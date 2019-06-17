@@ -8,7 +8,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import "./Signup.css";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+// import "./Signup.css";
 import { Button } from "../custom-styles";
 
 const SignupForm = styled.form`
@@ -31,7 +32,8 @@ const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    background: "green"
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -49,11 +51,14 @@ const useStyles = makeStyles(theme => ({
     minWidth: 120
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(1)
+  },
+  root: {
+    width: "100%"
   }
 }));
 
-const Signup = ({ token, dispatch, history }) => {
+const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const classes = useStyles();
   const [role, setRole] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -65,12 +70,17 @@ const Signup = ({ token, dispatch, history }) => {
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
 
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
+
   useEffect(() => {
-    if (!token) {
-      console.log("in here", token);
+    if (!isToken) {
       auth.login();
     }
-  }, [token, history]);
+  }, [isToken, history]);
 
   const changeHandler = (e, setState) => {
     let user = e.target.value;
@@ -78,20 +88,27 @@ const Signup = ({ token, dispatch, history }) => {
   };
   const submitHandler = e => {
     e.preventDefault();
-    signup({
-      role,
-      firstName,
-      lastName,
-      email,
-      skills,
-      devType,
-      linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
-      gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
-      twitter: twitter.split("/")[twitter.split("/").length - 1]
-    })(dispatch);
-    history.push("/dashboard");
+    signup(
+      {
+        role,
+        firstName,
+        lastName,
+        email,
+        skills,
+        devType,
+        linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
+        gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
+        twitter: twitter.split("/")[twitter.split("/").length - 1]
+      },
+      dispatch
+    );
+    // new user is still set to true
+    // need to set newUser to false after signup
+    // should not push to dashboard
+    // should push to profile page
+    // history.push("/dashboard");
   };
-  if (!localStorage.getItem("token")) {
+  if (isSignedIn || isLoading || !localStorage.getItem("token")) {
     return <div>loading...</div>;
   }
   return (
@@ -99,18 +116,25 @@ const Signup = ({ token, dispatch, history }) => {
       <SignupForm className={classes.root} onSubmit={submitHandler}>
         <h2>Profile Setup</h2>
         <div className="role">
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="age-simple">Sign Up As</InputLabel>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel ref={inputLabel} htmlFor="role-type">
+              Sign up As
+            </InputLabel>
             <Select
-              className={classes.select}
+              className={classes.selectMenu}
               value={role}
               onChange={event => changeHandler(event, setRole)}
-              inputProps={{
-                name: "age",
-                id: "age-simple"
-              }}
+              input={
+                <OutlinedInput
+                  labelWidth={labelWidth}
+                  name="age"
+                  id="role-type"
+                />
+              }
             >
-              <MenuItem value="" />
+              <MenuItem value=" ">
+                <em>None</em>
+              </MenuItem>
               <MenuItem value={"Developer"}>Developer</MenuItem>
               <MenuItem value={"Project Owner"}>Project Owner</MenuItem>
             </Select>

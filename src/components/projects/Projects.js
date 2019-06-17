@@ -1,45 +1,51 @@
-import React, { useEffect, useState, useReducer } from "react";
-import axios from "axios";
+import React, { useEffect, useState } from "react";
 import Project from "./Project";
 import { Link } from "react-router-dom";
 import { fetchProjects } from "../../store/actions";
 import { PageTitle } from "../../custom-styles";
 
-const Projects = ({ match, isLoading, isSignedIn, role, history }) => {
+const Projects = ({
+  isLoading,
+  isSignedIn,
+  fetch,
+  error,
+  role,
+  user,
+  match,
+  history
+}) => {
+  const props = { history, match, role, isLoading, isSignedIn };
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
     if (!isLoading) {
-      fetchProjects()(setProjects);
+      fetchProjects(setProjects);
     }
   }, [isLoading]);
-  console.log(isLoading);
-  if (isLoading) {
+
+  if (!projects) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div>
       <PageTitle>All Projects</PageTitle>
-      <div style={{ width: "80%", margin: "0 auto" }}>
+      <div style={{ width: "80%", margin: "auto auto" }}>
         {projects
           .filter(project => project.projectStatus === "proposal")
           .map(project => (
             <Link
               style={{ textDecoration: "none" }}
               className="project-link"
-              to={`/projects/project/${project.id}`}
+              to={`/project/${project.id}`}
               key={project.id}
             >
               <Project
-                match={match}
+                {...props}
                 name={project.name}
                 description={project.description}
                 budget={project.budget}
                 dueDate={project.dueDate}
-                isLoading={isLoading}
-                isSignedIn={isSignedIn}
-                role={role}
-                history={history}
               />
             </Link>
           ))}

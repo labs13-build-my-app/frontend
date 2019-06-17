@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Route } from "react-router";
+
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
-import { Button } from "../../custom-styles";
 import { fetchDeveloperPlans, getDeveloperFeedback } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -44,18 +42,17 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
-    console.log(user.id);
-    fetchDeveloperPlans(user.id)(setPlans);
-    getDeveloperFeedback(user.id)(setfeedback);
+    fetchDeveloperPlans(user.id, setPlans);
+    getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans]);
 
-  console.log("feedbacks", feedbacks);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
         <div style={{ width: "50%" }}>
           <img
             src={user.profilePictureURL ? user.profilePictureURL : placeholder}
+            alt={"avatar"}
             style={{
               borderRadius: "100%",
               width: "50%"
@@ -144,7 +141,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               className={"card plansCard"}
               onClick={() => history.push(`/projects/plan/${plan.id}`)}
             >
-              {plan.image_url ? <img src={plan.image_url} /> : null}
+              {plan.image_url ? (
+                <img src={plan.image_url} alt={"avatar"} />
+              ) : null}
               <h1>{plan.name}</h1>
               <p>{plan.description}</p>
               <p>{plan.planStatus}</p>

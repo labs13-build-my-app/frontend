@@ -20,7 +20,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     console.log("CREATE PROJECT", state);
     const budgetDisplay = { ...state, budget: state.budget * 100 };
-    createProject(budgetDisplay)(dispatch);
+    createProject(budgetDisplay, dispatch);
     history.push(`/profile/${history.location.state}`);
   });
   const useStyles = makeStyles(theme => ({
@@ -42,7 +42,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
   }));
   const classes = useStyles();
   return (
-    <div>
+    <div style={{marginLeft: '20%', width: '80%'}}>
       <StyledCard>
         <h2>Add Project</h2>
         <form onSubmit={handleSubmit}>

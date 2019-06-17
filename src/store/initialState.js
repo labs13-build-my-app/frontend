@@ -2,9 +2,9 @@ const initialState = {
   isLoading: true,
   fetch: false,
   error: false,
-  token: null,
+  isToken: false,
   isSignedIn: false,
-  newUser: false,
+  isNewUser: false,
   role: "",
   location: "/home",
   user: {

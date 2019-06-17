@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Route, Redirect } from "react-router";
-import axios from "axios";
 import {
   fetchProject,
   listProjectPlans,
@@ -19,18 +17,9 @@ const Project = ({
   dueDate,
   isLoading,
   isSignedIn,
-  role,
-  history,
-  location
+  role
 }) => {
   const [project, setProject] = useState([]);
-
-  // let projectData;
-  // if (props.history.location === "/projects") {
-  //   projectData = props;
-  // } else {
-  //   projectData = project;
-  // }
 
   useEffect(() => {
     const formatDate = unixDate => {
@@ -41,21 +30,28 @@ const Project = ({
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
-    if (!match.params.id) {
+
+    if (!match.params.project_id && !isLoading) {
       const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
       setProject({ name, description, budget: newBudget, dueDate: newDueDate });
     }
-    if (match.params.id && !isLoading) {
-      console.log("this should be be happeing here", match.params.id);
-      fetchProject(match.params.id, formatDate, formatBudget)(setProject);
+    if (match.params.project_id && !isLoading) {
+      fetchProject(
+        match.params.project_id,
+        formatDate,
+        formatBudget,
+        setProject
+      );
     }
-  }, [match, isLoading, name, description, budget, dueDate]);
+  }, [match.params.project_id, isLoading, name, description, budget, dueDate]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    listProjectPlans(match.params.id)(setProjectPlans);
-  }, [match.params.id]);
+    if (match.params.project_id && !isLoading) {
+      listProjectPlans(match.params.project_id, setProjectPlans);
+    }
+  }, [match.params.project_id, isLoading]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -63,11 +59,10 @@ const Project = ({
 
   const clickHandler = (e, id, status) => {
     e.preventDefault();
-    acceptPlan(match.params.id, { planStatus: status, id: id })();
-    window.location.reload();
+    acceptPlan(match.params.id, { planStatus: status, id: id });
+    window.location.reload(); // need to change this. this might be giving us a bug
   };
 
-  console.log(projectPlans);
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -91,8 +86,7 @@ const Project = ({
               style={{ textDecoration: "none" }}
               className="create-plan"
               to={{
-                pathname: "/create-plan",
-                state: { projectid: project.id }
+                state: { project_id: project.id, modal: true }
               }}
             >
               Apply to this project
@@ -115,7 +109,7 @@ const Project = ({
         </div>
       </Card>
       <div className={"project-plans"}>
-        {projectPlans.length &&
+        {projectPlans &&
           projectPlans.map(plan => {
             return (
               <Card style={{ width: "80%", color: "black" }}>

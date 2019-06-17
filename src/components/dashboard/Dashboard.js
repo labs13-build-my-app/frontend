@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { Route, Redirect } from "react-router";
-import Admin from "./Admin";
 import ProjectOwner from "./ProjectOwner";
 import Developer from "./Developer";
-import { fetchDashboard, fetchProfile } from "../../store/actions";
-import axios from "axios";
+import { fetchProfile } from "../../store/actions";
 
 const Dashboard = ({
   match,
   dispatch,
-  loggedInUser,
+  user: loggedInUser,
   role,
   isSignedIn,
   history
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    console.log();
-    fetchProfile(match.params.id)(setUser);
+    fetchProfile(match.params.user_id, setUser);
   }, [setUser, history.location.state, match.params.id]);
 
   const displayBasedOnRole = () => {
@@ -27,19 +23,22 @@ const Dashboard = ({
           history={history}
           user={user}
           loggedInUser={loggedInUser}
+          role={role}
         />
       );
     } else if (user.role === "Developer" || history.location.state) {
       return (
-        <Developer user={user} loggedInUser={loggedInUser} history={history} />
+        <Developer
+          role={role}
+          user={user}
+          loggedInUser={loggedInUser}
+          history={history}
+        />
       );
     } else {
       return <h1>Loading</h1>;
     }
   };
-
-  console.log("Dashboard logged in user", loggedInUser);
-  console.log("Dashboard user", user);
 
   return <div>{displayBasedOnRole()}</div>;
 };
