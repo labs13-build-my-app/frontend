@@ -56,7 +56,7 @@ const Developers = ({ history }) => {
     return <h1>Loading...</h1>;
   } else {
     return (
-      <div>
+      <div style={{width: '100%'}}>
         {developers.map(dev => {
           const initials = dev.firstName.charAt(0) + dev.lastName.charAt(0);
           return (

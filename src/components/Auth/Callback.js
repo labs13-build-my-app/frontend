@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import auth0 from "auth0-js";
-
+//redirectUri: "https://build-my-app-fe.onrender.com/callback", // maybe this can redirect to home or change this to auth?
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
   clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-  redirectUri: "http://localhost:3000/callback", // maybe this can redirect to home or change this to auth?
+  redirectUri: "http://localhost:3000/callback",
   responseType: "token id_token",
   scope: "openid profile"
 });
