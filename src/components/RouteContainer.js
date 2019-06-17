@@ -7,6 +7,8 @@ import Projects from "./projects/Projects";
 import Project from "./projects/Project";
 import Plan from "./projects/Plan";
 import Callback from "./Auth/Callback";
+import "./Signup.css";
+import Signup from "./Signup";
 
 const RouteContainer = ({
   isLoading,
@@ -17,7 +19,6 @@ const RouteContainer = ({
   error,
   role,
   user,
-  history,
   dispatch
 }) => {
   const state = {
@@ -34,7 +35,7 @@ const RouteContainer = ({
 
   return (
     <>
-      {/* Home component can be renamed to Dashboard */}
+      {/* Home component  */}
       <Route path={"/"} render={props => <Home {...props} {...state} />} />
 
       {!isSignedIn && !isLoading ? (
@@ -43,6 +44,10 @@ const RouteContainer = ({
           <Route
             path="/callback"
             render={props => <Callback {...props} {...state} />}
+          />
+          <Route
+            path="/signup"
+            render={props => <Signup {...props} {...state} />}
           />
         </>
       ) : null}
@@ -77,9 +82,7 @@ const RouteContainer = ({
             render={props => <Plan {...props} {...state} />}
           />
         </>
-      ) : (
-        <h1>Loading... </h1>
-      )}
+      ) : null}
     </>
   );
 };
