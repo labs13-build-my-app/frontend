@@ -96,7 +96,10 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               <ListItemIcon>
                 <FaGithub />
               </ListItemIcon>
-              <ListItemLink href={`https://github.com/${user.gitHub}`}>
+              <ListItemLink
+                target="_blank"
+                href={`https://github.com/${user.gitHub}`}
+              >
                 <ListItemText primary={`${user.gitHub}`} />
               </ListItemLink>
             </ListItem>
@@ -105,6 +108,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 <FaLinkedin />
               </ListItemIcon>
               <ListItemLink
+                target="_blank"
                 href={`https://www.linkedin.com/in/${user.linkedIn}`}
               >
                 <ListItemText primary={`${user.linkedIn}`} />
@@ -114,7 +118,10 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               <ListItemIcon>
                 <FaTwitter />
               </ListItemIcon>
-              <ListItemLink href={`https://twitter.com/${user.twitter}`}>
+              <ListItemLink
+                target="_blank"
+                href={`https://twitter.com/${user.twitter}`}
+              >
                 <ListItemText primary={`${user.twitter}`} />
               </ListItemLink>
             </ListItem>
