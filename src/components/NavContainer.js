@@ -38,6 +38,7 @@ const useStyles = makeStyles(theme => ({
     marginLeft: 0
   },
   navBar: {
+    top: 0,
     width: "305px",
     position: "fixed",
     minHeight: "100vh",
@@ -108,7 +109,6 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
       <img
         src={require("../assets/images/logo.png")}
         alt="logo"
-        style={{ width: "25%", height: "auto", maxWidth: 385 }}
         className={classes.logo}
       />
       <nav

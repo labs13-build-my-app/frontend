@@ -28,7 +28,7 @@ const Projects = ({
   }
 
   return (
-    <div style={{marginLeft: "20%"}}>
+    <div>
       <PageTitle>All Projects</PageTitle>
       <div style={{ width: "80%", margin: "auto auto" }}>
         {projects
