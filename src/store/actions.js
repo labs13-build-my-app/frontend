@@ -319,9 +319,9 @@ export const createPlan = (plan, project_id, dispatch) => {
     });
 };
 
-// updatea  plan
+// update  plan
 export const updatePlan = (plan, plan_id, dispatch) => {
-  dispatch({ type: FETCH_START });
+  // dispatch({ type: FETCH_START });
   axios({
     method: "PUT",
     headers: {
@@ -333,12 +333,12 @@ export const updatePlan = (plan, plan_id, dispatch) => {
   })
     .then(res => {
       dispatch({
-        type: UPDATE_PLAN_SUCCESS
-        // Should there be a payload? or invoke fetch list or page for plan
+        type: UPDATE_PLAN_SUCCESS,
+        payload: res.data
       });
     })
     .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
+      // dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };

@@ -139,7 +139,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             <Card
               key={plan.id}
               className={"card plansCard"}
-              onClick={() => history.push(`/projects/plan/${plan.id}`)}
+              onClick={() => history.push(`/plan/${plan.id}`)}
             >
               {plan.image_url ? (
                 <img src={plan.image_url} alt={"avatar"} />

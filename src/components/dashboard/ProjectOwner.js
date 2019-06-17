@@ -183,7 +183,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             {project.image_url ? (
               <img src={project.image_url} alt={"avatar"} />
             ) : null}
-            <h1 onClick={() => history.push(`/projects/project/${project.id}`)}>
+            <h1 onClick={() => history.push(`/project/${project.id}`)}>
               {project.name}
             </h1>
             {/* <<< See card page */}
