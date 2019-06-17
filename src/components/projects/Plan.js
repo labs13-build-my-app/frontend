@@ -83,7 +83,9 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
             <MenuItem value={"In Progress"}>In Progress</MenuItem>
             <MenuItem value={"Completed"}>Completed</MenuItem>
           </Select>
-          <Button type={"submit"}>Submit</Button>
+          <Button type={"submit"} style={{ margin: "20px" }}>
+            Submit
+          </Button>
         </FormControl>
       </form>
     </div>
