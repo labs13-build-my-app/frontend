@@ -42,7 +42,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
   }));
   const classes = useStyles();
   return (
-    <div>
+    <div style={{marginLeft: '20%', width: '80%'}}>
       <StyledCard>
         <h2>Add Project</h2>
         <form onSubmit={handleSubmit}>

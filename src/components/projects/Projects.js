@@ -18,9 +18,9 @@ const Projects = ({ match, isLoading, isSignedIn, role, history }) => {
     return <h1>Loading...</h1>;
   }
   return (
-    <div>
+    <div style={{marginLeft: "20%"}}>
       <PageTitle>All Projects</PageTitle>
-      <div style={{ width: "80%", margin: "0 auto" }}>
+      <div style={{ width: "80%", margin: "auto auto" }}>
         {projects
           .filter(project => project.projectStatus === "proposal")
           .map(project => (

@@ -7,7 +7,7 @@ import Dashboard from "../dashboard/Dashboard";
 
 const ProfileContainer = ({ history, dispatch, user }) => {
   return (
-    <div>
+    <div style={{marginLeft: '20%', width: '80%'}}>
       <Switch>
         {/* public routes */}
 
