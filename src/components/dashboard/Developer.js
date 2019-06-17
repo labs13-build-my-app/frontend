@@ -42,8 +42,8 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
-    fetchDeveloperPlans(user.id)(setPlans);
-    getDeveloperFeedback(user.id)(setfeedback);
+    fetchDeveloperPlans(user.id, setPlans);
+    getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans]);
 
   return (

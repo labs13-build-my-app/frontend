@@ -6,14 +6,14 @@ import { fetchProfile } from "../../store/actions";
 const Dashboard = ({
   match,
   dispatch,
-  loggedInUser,
+  user: loggedInUser,
   role,
   isSignedIn,
   history
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
-    fetchProfile(match.params.id)(setUser);
+    fetchProfile(match.params.user_id, setUser);
   }, [setUser, history.location.state, match.params.id]);
 
   const displayBasedOnRole = () => {

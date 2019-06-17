@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createNewPlan } from "../../store/actions";
+import { createPlan } from "../../store/actions";
 
 const CreatePlan = ({ history, user }) => {
   const [name, setName] = useState("");
@@ -27,7 +27,7 @@ const CreatePlan = ({ history, user }) => {
       user_id,
       project_id
     };
-    createNewPlan(
+    createPlan(
       {
         name,
         description,
@@ -39,7 +39,7 @@ const CreatePlan = ({ history, user }) => {
         project_id
       },
       project_id
-    )();
+    );
 
     history.push(`/profile/${user.id}`);
   };

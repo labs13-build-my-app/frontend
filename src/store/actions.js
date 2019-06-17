@@ -103,11 +103,13 @@ export const fetchUser = (token, dispatch) => {
 
 // fetch user profile
 export const fetchProfile = (userId, dispatch) => {
+  console.log(userId);
   axios({
     method: "GET",
     url: `${connection}/api/users/profile/${userId}`
   })
     .then(res => {
+      console.log(res);
       dispatch(res.data);
     })
     .catch(error => {
@@ -133,8 +135,9 @@ export const fetchDeveloper = (developer_id, dispatch) => {
 
 // fetch list of developers
 // list are paginated
-export const fetchDevelopers = dispatch => {
-  dispatch({ type: FETCH_START });
+export const fetchDevelopers = (dispatch, setPage) => {
+  // dispatch({ type: FETCH_START });
+  console.log(" in fetch Developers");
   axios({
     method: "GET",
     url: `${connection}/api/users/list-developers`,
@@ -145,9 +148,12 @@ export const fetchDevelopers = dispatch => {
   })
     .then(res => {
       // what this here? this doesn't look right
-      dispatch(res.data);
+      console.log(res);
+      dispatch(prevState => [...prevState, ...res.data.developers]);
     })
-    .catch(err => dispatch({ type: FETCH_FAIL }));
+    .catch(err => {
+      dispatch({ type: "FETCH_FAIL" });
+    });
 };
 
 // export const fetchDevelopers = () => dispatch => {
@@ -396,11 +402,7 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 };
 
 // page view of a project
-export const fetchProject = (
-  projectId,
-  formatDate,
-  formatBudget
-) => dispatch => {
+export const fetchProject = (projectId, formatDate, formatBudget, dispatch) => {
   axios
     .get(`${connection}/api/projects/project-view/${projectId}`)
     .then(res => {
@@ -426,7 +428,7 @@ export const fetchProjects = dispatch => {
   axios
     .get(`${connection}/api/projects/paginated-list-of-projects`)
     .then(res => {
-      dispatch(res.data);
+      dispatch(res.data.projects);
     })
     .catch(err => console.log(err));
 };

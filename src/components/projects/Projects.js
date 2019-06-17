@@ -19,7 +19,7 @@ const Projects = ({
 
   useEffect(() => {
     if (!isLoading) {
-      fetchProjects()(setProjects);
+      fetchProjects(setProjects);
     }
   }, [isLoading]);
 

@@ -1,6 +1,7 @@
 import React from "react";
 import CreateProjectForm from "./projects/CreateProjectForm";
 import CreatePlanForm from "./projects/CreatePlanForm";
+import Signup from "./Signup";
 
 // background: green;
 // position: absolute;
@@ -43,7 +44,7 @@ const ModalContainer = ({
     <>
       {role === "Project Owner" ? <CreateProjectForm {...state} /> : null}
       {role === "Developer" ? <CreatePlanForm {...state} /> : null}
-      {isNewUser ? <h1>modal for signup</h1> : null}
+      {isNewUser ? <Signup {...state} /> : null}
     </>
   );
 };

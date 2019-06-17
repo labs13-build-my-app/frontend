@@ -20,7 +20,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     console.log("CREATE PROJECT", state);
     const budgetDisplay = { ...state, budget: state.budget * 100 };
-    createProject(budgetDisplay)(dispatch);
+    createProject(budgetDisplay, dispatch);
     history.push(`/profile/${history.location.state}`);
   });
   const useStyles = makeStyles(theme => ({

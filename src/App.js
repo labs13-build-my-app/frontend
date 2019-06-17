@@ -2,6 +2,7 @@ import React, { useEffect, useReducer } from "react";
 import store from "./store";
 import { withRouter } from "react-router";
 import { locationRestore, fetchUser } from "./store/actions";
+import NavContainer from "./components/NavContainer";
 import RouteContainer from "./components/RouteContainer";
 import ModalContainer from "./components/ModalContainer";
 
@@ -33,7 +34,6 @@ const App = ({ history, match }) => {
 
   // logging state here
   console.log("STATE", state, isLoading, history.location.state, pathname);
-  console.log(typeof history.location.state);
 
   useEffect(() => {
     if (
@@ -44,7 +44,7 @@ const App = ({ history, match }) => {
       pathname !== undefined &&
       isToken === false
     ) {
-      locationRestore(pathname)(dispatch);
+      locationRestore(pathname, dispatch);
     }
   }, [isToken, location, pathname]);
 
@@ -66,7 +66,7 @@ const App = ({ history, match }) => {
           // history.push("/home");
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
-        fetchUser(localStorage.getItem("token"))(dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
+        fetchUser(localStorage.getItem("token"), dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
       } else if (isToken && isLoading && role && !isSignedIn) {
         dispatch({
           type: "LOADING_STATUS",
@@ -131,6 +131,7 @@ const App = ({ history, match }) => {
 
   return (
     <div className="App">
+      <NavContainer {...state} />
       <RouteContainer {...{ ...state, dispatch }} />
       {modal ? (
         <ModalContainer

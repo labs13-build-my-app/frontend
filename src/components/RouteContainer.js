@@ -1,11 +1,12 @@
 import React from "react";
 import { Route } from "react-router";
 import Home from "./Home";
-import ProfileContainer from "./profiles/ProfileContainer";
+import Dashboard from "./dashboard/Dashboard";
 import Developers from "./profiles/DeveloperList";
 import Projects from "./projects/Projects";
 import Project from "./projects/Project";
 import Plan from "./projects/Plan";
+import Callback from "./Auth/Callback";
 
 const RouteContainer = ({
   isLoading,
@@ -16,6 +17,7 @@ const RouteContainer = ({
   error,
   role,
   user,
+  history,
   dispatch
 }) => {
   const state = {
@@ -35,6 +37,16 @@ const RouteContainer = ({
       {/* Home component can be renamed to Dashboard */}
       <Route path={"/"} render={props => <Home {...props} {...state} />} />
 
+      {!isSignedIn && !isLoading ? (
+        <>
+          {/* this is our auth route that calls auth0 for token */}
+          <Route
+            path="/callback"
+            render={props => <Callback {...props} {...state} />}
+          />
+        </>
+      ) : null}
+
       {/* can add a marketing Routing component for home */}
       {!isLoading ? (
         <>
@@ -42,7 +54,7 @@ const RouteContainer = ({
 
           <Route
             path={"/profile/:user_id"}
-            render={props => <ProfileContainer {...props} {...state} />}
+            render={props => <Dashboard {...props} {...state} />}
           />
 
           <Route

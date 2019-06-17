@@ -46,14 +46,15 @@ const Developers = ({ history }) => {
     }
   }));
   const classes = useStyles();
+
   const [developers, setDevelopers] = useState([]);
+  const [page, setPage] = useState({});
   useEffect(() => {
-    fetchDevelopers()(setDevelopers);
+    fetchDevelopers(setDevelopers, setPage);
   }, []);
-  if (!developers) {
+  if (developers.length === 0) {
     return <h1>Loading...</h1>;
   } else {
-    console.log(developers);
     return (
       <div>
         {developers.map(dev => {

@@ -37,7 +37,10 @@ const Project = ({
       setProject({ name, description, budget: newBudget, dueDate: newDueDate });
     }
     if (match.params.project_id && !isLoading) {
-      fetchProject(match.params.project_id, formatDate, formatBudget)(
+      fetchProject(
+        match.params.project_id,
+        formatDate,
+        formatBudget,
         setProject
       );
     }
@@ -46,7 +49,7 @@ const Project = ({
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
     if (match.params.project_id && !isLoading) {
-      listProjectPlans(match.params.project_id)(setProjectPlans);
+      listProjectPlans(match.params.project_id, setProjectPlans);
     }
   }, [match.params.project_id, isLoading]);
 
@@ -56,7 +59,7 @@ const Project = ({
 
   const clickHandler = (e, id, status) => {
     e.preventDefault();
-    acceptPlan(match.params.id, { planStatus: status, id: id })();
+    acceptPlan(match.params.id, { planStatus: status, id: id });
     window.location.reload(); // need to change this. this might be giving us a bug
   };
 

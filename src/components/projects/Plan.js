@@ -54,7 +54,7 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
   };
 
   useEffect(() => {
-    fetchPlan(match.params.plan_id)(setPlan);
+    fetchPlan(match.params.plan_id, setPlan);
   }, [match.params.plan_id]);
   return (
     <div>

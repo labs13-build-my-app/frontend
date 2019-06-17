@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import Projects from "./Projects";
 import ProjectView from "./ProjectView";
-// import Plan from "./Plans"
 import store from "../../store";
 import { Route, Switch } from "react-router";
 

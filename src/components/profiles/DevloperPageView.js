@@ -22,7 +22,7 @@ const DeveloperPageView = ({ match }) => {
   const [developer, setDeveloper] = useState({});
 
   useEffect(() => {
-    fetchDeveloper(match.params.id)(setDeveloper);
+    fetchDeveloper(match.params.id, setDeveloper);
   }, [match.params.id]);
 
   if (!developer) {
