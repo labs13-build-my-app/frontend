@@ -66,7 +66,7 @@ export const usersReducer = (state, action) => {
         token: action.payload.token,
         isLoading: action.payload.token ? true : false
       };
-    case FETCH_USER_FAILURE:
+    case FETCH_FAILURE:
       return {
         ...state,
         fetch: false,
@@ -135,8 +135,7 @@ export const usersReducer = (state, action) => {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
             twitter: action.payload.twitter
-          },
-          projectOwnerDetails: {}
+          }
         }
       };
     case FETCH_ADMIN_SUCCESS:
@@ -167,34 +166,10 @@ export const usersReducer = (state, action) => {
           dashboardData: action.payload
         }
       };
-    case FETCH_DEVELOPER_DASHBOARD_SUCCESS:
-      return {
-        ...state,
-        fetch: false,
-        error: false,
-        user: {
-          ...state.user,
-          dashboardData: action.payload
-        }
-      };
-    case FETCH_PROJECT_OWNER_DASHBOARD_SUCCESS:
-      return {
-        ...state,
-        fetch: false,
-        error: false,
-        user: {
-          ...state.user,
-          dashboardData: action.payload
-        }
-      };
     case CREATE_PROJECT_SUCCESS:
       return {
         ...state,
-        fetch: false,
-        user: {
-          ...state.user,
-          project: [...state.user.project, action.payload]
-        }
+        fetch: false
       };
     default:
       return state;
