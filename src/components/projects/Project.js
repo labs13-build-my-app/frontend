@@ -123,7 +123,7 @@ const Project = ({
                 </div>
                 <div style={{ width: "75%" }}>
                   <p>{plan.description}</p>
-                  <p>Willing to accept ${plan.budget}</p>
+                  <p>Will accept ${plan.budget}</p>
                   <p>Can Deliver by {plan.dueDate}</p>
                   <p>Plan Status: {plan.planStatus}</p>
                 </div>
