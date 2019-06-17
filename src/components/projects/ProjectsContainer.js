@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer } from "react";
 import Projects from "./Projects";
 import ProjectView from "./ProjectView";
-// import Plan from "./Plans"
 import store from "../../store";
 import { Route, Switch } from "react-router";
 
@@ -10,9 +9,9 @@ const ProjectsContainer = ({ role, match, isLoading, isSignedIn, history }) => {
     store.projectsReducer,
     store.initialState
   );
-  console.log("projectsContainerLog");
+
   return (
-    <div style={{marginLeft: '20%', width: '80%'}}>
+    <div>
       <Switch>
         {/* may need to implement switch in here to render only one render */}
         {/* public routes */}

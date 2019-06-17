@@ -33,6 +33,11 @@ import {
 
 export const usersReducer = (state, action) => {
   switch (action.type) {
+    case "LOADING_STATUS":
+      return {
+        ...state,
+        ...action.payload
+      };
     // case LOADING_COMPLETE:
     //   return {
     //     ...state,
@@ -61,7 +66,7 @@ export const usersReducer = (state, action) => {
         token: action.payload.token,
         isLoading: action.payload.token ? true : false
       };
-    case FETCH_USER_FAILURE:
+    case FETCH_FAILURE:
       return {
         ...state,
         fetch: false,
@@ -83,7 +88,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         error: false,
         isLoading: false,
-        newUser: true
+        isNewUser: true
       };
     case FETCH_DEVELOPER_SUCCESS:
       return {
@@ -91,6 +96,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         isSignedIn: true,
         isLoading: false,
+        newUser: false,
         role: action.payload.role,
         user: {
           ...state.user,
@@ -114,7 +120,7 @@ export const usersReducer = (state, action) => {
       return {
         ...state,
         fetch: false,
-
+        newUser: false,
         isSignedIn: true,
         isLoading: false,
         role: action.payload.role,
@@ -129,8 +135,7 @@ export const usersReducer = (state, action) => {
             linkedIn: action.payload.linkedIn,
             github: action.payload.gitHub,
             twitter: action.payload.twitter
-          },
-          projectOwnerDetails: {}
+          }
         }
       };
     case FETCH_ADMIN_SUCCESS:
@@ -139,6 +144,7 @@ export const usersReducer = (state, action) => {
         fetch: false,
         isSignedIn: true,
         isLoading: false,
+        newUser: false,
         role: action.payload.role,
         user: {
           ...state.user,
@@ -160,34 +166,10 @@ export const usersReducer = (state, action) => {
           dashboardData: action.payload
         }
       };
-    case FETCH_DEVELOPER_DASHBOARD_SUCCESS:
-      return {
-        ...state,
-        fetch: false,
-        error: false,
-        user: {
-          ...state.user,
-          dashboardData: action.payload
-        }
-      };
-    case FETCH_PROJECT_OWNER_DASHBOARD_SUCCESS:
-      return {
-        ...state,
-        fetch: false,
-        error: false,
-        user: {
-          ...state.user,
-          dashboardData: action.payload
-        }
-      };
     case CREATE_PROJECT_SUCCESS:
       return {
         ...state,
-        fetch: false,
-        user: {
-          ...state.user,
-          project: [...state.user.project, action.payload]
-        }
+        fetch: false
       };
     default:
       return state;

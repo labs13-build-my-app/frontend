@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 import { fetchDevelopers } from "../../store/actions";
 
 const Developers = ({ history }) => {
@@ -47,15 +46,15 @@ const Developers = ({ history }) => {
     }
   }));
   const classes = useStyles();
+
   const [developers, setDevelopers] = useState([]);
+  const [page, setPage] = useState({});
   useEffect(() => {
-    console.log("this is being set up for developers");
-    fetchDevelopers()(setDevelopers);
+    fetchDevelopers(setDevelopers, setPage);
   }, []);
-  if (!developers) {
+  if (developers.length === 0) {
     return <h1>Loading...</h1>;
   } else {
-    console.log(developers);
     return (
       <div style={{width: '100%'}}>
         {developers.map(dev => {
@@ -76,7 +75,7 @@ const Developers = ({ history }) => {
                 <Button
                   variant="outlined"
                   className={classes.button}
-                  onClick={() => history.push(`/profile/developer/${dev.id}`)}
+                  onClick={() => history.push(`/profile/${dev.id}`)}
                 >
                   View Profile
                 </Button>
