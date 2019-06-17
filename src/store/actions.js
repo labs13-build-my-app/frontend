@@ -132,6 +132,7 @@ export const fetchDeveloper = (developer_id, dispatch) => {
 };
 
 // fetch list of developers
+// list are paginated
 export const fetchDevelopers = dispatch => {
   dispatch({ type: FETCH_START });
   axios({
@@ -175,7 +176,7 @@ export const deleteUser = dispatch => {};
 export const signup = (user, dispatch) => {
   dispatch({ type: FETCH_START });
   axios({
-    method: "post",
+    method: "POST",
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
@@ -206,7 +207,7 @@ export const signup = (user, dispatch) => {
 export const createProject = (project, dispatch) => {
   dispatch({ type: FETCH_START });
   axios({
-    method: "post",
+    method: "POST",
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
@@ -401,7 +402,7 @@ export const fetchProject = (
   formatBudget
 ) => dispatch => {
   axios
-    .get(`${connection}/api/projects/project/${projectId}`)
+    .get(`${connection}/api/projects/project-view/${projectId}`)
     .then(res => {
       const newDueDate = formatDate(res.data.dueDate);
       const newBudget = formatBudget(res.data.budget);
@@ -413,7 +414,7 @@ export const fetchProject = (
 // page view of a plan
 export const fetchPlan = (plan_id, dispatch) => {
   axios({
-    method: "get",
+    method: "GET",
     url: `${connection}/api/projects/plan-view/${plan_id}`
   })
     .then(res => dispatch(res.data))
@@ -433,7 +434,7 @@ export const fetchProjects = dispatch => {
 // feedback for a developer from a project owner for work on a project
 export const getDeveloperFeedback = (developer_id, dispatch) => {
   axios({
-    method: "get",
+    method: "GET",
     url: `${connection}/api/projects/developer-feedback/${developer_id}`
   })
     .then(res => dispatch(res.data))
@@ -443,7 +444,7 @@ export const getDeveloperFeedback = (developer_id, dispatch) => {
 // list of plans of a project
 export const listProjectPlans = (project_id, dispatch) => {
   axios({
-    method: "get",
+    method: "GET",
     url: `${connection}/api/projects/plan-list-project/${project_id}`
   })
     .then(res => dispatch(res.data))

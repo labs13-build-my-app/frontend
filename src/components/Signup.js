@@ -9,7 +9,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-import "./Signup.css";
+// import "./Signup.css";
 import { Button } from "../custom-styles";
 
 const SignupForm = styled.form`
@@ -32,7 +32,8 @@ const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
     display: "flex",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    background: "green"
   },
   textField: {
     marginLeft: theme.spacing(1),
@@ -52,7 +53,7 @@ const useStyles = makeStyles(theme => ({
   selectEmpty: {
     marginTop: theme.spacing(1)
   },
-  selectMenu: {
+  root: {
     width: "100%"
   }
 }));
