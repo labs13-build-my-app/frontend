@@ -70,7 +70,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
       document.querySelector("#font-awesome-css")
     );
     const navLinks = [
-      { route: "/home", label: "Home", icon: "fa fa-home" },
+      { route: `/profile/${user.id}`, label: "Home", icon: "fa fa-home" },
       {
         route: "/projects/proposals",
         label: "Projects",
