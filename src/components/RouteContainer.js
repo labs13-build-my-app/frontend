@@ -19,7 +19,8 @@ const RouteContainer = ({
   error,
   role,
   user,
-  dispatch
+  dispatch,
+  reload
 }) => {
   const state = {
     isLoading,
@@ -30,7 +31,8 @@ const RouteContainer = ({
     error,
     role,
     user,
-    dispatch
+    dispatch,
+    reload
   };
 
   return (

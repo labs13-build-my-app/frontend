@@ -18,6 +18,7 @@ import "./App.css";
 const App = ({ history, match }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
+  const { modal, reload } = history.location.state || false;
   const {
     role,
     userID,
@@ -30,7 +31,6 @@ const App = ({ history, match }) => {
     // fetch
   } = state;
   const { pathname } = history.location;
-  const { modal } = history.location.state || false;
 
   // logging state here
   console.log("STATE", state, isLoading, history.location.state, pathname);
@@ -130,14 +130,29 @@ const App = ({ history, match }) => {
   ]);
 
   return (
-    <div className="App">
+    <div
+      onClick={() => {
+        return modal === true
+          ? history.push({ state: { modal: false } })
+          : null;
+      }}
+      className="App"
+    >
       <NavContainer {...state} />
-      <RouteContainer {...{ ...state, dispatch }} />
-      {modal ? (
-        <ModalContainer
-          {...{ ...state, ...history.location.state, dispatch, history, match }}
-        />
-      ) : null}
+      <div className="content-wrapper">
+        <RouteContainer {...{ ...state, dispatch, reload }} />
+        {modal ? (
+          <ModalContainer
+            {...{
+              ...state,
+              ...history.location.state,
+              dispatch,
+              history,
+              match
+            }}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };
