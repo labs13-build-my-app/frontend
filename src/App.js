@@ -139,12 +139,20 @@ const App = ({ history, match }) => {
       className="App"
     >
       <NavContainer {...state} />
-      <RouteContainer {...{ ...state, dispatch }} />
-      {modal ? (
-        <ModalContainer
-          {...{ ...state, ...history.location.state, dispatch, history, match }}
-        />
-      ) : null}
+      <div className="content-wrapper">
+        <RouteContainer {...{ ...state, dispatch }} />
+        {modal ? (
+          <ModalContainer
+            {...{
+              ...state,
+              ...history.location.state,
+              dispatch,
+              history,
+              match
+            }}
+          />
+        ) : null}
+      </div>
     </div>
   );
 };

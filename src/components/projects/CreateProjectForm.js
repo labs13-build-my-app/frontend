@@ -12,16 +12,22 @@ const StyledCard = styled.form`
   border: 1px lightgrey solid;
   border-radius: 20px;
   margin: 25px auto;
-  width: 80%;
+  width: 70%;
   box-shadow: 10px 10px 10px grey;
+  position: fixed;
+  margin-left: 10%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;
 
 const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     console.log("CREATE PROJECT", state);
-    const budgetDisplay = { ...state, budget: state.budget * 100 };
-    createProject(budgetDisplay, dispatch);
-    history.push(`/profile/${history.location.state}`);
+    const project = { ...state, budget: state.budget * 100 };
+    createProject(project, dispatch);
+    console.log("HERE", history.location.state);
+    history.push(`/profile/${history.location.state.projectOwner_id}`);
   });
   const useStyles = makeStyles(theme => ({
     container: {
@@ -42,11 +48,14 @@ const CreateProjectForm = ({ history, dispatch }) => {
   }));
   const classes = useStyles();
   return (
-    <div style={{ marginLeft: "20%", width: "80%" }}>
-      <StyledCard>
-        <h2>Add Project</h2>
-        <form onSubmit={handleSubmit}>
-          {/* <label>Name</label>
+    <StyledCard
+      onClick={e => {
+        e.stopPropagation();
+      }}
+    >
+      <h2>Add Project</h2>
+      <form onSubmit={handleSubmit}>
+        {/* <label>Name</label>
         <input
           onChange={handleInputChange}
           name="name"
@@ -54,20 +63,20 @@ const CreateProjectForm = ({ history, dispatch }) => {
           value={state.name}
           required
         /> */}
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="name"
-            type="text"
-            value={state.name}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Project Name"
-          />
-          <br />
-          {/* <label>Description</label>
+        <br />
+        <TextField
+          onChange={handleInputChange}
+          name="name"
+          type="text"
+          value={state.name}
+          required
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          label="Project Name"
+        />
+        <br />
+        {/* <label>Description</label>
         <input
           onChange={handleInputChange}
           name="description"
@@ -75,22 +84,22 @@ const CreateProjectForm = ({ history, dispatch }) => {
           value={state.description}
           required
         /> */}
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="description"
-            type="text"
-            value={state.description}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Description"
-            multiline
-            rows="6"
-          />
-          <br />
-          {/* <label>Image Url</label>
+        <br />
+        <TextField
+          onChange={handleInputChange}
+          name="description"
+          type="text"
+          value={state.description}
+          required
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          label="Description"
+          multiline
+          rows="6"
+        />
+        <br />
+        {/* <label>Image Url</label>
         <input
           onChange={handleInputChange}
           name="image_url"
@@ -98,19 +107,19 @@ const CreateProjectForm = ({ history, dispatch }) => {
           value={state.image_url}
           required
         /> */}
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="image_url"
-            type="text"
-            value={state.image_url}
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Image Url"
-          />
-          <br />
-          {/* <label>Budget</label>
+        <br />
+        <TextField
+          onChange={handleInputChange}
+          name="image_url"
+          type="text"
+          value={state.image_url}
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          label="Image Url"
+        />
+        <br />
+        {/* <label>Budget</label>
         <input
           onChange={handleInputChange}
           name="budget"
@@ -118,25 +127,23 @@ const CreateProjectForm = ({ history, dispatch }) => {
           value={state.budget}
           required
         /> */}
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="budget"
-            type="text"
-            value={state.budget}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Budget"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              )
-            }}
-          />
-          <br />
-          {/* <label>Due Date</label>
+        <br />
+        <TextField
+          onChange={handleInputChange}
+          name="budget"
+          type="text"
+          value={state.budget}
+          required
+          className={classes.textField}
+          margin="normal"
+          variant="outlined"
+          label="Budget"
+          InputProps={{
+            startAdornment: <InputAdornment position="start">$</InputAdornment>
+          }}
+        />
+        <br />
+        {/* <label>Due Date</label>
         <input
           onChange={handleInputChange}
           name="dueDate"
@@ -144,25 +151,24 @@ const CreateProjectForm = ({ history, dispatch }) => {
           value={state.dueDate}
           required
         /> */}
-          <br />
-          <TextField
-            label="Due Date"
-            name="dueDate"
-            type="date"
-            onChange={handleInputChange}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-          <br />
-          <br />
-          <Button type="submit">Submit</Button>
-          <br />
-          <br />
-        </form>
-      </StyledCard>
-    </div>
+        <br />
+        <TextField
+          label="Due Date"
+          name="dueDate"
+          type="date"
+          onChange={handleInputChange}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true
+          }}
+        />
+        <br />
+        <br />
+        <Button type="submit">Submit</Button>
+        <br />
+        <br />
+      </form>
+    </StyledCard>
   );
 };
 

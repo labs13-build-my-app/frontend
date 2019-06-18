@@ -18,51 +18,11 @@ const StyledCard = styled.form`
 `;
 //<<<<<<<<<<<<<<
 const CreatePlan = ({ history, user, dispatch }) => {
-  // const [name, setName] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [technologiesToUse, setTechnologies] = useState("");
-  // const [budget, setBudget] = useState("");
-  // const [dueDate, setfinishedBy] = useState("");
-
-  // const changeHandler = (e, setState) => {
-  //   setState(e.target.value);
-  // };
-
-  // const submitHandler = e => {
-  //   e.preventDefault();
-  //   const user_id = user.id;
-  //   const project_id = history.location.state.projectid;
-  //   const planStatus = "started";
-  //   const testData = {
-  //     name,
-  //     description,
-  //     technologiesToUse,
-  //     budget,
-  //     dueDate,
-  //     planStatus,
-  //     user_id,
-  //     project_id
-  //   };
-  //   createPlan(
-  //     {
-  //       name,
-  //       description,
-  //       technologiesToUse,
-  //       budget,
-  //       dueDate,
-  //       planStatus,
-  //       user_id,
-  //       project_id
-  //     },
-  //     project_id
-  //   );
-
-  //   history.push(`/profile/${user.id}`);
-  // };
   //>>>>>>>>>>>>>>>>>>>>>>>>
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    const budgetDisplay = { ...state, budget: state.budget * 100 }; // ??? does not display the right format
-    createPlan(budgetDisplay, history.location.state.project_id, dispatch); // why I need a dispatch?
+    const plan = { ...state, budget: state.budget * 100 };
+
+    createPlan(plan, history.location.state.project_id, dispatch); // why I need a dispatch?
     history.push(`/profile/${user.id}`);
   });
   const useStyles = makeStyles(theme => ({

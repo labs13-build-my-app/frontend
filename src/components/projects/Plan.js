@@ -73,7 +73,7 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
       <h1>Name: {plan.name}</h1>
       <h1>desc: {plan.description}</h1>
       <h1>tech: {plan.technologiesToUse}</h1>
-      <h1>bud: {plan.budget}</h1>
+      <h1>budget:$ {(plan.budget / 100).toFixed(2)}</h1>
       <h1>date: {plan.dueDate}</h1>
       <h1>status: {plan.planStatus}</h1>
       <form onSubmit={submitHandler}>
