@@ -4,7 +4,7 @@ import Home from "./Home";
 import Dashboard from "./dashboard/Dashboard";
 import Developers from "./profiles/DeveloperList";
 import Projects from "./projects/Projects";
-import Project from "./projects/Project";
+import ProjectView from "./projects/ProjectView";
 import Plan from "./projects/Plan";
 import Callback from "./Auth/Callback";
 import "./Signup.css";
@@ -76,7 +76,7 @@ const RouteContainer = ({
 
           <Route
             path={"/project/:project_id"}
-            render={props => <Project {...props} {...state} />}
+            render={props => <ProjectView {...props} {...state} />}
           />
 
           <Route

@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { Route, Redirect } from "react-router";
-import axios from "axios";
+import React from "react";
+import Project from "./Project";
+import ProjectPlanList from "./ProjectPlanList";
+import Test from "./Test";
 
-const ProjectView = ({ role }) => {
-  console.log(role, role !== "Developer");
+const ProjectView = props => {
+  console.log(props);
   return (
     <div>
-      <h1>project view page</h1>
-
-      {role ? (
-        <Route
-          path={"/projects/:project_id/create-plan-modal"}
-          render={props => {
-            const path = props.match.params.project_id;
-            return role !== "Developer" ? (
-              <Redirect to={`/projects/${path}`} />
-            ) : (
-              <h1>model to create plan to project</h1>
-            );
-          }}
-        />
-      ) : null}
+      <Project {...props}>
+        <Test text={"this should work right?"} />
+      </Project>
+      <ProjectPlanList />
     </div>
   );
 };

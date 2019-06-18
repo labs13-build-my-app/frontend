@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Children } from "react";
 import EmailDrawer from "../EmailDrawer.js";
 import { NavLink } from "react-router-dom";
 import {
@@ -25,7 +25,8 @@ const Project = ({
   email,
   image_url,
   history,
-  reload
+  reload,
+  children
 }) => {
   const [project, setProject] = useState([]);
   console.log("USER <===========", user);
@@ -88,6 +89,7 @@ const Project = ({
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
+  console.log(children);
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -100,6 +102,10 @@ const Project = ({
           <p>{project.description}</p>
           <p>Willing to pay {project.budget}</p>
           <p>Need by {project.dueDate}</p>
+          <img src={project.image_url} />
+
+          {children ? children : null}
+
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
           ) : null}
