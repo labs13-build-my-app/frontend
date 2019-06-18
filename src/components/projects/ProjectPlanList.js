@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Card } from "../../custom-styles";
+import React from "react";
 import ProjectPlan from "./ProjectPlan";
 
 const ProjectPlanList = ({ projectPlans, project, user, clickHandler }) => {
+  console.log("<<<======= PLANNNNNN", projectPlans);
   return (
     <div className={"project-plans"}>
       {projectPlans &&
