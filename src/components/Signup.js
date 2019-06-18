@@ -70,11 +70,13 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
 
-  const inputLabel = React.useRef(null);
+  const inputLabel = React.useRef(0);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
+    console.log(labelWidth);
     setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
+    return () => setLabelWidth(null);
+  }, [labelWidth]);
 
   useEffect(() => {
     if (!isToken) {
