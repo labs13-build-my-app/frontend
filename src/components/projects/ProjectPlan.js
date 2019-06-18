@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../../custom-styles";
+import EmailDrawer from "../EmailDrawer";
 
 const ProjectPlan = ({ project, user, clickHandler, plan }) => {
   return (
@@ -19,6 +20,7 @@ const ProjectPlan = ({ project, user, clickHandler, plan }) => {
             <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
             <p>Can Deliver by {plan.dueDate}</p>
             <p>Plan Status: {plan.planStatus}</p>
+            <EmailDrawer emailAddress={plan.email} firstName={user.firstName} />
           </div>
           {project.user_id === user.id &&
           project.projectStatus === "proposal" ? (
