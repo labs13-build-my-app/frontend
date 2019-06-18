@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EmailDrawer from "../EmailDrawer.js";
 import { NavLink } from "react-router-dom";
+import Plan from "./Plan";
 import {
   fetchProject,
   fetchProfile,
@@ -8,7 +9,7 @@ import {
   acceptPlan
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
-
+import ProjectPlan from "./ProjectPlan";
 import { Card, Button } from "../../custom-styles";
 import moment from "moment";
 
@@ -82,13 +83,27 @@ const Project = ({
     }
   }, [match.params.project_id, isLoading, reload]);
 
+  const [selectedPlan, setSelectedPlan] = useState([]);
+  useEffect(() => {
+    setSelectedPlan(projectPlans.find(plan => plan.planStatus === "selected"));
+  }, [projectPlans]);
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
   const clickHandler = (e, id, status) => {
-    e.preventDefault();
+    // e.preventDefault();
     acceptPlan(match.params.project_id, { planStatus: status, id: id });
+    const plan = projectPlans.find(plan => plan.id === id);
+    setSelectedPlan(() => ({
+      ...plan,
+      planStatus: status
+    }));
+    setProject(prevState => ({
+      ...prevState,
+      projectStatus: status === "selected" ? "in progress" : "proposal"
+    }));
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
@@ -163,6 +178,13 @@ const Project = ({
         <ProjectPlanList
           project={project}
           projectPlans={projectPlans}
+          user={user}
+          clickHandler={clickHandler}
+        />
+      ) : selectedPlan !== undefined ? (
+        <ProjectPlan
+          project={project}
+          plan={selectedPlan}
           user={user}
           clickHandler={clickHandler}
         />
