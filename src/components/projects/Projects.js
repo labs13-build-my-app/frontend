@@ -46,6 +46,7 @@ const Projects = ({
                 description={project.description}
                 budget={project.budget}
                 dueDate={project.dueDate}
+                user={user}
               />
             </Link>
           ))}
