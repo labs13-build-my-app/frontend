@@ -108,7 +108,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
 
   useEffect(() => {
     fecthProjectOwnerProjectsList(user.id, setProjects);
-  }, [user.id]);
+  }, [user.id, history.location.state]);
 
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };
@@ -149,7 +149,10 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               <ListItemIcon>
                 <FaGithub />
               </ListItemIcon>
-              <ListItemLink href={`https://github.com/${user.gitHub}`}>
+              <ListItemLink
+                target="_blank"
+                href={`https://github.com/${user.gitHub}`}
+              >
                 <ListItemText primary={`${user.gitHub}`} />
               </ListItemLink>
             </ListItem>
@@ -158,6 +161,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                 <FaLinkedin />
               </ListItemIcon>
               <ListItemLink
+                target="_blank"
                 href={`https://www.linkedin.com/in/${user.linkedIn}`}
               >
                 <ListItemText primary={`${user.linkedIn}`} />
@@ -167,14 +171,26 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               <ListItemIcon>
                 <FaTwitter />
               </ListItemIcon>
-              <ListItemLink href={`https://twitter.com/${user.twitter}`}>
+              <ListItemLink
+                target="_blank"
+                href={`https://twitter.com/${user.twitter}`}
+              >
                 <ListItemText primary={`${user.twitter}`} />
               </ListItemLink>
             </ListItem>
           </List>
         </UserInfo>
       </Card>
-
+      <Button
+        style={displayOnlyOnLoggedInUser()}
+        onClick={() =>
+          history.push({
+            state: { modal: true, projectOwner_id: loggedInUser.id }
+          })
+        }
+      >
+        + Create New Project
+      </Button>
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
@@ -205,7 +221,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         ))
       )}
       {/* // hide when loggedIn !== user */}
-      <Button
+      {/* <Button
         style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
@@ -214,7 +230,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         }
       >
         + Create New Project
-      </Button>
+      </Button> */}
       <Route
         path={"/profile/:id/feedbackmodal"}
         render={() => {
