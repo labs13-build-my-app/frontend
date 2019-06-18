@@ -26,7 +26,6 @@ const Projects = ({
   if (!projects) {
     return <h1>Loading...</h1>;
   }
-
   return (
     <div>
       <PageTitle>All Projects</PageTitle>
@@ -46,6 +45,10 @@ const Projects = ({
                 description={project.description}
                 budget={project.budget}
                 dueDate={project.dueDate}
+                email={project.email}
+                image_url={project.image_url}
+                firstName={project.firstName}
+                user={user}
               />
             </Link>
           ))}

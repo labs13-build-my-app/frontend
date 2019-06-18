@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import EmailDrawer from "../EmailDrawer.js";
 import { NavLink } from "react-router-dom";
 import {
   fetchProject,
+  fetchProfile,
   listProjectPlans,
   acceptPlan
 } from "../../store/actions";
@@ -11,16 +13,20 @@ import moment from "moment";
 
 const Project = ({
   match,
+  history,
+  user,
   name,
   description,
   budget,
   dueDate,
   isLoading,
   isSignedIn,
-  role
+  role,
+  email,
+  image_url
 }) => {
   const [project, setProject] = useState([]);
-
+  console.log("USER <===========", user);
   useEffect(() => {
     const formatDate = unixDate => {
       //function to format unix date
@@ -34,7 +40,14 @@ const Project = ({
     if (!match.params.project_id && !isLoading) {
       const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
-      setProject({ name, description, budget: newBudget, dueDate: newDueDate });
+      setProject({
+        name,
+        description,
+        email,
+        image_url,
+        budget: newBudget,
+        dueDate: newDueDate
+      });
     }
     if (match.params.project_id && !isLoading) {
       fetchProject(
@@ -44,7 +57,16 @@ const Project = ({
         setProject
       );
     }
-  }, [match.params.project_id, isLoading, name, description, budget, dueDate]);
+  }, [
+    match.params.project_id,
+    isLoading,
+    name,
+    description,
+    budget,
+    dueDate,
+    email,
+    image_url
+  ]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
@@ -62,7 +84,6 @@ const Project = ({
     acceptPlan(match.params.id, { planStatus: status, id: id });
     window.location.reload(); // need to change this. this might be giving us a bug
   };
-
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -106,6 +127,10 @@ const Project = ({
             }}
           />
         ) : null} */}
+          <EmailDrawer
+            emailAddress={project.email}
+            firstName={user.firstName}
+          />
         </div>
       </Card>
       <div className={"project-plans"}>
