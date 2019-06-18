@@ -48,6 +48,7 @@ const Projects = ({
                 email={project.email}
                 image_url={project.image_url}
                 firstName={project.firstName}
+                lastName={project.lastName}
                 user={user}
               />
             </Link>
