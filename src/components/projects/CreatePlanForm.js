@@ -18,9 +18,9 @@ const StyledCard = styled.form`
 
 const CreatePlan = ({ history, user, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    const plan = { ...state, budget: state.budget * 100 };
+    const plan = { ...state, budget: state.budget * 100 }; // <<<<<< MB
 
-    createPlan(plan, history.location.state.project_id, dispatch); // why I need a dispatch?
+    createPlan(plan, history.location.state.project_id, dispatch);
     history.push(`/profile/${user.id}`);
   });
   const useStyles = makeStyles(theme => ({
