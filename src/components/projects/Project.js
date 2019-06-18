@@ -109,13 +109,7 @@ const Project = ({
           user={user}
           clickHandler={clickHandler}
         />
-      ) : (
-        <h1>
-          don't display any plans if a plan is already selected and project
-          status is not proposal. maybe we should display the currently selected
-          plan
-        </h1>
-      )}
+      ) : null}
     </div>
   );
 };
