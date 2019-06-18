@@ -163,15 +163,14 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         ) : null} */}
       </div>
       <div className="projectsFeedback">
+        Feedback
         {feedbacks.length === 0 ? (
           <Card className={"card plansCard"}>No Feedback</Card>
         ) : (
           feedbacks.map(feedback => (
             <Card key={feedback.planID} className={"card plansCard"}>
               <h1
-                onClick={() =>
-                  history.push(`/projects/project/${feedback.projectID}`)
-                }
+                onClick={() => history.push(`/project/${feedback.projectID}`)}
               >
                 {feedback.projectName}
               </h1>
