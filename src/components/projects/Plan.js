@@ -33,8 +33,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Plan = ({ match, isLoading, isSignedIn, role }) => {
-  console.log(match);
+const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -53,10 +52,11 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
     let planUpdate = e.target.value;
     setPlanStatus(planUpdate);
   };
+  const currentPlanID = planID || match.params.plan_id;
 
   const submitHandler = e => {
     e.preventDefault();
-    updatePlan({ planStatus: planStatus }, match.params.plan_id);
+    updatePlan({ planStatus: planStatus }, currentPlanID);
     setPlan(prevState => ({
       ...prevState,
       planStatus
@@ -65,8 +65,8 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
   };
 
   useEffect(() => {
-    fetchPlan(match.params.plan_id, setPlan);
-  }, [match.params.plan_id]);
+    fetchPlan(currentPlanID, setPlan);
+  }, [currentPlanID]);
 
   return (
     <div>
@@ -76,6 +76,7 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
       <h1>budget:$ {(plan.budget / 100).toFixed(2)}</h1>
       <h1>date: {plan.dueDate}</h1>
       <h1>status: {plan.planStatus}</h1>
+
       <form onSubmit={submitHandler}>
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
