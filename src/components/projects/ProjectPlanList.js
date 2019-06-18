@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Card } from "../../custom-styles";
+import EmailDrawer from "../EmailDrawer";
 
 const ProjectPlanList = ({ projectPlans, project, user, clickHandler }) => {
+  console.log("<<<======= PLANNNNNN", projectPlans);
   return (
     <div className={"project-plans"}>
       {projectPlans &&
@@ -23,6 +25,10 @@ const ProjectPlanList = ({ projectPlans, project, user, clickHandler }) => {
                   <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
                   <p>Can Deliver by {plan.dueDate}</p>
                   <p>Plan Status: {plan.planStatus}</p>
+                  <EmailDrawer
+                    emailAddress={plan.email}
+                    firstName={user.firstName}
+                  />
                 </div>
                 {project.user_id === user.id &&
                 project.projectStatus === "proposal" ? (
