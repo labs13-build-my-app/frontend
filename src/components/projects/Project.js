@@ -7,6 +7,7 @@ import {
   listProjectPlans,
   acceptPlan
 } from "../../store/actions";
+import ProjectPlanList from "./ProjectPlanList";
 
 import { Card } from "../../custom-styles";
 import moment from "moment";
@@ -83,8 +84,8 @@ const Project = ({
 
   const clickHandler = (e, id, status) => {
     e.preventDefault();
-    acceptPlan(match.params.id, { planStatus: status, id: id });
-    window.location.reload(); // need to change this. this might be giving us a bug
+    acceptPlan(match.params.project_id, { planStatus: status, id: id });
+    // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
   return (
@@ -139,48 +140,14 @@ const Project = ({
           />
         </div>
       </Card>
-      <div className={"project-plans"}>
-        {projectPlans &&
-          projectPlans.map(plan => {
-            return (
-              <Card style={{ width: "80%", color: "black" }}>
-                <div style={{ width: "25%" }}>
-                  <h3 style={{ color: "black" }} className="ProjectTitle">
-                    Plan
-                  </h3>
-                  <h3 style={{ color: "black" }} className="ProjectTitle">
-                    {plan.name}
-                  </h3>
-                </div>
-                <div style={{ width: "75%" }}>
-                  <p>{plan.description}</p>
-                  <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
-                  <p>Can Deliver by {plan.dueDate}</p>
-                  <p>Plan Status: {plan.planStatus}</p>
-                </div>
-                {/* Conditional rendering dependent on if PO is the user viewing project
-                Conditional rendering dependent on if plan status is proposal */}
-                <button
-                  type={"submit"}
-                  onClick={e => {
-                    return clickHandler(e, plan.id, "selected");
-                  }}
-                >
-                  Accept
-                </button>
-                {/* decline should remove card from dashboard */}
-                <button
-                  type={"submit"}
-                  onClick={e => {
-                    return clickHandler(e, plan.id, "declined");
-                  }}
-                >
-                  Decline
-                </button>
-              </Card>
-            );
-          })}
-      </div>
+      {project.projectStatus === "proposal" ? (
+        <ProjectPlanList
+          project={project}
+          projectPlans={projectPlans}
+          user={user}
+          clickHandler={clickHandler}
+        />
+      ) : null}
     </div>
   );
 };
