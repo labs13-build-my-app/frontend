@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Children } from "react";
 import EmailDrawer from "../EmailDrawer.js";
 import { NavLink } from "react-router-dom";
+import Plan from "./Plan";
 import {
   fetchProject,
   fetchProfile,
@@ -8,8 +9,8 @@ import {
   acceptPlan
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
-
-import { Card } from "../../custom-styles";
+import ProjectPlan from "./ProjectPlan";
+import { Card, Button } from "../../custom-styles";
 import moment from "moment";
 
 const Project = ({
@@ -26,7 +27,9 @@ const Project = ({
   image_url,
   history,
   reload,
-  children
+  children,
+  firstName,
+  lastName
 }) => {
   const [project, setProject] = useState([]);
   console.log("USER <===========", user);
@@ -49,7 +52,9 @@ const Project = ({
         email,
         image_url,
         budget: newBudget,
-        dueDate: newDueDate
+        dueDate: newDueDate,
+        firstName,
+        lastName
       });
     }
     if (match.params.project_id && !isLoading) {
@@ -79,13 +84,27 @@ const Project = ({
     }
   }, [match.params.project_id, isLoading, reload]);
 
+  const [selectedPlan, setSelectedPlan] = useState([]);
+  useEffect(() => {
+    setSelectedPlan(projectPlans.find(plan => plan.planStatus === "selected"));
+  }, [projectPlans]);
+
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
 
   const clickHandler = (e, id, status) => {
-    e.preventDefault();
+    // e.preventDefault();
     acceptPlan(match.params.project_id, { planStatus: status, id: id });
+    const plan = projectPlans.find(plan => plan.id === id);
+    setSelectedPlan(() => ({
+      ...plan,
+      planStatus: status
+    }));
+    setProject(prevState => ({
+      ...prevState,
+      projectStatus: status === "selected" ? "in progress" : "proposal"
+    }));
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
@@ -105,6 +124,19 @@ const Project = ({
           <img src={project.image_url} />
 
           {children ? children : null}
+
+          <p>
+            Project Owner: {project.firstName} {project.lastName}
+          </p>
+
+          <div>
+            <Button
+              variant="outlined"
+              onClick={() => history.push(`/profile/${project.user_id}`)}
+            >
+              View Profile
+            </Button>
+          </div>
 
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
@@ -150,6 +182,13 @@ const Project = ({
         <ProjectPlanList
           project={project}
           projectPlans={projectPlans}
+          user={user}
+          clickHandler={clickHandler}
+        />
+      ) : selectedPlan !== undefined ? (
+        <ProjectPlan
+          project={project}
+          plan={selectedPlan}
           user={user}
           clickHandler={clickHandler}
         />

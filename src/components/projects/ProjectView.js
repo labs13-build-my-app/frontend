@@ -8,7 +8,7 @@ const ProjectView = props => {
   return (
     <div>
       <Project {...props}>
-        <Test text={"this should work right?"} />
+        <Test />
       </Project>
       <ProjectPlanList />
     </div>
