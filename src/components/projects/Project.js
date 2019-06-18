@@ -17,7 +17,8 @@ const Project = ({
   dueDate,
   isLoading,
   isSignedIn,
-  role
+  role,
+  history
 }) => {
   const [project, setProject] = useState([]);
 
@@ -62,7 +63,7 @@ const Project = ({
     acceptPlan(match.params.id, { planStatus: status, id: id });
     window.location.reload(); // need to change this. this might be giving us a bug
   };
-
+  const { modal } = history.location.state || false;
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -86,7 +87,10 @@ const Project = ({
               style={{ textDecoration: "none" }}
               className="create-plan"
               to={{
-                state: { project_id: project.id, modal: true }
+                state: {
+                  project_id: project.id,
+                  modal: modal === true ? false : true
+                }
               }}
             >
               Apply to this project

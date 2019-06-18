@@ -120,7 +120,11 @@ const CreatePlan = ({ history, user, dispatch }) => {
     // </form>
     //<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>
     <div style={{ marginLeft: "20%", width: "80%" }}>
-      <StyledCard>
+      <StyledCard
+        onClick={e => {
+          e.stopPropagation();
+        }}
+      >
         <h2>Add Plan</h2>
         <form onSubmit={handleSubmit}>
           <br />

@@ -55,8 +55,13 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
   };
 
   const submitHandler = e => {
-    // e.preventDefault();
+    e.preventDefault();
     updatePlan({ planStatus: planStatus }, match.params.plan_id);
+    setPlan(prevState => ({
+      ...prevState,
+      planStatus
+    }));
+    setPlanStatus([]);
   };
 
   useEffect(() => {
