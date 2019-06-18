@@ -80,6 +80,7 @@ const Project = ({
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+  // const [planStatus, setPlanStatus] = useState([]); <<<<<<<<<<<<<<<<<<<<<<<
 
   const clickHandler = (e, id, status) => {
     e.preventDefault();

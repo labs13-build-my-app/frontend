@@ -85,7 +85,7 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
             onChange={e => changeHandler(e)}
           >
             <MenuItem value="" />
-            <MenuItem value={"In Progress"}>In Progress</MenuItem>
+            <MenuItem value={"Submitted"}>Submitted</MenuItem>
             <MenuItem value={"Completed"}>Completed</MenuItem>
           </Select>
           <Button type={"submit"} style={{ margin: "20px" }}>
