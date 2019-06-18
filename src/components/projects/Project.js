@@ -9,7 +9,7 @@ import {
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
 
-import { Card } from "../../custom-styles";
+import { Card, Button } from "../../custom-styles";
 import moment from "moment";
 
 const Project = ({
@@ -25,7 +25,9 @@ const Project = ({
   email,
   image_url,
   history,
-  reload
+  reload,
+  firstName,
+  lastName
 }) => {
   const [project, setProject] = useState([]);
   console.log("USER <===========", user);
@@ -48,7 +50,9 @@ const Project = ({
         email,
         image_url,
         budget: newBudget,
-        dueDate: newDueDate
+        dueDate: newDueDate,
+        firstName,
+        lastName
       });
     }
     if (match.params.project_id && !isLoading) {
@@ -88,6 +92,7 @@ const Project = ({
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
+
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -100,6 +105,20 @@ const Project = ({
           <p>{project.description}</p>
           <p>Willing to pay {project.budget}</p>
           <p>Need by {project.dueDate}</p>
+
+          <p>
+            Project Owner: {project.firstName} {project.lastName}
+          </p>
+
+          <div>
+            <Button
+              variant="outlined"
+              onClick={() => history.push(`/profile/${project.user_id}`)}
+            >
+              View Profile
+            </Button>
+          </div>
+
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
           ) : null}
