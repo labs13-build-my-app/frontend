@@ -5,6 +5,7 @@ import {
   listProjectPlans,
   acceptPlan
 } from "../../store/actions";
+import ProjectPlanList from "./ProjectPlanList";
 
 import { Card } from "../../custom-styles";
 import moment from "moment";
@@ -67,7 +68,6 @@ const Project = ({
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
-  console.log("project user id", project.user_id === user.id);
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -100,68 +100,21 @@ const Project = ({
               Apply to this project
             </NavLink>
           ) : null}
-
-          {/* {role ? (
-          <Route
-            path={"/projects/:project_id/create-plan-modal"}
-            render={props => {
-              const path = props.match.params.project_id;
-              return role !== "Developer" ? (
-                <Redirect to={`/projects/${path}`} />
-              ) : (
-                <h1>model to create plan to project</h1>
-              );
-            }}
-          />
-        ) : null} */}
         </div>
       </Card>
-      <div className={"project-plans"}>
-        {projectPlans &&
-          projectPlans
-            .filter(plan => plan.planStatus !== "declined")
-            .map(plan => {
-              return (
-                <Card style={{ width: "80%", color: "black" }}>
-                  <div style={{ width: "25%" }}>
-                    <h3 style={{ color: "black" }} className="ProjectTitle">
-                      Plan
-                    </h3>
-                    <h3 style={{ color: "black" }} className="ProjectTitle">
-                      {plan.name}
-                    </h3>
-                  </div>
-                  <div style={{ width: "75%" }}>
-                    <p>{plan.description}</p>
-                    <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
-                    <p>Can Deliver by {plan.dueDate}</p>
-                    <p>Plan Status: {plan.planStatus}</p>
-                  </div>
-                  {project.user_id === user.id &&
-                  project.projectStatus === "proposal" ? (
-                    <div className={"button-container"}>
-                      <button
-                        type={"submit"}
-                        onClick={e => {
-                          return clickHandler(e, plan.id, "selected");
-                        }}
-                      >
-                        Accept
-                      </button>
-                      <button
-                        type={"submit"}
-                        onClick={e => {
-                          return clickHandler(e, plan.id, "declined");
-                        }}
-                      >
-                        Decline
-                      </button>
-                    </div>
-                  ) : null}
-                </Card>
-              );
-            })}
-      </div>
+      {project.projectStatus === "proposal" ? (
+        <ProjectPlanList
+          project={project}
+          projectPlans={projectPlans}
+          user={user}
+          clickHandler={clickHandler}
+        />
+      ) : (
+        <h1>
+          don't display any plans if a plan is already selected and project
+          status is not proposal
+        </h1>
+      )}
     </div>
   );
 };
