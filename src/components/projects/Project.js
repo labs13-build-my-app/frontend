@@ -13,7 +13,6 @@ import moment from "moment";
 
 const Project = ({
   match,
-  history,
   user,
   name,
   description,
@@ -23,7 +22,9 @@ const Project = ({
   isSignedIn,
   role,
   email,
-  image_url
+  image_url,
+  history,
+  reload
 }) => {
   const [project, setProject] = useState([]);
   console.log("USER <===========", user);
@@ -70,10 +71,11 @@ const Project = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    if (match.params.project_id && !isLoading) {
+    // const { reload } = history.location.state || false;
+    if ((match.params.project_id && !isLoading) || reload) {
       listProjectPlans(match.params.project_id, setProjectPlans);
     }
-  }, [match.params.project_id, isLoading]);
+  }, [match.params.project_id, isLoading, reload]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -84,6 +86,7 @@ const Project = ({
     acceptPlan(match.params.id, { planStatus: status, id: id });
     window.location.reload(); // need to change this. this might be giving us a bug
   };
+  const { modal } = history.location.state || false;
   return (
     <div>
       <Card style={{ width: "80%", color: "black" }}>
@@ -107,7 +110,10 @@ const Project = ({
               style={{ textDecoration: "none" }}
               className="create-plan"
               to={{
-                state: { project_id: project.id, modal: true }
+                state: {
+                  project_id: project.id,
+                  modal: modal === true ? false : true
+                }
               }}
             >
               Apply to this project
@@ -148,7 +154,7 @@ const Project = ({
                 </div>
                 <div style={{ width: "75%" }}>
                   <p>{plan.description}</p>
-                  <p>Willing to accept ${plan.budget}</p>
+                  <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
                   <p>Can Deliver by {plan.dueDate}</p>
                   <p>Plan Status: {plan.planStatus}</p>
                 </div>

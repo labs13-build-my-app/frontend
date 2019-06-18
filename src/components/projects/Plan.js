@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPlan } from "../../store/actions";
+import { fetchPlan, updatePlan } from "../../store/actions";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -34,6 +34,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Plan = ({ match, isLoading, isSignedIn, role }) => {
+  console.log(match);
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -48,39 +49,52 @@ const Plan = ({ match, isLoading, isSignedIn, role }) => {
   //   setOpen(false);
   // }
 
-  const changeHandler = (e, setState) => {
-    let user = e.target.value;
-    setState(user);
+  const changeHandler = e => {
+    let planUpdate = e.target.value;
+    setPlanStatus(planUpdate);
+  };
+
+  const submitHandler = e => {
+    e.preventDefault();
+    updatePlan({ planStatus: planStatus }, match.params.plan_id);
+    setPlan(prevState => ({
+      ...prevState,
+      planStatus
+    }));
+    setPlanStatus([]);
   };
 
   useEffect(() => {
     fetchPlan(match.params.plan_id, setPlan);
   }, [match.params.plan_id]);
+
   return (
     <div>
       <h1>Name: {plan.name}</h1>
       <h1>desc: {plan.description}</h1>
       <h1>tech: {plan.technologiesToUse}</h1>
-      <h1>bud: {plan.budget}</h1>
+      <h1>budget:$ {(plan.budget / 100).toFixed(2)}</h1>
       <h1>date: {plan.dueDate}</h1>
       <h1>status: {plan.planStatus}</h1>
-
-      <FormControl className={classes.formControl}>
-        <InputLabel>Plan Status</InputLabel>
-        <Select
-          className={classes.select}
-          value={role}
-          onChange={event => changeHandler(event, setPlanStatus)}
-        >
-          <MenuItem value="" />
-          <MenuItem value={"In Progress"}>In Progress</MenuItem>
-          <MenuItem value={"Completed"}>Completed</MenuItem>
-        </Select>
-      </FormControl>
-      <Button type="submit">Submit</Button>
+      <form onSubmit={submitHandler}>
+        <FormControl className={classes.formControl}>
+          <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
+          <Select
+            // className={classes.select}
+            value={planStatus}
+            onChange={e => changeHandler(e)}
+          >
+            <MenuItem value="" />
+            <MenuItem value={"In Progress"}>In Progress</MenuItem>
+            <MenuItem value={"Completed"}>Completed</MenuItem>
+          </Select>
+          <Button type={"submit"} style={{ margin: "20px" }}>
+            Submit
+          </Button>
+        </FormControl>
+      </form>
     </div>
   );
 };
-console.log("hello plan");
 
 export default Plan;

@@ -36,7 +36,20 @@ const Developers = ({ history }) => {
       backgroundColor: deepPurple[500]
     },
     button: {
-      margin: theme.spacing(1)
+      margin: theme.spacing(1),
+      backgroundColor: "#4E72B7",
+      border: "1px solid #4E72B7",
+      color: "white",
+      fontSize: "0.7rem",
+      padding: "8px 13px",
+      fontWeight: "bold",
+      borderRadius: "15px",
+      cursor: "pointer",
+      outline: "none",
+      "&:hover": {
+        color: "#4E72B7",
+        backgroundColor: "white"
+      }
     },
     title: {
       fontSize: 14
@@ -56,7 +69,8 @@ const Developers = ({ history }) => {
     return <h1>Loading...</h1>;
   } else {
     return (
-      <div style={{width: '100%'}}>
+      <div style={{ width: "100%" }}>
+        <h2>Developers</h2>
         {developers.map(dev => {
           const initials = dev.firstName.charAt(0) + dev.lastName.charAt(0);
           return (
