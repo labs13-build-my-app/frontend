@@ -467,3 +467,15 @@ export const acceptPlan = (project_id, plan, dispatch) => {
     .then(res => console.log(res, "here"))
     .catch(err => console.log(err));
 };
+export const sendEmail = (email) => {
+  axios({
+    method: "POST",
+    url: `${connection}/api/message`,
+    data: email
+  })
+    .then(res => {
+      console.log(res.data);
+      
+    })
+    .catch(err => console.log(err));
+};
