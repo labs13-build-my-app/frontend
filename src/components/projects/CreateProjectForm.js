@@ -23,11 +23,13 @@ const StyledCard = styled.form`
 
 const CreateProjectForm = ({ history, dispatch }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    console.log("CREATE PROJECT", state);
     const project = { ...state, budget: state.budget * 100 };
     createProject(project, dispatch);
-    console.log("HERE", history.location.state);
-    history.push(`/profile/${history.location.state.projectOwner_id}`);
+
+    history.push({
+      pathname: `/profile/${history.location.state.projectOwner_id}`,
+      state: { reload: true }
+    });
   });
   const useStyles = makeStyles(theme => ({
     container: {

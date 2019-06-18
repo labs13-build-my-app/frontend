@@ -18,7 +18,8 @@ const Project = ({
   isLoading,
   isSignedIn,
   role,
-  history
+  history,
+  reload
 }) => {
   const [project, setProject] = useState([]);
 
@@ -49,10 +50,11 @@ const Project = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    if (match.params.project_id && !isLoading) {
+    // const { reload } = history.location.state || false;
+    if ((match.params.project_id && !isLoading) || reload) {
       listProjectPlans(match.params.project_id, setProjectPlans);
     }
-  }, [match.params.project_id, isLoading]);
+  }, [match.params.project_id, isLoading, reload]);
 
   if (isLoading) {
     return <h1>Loading...</h1>;

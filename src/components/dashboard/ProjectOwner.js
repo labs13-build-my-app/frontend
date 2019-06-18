@@ -108,7 +108,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
 
   useEffect(() => {
     fecthProjectOwnerProjectsList(user.id, setProjects);
-  }, [user.id]);
+  }, [user.id, history.location.state]);
 
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };

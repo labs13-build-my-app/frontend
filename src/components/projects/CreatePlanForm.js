@@ -1,6 +1,5 @@
 import React from "react";
 import { createPlan } from "../../store/actions";
-//>>>>>>>>>>>>>>>>>>>>>>>>
 import { useInput } from "../../utils/customhooks/index";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -16,9 +15,8 @@ const StyledCard = styled.form`
   width: 80%;
   box-shadow: 10px 10px 10px grey;
 `;
-//<<<<<<<<<<<<<<
+
 const CreatePlan = ({ history, user, dispatch }) => {
-  //>>>>>>>>>>>>>>>>>>>>>>>>
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     const plan = { ...state, budget: state.budget * 100 };
 
@@ -43,42 +41,8 @@ const CreatePlan = ({ history, user, dispatch }) => {
     }
   }));
   const classes = useStyles();
-  //<<<<<<<<<<<<<<
+
   return (
-    // <form onSubmit={handleSubmit}>
-    //   <label>Name</label>
-    //   <input
-    //     name={"name"}
-    //     value={name}
-    //     onChange={e => changeHandler(e, setName)}
-    //   />
-    //   <label>Description</label>
-    //   <input
-    //     name={"description"}
-    //     value={description}
-    //     onChange={e => changeHandler(e, setDescription)}
-    //   />
-    //   <label>Technologies</label>
-    //   <input
-    //     name={"technologies"}
-    //     value={technologiesToUse}
-    //     onChange={e => changeHandler(e, setTechnologies)}
-    //   />
-    //   <label>Budget</label>
-    //   <input
-    //     name={"budget"}
-    //     value={budget}
-    //     onChange={e => changeHandler(e, setBudget)}
-    //   />
-    //   <label>Finished By</label>
-    //   <input
-    //     name={"Finished By"}
-    //     value={dueDate}
-    //     onChange={e => changeHandler(e, setfinishedBy)}
-    //   />
-    //   <button type={"submit"}>Submit</button>
-    // </form>
-    //<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>
     <div style={{ marginLeft: "20%", width: "80%" }}>
       <StyledCard
         onClick={e => {

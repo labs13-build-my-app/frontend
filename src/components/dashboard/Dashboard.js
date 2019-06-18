@@ -9,7 +9,8 @@ const Dashboard = ({
   user: loggedInUser,
   role,
   isSignedIn,
-  history
+  history,
+  reload
 }) => {
   const [user, setUser] = useState({});
   useEffect(() => {
@@ -24,6 +25,7 @@ const Dashboard = ({
           user={user}
           loggedInUser={loggedInUser}
           role={role}
+          reload={reload}
         />
       );
     } else if (user.role === "Developer" || history.location.state) {
@@ -33,6 +35,7 @@ const Dashboard = ({
           user={user}
           loggedInUser={loggedInUser}
           history={history}
+          reload={reload}
         />
       );
     } else {
