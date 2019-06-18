@@ -91,9 +91,14 @@ const Project = ({
   const clickHandler = (e, id, status) => {
     // e.preventDefault();
     acceptPlan(match.params.project_id, { planStatus: status, id: id });
-    setSelectedPlan(prevState => ({
-      ...prevState,
+    const plan = projectPlans.find(plan => plan.id === id);
+    setSelectedPlan(() => ({
+      ...plan,
       planStatus: status
+    }));
+    setProject(prevState => ({
+      ...prevState,
+      projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
