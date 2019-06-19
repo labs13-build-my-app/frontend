@@ -24,6 +24,7 @@ import {
   // FaDev,
   // FaBook
 } from "react-icons/fa";
+import EmailDrawer from "../EmailDrawer";
 
 // const Card = styled.div`
 //   display: flex;
@@ -72,6 +73,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
+  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -179,6 +181,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
+          {loggedInUser.id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={user.email}
+              firstName={loggedInUser.firstName}
+            />
+          )}
         </UserInfo>
       </Card>
       <Button
