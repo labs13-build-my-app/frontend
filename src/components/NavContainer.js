@@ -39,18 +39,21 @@ const useStyles = makeStyles(theme => ({
   },
   navBar: {
     top: 0,
-    width: "305px",
+    width: "25%",
     position: "fixed",
     minHeight: "100vh",
     textAlign: "left",
     backgroundImage: "linear-gradient(to top right, #B1CAF8, #B1CAF8)"
   },
   logo: {
-    width: "245px",
+    width: " 90%",
     height: "auto",
-    margin: "45px 0 75px",
-    marginLeft: "25px",
-    marginRight: "15px"
+    padding: "10% 5%"
+    // width: "100%",
+    // height: "auto",
+    // margin: "45px 0 75px",
+    // marginLeft: "25px",
+    // marginRight: "15px"
   }
 }));
 
@@ -102,7 +105,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
       });
     }
     setNav(navLinks);
-  }, [isSignedIn, isToken, newUser]);
+  }, [isSignedIn, isToken, newUser, role, user.id]);
 
   return (
     <div className={classes.navBar}>
