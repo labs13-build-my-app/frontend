@@ -168,10 +168,14 @@ const Project = ({
             }}
           />
         ) : null} */}
-          <EmailDrawer
-            emailAddress={project.email}
-            firstName={user.firstName}
-          />
+
+          {/* added conditions to only render email option if project does not belong to current user */}
+          {project.user_id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={project.email}
+              firstName={user.firstName}
+            />
+          )}
         </div>
       </Card>
       {project.projectStatus === "proposal" ? (
