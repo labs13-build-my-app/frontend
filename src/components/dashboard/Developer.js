@@ -49,6 +49,18 @@ const Developer = ({ loggedInUser, user, role, history }) => {
     completed: true,
     declined: true
   });
+  
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    const newFilters = []
+    Object.keys(state).forEach(filter => {
+      !state[filter] 
+        && newFilters.push(filter) 
+    });
+    setFilters(newFilters);
+  }, [state, setFilters]);
+  
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
   };
@@ -200,18 +212,21 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
           plans.map(plan => (
-            <Card
-              key={plan.id}
-              className={"card plansCard"}
-              onClick={() => history.push(`/plan/${plan.id}`)}
-            >
-              {plan.image_url ? (
-                <img src={plan.image_url} alt={"avatar"} />
-              ) : null}
-              <h1>{plan.name}</h1>
-              <p>{plan.description}</p>
-              <p>{plan.planStatus}</p>
-            </Card>
+            !filters.includes(plan.planStatus.toLowerCase()) 
+              && (
+                <Card
+                  key={plan.id}
+                  className={"card plansCard"}
+                  onClick={() => history.push(`/plan/${plan.id}`)}
+                >
+                  {plan.image_url ? (
+                    <img src={plan.image_url} alt={"avatar"} />
+                  ) : null}
+                  <h1>{plan.name}</h1>
+                  <p>{plan.description}</p>
+                  <p>{plan.planStatus}</p>
+                </Card>
+              )
           ))
         )}
       </div>
