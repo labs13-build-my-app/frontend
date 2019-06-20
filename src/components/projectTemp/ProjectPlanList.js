@@ -25,7 +25,10 @@ const ProjectPlanList = ({
           .filter(plan => plan.planStatus !== "declined")
           .map(plan => {
             return (
-              <ProjectPlan {...{ plan, user, project, setProject, history }} />
+              <ProjectPlan
+                key={project.id}
+                {...{ plan, user, project, setProject, history }}
+              />
             );
           })}
     </>
