@@ -435,6 +435,15 @@ export const fetchPlan = (plan_id, dispatch) => {
     .catch(err => console.log(err));
 };
 
+export const fetchProjectSelectedPlan = (project_id, dispatch) => {
+  axios({
+    method: "GET",
+    url: `${connection}/api/projects/selected-plan/${project_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
 // paginated list of projects
 export const fetchProjects = dispatch => {
   axios

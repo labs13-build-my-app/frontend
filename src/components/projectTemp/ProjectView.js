@@ -19,7 +19,8 @@ const ProjectView = ({
   history,
   match
 }) => {
-  const { pathname } = history.location;
+  const { pathname, state } = history.location;
+  console.log("seleted plans here?", state);
   return (
     <>
       <Card style={{ width: "80%", color: "black" }}>
@@ -83,7 +84,9 @@ const ProjectView = ({
         project_id &&
         pathname !== "/projects/proposals" ? (
         <ProjectPlan {...{ project, user, history }} />
-      ) : null}
+      ) : pathname === "/projects/proposals" ? null : (
+        <ProjectPlan {...{ project, user, history }} />
+      )}
     </>
   );
 };

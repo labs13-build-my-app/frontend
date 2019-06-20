@@ -12,6 +12,7 @@ const ConfirmationButtons = ({
 }) => {
   const clickHandler = (e, id, status) => {
     acceptPlan(project.id, { planStatus: status, id: plan.id });
+    console.log(plan);
 
     setPlan(() => ({
       ...plan,
@@ -21,7 +22,7 @@ const ConfirmationButtons = ({
       ...prevState,
       projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
-    history.push({ state: { plan } });
+    history.push({ state: { plan: { ...plan, planStatus: "selected" } } });
   };
   return (
     <>
