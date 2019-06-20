@@ -32,33 +32,46 @@ const Projects = ({
     return <h1>Loading...</h1>;
   }
 
+  let projectsArr = projects.filter(
+    project => project.projectStatus === "proposal"
+  );
+
+  const filteredArr = projectsArr.reduce((acc, current) => {
+    const x = acc.find(item => item.id === current.id);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
+  console.log(projectsArr);
+  console.log(filteredArr);
+
   return (
     <div>
       <PageTitle>All Projects</PageTitle>
       <div style={{ width: "80%", margin: "auto auto" }}>
-        {projects
-          .filter(project => project.projectStatus === "proposal")
-          .map(project => (
-            <Link
-              style={{ textDecoration: "none" }}
-              className="project-link"
-              to={`/project/${project.id}`}
-              key={project.id}
-            >
-              <Project
-                {...props}
-                name={project.name}
-                description={project.description}
-                budget={project.budget}
-                dueDate={project.dueDate}
-                email={project.email}
-                image_url={project.image_url}
-                firstName={project.firstName}
-                lastName={project.lastName}
-                user={user}
-              />
-            </Link>
-          ))}
+        {filteredArr.map(project => (
+          <Link
+            style={{ textDecoration: "none" }}
+            className="project-link"
+            to={`/project/${project.id}`}
+            key={project.id}
+          >
+            <Project
+              {...props}
+              name={project.name}
+              description={project.description}
+              budget={project.budget}
+              dueDate={project.dueDate}
+              email={project.email}
+              image_url={project.image_url}
+              firstName={project.firstName}
+              lastName={project.lastName}
+              user={user}
+            />
+          </Link>
+        ))}
         {pageCount.page > 1 ? (
           <Button
             medium
