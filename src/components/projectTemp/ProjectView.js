@@ -22,6 +22,7 @@ const ProjectView = ({
 }) => {
   const { pathname } = history.location;
   const { planStatus } = history.location.state || false;
+  console.log(project.user_id === user.id);
   console.log("seleted plans here?", project);
   return (
     <>
@@ -96,7 +97,7 @@ const ProjectView = ({
         </ProjectCard>
       </Card>
       {project.projectStatus === "proposal" &&
-      project_id &&
+      project.user_id !== user.id &&
       pathname !== "/projects/proposals" ? (
         <ProjectPlanList
           {...{
@@ -110,10 +111,11 @@ const ProjectView = ({
           }}
         />
       ) : project.projectStatus === "in progress" &&
-        project_id &&
+        project.user_id !== user.id &&
         pathname !== "/projects/proposals" ? (
         <ProjectPlan {...{ project, user, history }} />
-      ) : pathname === "/projects/proposals" ? null : (
+      ) : project.user_id !== user.id || // this is logic that is not fully set. maybe I need to move  this into ProjectPlan component???
+        pathname === "/projects/proposals" ? null : (
         <ProjectPlan {...{ project, user, history }} />
       )}
     </>

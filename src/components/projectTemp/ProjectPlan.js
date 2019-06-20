@@ -33,7 +33,7 @@ const ProjectPlan = ({
 
   return (
     <>
-      {planCard || plan ? (
+      {planCard || plan ? ( // maybe do the condtion for logged in user and if user id match user on plan display this card? and if user match user on project
         <Card style={{ width: "80%", color: "black" }}>
           <PlanCard plan={plan}>
             <EmailDrawer emailAddress={plan.email} firstName={user.firstName} />
