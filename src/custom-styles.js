@@ -65,4 +65,6 @@ export const PageTitle = styled.h1`
 `;
 export const Background = styled.div`
   background-color: rgba(245, 245, 245, 1);
+  min-height: 100vh;
+  padding: 5px 0px;
 `;
