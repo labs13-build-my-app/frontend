@@ -269,7 +269,8 @@ export const updateProject = (project_id, project, history, dispatch) => {
     data: project
   })
     .then(res => {
-      dispatch.push(`/projects/project/${res.data.id}`);
+      console.log(res);
+      history.push(`/project/${res.data.id}`);
     })
     .catch(err => console.log(err));
 };

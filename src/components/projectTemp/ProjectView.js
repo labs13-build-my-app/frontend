@@ -6,6 +6,7 @@ import ProjectPlan from "./ProjectPlan";
 import { NavLink } from "react-router-dom";
 import EmailDrawer from "../EmailDrawer.js";
 import { Card, Button } from "../../custom-styles";
+import { updateProject } from "../../store/actions";
 
 const ProjectView = ({
   project,
@@ -19,14 +20,42 @@ const ProjectView = ({
   history,
   match
 }) => {
-  const { pathname, state } = history.location;
-  console.log("seleted plans here?", state);
+  const { pathname } = history.location;
+  const { planStatus } = history.location.state || false;
+  console.log("seleted plans here?", project);
   return (
     <>
       <Card style={{ width: "80%", color: "black" }}>
         <ProjectCard
-          {...{ project, isLoading, isSignedIn, role, modal, user, history }}
+          {...{
+            project,
+            isLoading,
+            isSignedIn,
+            role,
+            modal,
+            user,
+            history
+          }}
         >
+          {planStatus === "Completed" &&
+          project.projectStatus !== "Completed" ? (
+            <div>
+              <Button
+                variant="outlined"
+                onClick={() =>
+                  updateProject(
+                    project.id,
+                    {
+                      projectStatus: "Completed"
+                    },
+                    history
+                  )
+                }
+              >
+                Complete Project
+              </Button>
+            </div>
+          ) : null}
           <div>
             <Button
               variant="outlined"

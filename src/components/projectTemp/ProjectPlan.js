@@ -25,6 +25,12 @@ const ProjectPlan = ({
     }
   }, [planCard, seletectPlan, project.id]);
 
+  useEffect(() => {
+    if (plan) {
+      history.push({ state: { planStatus: plan.planStatus } });
+    }
+  }, [plan]);
+
   return (
     <>
       {planCard || plan ? (
