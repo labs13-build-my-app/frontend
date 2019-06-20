@@ -32,13 +32,26 @@ const Projects = ({
     return <h1>Loading...</h1>;
   }
 
+  let projectsArr = projects.filter(
+    project => project.projectStatus === "proposal"
+  );
+
+  const filteredArr = projectsArr.reduce((acc, current) => {
+    const x = acc.find(item => item.id === current.id);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
+
   return (
     <>
       <PageTitle>Available Projects</PageTitle>
       {/* <div style={{ width: "100%", margin: "auto auto" }}> */}
-      {projects
-        .filter(project => project.projectStatus === "proposal")
+      {filteredArr
         .map(project => (
+
           <Link
             style={{ textDecoration: "none" }}
             className="project-link"

@@ -192,6 +192,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
+          <p>{user.role}</p>
           {loggedInUser.id === user.id ? null : (
             <EmailDrawer
               emailAddress={user.email}
@@ -236,6 +237,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               <p>Plans Available</p>
               <h2>{project.plans.length}</h2>
             </div>
+
             <div
               className="buttons"
               style={{
@@ -293,7 +295,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                     value={feedback}
                     onChange={e => changeHandler(e, setFeedback)}
                   />
-                  <button type="submit">Submit</button>
+                  <Button small type="submit">
+                    Submit
+                  </Button>
                 </form>
               </div>
             </Modal>

@@ -12,7 +12,8 @@ export const Button = styled.button`
   border-radius: 25px;
   cursor: pointer;
   outline: none;
-  margin-top: 10px;
+  margin-top: 25px;
+  margin-bottom: 25px
 
   &:hover {
     background: white;

@@ -31,3 +31,15 @@
     transform: rotate(360deg);
   }
 }
+.create-plan {
+  background-color: #4e72b7;
+  border: 1px solid #4e72b7;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  outline: none;
+  margin: 10px;
+}
