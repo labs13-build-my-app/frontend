@@ -76,24 +76,25 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
       <h1>budget:$ {(plan.budget / 100).toFixed(2)}</h1>
       <h1>date: {plan.dueDate}</h1>
       <h1>status: {plan.planStatus}</h1>
+      {plan.planStatus === "selected" ? (
+        <form onSubmit={submitHandler}>
+          <FormControl className={classes.formControl}>
+            <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
+            <Select
+              // className={classes.select}
+              value={planStatus}
+              onChange={e => changeHandler(e)}
+            >
+              <MenuItem value="" />
 
-      <form onSubmit={submitHandler}>
-        <FormControl className={classes.formControl}>
-          <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
-          <Select
-            // className={classes.select}
-            value={planStatus}
-            onChange={e => changeHandler(e)}
-          >
-            <MenuItem value="" />
-            <MenuItem value={"Submitted"}>Submitted</MenuItem>
-            <MenuItem value={"Completed"}>Completed</MenuItem>
-          </Select>
-          <Button type={"submit"} style={{ margin: "20px" }}>
-            Submit
-          </Button>
-        </FormControl>
-      </form>
+              <MenuItem value={"Completed"}>Completed</MenuItem>
+            </Select>
+            <Button type={"submit"} style={{ margin: "20px" }}>
+              Submit
+            </Button>
+          </FormControl>
+        </form>
+      ) : null}
     </div>
   );
 };

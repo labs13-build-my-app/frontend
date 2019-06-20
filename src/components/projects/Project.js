@@ -32,7 +32,7 @@ const Project = ({
   lastName
 }) => {
   const [project, setProject] = useState([]);
-  console.log("USER <===========", user);
+  // console.log("USER <===========", user);
   useEffect(() => {
     const formatDate = unixDate => {
       //function to format unix date
@@ -131,6 +131,7 @@ const Project = ({
 
           <div>
             <Button
+              medium
               variant="outlined"
               onClick={() => history.push(`/profile/${project.user_id}`)}
             >
@@ -184,10 +185,12 @@ const Project = ({
       </Card>
       {project.projectStatus === "proposal" ? (
         <ProjectPlanList
+          style={{ width: '60%' }}
           project={project}
           projectPlans={projectPlans}
           user={user}
           clickHandler={clickHandler}
+          history={history}
         />
       ) : selectedPlan !== undefined ? (
         <ProjectPlan
