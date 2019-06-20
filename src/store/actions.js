@@ -424,13 +424,45 @@ export const fetchPlan = (plan_id, dispatch) => {
 };
 
 // paginated list of projects
-export const fetchProjects = dispatch => {
-  axios
-    .get(`${connection}/api/projects/paginated-list-of-projects`)
-    .then(res => {
-      dispatch(res.data.projects);
-    })
-    .catch(err => console.log(err));
+export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
+  if (user_id) {
+    console.log("PRINT USER ID", user_id, "PAGE", page);
+    axios
+      .get(
+        `${connection}/api/projects/paginated-list-of-projects?page=${page}&user_id=${user_id}`
+      )
+      .then(res => {
+        const { projects, page, total_pages } = res.data;
+        console.log("TEST PAGE", res.data.page);
+        const resultedProject = projects.map(project => {
+          return {
+            id: project.projectID,
+            name: project.projectName,
+            description: project.projectDecription,
+            budget: project.projectBudget,
+            dueDate: project.projectDueDate,
+            email: project.userEmail,
+            image_url: project.projectImageUrl,
+            firstName: project.userFirstName,
+            projectStatus: project.projectProjectStatus,
+            lastName: project.userLastName
+          };
+        });
+        setProjects(resultedProject);
+        setPageCount({ page: Number(page), total_pages });
+      })
+      .catch(err => console.log(err));
+  } else {
+    axios
+      .get(`${connection}/api/projects/paginated-list-of-projects?page=${page}`)
+      .then(res => {
+        const { projects, page, total_pages } = res.data;
+
+        setProjects(projects);
+        setPageCount({ page: Number(page), total_pages });
+      })
+      .catch(err => console.log(err));
+  }
 };
 
 // feedback for a developer from a project owner for work on a project
@@ -467,7 +499,7 @@ export const acceptPlan = (project_id, plan, dispatch) => {
     .then(res => console.log(res, "here"))
     .catch(err => console.log(err));
 };
-export const sendEmail = (email) => {
+export const sendEmail = email => {
   axios({
     method: "POST",
     url: `${connection}/api/message`,
@@ -475,7 +507,6 @@ export const sendEmail = (email) => {
   })
     .then(res => {
       console.log(res.data);
-      
     })
     .catch(err => console.log(err));
 };

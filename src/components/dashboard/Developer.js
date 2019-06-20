@@ -8,6 +8,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import EmailDrawer from "../EmailDrawer";
 import {
   FaGithub,
   FaTwitter,
@@ -39,6 +40,7 @@ function ListItemLink(props) {
 }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
+  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
@@ -127,6 +129,12 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             </ListItem>
           </List>
           <p>{role}</p>
+          {loggedInUser.id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={user.email}
+              firstName={loggedInUser.firstName}
+            />
+          )}
         </UserInfo>
       </Card>
       <div className="plans-area" style={{ width: "70%", margin: "50px auto" }}>

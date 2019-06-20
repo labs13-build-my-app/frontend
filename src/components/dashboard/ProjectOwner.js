@@ -24,6 +24,7 @@ import {
   // FaDev,
   // FaBook
 } from "react-icons/fa";
+import EmailDrawer from "../EmailDrawer";
 
 // const Card = styled.div`
 //   display: flex;
@@ -39,6 +40,17 @@ import {
 const UserInfo = styled.div`
   text-align: left;
   width: 50%;
+`;
+
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 10%;
+  height: 100% img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 `;
 
 function ListItemLink(props) {
@@ -72,6 +84,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
+  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -179,9 +192,16 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
+          {loggedInUser.id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={user.email}
+              firstName={loggedInUser.firstName}
+            />
+          )}
         </UserInfo>
       </Card>
       <Button
+        large
         style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
@@ -197,31 +217,46 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       ) : (
         projects.map(project => (
           <Card key={project.id} className={"card projectsCard"}>
-            {project.image_url ? (
-              <img src={project.image_url} alt={"avatar"} />
-            ) : null}
-            <h1 onClick={() => history.push(`/project/${project.id}`)}>
+            <ImageContainer>
+              {project.image_url ? (
+                <img src={project.image_url} alt={"avatar"} />
+              ) : null}
+            </ImageContainer>
+            <h1
+              onClick={() => history.push(`/project/${project.id}`)}
+              style={{
+                width: "35%"
+              }}
+            >
               {project.name}
             </h1>
             {/* <<< See card page */}
-            <p>{project.description}</p>
+            <p style={{ width: "35%" }}>{project.description}</p>
             <div>
               <p>Plans Available</p>
               <h2>{project.plans.length}</h2>
             </div>
-
-            {project.projectStatus === "completed" ? (
-              // hide when loggedIn !== user
-              <Button
-                style={displayOnlyOnLoggedInUser()}
-                onClick={() => handleOpen(project.id)}
-              >
-                Add Feedback
-              </Button>
-            ) : null}
-            {/* // hide when loggedIn !== user */}
-            <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
-            {/* <<< Modal form to delete with confirmation question to delete */}
+            <div
+              className="buttons"
+              style={{
+                width: "10%",
+                display: "flex",
+                flexDirection: "column"
+              }}
+            >
+              {project.projectStatus === "completed" ? (
+                // hide when loggedIn !== user
+                <Button
+                  style={displayOnlyOnLoggedInUser()}
+                  onClick={() => handleOpen(project.id)}
+                >
+                  Add Feedback
+                </Button>
+              ) : null}
+              {/* // hide when loggedIn !== user */}
+              <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
+              {/* <<< Modal form to delete with confirmation question to delete */}
+            </div>
           </Card>
         ))
       )}

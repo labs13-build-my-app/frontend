@@ -12,11 +12,6 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
 
   const [email, setEmail] = useState({});
 
-  // const [userContactInfo, setuserContactInfo] = useState({
-  //   email: emailAddress,
-  //   name: firstName
-  // });
-
   const useStyles = makeStyles(theme => ({
     list: {
       width: 250
@@ -61,6 +56,9 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
   };
 
   const toggleDrawer = (side, open) => event => {
+    event.stopPropagation();
+    event.preventDefault();
+
     if (
       event.type === "keydown" &&
       (event.key === "Tab" || event.key === "Shift")
@@ -72,12 +70,7 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
   };
 
   const fullList = side => (
-    <div
-      className={classes.fullList}
-      role="presentation"
-      //   onClick={toggleDrawer(side, false)}
-      //   onKeyDown={toggleDrawer(side, false)}
-    >
+    <div className={classes.fullList} role="presentation">
       <form onSubmit={handleSubmit}>
         <br />
         <TextField
@@ -111,16 +104,16 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
         <br />
         <br />
         <br /> */}
-        <Button type="submit">Submit</Button>
+        <Button small type="submit">Submit</Button>
         <br />
         <br />
       </form>
     </div>
   );
-  console.log({ emailAddress, firstName });
+  // console.log({ emailAddress, firstName });
   return (
     <div>
-      <Button onClick={toggleDrawer("bottom", true)}>Send Email</Button>
+      <Button medium onClick={toggleDrawer("bottom", true)}>Send Email</Button>
       <Drawer
         anchor="bottom"
         open={state.bottom}
