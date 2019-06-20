@@ -131,32 +131,30 @@ const App = ({ history, match }) => {
   ]);
 
   return (
-    <Background>
-      <div
-        onClick={() => {
-          return modal === true
-            ? history.push({ state: { modal: false } })
-            : null;
-        }}
-        className="App"
-      >
-        <NavContainer {...state} />
-        <div className="content-wrapper">
-          <RouteContainer {...{ ...state, dispatch, reload }} />
-          {modal ? (
-            <ModalContainer
-              {...{
-                ...state,
-                ...history.location.state,
-                dispatch,
-                history,
-                match
-              }}
-            />
-          ) : null}
-        </div>
-      </div>
-    </Background>
+    <div
+      onClick={() => {
+        return modal === true
+          ? history.push({ state: { modal: false } })
+          : null;
+      }}
+      className="App"
+    >
+      <NavContainer {...state} />
+      <Background>
+        <RouteContainer {...{ ...state, dispatch, reload }} />
+        {modal ? (
+          <ModalContainer
+            {...{
+              ...state,
+              ...history.location.state,
+              dispatch,
+              history,
+              match
+            }}
+          />
+        ) : null}
+      </Background>
+    </div>
   );
 };
 
