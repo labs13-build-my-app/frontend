@@ -46,8 +46,7 @@ const ImageContainer = styled.div`
   display: flex;
   align-items: center;
   width: 10%;
-  height: 100%
-  img {
+  height: 100% img {
     width: 100%;
     height: auto;
     object-fit: cover;
@@ -193,6 +192,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
+          <p>{user.role}</p>
           {loggedInUser.id === user.id ? null : (
             <EmailDrawer
               emailAddress={user.email}
@@ -222,26 +222,26 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                 <img src={project.image_url} alt={"avatar"} />
               ) : null}
             </ImageContainer>
-            <h1 
+            <h1
               onClick={() => history.push(`/project/${project.id}`)}
               style={{
-                width: '35%'
+                width: "35%"
               }}
             >
               {project.name}
             </h1>
             {/* <<< See card page */}
-            <p style={{ width: '35%' }}>{project.description}</p>
-            <div 
-              className="buttons" 
-              style={{ 
-                width: '10%', 
-                display: 'flex', 
-                flexDirection: 'column' 
+            <p style={{ width: "35%" }}>{project.description}</p>
+            <div
+              className="buttons"
+              style={{
+                width: "10%",
+                display: "flex",
+                flexDirection: "column"
               }}
             >
               {project.projectStatus === "completed" ? (
-              // hide when loggedIn !== user
+                // hide when loggedIn !== user
                 <Button
                   style={displayOnlyOnLoggedInUser()}
                   onClick={() => handleOpen(project.id)}

@@ -128,7 +128,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
-          <p>{role}</p>
+          <p>{user.role}</p>
           {loggedInUser.id === user.id ? null : (
             <EmailDrawer
               emailAddress={user.email}
