@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "../../custom-styles";
+import { Button, Card } from "../../custom-styles";
 import EmailDrawer from "../EmailDrawer";
 
-const ProjectPlan = ({ project, user, clickHandler, plan }) => {
-  console.log("PLAN <====", plan);
+
+const ProjectPlan = ({ project, user, clickHandler, plan, history }) => {
+
   return (
     <div className={"project-plans"}>
       {plan && (
@@ -18,6 +19,7 @@ const ProjectPlan = ({ project, user, clickHandler, plan }) => {
           </div>
           <div style={{ width: "75%" }}>
             <p>{plan.description}</p>
+
             {user.id === plan.user_id || user.id === plan.project_owner_id ? (
               <>
                 <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
@@ -31,6 +33,7 @@ const ProjectPlan = ({ project, user, clickHandler, plan }) => {
                 firstName={user.firstName}
               />
             )}
+
           </div>
           {project.user_id === user.id &&
           project.projectStatus === "proposal" ? (
