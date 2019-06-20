@@ -402,15 +402,27 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 };
 
 // page view of a project
-export const fetchProject = (projectId, formatDate, formatBudget, dispatch) => {
+export const fetchProject = (
+  project_id,
+  formatDate,
+  formatBudget,
+  dispatch
+) => {
+  console.log("fetching data");
   axios
-    .get(`${connection}/api/projects/project-view/${projectId}`)
+    .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      const newDueDate = formatDate(res.data.dueDate);
-      const newBudget = formatBudget(res.data.budget);
-      dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+      dispatch({ ...res.data });
     })
     .catch(err => console.log(err));
+  // axios
+  //   .get(`${connection}/api/projects/project-view/${projectId}`)
+  //   .then(res => {
+  //     const newDueDate = formatDate(res.data.dueDate);
+  //     const newBudget = formatBudget(res.data.budget);
+  //     dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+  //   })
+  //   .catch(err => console.log(err));
 };
 
 // page view of a plan
@@ -467,7 +479,7 @@ export const acceptPlan = (project_id, plan, dispatch) => {
     .then(res => console.log(res, "here"))
     .catch(err => console.log(err));
 };
-export const sendEmail = (email) => {
+export const sendEmail = email => {
   axios({
     method: "POST",
     url: `${connection}/api/message`,
@@ -475,7 +487,6 @@ export const sendEmail = (email) => {
   })
     .then(res => {
       console.log(res.data);
-      
     })
     .catch(err => console.log(err));
 };

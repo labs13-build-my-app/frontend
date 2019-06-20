@@ -34,6 +34,7 @@ const App = ({ history, match }) => {
 
   // logging state here
   console.log("STATE", state, isLoading, history.location.state, pathname);
+  console.log("HISTORY FUOOL", history);
 
   useEffect(() => {
     if (

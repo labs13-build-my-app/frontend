@@ -2,7 +2,7 @@ import React from "react";
 import ProjectPlan from "./ProjectPlan";
 
 const ProjectPlanList = ({ projectPlans, project, user, clickHandler }) => {
-  console.log("<<<======= PLANNNNNN", projectPlans);
+  // console.log("<<<======= PLANNNNNN", projectPlans);
   return (
     <div className={"project-plans"}>
       {projectPlans &&

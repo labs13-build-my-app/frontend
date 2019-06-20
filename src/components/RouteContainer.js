@@ -5,6 +5,7 @@ import Dashboard from "./dashboard/Dashboard";
 import Developers from "./profiles/DeveloperList";
 import Projects from "./projects/Projects";
 import Project from "./projects/Project";
+import ProjectsContainer from "./projectTemp/ProjectsContainer";
 import Plan from "./projects/Plan";
 import Callback from "./Auth/Callback";
 import "./Signup.css";
@@ -71,12 +72,12 @@ const RouteContainer = ({
 
           <Route
             path={"/projects/proposals"}
-            render={props => <Projects {...props} {...state} />}
+            render={props => <ProjectsContainer {...props} {...state} />}
           />
 
           <Route
             path={"/project/:project_id"}
-            render={props => <Project {...props} {...state} />}
+            render={props => <ProjectsContainer {...props} {...state} />}
           />
 
           <Route
