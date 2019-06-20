@@ -5,6 +5,7 @@ import { locationRestore, fetchUser } from "./store/actions";
 import NavContainer from "./components/NavContainer";
 import RouteContainer from "./components/RouteContainer";
 import ModalContainer from "./components/ModalContainer";
+import { Background } from "./custom-styles";
 
 import "./App.css";
 
@@ -130,30 +131,32 @@ const App = ({ history, match }) => {
   ]);
 
   return (
-    <div
-      onClick={() => {
-        return modal === true
-          ? history.push({ state: { modal: false } })
-          : null;
-      }}
-      className="App"
-    >
-      <NavContainer {...state} />
-      <div className="content-wrapper">
-        <RouteContainer {...{ ...state, dispatch, reload }} />
-        {modal ? (
-          <ModalContainer
-            {...{
-              ...state,
-              ...history.location.state,
-              dispatch,
-              history,
-              match
-            }}
-          />
-        ) : null}
+    <Background>
+      <div
+        onClick={() => {
+          return modal === true
+            ? history.push({ state: { modal: false } })
+            : null;
+        }}
+        className="App"
+      >
+        <NavContainer {...state} />
+        <div className="content-wrapper">
+          <RouteContainer {...{ ...state, dispatch, reload }} />
+          {modal ? (
+            <ModalContainer
+              {...{
+                ...state,
+                ...history.location.state,
+                dispatch,
+                history,
+                match
+              }}
+            />
+          ) : null}
+        </div>
       </div>
-    </div>
+    </Background>
   );
 };
 
