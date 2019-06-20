@@ -36,7 +36,7 @@ const RouteContainer = ({
   };
 
   return (
-    <div style={{ marginLeft: "25%", width: "75%" }}>
+    <>
       {/* Home component  */}
       <Route path={"/"} render={props => <Home {...props} {...state} />} />
 
@@ -85,7 +85,7 @@ const RouteContainer = ({
           />
         </>
       ) : null}
-    </div>
+    </>
   );
 };
 
