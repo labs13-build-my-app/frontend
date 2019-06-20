@@ -33,8 +33,8 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     textDecoration: "none",
     marginLeft: "5px",
-    color: "#4085FC",
-    borderLeft: "5px solid #4085FC",
+    color: "#F26D5A",
+    borderLeft: "5px solid #F26D5A",
     marginLeft: 0
   },
   navBar: {
@@ -43,7 +43,7 @@ const useStyles = makeStyles(theme => ({
     position: "fixed",
     minHeight: "100vh",
     textAlign: "left",
-    backgroundImage: "linear-gradient(to top right, #B1CAF8, #B1CAF8)"
+    backgroundImage: "linear-gradient(to top right, #001740, #001740)"
   },
   logo: {
     width: " 90%",

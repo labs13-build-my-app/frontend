@@ -120,6 +120,11 @@ const Project = ({
     },
     avatar: {
       backgroundColor: red[500]
+    },
+    bigAvatar: {
+      margin: 10,
+      width: 60,
+      height: 60
     }
   }));
 
@@ -152,11 +157,15 @@ const Project = ({
           />
         ) : null}
         <CardHeader
-          // avatar={
-          //   <Avatar aria-label="Recipe" className={classes.avatar}>
-          //     R
-          //   </Avatar>
-          // }
+          avatar={
+            project.image_url ? (
+              <Avatar
+                alt="Remy Sharp"
+                src={project.image_url}
+                className={classes.bigAvatar}
+              />
+            ) : null
+          }
           // action={
           //   <IconButton aria-label="Settings">
           //     <MoreVertIcon />
