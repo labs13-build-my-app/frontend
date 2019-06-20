@@ -445,7 +445,8 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
             projectStatus: project.projectProjectStatus,
-            lastName: project.userLastName
+            lastName: project.userLastName,
+            projectOwnerAvatar: project.projectOwnerAvatar
           };
         });
         setProjects(resultedProject);

@@ -41,7 +41,8 @@ const Project = ({
   history,
   reload,
   firstName,
-  lastName
+  lastName,
+  projectOwnerAvatar
 }) => {
   const [project, setProject] = useState([]);
   // console.log("USER <===========", user);
@@ -66,7 +67,8 @@ const Project = ({
         budget: newBudget,
         dueDate: newDueDate,
         firstName,
-        lastName
+        lastName,
+        projectOwnerAvatar
       });
     }
     if (match.params.project_id && !isLoading) {
@@ -77,18 +79,7 @@ const Project = ({
         setProject
       );
     }
-  }, [
-    match.params.project_id,
-    isLoading,
-    name,
-    description,
-    budget,
-    dueDate,
-    email,
-    image_url,
-    firstName,
-    lastName
-  ]);
+  }, [match.params.project_id, isLoading, name, description, budget, dueDate, email, image_url, firstName, lastName, projectOwnerAvatar]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
@@ -123,8 +114,12 @@ const Project = ({
     },
     bigAvatar: {
       margin: 10,
-      width: 60,
-      height: 60
+      width: 75,
+      height: 75
+    },
+    buttonWrapper: {
+      display: "flex",
+      justifyContent: "space-evenly"
     }
   }));
 
@@ -147,8 +142,15 @@ const Project = ({
   const { modal } = history.location.state || false;
   console.log(project);
   return (
-    <div>
-      <Card style={{ width: "90%", color: "black", marginBottom: "20px" }}>
+    <div
+      style={{
+        width: "80%",
+        color: "black",
+        margin: "0 auto",
+        marginBottom: "20px"
+      }}
+    >
+      <Card>
         {project.image_url ? (
           <CardMedia
             className={classes.media}
@@ -161,7 +163,7 @@ const Project = ({
             project.image_url ? (
               <Avatar
                 alt="Remy Sharp"
-                src={project.image_url}
+                src={project.projectOwnerAvatar}
                 className={classes.bigAvatar}
               />
             ) : null
@@ -174,32 +176,32 @@ const Project = ({
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
         />
-        <div style={{ width: "25%" }}>
-          {/* <h3 style={{ color: "black" }} className="ProjectTitle">
-            {project.name}
-          </h3> */}
-        </div>
-        <div style={{ width: "75%" }}>
+        <div>
           <CardContent className={classes.content}>
             <p>{project.description}</p>
             <p>Willing to pay {project.budget}</p>
             <p>Need by {project.dueDate}</p>
           </CardContent>
-          {/* <p>
-            Project Owner: {project.firstName} {project.lastName}
-          </p> */}
+          {/* <div className={classes.buttonWrapper}> */}
+          <CardContent className={classes.buttonWrapper}>
+            <Button
+              small
+              variant="outlined"
+              onClick={() => history.push(`/profile/${project.user_id}`)}
+            >
+              View Profile
+            </Button>
 
-          <div>
-            <CardContent className={classes.content}>
-              <Button
-                medium
-                variant="outlined"
-                onClick={() => history.push(`/profile/${project.user_id}`)}
-              >
-                View Profile
-              </Button>
-            </CardContent>
-          </div>
+            {/* added conditions to only render email option if project does not belong to current user */}
+
+            {project.user_id === user.id ? null : (
+              <EmailDrawer
+                emailAddress={project.email}
+                firstName={user.firstName}
+              />
+            )}
+          </CardContent>
+          {/* </div> */}
 
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
@@ -235,16 +237,6 @@ const Project = ({
             }}
           />
         ) : null} */}
-
-          {/* added conditions to only render email option if project does not belong to current user */}
-          <CardContent className={classes.content}>
-            {project.user_id === user.id ? null : (
-              <EmailDrawer
-                emailAddress={project.email}
-                firstName={user.firstName}
-              />
-            )}
-          </CardContent>
         </div>
       </Card>
       {project.projectStatus === "proposal" ? (
