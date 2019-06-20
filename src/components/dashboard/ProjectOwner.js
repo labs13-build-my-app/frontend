@@ -289,7 +289,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                     value={feedback}
                     onChange={e => changeHandler(e, setFeedback)}
                   />
-                  <button type="submit">Submit</button>
+                  <Button small type="submit">
+                    Submit
+                  </Button>
                 </form>
               </div>
             </Modal>

@@ -44,8 +44,6 @@ const Projects = ({
       return acc;
     }
   }, []);
-  console.log(projectsArr);
-  console.log(filteredArr);
 
   return (
     <div>
