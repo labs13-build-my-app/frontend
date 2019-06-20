@@ -191,6 +191,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       >
         + Create New Project
       </Button>
+      {console.log(projects)}
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
@@ -204,6 +205,10 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             </h1>
             {/* <<< See card page */}
             <p>{project.description}</p>
+            <div>
+              <p>Plans Available</p>
+              <h2>{project.plans.length}</h2>
+            </div>
 
             {project.projectStatus === "completed" ? (
               // hide when loggedIn !== user
