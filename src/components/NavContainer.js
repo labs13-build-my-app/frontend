@@ -90,7 +90,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
           route: "/",
           state: "logout",
           label: "Logout",
-          icon: "fa fa-user-slash"
+          icon: "fas fa-sign-out-alt"
         }
       );
     } else {
