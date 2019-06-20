@@ -448,7 +448,6 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             lastName: project.userLastName
           };
         });
-        console.log(resultedProject);
         setProjects(resultedProject);
         setPageCount({ page: Number(page), total_pages });
       })

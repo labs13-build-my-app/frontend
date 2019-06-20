@@ -5,7 +5,7 @@ import {
   fetchProjects,
   fecthProjectOwnerProjectsList
 } from "../../store/actions";
-import { PageTitle } from "../../custom-styles";
+import { PageTitle, Button } from "../../custom-styles";
 
 const Projects = ({
   isLoading,
@@ -60,7 +60,8 @@ const Projects = ({
             </Link>
           ))}
         {pageCount.page > 1 ? (
-          <button
+          <Button
+            medium
             onClick={() => {
               if (pageCount.page >= 0)
                 fetchProjects(
@@ -72,10 +73,11 @@ const Projects = ({
             }}
           >
             Prev
-          </button>
+          </Button>
         ) : null}
         {pageCount.page < pageCount.total_pages ? (
-          <button
+          <Button
+            medium
             onClick={() => {
               if (pageCount.page <= pageCount.total_pages)
                 fetchProjects(
@@ -87,7 +89,7 @@ const Projects = ({
             }}
           >
             Next
-          </button>
+          </Button>
         ) : null}
       </div>
     </div>
