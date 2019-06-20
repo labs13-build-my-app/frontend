@@ -4,12 +4,15 @@ export const Button = styled.button`
   background-color: #4E72B7;
   border: 1px solid #4E72B7;
   color: white;
-  font-size: 1.5rem;
+  ${props => props.small && `font-size: 1.0rem;`}
+  ${props => props.medium ? `font-size: 1.2rem;` : null}
+  ${props => props.large ? `font-size: 1.5rem;` : null}
   padding: 10px 25px;
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
   outline: none;
+  margin-top: 10px;
 
   &:hover{
     background: white;
