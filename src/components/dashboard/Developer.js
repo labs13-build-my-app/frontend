@@ -11,6 +11,8 @@ import Divider from "@material-ui/core/Divider";
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
+import EmailDrawer from "../EmailDrawer";
+
 import {
   FaGithub,
   FaTwitter,
@@ -43,6 +45,7 @@ function ListItemLink(props) {
 }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
+
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
@@ -153,6 +156,12 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             </ListItem>
           </List>
           <p>{role}</p>
+          {loggedInUser.id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={user.email}
+              firstName={loggedInUser.firstName}
+            />
+          )}
         </UserInfo>
       </Card>
       <PageTitle>
