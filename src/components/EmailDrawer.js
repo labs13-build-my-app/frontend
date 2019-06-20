@@ -111,7 +111,7 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
         <br />
         <br />
         <br /> */}
-        <Button type="submit">Submit</Button>
+        <Button small type="submit">Submit</Button>
         <br />
         <br />
       </form>
@@ -120,7 +120,7 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
   // console.log({ emailAddress, firstName });
   return (
     <div>
-      <Button onClick={toggleDrawer("bottom", true)}>Send Email</Button>
+      <Button medium onClick={toggleDrawer("bottom", true)}>Send Email</Button>
       <Drawer
         anchor="bottom"
         open={state.bottom}

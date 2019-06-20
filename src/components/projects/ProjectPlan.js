@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "../../custom-styles";
+import { Button, Card } from "../../custom-styles";
 import EmailDrawer from "../EmailDrawer";
 
-const ProjectPlan = ({ project, user, clickHandler, plan }) => {
+const ProjectPlan = ({ project, user, clickHandler, plan, history }) => {
   return (
     <div className={"project-plans"}>
       {plan && (
@@ -20,6 +20,13 @@ const ProjectPlan = ({ project, user, clickHandler, plan }) => {
             <p>Will accept ${(plan.budget / 100).toFixed(2)}</p>
             <p>Can Deliver by {plan.dueDate}</p>
             <p>Plan Status: {plan.planStatus}</p>
+            <Button
+              medium
+              variant="outlined"
+              onClick={() => history.push(`/profile/${plan.user_id}`)}
+            >
+              View Profile
+            </Button>
             <EmailDrawer emailAddress={plan.email} firstName={user.firstName} />
           </div>
           {project.user_id === user.id &&
