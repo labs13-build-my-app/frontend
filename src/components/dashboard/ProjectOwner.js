@@ -42,6 +42,18 @@ const UserInfo = styled.div`
   width: 50%;
 `;
 
+const ImageContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 10%;
+  height: 100%
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+`;
+
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
@@ -190,6 +202,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         </UserInfo>
       </Card>
       <Button
+        large
         style={displayOnlyOnLoggedInUser()}
         onClick={() =>
           history.push({
@@ -204,27 +217,42 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       ) : (
         projects.map(project => (
           <Card key={project.id} className={"card projectsCard"}>
-            {project.image_url ? (
-              <img src={project.image_url} alt={"avatar"} />
-            ) : null}
-            <h1 onClick={() => history.push(`/project/${project.id}`)}>
+            <ImageContainer>
+              {project.image_url ? (
+                <img src={project.image_url} alt={"avatar"} />
+              ) : null}
+            </ImageContainer>
+            <h1 
+              onClick={() => history.push(`/project/${project.id}`)}
+              style={{
+                width: '35%'
+              }}
+            >
               {project.name}
             </h1>
             {/* <<< See card page */}
-            <p>{project.description}</p>
-
-            {project.projectStatus === "completed" ? (
+            <p style={{ width: '35%' }}>{project.description}</p>
+            <div 
+              className="buttons" 
+              style={{ 
+                width: '10%', 
+                display: 'flex', 
+                flexDirection: 'column' 
+              }}
+            >
+              {project.projectStatus === "completed" ? (
               // hide when loggedIn !== user
-              <Button
-                style={displayOnlyOnLoggedInUser()}
-                onClick={() => handleOpen(project.id)}
-              >
-                Add Feedback
-              </Button>
-            ) : null}
-            {/* // hide when loggedIn !== user */}
-            <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
-            {/* <<< Modal form to delete with confirmation question to delete */}
+                <Button
+                  style={displayOnlyOnLoggedInUser()}
+                  onClick={() => handleOpen(project.id)}
+                >
+                  Add Feedback
+                </Button>
+              ) : null}
+              {/* // hide when loggedIn !== user */}
+              <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
+              {/* <<< Modal form to delete with confirmation question to delete */}
+            </div>
           </Card>
         ))
       )}
