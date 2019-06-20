@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Project from "./Project";
 import { Link } from "react-router-dom";
-import { fetchProjects } from "../../store/actions";
+import {
+  fetchProjects,
+  fecthProjectOwnerProjectsList
+} from "../../store/actions";
 import { PageTitle } from "../../custom-styles";
 
 const Projects = ({
@@ -15,17 +18,20 @@ const Projects = ({
   history
 }) => {
   const props = { history, match, role, isLoading, isSignedIn };
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]); // public PO or not loggin User
+
+  const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
-    if (!isLoading) {
-      fetchProjects(setProjects);
+    if (!isLoading && pageCount) {
+      fetchProjects(user.id, pageCount, setProjects, setPageCount);
     }
-  }, [isLoading]);
+  }, [isLoading, history.location.state]);
 
   if (!projects) {
     return <h1>Loading...</h1>;
   }
+
   return (
     <div>
       <PageTitle>All Projects</PageTitle>
@@ -53,6 +59,36 @@ const Projects = ({
               />
             </Link>
           ))}
+        {pageCount.page > 1 ? (
+          <button
+            onClick={() => {
+              if (pageCount.page >= 0)
+                fetchProjects(
+                  user.id,
+                  Number(pageCount.page) - 1,
+                  setProjects,
+                  setPageCount
+                );
+            }}
+          >
+            Prev
+          </button>
+        ) : null}
+        {pageCount.page < pageCount.total_pages ? (
+          <button
+            onClick={() => {
+              if (pageCount.page <= pageCount.total_pages)
+                fetchProjects(
+                  user.id,
+                  Number(pageCount.page) + 1,
+                  setProjects,
+                  setPageCount
+                );
+            }}
+          >
+            Next
+          </button>
+        ) : null}
       </div>
     </div>
   );

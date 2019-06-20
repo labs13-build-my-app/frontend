@@ -117,7 +117,7 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
       </form>
     </div>
   );
-  console.log({ emailAddress, firstName });
+  // console.log({ emailAddress, firstName });
   return (
     <div>
       <Button onClick={toggleDrawer("bottom", true)}>Send Email</Button>

@@ -31,7 +31,7 @@ const Project = ({
   lastName
 }) => {
   const [project, setProject] = useState([]);
-  console.log("USER <===========", user);
+  // console.log("USER <===========", user);
   useEffect(() => {
     const formatDate = unixDate => {
       //function to format unix date
