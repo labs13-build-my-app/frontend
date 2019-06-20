@@ -122,6 +122,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
         {nav.map(link => {
           return (
             <Link
+              key={link.label}
               className={
                 active === link.label ? classes.selectedLink : classes.link
               }
