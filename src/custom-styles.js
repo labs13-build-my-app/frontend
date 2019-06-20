@@ -5,8 +5,8 @@ export const Button = styled.button`
   border: 1px solid #4e72b7;
   color: white;
   ${props => props.small && `font-size: 1.0rem;`}
-  ${props => props.medium ? `font-size: 1.2rem;` : null}
-  ${props => props.large ? `font-size: 1.5rem;` : null}
+  ${props => (props.medium ? `font-size: 1.2rem;` : null)}
+  ${props => (props.large ? `font-size: 1.5rem;` : null)}
   padding: 10px 25px;
   font-weight: bold;
   border-radius: 25px;
@@ -69,5 +69,7 @@ export const PageTitle = styled.h1`
 export const Background = styled.div`
   background-color: rgba(245, 245, 245, 1);
   min-height: 100vh;
-  padding: 5px 0px;
+  padding: 1px 0px;
+  width: 75%;
+  margin-left: 25%;
 `;
