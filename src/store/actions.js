@@ -438,6 +438,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
         const resultedProject = projects.map(project => {
           return {
             id: project.projectID,
+            user_id: project.projectProjectOwnerID,
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,

@@ -42,7 +42,8 @@ const Project = ({
   reload,
   firstName,
   lastName,
-  projectOwnerAvatar
+  projectOwnerAvatar,
+  user_id
 }) => {
   const [project, setProject] = useState([]);
   // console.log("USER <===========", user);
@@ -68,7 +69,8 @@ const Project = ({
         dueDate: newDueDate,
         firstName,
         lastName,
-        projectOwnerAvatar
+        projectOwnerAvatar,
+        user_id
       });
     }
     if (match.params.project_id && !isLoading) {
@@ -79,7 +81,19 @@ const Project = ({
         setProject
       );
     }
-  }, [match.params.project_id, isLoading, name, description, budget, dueDate, email, image_url, firstName, lastName, projectOwnerAvatar]);
+  }, [
+    match.params.project_id,
+    isLoading,
+    name,
+    description,
+    budget,
+    dueDate,
+    email,
+    image_url,
+    firstName,
+    lastName,
+    projectOwnerAvatar
+  ]);
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
@@ -185,9 +199,15 @@ const Project = ({
           {/* <div className={classes.buttonWrapper}> */}
           <CardContent className={classes.buttonWrapper}>
             <Button
+              className="TEST"
               small
               variant="outlined"
-              onClick={() => history.push(`/profile/${project.user_id}`)}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("HERE", project.user_id);
+                history.push(`/profile/${project.user_id}`);
+              }}
             >
               View Profile
             </Button>
