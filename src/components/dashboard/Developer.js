@@ -8,9 +8,9 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import EmailDrawer from "../EmailDrawer";
 
 import {
@@ -22,7 +22,7 @@ import {
   FaDev,
   FaBook
 } from "react-icons/fa";
-import { PageTitle } from '../../custom-styles';
+import { PageTitle } from "../../custom-styles";
 
 const Card = styled.div`
   display: flex;
@@ -45,29 +45,27 @@ function ListItemLink(props) {
 }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
-
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
     completed: true,
     declined: true
   });
-  
+
   const [filters, setFilters] = useState([]);
 
   useEffect(() => {
-    const newFilters = []
+    const newFilters = [];
     Object.keys(state).forEach(filter => {
-      !state[filter] 
-        && newFilters.push(filter) 
+      !state[filter] && newFilters.push(filter);
     });
     setFilters(newFilters);
   }, [state, setFilters]);
-  
+
   const handleChange = name => event => {
     setState({ ...state, [name]: event.target.checked });
   };
-  
+
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
@@ -80,7 +78,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
       <Card className={"card userCard"}>
         <div style={{ width: "50%" }}>
           <img
-            src={user.profilePictureURL ? user.profilePictureURL : placeholder}
+            src={
+              user.profile_picture_url ? user.profile_picture_url : placeholder
+            }
             alt={"avatar"}
             style={{
               borderRadius: "100%",
@@ -164,18 +164,19 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           )}
         </UserInfo>
       </Card>
-      <PageTitle>
-        Plans
-      </PageTitle>
+      <PageTitle>Plans</PageTitle>
       <div className="plans-area" style={{ width: "80%", margin: "50px auto" }}>
-        <div className="switches" style={{ display: 'flex', justifyContent: 'center' }}>
-          <h3 style={{ marginRight: '15px' }}>Show:</h3>
+        <div
+          className="switches"
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <h3 style={{ marginRight: "15px" }}>Show:</h3>
           <FormGroup row>
             <FormControlLabel
               control={
-                <Switch 
-                  checked={state.submitted} 
-                  onChange={handleChange('submitted')} 
+                <Switch
+                  checked={state.submitted}
+                  onChange={handleChange("submitted")}
                   value="submitted"
                   color="primary"
                 />
@@ -184,9 +185,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             />
             <FormControlLabel
               control={
-                <Switch 
-                  checked={state.selected} 
-                  onChange={handleChange('selected')} 
+                <Switch
+                  checked={state.selected}
+                  onChange={handleChange("selected")}
                   value="selected"
                   color="primary"
                 />
@@ -195,9 +196,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             />
             <FormControlLabel
               control={
-                <Switch 
-                  checked={state.completed} 
-                  onChange={handleChange('completed')} 
+                <Switch
+                  checked={state.completed}
+                  onChange={handleChange("completed")}
                   value="completed"
                   color="primary"
                 />
@@ -206,9 +207,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             />
             <FormControlLabel
               control={
-                <Switch 
-                  checked={state.declined} 
-                  onChange={handleChange('declined')} 
+                <Switch
+                  checked={state.declined}
+                  onChange={handleChange("declined")}
                   value="declined"
                   color="primary"
                 />
@@ -220,9 +221,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         {plans.length === 0 ? (
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
-          plans.map(plan => (
-            !filters.includes(plan.planStatus.toLowerCase()) 
-              && (
+          plans.map(
+            plan =>
+              !filters.includes(plan.planStatus.toLowerCase()) && (
                 <Card
                   key={plan.id}
                   className={"card plansCard"}
@@ -236,19 +237,23 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                   <p>{plan.planStatus}</p>
                 </Card>
               )
-          ))
+          )
         )}
       </div>
-      
-      <PageTitle>
-        Feedback
-      </PageTitle>
-      <div className="projectsFeedback" style={{ width: '80%' }}>
+
+      <PageTitle>Feedback</PageTitle>
+      <div className="projectsFeedback" style={{ width: "80%" }}>
         {feedbacks.length === 0 ? (
-          <Card style={{width: '80%'}} className={"card plansCard"}>No Feedback</Card>
+          <Card style={{ width: "80%" }} className={"card plansCard"}>
+            No Feedback
+          </Card>
         ) : (
           feedbacks.map(feedback => (
-            <Card style={{width: '80%'}} key={feedback.planID} className={"card plansCard"}>
+            <Card
+              style={{ width: "80%" }}
+              key={feedback.planID}
+              className={"card plansCard"}
+            >
               <h1
                 onClick={() => history.push(`/project/${feedback.projectID}`)}
               >

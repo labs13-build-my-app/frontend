@@ -85,6 +85,7 @@ const useStyles = makeStyles(theme => ({
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
+  console.log(user, "USERRRRRRRRRRRRRRRRRRRRRR");
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -131,7 +132,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       <Card className={"card userCard"}>
         <div style={{ width: "50%" }}>
           <img
-            src={user.profilePictureURL ? user.profilePictureURL : placeholder}
+            src={
+              user.profile_picture_url ? user.profile_picture_url : placeholder
+            }
             alt={"avatar"}
             style={{
               borderRadius: "100%",

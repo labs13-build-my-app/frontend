@@ -74,3 +74,28 @@ export const Background = styled.div`
   width: 75%;
   margin-left: 25%;
 `;
+export const Pill = styled.div`
+  ${props =>
+    props.devType === "Web"
+      ? `background-color: #4e72b7`
+      : props.devType === "Android"
+      ? `background-color: #3bdb85`
+      : `background-color: #a3224f`}
+  ${props =>
+    props.devType === "Web"
+      ? `border: #4e72b7`
+      : props.devType === "Android"
+      ? `border: #3bdb85`
+      : `border: #a3224f`}
+  
+  color: white;
+  font-size: 0.8rem;
+  padding: 5px 0px;
+  width: 60px;
+  font-weight: bold;
+  border-radius: 25px;
+  cursor: pointer;
+  outline: none;
+  margin-top: 25px;
+  margin-bottom: 25px;
+`;
