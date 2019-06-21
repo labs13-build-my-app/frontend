@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Children } from "react";
 import EmailDrawer from "../EmailDrawer.js";
 import { NavLink } from "react-router-dom";
 import {
   fetchProject,
   listProjectPlans,
-  acceptPlan
+  acceptPlan,
+  updateProject
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
 import ProjectPlan from "./ProjectPlan";
@@ -40,6 +41,7 @@ const Project = ({
   image_url,
   history,
   reload,
+  children,
   firstName,
   lastName,
   projectOwnerAvatar,
@@ -97,6 +99,7 @@ const Project = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
+    console.log("is this use effect being invoked?");
     // const { reload } = history.location.state || false;
     if ((match.params.project_id && !isLoading) || reload) {
       listProjectPlans(match.params.project_id, setProjectPlans);
@@ -106,6 +109,13 @@ const Project = ({
   const [selectedPlan, setSelectedPlan] = useState([]);
   useEffect(() => {
     setSelectedPlan(projectPlans.find(plan => plan.planStatus === "selected"));
+  }, [projectPlans]);
+
+  const [completedPlan, setCompletedPlan] = useState(null);
+  useEffect(() => {
+    setCompletedPlan(
+      projectPlans.find(plan => plan.planStatus === "completed")
+    );
   }, [projectPlans]);
 
   if (isLoading) {
@@ -154,7 +164,7 @@ const Project = ({
     // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
-  console.log(project);
+
   return (
     <div
       style={{
@@ -242,6 +252,18 @@ const Project = ({
             >
               Apply to this project
             </NavLink>
+          ) : completedPlan && project.projectStatus !== "completed" ? (
+            <Button
+              onClick={() => {
+                updateProject(
+                  project.id,
+                  { projectStatus: "completed" },
+                  history
+                );
+              }}
+            >
+              <i class="fas fa-check" /> &nbsp; Mark Completed
+            </Button>
           ) : null}
 
           {/* {role ? (
