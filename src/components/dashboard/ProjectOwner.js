@@ -236,7 +236,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             </ImageContainer>
 
             <div
-              className="left"
+              className="leftSideProjectCard"
               style={{ width: "40%", display: "flex", flexDirection: "column" }}
             >
               <div>
