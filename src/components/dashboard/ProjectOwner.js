@@ -132,11 +132,15 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
     e.preventDefault();
     const user_id = user.id;
     const project_id = history.location.state;
-    updateProject(history.location.state, {
-      feedback,
-      user_id,
-      project_id
-    })(history);
+    updateProject(
+      history.location.state,
+      {
+        feedback,
+        user_id,
+        project_id
+      },
+      history
+    );
   };
 
   useEffect(() => {

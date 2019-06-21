@@ -16,11 +16,11 @@ const StyledCard = styled.form`
   box-shadow: 10px 10px 10px grey;
 `;
 
-const CreatePlan = ({ history, user, dispatch }) => {
+const CreatePlan = ({ history, user, projectId }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     const plan = { ...state, budget: state.budget * 100 }; // <<<<<< MB
 
-    createPlan(plan, history.location.state.project_id, dispatch);
+    createPlan(plan, projectId);
     history.push(`/profile/${user.id}`);
   });
   const useStyles = makeStyles(theme => ({
