@@ -8,7 +8,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import EmailDrawer from "../EmailDrawer";
+
 import {
   FaGithub,
   FaTwitter,
@@ -18,6 +22,7 @@ import {
   FaDev,
   FaBook
 } from "react-icons/fa";
+import { PageTitle } from '../../custom-styles';
 
 const Card = styled.div`
   display: flex;
@@ -40,7 +45,29 @@ function ListItemLink(props) {
 }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
-  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
+
+  const [state, setState] = React.useState({
+    submitted: true,
+    selected: true,
+    completed: true,
+    declined: true
+  });
+  
+  const [filters, setFilters] = useState([]);
+
+  useEffect(() => {
+    const newFilters = []
+    Object.keys(state).forEach(filter => {
+      !state[filter] 
+        && newFilters.push(filter) 
+    });
+    setFilters(newFilters);
+  }, [state, setFilters]);
+  
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+  };
+  
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
@@ -128,7 +155,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
-          <p>{role}</p>
+          <p>{user.role}</p>
           {loggedInUser.id === user.id ? null : (
             <EmailDrawer
               emailAddress={user.email}
@@ -137,46 +164,91 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           )}
         </UserInfo>
       </Card>
-      <div className="plans-area" style={{ width: "70%", margin: "50px auto" }}>
-        <h2
-          style={{
-            borderBottom: "1px solid black",
-            paddingBottom: "5px",
-            textAlign: "left"
-          }}
-        >
-          plans
-        </h2>
+      <PageTitle>
+        Plans
+      </PageTitle>
+      <div className="plans-area" style={{ width: "80%", margin: "50px auto" }}>
+        <div className="switches" style={{ display: 'flex', justifyContent: 'center' }}>
+          <h3 style={{ marginRight: '15px' }}>Show:</h3>
+          <FormGroup row>
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={state.submitted} 
+                  onChange={handleChange('submitted')} 
+                  value="submitted"
+                  color="primary"
+                />
+              }
+              label="Submitted"
+            />
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={state.selected} 
+                  onChange={handleChange('selected')} 
+                  value="selected"
+                  color="primary"
+                />
+              }
+              label="Selected"
+            />
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={state.completed} 
+                  onChange={handleChange('completed')} 
+                  value="completed"
+                  color="primary"
+                />
+              }
+              label="Completed"
+            />
+            <FormControlLabel
+              control={
+                <Switch 
+                  checked={state.declined} 
+                  onChange={handleChange('declined')} 
+                  value="declined"
+                  color="primary"
+                />
+              }
+              label="Declined"
+            />
+          </FormGroup>
+        </div>
         {plans.length === 0 ? (
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
           plans.map(plan => (
-            <Card
-              key={plan.id}
-              className={"card plansCard"}
-              onClick={() => history.push(`/plan/${plan.id}`)}
-            >
-              {plan.image_url ? (
-                <img src={plan.image_url} alt={"avatar"} />
-              ) : null}
-              <h1>{plan.name}</h1>
-              <p>{plan.description}</p>
-              <p>{plan.planStatus}</p>
-            </Card>
+            !filters.includes(plan.planStatus.toLowerCase()) 
+              && (
+                <Card
+                  key={plan.id}
+                  className={"card plansCard"}
+                  onClick={() => history.push(`/plan/${plan.id}`)}
+                >
+                  {plan.image_url ? (
+                    <img src={plan.image_url} alt={"avatar"} />
+                  ) : null}
+                  <h1>{plan.name}</h1>
+                  <p>{plan.description}</p>
+                  <p>{plan.planStatus}</p>
+                </Card>
+              )
           ))
         )}
-        {/* maybe move this button on project */}
-        {/* {user.id === loggedInUser.id ? (
-          <Button style={{ margin: "50px auto" }}>+ Create New plan</Button>
-        ) : null} */}
       </div>
-      <div className="projectsFeedback">
+      
+      <PageTitle>
         Feedback
+      </PageTitle>
+      <div className="projectsFeedback" style={{ width: '80%' }}>
         {feedbacks.length === 0 ? (
-          <Card className={"card plansCard"}>No Feedback</Card>
+          <Card style={{width: '80%'}} className={"card plansCard"}>No Feedback</Card>
         ) : (
           feedbacks.map(feedback => (
-            <Card key={feedback.planID} className={"card plansCard"}>
+            <Card style={{width: '80%'}} key={feedback.planID} className={"card plansCard"}>
               <h1
                 onClick={() => history.push(`/project/${feedback.projectID}`)}
               >

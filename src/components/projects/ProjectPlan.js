@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card } from "../../custom-styles";
 import EmailDrawer from "../EmailDrawer";
 
-
 const ProjectPlan = ({ project, user, clickHandler, plan, history }) => {
-
   return (
     <div className={"project-plans"}>
       {plan && (
@@ -33,27 +31,32 @@ const ProjectPlan = ({ project, user, clickHandler, plan, history }) => {
                 firstName={user.firstName}
               />
             )}
-
           </div>
           {project.user_id === user.id &&
           project.projectStatus === "proposal" ? (
             <div className={"button-container"}>
-              <button
+              <Button
+                medium
+                style={{ background: "#589658", border: "none" }}
                 type={"submit"}
                 onClick={e => {
                   return clickHandler(e, plan.id, "selected");
                 }}
               >
+                <i class="fas fa-check" />
                 Accept
-              </button>
-              <button
+              </Button>
+              <Button
+                medium
+                style={{ background: "#e65211c9", border: "none" }}
                 type={"submit"}
                 onClick={e => {
                   return clickHandler(e, plan.id, "declined");
                 }}
               >
+                <i class="fas fa-times" />
                 Decline
-              </button>
+              </Button>
             </div>
           ) : null}
         </Card>

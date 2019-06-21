@@ -5,6 +5,7 @@ import { locationRestore, fetchUser } from "./store/actions";
 import NavContainer from "./components/NavContainer";
 import RouteContainer from "./components/RouteContainer";
 import ModalContainer from "./components/ModalContainer";
+import { Background } from "./custom-styles";
 
 import "./App.css";
 
@@ -33,7 +34,8 @@ const App = ({ history, match }) => {
   const { pathname } = history.location;
 
   // logging state here
-  console.log("STATE", state, isLoading, history.location.state, pathname);
+  // console.log("STATE", state, isLoading, history.location.state, pathname);
+  // console.log("HISTORY FUOOL", history);
 
   useEffect(() => {
     if (
@@ -139,7 +141,7 @@ const App = ({ history, match }) => {
       className="App"
     >
       <NavContainer {...state} />
-      <div className="content-wrapper">
+      <Background>
         <RouteContainer {...{ ...state, dispatch, reload }} />
         {modal ? (
           <ModalContainer
@@ -152,7 +154,7 @@ const App = ({ history, match }) => {
             }}
           />
         ) : null}
-      </div>
+      </Background>
     </div>
   );
 };
