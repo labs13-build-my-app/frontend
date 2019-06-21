@@ -23,76 +23,90 @@ const Projects = ({
   const [pageCount, setPageCount] = useState(1);
 
   useEffect(() => {
-    if (!isLoading && pageCount) {
+    if (projects.length === 0 && !isLoading && pageCount) {
       fetchProjects(user.id, pageCount, setProjects, setPageCount);
     }
-  }, [isLoading, history.location.state]);
+  }, [isLoading, history.location.state, pageCount, user.id, projects.length]);
 
   if (!projects) {
     return <h1>Loading...</h1>;
   }
 
+  let projectsArr = projects.filter(
+    project => project.projectStatus === "proposal"
+  );
+
+  const filteredArr = projectsArr.reduce((acc, current) => {
+    const x = acc.find(item => item.id === current.id);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
+
   return (
-    <div>
-      <PageTitle>All Projects</PageTitle>
-      <div style={{ width: "80%", margin: "auto auto" }}>
-        {projects
-          .filter(project => project.projectStatus === "proposal")
-          .map(project => (
-            <Link
-              style={{ textDecoration: "none" }}
-              className="project-link"
-              to={`/project/${project.id}`}
-              key={project.id}
-            >
-              <Project
-                {...props}
-                name={project.name}
-                description={project.description}
-                budget={project.budget}
-                dueDate={project.dueDate}
-                email={project.email}
-                image_url={project.image_url}
-                firstName={project.firstName}
-                lastName={project.lastName}
-                user={user}
-              />
-            </Link>
-          ))}
-        {pageCount.page > 1 ? (
-          <Button
-            medium
-            onClick={() => {
-              if (pageCount.page >= 0)
-                fetchProjects(
-                  user.id,
-                  Number(pageCount.page) - 1,
-                  setProjects,
-                  setPageCount
-                );
-            }}
+    <>
+      <PageTitle>Available Projects</PageTitle>
+      {/* <div style={{ width: "100%", margin: "auto auto" }}> */}
+      {filteredArr
+        .map(project => (
+
+          <Link
+            style={{ textDecoration: "none" }}
+            className="project-link"
+            to={`/project/${project.id}`}
+            key={project.id}
           >
-            Prev
-          </Button>
-        ) : null}
-        {pageCount.page < pageCount.total_pages ? (
-          <Button
-            medium
-            onClick={() => {
-              if (pageCount.page <= pageCount.total_pages)
-                fetchProjects(
-                  user.id,
-                  Number(pageCount.page) + 1,
-                  setProjects,
-                  setPageCount
-                );
-            }}
-          >
-            Next
-          </Button>
-        ) : null}
-      </div>
-    </div>
+            <Project
+              {...props}
+              name={project.name}
+              description={project.description}
+              budget={project.budget}
+              dueDate={project.dueDate}
+              email={project.email}
+              image_url={project.image_url}
+              firstName={project.firstName}
+              lastName={project.lastName}
+              user={user}
+              projectOwnerAvatar={project.projectOwnerAvatar}
+            />
+          </Link>
+        ))}
+      {pageCount.page > 1 ? (
+        <Button
+          medium
+          onClick={() => {
+            if (pageCount.page >= 0)
+              fetchProjects(
+                user.id,
+                Number(pageCount.page) - 1,
+                setProjects,
+                setPageCount
+              );
+          }}
+        >
+          Prev
+        </Button>
+      ) : null}
+      {pageCount.page < pageCount.total_pages ? (
+        <Button
+          medium
+          onClick={() => {
+            if (pageCount.page <= pageCount.total_pages)
+              fetchProjects(
+                user.id,
+                Number(pageCount.page) + 1,
+                setProjects,
+                setPageCount
+              );
+          }}
+        >
+          Next
+        </Button>
+      ) : null}
+      {/* </div> */}
+    </>
   );
 };
 

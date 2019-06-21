@@ -85,6 +85,7 @@ const useStyles = makeStyles(theme => ({
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
+  console.log(user, "USERRRRRRRRRRRRRRRRRRRRRR");
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
@@ -131,7 +132,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       <Card className={"card userCard"}>
         <div style={{ width: "50%" }}>
           <img
-            src={user.profilePictureURL ? user.profilePictureURL : placeholder}
+            src={
+              user.profile_picture_url ? user.profile_picture_url : placeholder
+            }
             alt={"avatar"}
             style={{
               borderRadius: "100%",
@@ -192,6 +195,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               </ListItemLink>
             </ListItem>
           </List>
+          <p>{user.role}</p>
           {loggedInUser.id === user.id ? null : (
             <EmailDrawer
               emailAddress={user.email}
@@ -236,6 +240,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               <p>Plans Available</p>
               <h2>{project.plans.length}</h2>
             </div>
+
             <div
               className="buttons"
               style={{
@@ -293,7 +298,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                     value={feedback}
                     onChange={e => changeHandler(e, setFeedback)}
                   />
-                  <button type="submit">Submit</button>
+                  <Button small type="submit">
+                    Submit
+                  </Button>
                 </form>
               </div>
             </Modal>

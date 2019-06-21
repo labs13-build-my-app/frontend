@@ -432,6 +432,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
         `${connection}/api/projects/paginated-list-of-projects?page=${page}&user_id=${user_id}`
       )
       .then(res => {
+        console.log(res.data);
         const { projects, page, total_pages } = res.data;
         console.log("TEST PAGE", res.data.page);
         const resultedProject = projects.map(project => {
@@ -445,7 +446,8 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
             projectStatus: project.projectProjectStatus,
-            lastName: project.userLastName
+            lastName: project.userLastName,
+            projectOwnerAvatar: project.projectOwnerAvatar
           };
         });
         setProjects(resultedProject);
