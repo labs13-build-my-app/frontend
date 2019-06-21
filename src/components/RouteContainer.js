@@ -72,12 +72,12 @@ const RouteContainer = ({
 
           <Route
             path={"/projects/proposals"}
-            render={props => <ProjectsContainer {...props} {...state} />}
+            render={props => <Projects {...props} {...state} />}
           />
 
           <Route
             path={"/project/:project_id"}
-            render={props => <ProjectsContainer {...props} {...state} />}
+            render={props => <Project {...props} {...state} />}
           />
 
           <Route
