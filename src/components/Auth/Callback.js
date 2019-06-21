@@ -4,7 +4,8 @@ import auth0 from "auth0-js";
 const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
   clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-  redirectUri: "http://localhost:3000/callback",
+  // redirectUri: "http://localhost:3000/callback",
+  redirectUri: "https://build-my-app-fe.onrender.com/callback",
   responseType: "token id_token",
   scope: "openid profile"
 });
