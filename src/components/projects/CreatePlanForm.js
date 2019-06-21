@@ -16,11 +16,11 @@ const StyledCard = styled.form`
   box-shadow: 10px 10px 10px grey;
 `;
 
-const CreatePlan = ({ history, user, dispatch }) => {
+const CreatePlan = ({ history, user, projectId }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     const plan = { ...state, budget: state.budget * 100 }; // <<<<<< MB
 
-    createPlan(plan, history.location.state.project_id, dispatch);
+    createPlan(plan, projectId);
     history.push(`/profile/${user.id}`);
   });
   const useStyles = makeStyles(theme => ({
@@ -43,14 +43,19 @@ const CreatePlan = ({ history, user, dispatch }) => {
   const classes = useStyles();
 
   return (
-    <div style={{ marginLeft: "20%", width: "80%" }}>
-      <StyledCard
-        onClick={e => {
-          e.stopPropagation();
-        }}
+    <form 
+      onSubmit={handleSubmit}
+      style={{ 
+        display:'flex', 
+        flexDirection: 'column', 
+        alignItems: 'center', 
+        justifyContent: 'space-around' 
+      }}
+      onClick={e => {
+        e.stopPropagation();
+      }}
+      
       >
-        <h2>Add Plan</h2>
-        <form onSubmit={handleSubmit}>
           <br />
           <TextField
             onChange={handleInputChange}
@@ -125,12 +130,15 @@ const CreatePlan = ({ history, user, dispatch }) => {
           />
           <br />
           <br />
-          <Button type="submit">Submit</Button>
+          <Button 
+            style={{margin: '0 auto'}}
+            type="submit"
+          >
+              Submit
+        </Button>
           <br />
           <br />
         </form>
-      </StyledCard>
-    </div>
   );
 };
 

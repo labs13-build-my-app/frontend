@@ -25,6 +25,8 @@ import {
   // FaBook
 } from "react-icons/fa";
 import EmailDrawer from "../EmailDrawer";
+import Icon from "@material-ui/core/Icon";
+import clsx from "clsx";
 
 // const Card = styled.div`
 //   display: flex;
@@ -80,6 +82,20 @@ const useStyles = makeStyles(theme => ({
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
     outline: "none"
+  },
+  delete: {
+    marginLeft: '10px',
+    color: 'red',
+    '&:hover': {
+      color: 'darkred'
+    }
+  },
+  accept: {
+    marginLeft: '10px',
+    color: 'green',
+    '&:hover': {
+      color: 'darkgreen'
+    }
   }
 }));
 
@@ -88,8 +104,11 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   console.log(user, "USERRRRRRRRRRRRRRRRRRRRRR");
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
-
-  const handleOpen = projectID => {
+  
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleOpenFeedback = projectID => {
     setOpen(true);
     history.push({
       pathname: `/profile/${user.id}/feedbackmodal`,
@@ -255,31 +274,50 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               <p>Plans Available</p>
               <h2>{project.plans.length}</h2>
               <div className="buttons">
-                {project.projectStatus === "completed" ? (
-                  <Button
-                    style={displayOnlyOnLoggedInUser()}
-                    onClick={() => handleOpen(project.id)}
-                  >
-                    Add Feedback
-                  </Button>
-                ) : null}
-                <Button style={displayOnlyOnLoggedInUser()}>Delete</Button>
-              </div>
+              {project.projectStatus === "completed" ? (
+              // hide when loggedIn !== user
+                <Button
+                  style={displayOnlyOnLoggedInUser()}
+                  onClick={() => handleOpenFeedback(project.id)}
+                >
+                  + Add Feedback
+                </Button>
+              ) : null}
+              {/* // hide when loggedIn !== user */}
+              <Icon 
+                className={clsx(classes.delete, 'far fa-trash-alt')}
+                style={displayOnlyOnLoggedInUser()}
+                onClick={handleOpen}
+              />
+              <Modal
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+                open={open}
+                onClose={handleClose}
+              >
+                <div style={modalStyle} className={classes.paper}>
+                  <h3>Are you sure you want to delete this project?</h3>
+                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <div className={classes.delete} style={{display: 'flex', alignItems: 'center'}}>
+                      <Icon 
+                        className={clsx(classes.accept, 'far fa-check-circle')}
+                      />
+                      <p className={classes.accept}> Delete</p>
+                    </div>
+                      <div className={classes.delete} style={{display: 'flex', alignItems: 'center'}}>
+                      <Icon 
+                        className={clsx(classes.delete, 'far fa-times-circle')}
+                      />
+                      <p> Cancel</p>
+                    </div>
+                  </div>
+                </div>
+              </Modal>
+                </div>
             </div>
           </Card>
         ))
       )}
-      {/* // hide when loggedIn !== user */}
-      {/* <Button
-        style={displayOnlyOnLoggedInUser()}
-        onClick={() =>
-          history.push({
-            state: { modal: true, projectOwner_id: loggedInUser.id }
-          })
-        }
-      >
-        + Create New Project
-      </Button> */}
       <Route
         path={"/profile/:id/feedbackmodal"}
         render={() => {
@@ -311,36 +349,6 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
           );
         }}
       />
-      {/* <Route
-      <div className="projects-area" style={{width: '70%', margin: '50px auto'}}>
-      <h2 style={{borderBottom: '1px solid black', paddingBottom: '5px', textAlign: 'left'}}>Projects</h2>
-      {
-        projects.length === 0
-          ?  <Card className={'card projectsCard'}>
-               No Projects
-             </Card>
-          : projects.map(project => (
-              <Card className={'card projectsCard'}>
-                  {
-                    project.image_url ? 
-                    <img src={project.image_url}/>
-                    : null}
-                <h1>project.name</h1>
-                <p>project.description</p>
-              </Card>
-          )) 
-      }
-      {
-        user.id === loggedInUser.id 
-        ? <Button style={{margin: '50px auto'}}>+ Create New Project</Button>
-        : null
-      }    
-
-      </div>
-      {/* <Route
-        path={"/dashboard/create-project"}
-        render={props => <h1>create project model for project owner</h1>}
-      /> */}
     </div>
   );
 };
