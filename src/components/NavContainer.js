@@ -33,24 +33,27 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center",
     textDecoration: "none",
     marginLeft: "5px",
-    color: "#4085FC",
-    borderLeft: "5px solid #4085FC",
+    color: "#F26D5A",
+    borderLeft: "5px solid #F26D5A",
     marginLeft: 0
   },
   navBar: {
     top: 0,
-    width: "305px",
+    width: "25%",
     position: "fixed",
     minHeight: "100vh",
     textAlign: "left",
-    backgroundImage: "linear-gradient(to top right, #B1CAF8, #B1CAF8)"
+    backgroundImage: "linear-gradient(to top right, #001740, #001740)"
   },
   logo: {
-    width: "245px",
+    width: " 90%",
     height: "auto",
-    margin: "45px 0 75px",
-    marginLeft: "25px",
-    marginRight: "15px"
+    padding: "10% 5%"
+    // width: "100%",
+    // height: "auto",
+    // margin: "45px 0 75px",
+    // marginLeft: "25px",
+    // marginRight: "15px"
   }
 }));
 
@@ -90,7 +93,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
           route: "/",
           state: "logout",
           label: "Logout",
-          icon: "fa fa-user-slash"
+          icon: "fas fa-sign-out-alt"
         }
       );
     } else {
@@ -102,7 +105,7 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
       });
     }
     setNav(navLinks);
-  }, [isSignedIn, isToken, newUser]);
+  }, [isSignedIn, isToken, newUser, role, user.id]);
 
   return (
     <div className={classes.navBar}>
