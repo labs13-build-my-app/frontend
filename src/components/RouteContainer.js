@@ -66,7 +66,7 @@ const RouteContainer = ({
 
           <Route
             path={"/developers"}
-            render={props => <Developers {...props} {...state} />}
+            render={props => <Developers user={user} {...props} {...state} />}
           />
 
           <Route
