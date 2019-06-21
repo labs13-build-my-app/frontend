@@ -269,7 +269,8 @@ export const updateProject = (project_id, project, history, dispatch) => {
     data: project
   })
     .then(res => {
-      dispatch.push(`/projects/project/${res.data.id}`);
+      console.log(res);
+      history.push(`/project/${res.data.id}`);
     })
     .catch(err => console.log(err));
 };
@@ -402,15 +403,27 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 };
 
 // page view of a project
-export const fetchProject = (projectId, formatDate, formatBudget, dispatch) => {
+export const fetchProject = (
+  project_id,
+  formatDate,
+  formatBudget,
+  dispatch
+) => {
+  console.log("fetching data");
   axios
-    .get(`${connection}/api/projects/project-view/${projectId}`)
+    .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      const newDueDate = formatDate(res.data.dueDate);
-      const newBudget = formatBudget(res.data.budget);
-      dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+      dispatch({ ...res.data });
     })
     .catch(err => console.log(err));
+  // axios
+  //   .get(`${connection}/api/projects/project-view/${projectId}`)
+  //   .then(res => {
+  //     const newDueDate = formatDate(res.data.dueDate);
+  //     const newBudget = formatBudget(res.data.budget);
+  //     dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+  //   })
+  //   .catch(err => console.log(err));
 };
 
 // page view of a plan
@@ -418,6 +431,15 @@ export const fetchPlan = (plan_id, dispatch) => {
   axios({
     method: "GET",
     url: `${connection}/api/projects/plan-view/${plan_id}`
+  })
+    .then(res => dispatch(res.data))
+    .catch(err => console.log(err));
+};
+
+export const fetchProjectSelectedPlan = (project_id, dispatch) => {
+  axios({
+    method: "GET",
+    url: `${connection}/api/projects/selected-plan/${project_id}`
   })
     .then(res => dispatch(res.data))
     .catch(err => console.log(err));
@@ -434,7 +456,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       .then(res => {
         console.log(res.data);
         const { projects, page, total_pages } = res.data;
-        console.log("TEST PAGE", res.data.page);
+        console.log("TEST PAGE", res.data);
         const resultedProject = projects.map(project => {
           return {
             id: project.projectID,
