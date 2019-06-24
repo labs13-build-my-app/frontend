@@ -217,7 +217,8 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                     <div style={{ width: "100%" }}>
                       <PageTitle>Plan Description</PageTitle>
                       <p>{plan.description}</p>
-                      {loggedInUser.id === user.id ? (
+                      {loggedInUser.id === user.id &&
+                      plan.planStatus !== "completed" ? (
                         <>
                           <h4>Update Plan Status</h4>
                           <Plan planID={plan.id} />
