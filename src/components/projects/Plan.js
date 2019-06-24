@@ -87,7 +87,7 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
             >
               <MenuItem value="" />
 
-              <MenuItem value={"Completed"}>Completed</MenuItem>
+              <MenuItem value={"completed"}>Completed</MenuItem>
             </Select>
             <Button type={"submit"} style={{ margin: "20px" }}>
               Submit
