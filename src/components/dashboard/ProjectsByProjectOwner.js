@@ -103,24 +103,26 @@ const ProjectByProjectOwner = ({
   const classes = useStyles();
   console.log(project);
   return (
-    <>
+    <div style={{ width: "100%" }}>
       <Card key={project.id} className={"card projectsCard"}>
-        <ImageContainer
-          style={{
-            width: "55%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "end"
-          }}
-        >
-          {project.image_url ? (
-            <img
-              style={{ width: "100%" }}
-              src={project.image_url}
-              alt={project.name}
-            />
-          ) : null}
-        </ImageContainer>
+        {project.image_url ? (
+          <ImageContainer
+            style={{
+              width: "55%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "end"
+            }}
+          >
+            {project.image_url ? (
+              <img
+                style={{ width: "100%" }}
+                src={project.image_url}
+                alt={project.name}
+              />
+            ) : null}
+          </ImageContainer>
+        ) : null}
 
         <div
           className="leftSideProjectCard"
@@ -188,7 +190,7 @@ const ProjectByProjectOwner = ({
           </div>
         </div>
       </Card>
-    </>
+    </div>
   );
 };
 export default ProjectByProjectOwner;

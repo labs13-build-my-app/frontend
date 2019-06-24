@@ -218,7 +218,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                       <PageTitle>Plan Description</PageTitle>
                       <p>{plan.description}</p>
                       {loggedInUser.id === user.id &&
-                      plan.planStatus !== "completed" ? (
+                      plan.planStatus === "selected" ? (
                         <>
                           <h4>Update Plan Status</h4>
                           <Plan planID={plan.id} />
@@ -256,7 +256,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         )}
       </div>
 
-      <PageTitle>Feedback</PageTitle>
+      <PageTitle>Completed Projects</PageTitle>
       <div style={{ width: "100%" }}>
         {feedbacks.length === 0 ? (
           <FeedbackCard style={{ width: "100%" }} className={"card plansCard"}>

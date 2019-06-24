@@ -228,24 +228,24 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
         projects.map(project => (
-          
-            <ProjectExpansionPanel
-              key={project.id}
-              project={project}
-              component={
-                <ProjectsByProjectOwner
-                  setOpen={setOpen}
-                  user={user}
-                  loggedInUser={loggedInUser}
-                  handleOpen={handleOpen}
-                  modalStyle={modalStyle}
-                  project={project}
-                  history={history}
-                  open={open}
-                />
-              }
-            />
-          
+          <ProjectExpansionPanel
+            
+            key={project.id}
+            project={project}
+            component={
+              <ProjectsByProjectOwner
+                setOpen={setOpen}
+                user={user}
+                loggedInUser={loggedInUser}
+                handleOpen={handleOpen}
+                modalStyle={modalStyle}
+                project={project}
+                history={history}
+                open={open}
+              />
+            }
+          />
+
           // <Card key={project.id} className={"card projectsCard"}>
           //   <ImageContainer
           //     style={{
