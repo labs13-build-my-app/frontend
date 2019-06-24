@@ -37,7 +37,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = process.env.NODE_ENV === 'development' ? local : heroku;
+const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -309,7 +309,7 @@ export const createPlan = (plan, project_id) => {
     data: plan
   })
     .then(res => {
-      console.log(res)
+      console.log(res);
     })
     .catch(error => {
       console.log(error.message);

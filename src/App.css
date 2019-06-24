@@ -43,3 +43,19 @@
   outline: none;
   margin: 10px;
 }
+.completed-projects-feedback {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.project-avatar-feedback {
+  display: flex;
+  align-items: center;
+}
+.project-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
