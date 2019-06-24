@@ -65,14 +65,12 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
-    completed: true,
-    declined: true
   });
 
-  const [filters, setFilters] = useState([]);
+  const [filters, setFilters] = useState(['completed','declined']);
 
   useEffect(() => {
-    const newFilters = [];
+    const newFilters = ['completed', 'declined'];
     Object.keys(state).forEach(filter => {
       !state[filter] && newFilters.push(filter);
     });
@@ -180,28 +178,6 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 />
               }
               label="Selected"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={state.completed}
-                  onChange={handleChange("completed")}
-                  value="completed"
-                  color="primary"
-                />
-              }
-              label="Completed"
-            />
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={state.declined}
-                  onChange={handleChange("declined")}
-                  value="declined"
-                  color="primary"
-                />
-              }
-              label="Declined"
             />
           </FormGroup>
         </div>
