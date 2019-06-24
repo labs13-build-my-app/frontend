@@ -56,7 +56,8 @@ const Project = ({
   children,
   firstName,
   lastName,
-  projectOwnerAvatar
+  projectOwnerAvatar,
+  user_id
 }) => {
   
   const [open, setOpen] = useState(false);
@@ -97,7 +98,8 @@ const Project = ({
         dueDate: newDueDate,
         firstName,
         lastName,
-        projectOwnerAvatar
+        projectOwnerAvatar,
+        user_id
       });
     }
     if (match.params.project_id && !isLoading) {
@@ -234,9 +236,15 @@ const Project = ({
           {/* <div className={classes.buttonWrapper}> */}
           <CardContent className={classes.buttonWrapper}>
             <Button
+              className="TEST"
               small
               variant="outlined"
-              onClick={() => history.push(`/profile/${project.user_id}`)}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("HERE", project.user_id);
+                history.push(`/profile/${project.user_id}`);
+              }}
             >
               View Profile
             </Button>
