@@ -217,8 +217,12 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                     <div style={{ width: "100%" }}>
                       <PageTitle>Plan Description</PageTitle>
                       <p>{plan.description}</p>
-                      <h4>Update Plan Status</h4>
-                      <Plan planID={plan.id} />
+                      {loggedInUser.id === user.id ? (
+                        <>
+                          <h4>Update Plan Status</h4>
+                          <Plan planID={plan.id} />
+                        </>
+                      ) : null}
                       <Divider style={{ margin: "10px 0px" }} />
                       <Button
                         small
