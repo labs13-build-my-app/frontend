@@ -87,7 +87,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
     fetchDeveloperPlans(user.id, setPlans);
     getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans]);
-  console.log(feedbacks);
+
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -232,28 +232,48 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         )}
       </div>
 
-      <PageTitle>Completed Projects</PageTitle>
-      <div style={{ width: "100%" }}>
+      <PageTitle style={{ marginBottom: "35px" }}>Completed Projects</PageTitle>
+      <div className="completed-projects-feedback">
         {feedbacks.length === 0 ? (
           <FeedbackCard style={{ width: "100%" }} className={"card plansCard"}>
             No Feedback
           </FeedbackCard>
         ) : (
-          feedbacks.map(feedback => (
-            <FeedbackCard
-              style={{ width: "100%", flexDirection: "column" }}
-              key={feedback.planID}
-              className={"card plansCard"}
-            >
-              <h4
-                onClick={() => history.push(`/project/${feedback.projectID}`)}
+          feedbacks.map(feedback =>
+            feedback.feedback ? (
+              <FeedbackCard
+                style={{
+                  width: "33%",
+                  flexDirection: "column",
+                  margin: "20px"
+                }}
+                key={feedback.planID}
+                className={"card plansCard"}
               >
-                {`${feedback.projectOwnerFirstName} ${
-                  feedback.projectOwnerLastName
-                }
+                <div className="project-avatar-feedback">
+                  <div
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      marginRight: "20px"
+                    }}
+                  >
+                    <img
+                      className="project-avatar"
+                      src={feedback.projectImage}
+                    />
+                  </div>
+
+                  <h3>{feedback.projectName}</h3>
+                </div>
+
+                <h4>
+                  {`${feedback.projectOwnerFirstName} ${
+                    feedback.projectOwnerLastName
+                  }
                 said this about ${user.firstName}`}
-              </h4>
-              {/* <p
+                </h4>
+                {/* <p
                 onClick={() =>
                   history.push(`/profile/${feedback.projectOwnerID}`)
                 }
@@ -261,16 +281,17 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 {feedback.projectOwnerFirstName}
                 {""} {feedback.projectOwnerLastName}
               </p> */}
-              <p>{feedback.feedback}</p>
-              {/* <Divider style={{ margin: "10px 0px" }} /> */}
-              <Button
-                small
-                onClick={() => history.push(`/project/${feedback.projectID}`)}
-              >
-                View This Project
-              </Button>
-            </FeedbackCard>
-          ))
+                <em>{feedback.feedback}</em>
+                {/* <Divider style={{ margin: "10px 0px" }} /> */}
+                <Button
+                  small
+                  onClick={() => history.push(`/project/${feedback.projectID}`)}
+                >
+                  View This Project
+                </Button>
+              </FeedbackCard>
+            ) : null
+          )
         )}
       </div>
     </div>
