@@ -5,7 +5,7 @@ import Drawer from "@material-ui/core/Drawer";
 import { Button } from "../custom-styles";
 import TextField from "@material-ui/core/TextField";
 
-const EmailDrawer = ({ emailAddress, firstName }) => {
+const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
   const [state, setState] = React.useState({
     bottom: false
   });
@@ -112,12 +112,18 @@ const EmailDrawer = ({ emailAddress, firstName }) => {
       </form>
     </div>
   );
-  // console.log({ emailAddress, firstName });
+
   return (
     <div>
-      <Button small onClick={toggleDrawer("bottom", true)}>
-        Send Email
-      </Button>
+      {email ? (
+        <Button email onClick={toggleDrawer("bottom", true)}>
+          {buttonText || "Send Email"}
+        </Button>
+      ) : (
+        <Button small onClick={toggleDrawer("bottom", true)}>
+          {buttonText || "Send Email"}
+        </Button>
+      )}
       <Drawer
         anchor="bottom"
         open={state.bottom}

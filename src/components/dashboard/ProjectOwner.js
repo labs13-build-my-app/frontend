@@ -3,7 +3,8 @@ import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button, Card } from "../../custom-styles";
-
+import ProjectExpansionPanel from "../ProjectExpansionPanel";
+import ProjectsByProjectOwner from "./ProjectsByProjectOwner";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -12,15 +13,15 @@ import {
 } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+// import ListItemIcon from "@material-ui/core/ListItemIcon";
+// import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import {
   FaGithub,
   FaTwitter,
-  FaLinkedin,
-  FaUser,
-  FaEnvelope
+  FaLinkedin
+  // FaUser,
+  // FaEnvelope
   // FaDev,
   // FaBook
 } from "react-icons/fa";
@@ -84,27 +85,29 @@ const useStyles = makeStyles(theme => ({
     outline: "none"
   },
   delete: {
-    marginLeft: '10px',
-    color: 'red',
-    '&:hover': {
-      color: 'darkred'
+    marginLeft: "10px",
+    color: "red",
+    "&:hover": {
+      color: "darkred"
     }
   },
   accept: {
-    marginLeft: '10px',
-    color: 'green',
-    '&:hover': {
-      color: 'darkgreen'
+    marginLeft: "10px",
+    color: "green",
+    "&:hover": {
+      color: "darkgreen"
+    },
+    socialIcons: {
+      margin: "0px 10px"
     }
   }
 }));
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
-  console.log(user, "USERRRRRRRRRRRRRRRRRRRRRR");
   const [open, setOpen] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
-  
+
   const handleOpen = () => {
     setOpen(true);
   };
@@ -164,67 +167,49 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               width: "50%"
             }}
           />
+          <p style={{ fontSize: "20px" }}>
+            {user.firstName} {user.lastName}
+          </p>
         </div>
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
-            <ListItem>
-              <ListItemIcon>
-                <FaUser />
-              </ListItemIcon>
-              <ListItemText>
-                {user.firstName} {user.lastName}
-              </ListItemText>
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <FaEnvelope />
-              </ListItemIcon>
-              <ListItemText>{user.email}</ListItemText>
-            </ListItem>
-
-            <Divider />
-            <ListItem>
-              <ListItemIcon>
-                <FaGithub />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://github.com/${user.gitHub}`}
-              >
-                <ListItemText primary={`${user.gitHub}`} />
-              </ListItemLink>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <FaLinkedin />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://www.linkedin.com/in/${user.linkedIn}`}
-              >
-                <ListItemText primary={`${user.linkedIn}`} />
-              </ListItemLink>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <FaTwitter />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://twitter.com/${user.twitter}`}
-              >
-                <ListItemText primary={`${user.twitter}`} />
-              </ListItemLink>
-            </ListItem>
+            <span style={{ fontSize: "20px" }}>{user.role}</span>
+            <Divider style={{ margin: "10px 0px" }} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {user.gitHub ? (
+                <a target="_blank" href={`${user.gitHub}`}>
+                  <FaGithub
+                    style={{ margin: "10 10px 10 0px", color: "#211F1F" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+              {user.linkedIn ? (
+                <a target="_blank" href={`${user.linkedIn}`}>
+                  <FaLinkedin
+                    style={{ margin: "10 10px", color: "#0077B5" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+              {user.twitter ? (
+                <a target="_blank" href={`${user.twitter}`}>
+                  <FaTwitter
+                    style={{ margin: "10 10px", color: "#00aced" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+            </div>
+            {loggedInUser.id === user.id ? null : (
+              <EmailDrawer
+                buttonSize
+                emailAddress={user.email}
+                firstName={loggedInUser.firstName}
+                buttonText={`Message ${user.firstName}`}
+              />
+            )}
           </List>
-          <p>{user.role}</p>
-          {loggedInUser.id === user.id ? null : (
-            <EmailDrawer
-              emailAddress={user.email}
-              firstName={loggedInUser.firstName}
-            />
-          )}
         </UserInfo>
       </Card>
       <Button
@@ -243,79 +228,114 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
         projects.map(project => (
-          <Card key={project.id} className={"card projectsCard"}>
-            <ImageContainer
-              style={{
-                width: "55%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "end"
-              }}
-            >
-              {project.image_url ? (
-                <img
-                  style={{ width: "100%" }}
-                  src={project.image_url}
-                  alt={"avatar"}
-                />
-              ) : null}
-            </ImageContainer>
-
-            <div
-              className="leftSideProjectCard"
-              style={{ width: "40%", display: "flex", flexDirection: "column" }}
-            >
-              <div>
-                <h1 onClick={() => history.push(`/project/${project.id}`)}>
-                  {project.name}
-                </h1>
-                <p>{project.description}</p>
-              </div>
-              <p>Plans Available</p>
-              <h2>{project.plans.length}</h2>
-              <div className="buttons">
-              {project.projectStatus === "completed" ? (
-              // hide when loggedIn !== user
-                <Button
-                  style={displayOnlyOnLoggedInUser()}
-                  onClick={() => handleOpenFeedback(project.id)}
-                >
-                  + Add Feedback
-                </Button>
-              ) : null}
-              {/* // hide when loggedIn !== user */}
-              <Icon 
-                className={clsx(classes.delete, 'far fa-trash-alt')}
-                style={displayOnlyOnLoggedInUser()}
-                onClick={handleOpen}
-              />
-              <Modal
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
+          <ProjectExpansionPanel
+            
+            key={project.id}
+            project={project}
+            component={
+              <ProjectsByProjectOwner
+                setOpen={setOpen}
+                user={user}
+                loggedInUser={loggedInUser}
+                handleOpen={handleOpen}
+                modalStyle={modalStyle}
+                project={project}
+                history={history}
                 open={open}
-                onClose={handleClose}
-              >
-                <div style={modalStyle} className={classes.paper}>
-                  <h3>Are you sure you want to delete this project?</h3>
-                  <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <div className={classes.delete} style={{display: 'flex', alignItems: 'center'}}>
-                      <Icon 
-                        className={clsx(classes.accept, 'far fa-check-circle')}
-                      />
-                      <p className={classes.accept}> Delete</p>
-                    </div>
-                      <div className={classes.delete} style={{display: 'flex', alignItems: 'center'}}>
-                      <Icon 
-                        className={clsx(classes.delete, 'far fa-times-circle')}
-                      />
-                      <p> Cancel</p>
-                    </div>
-                  </div>
-                </div>
-              </Modal>
-                </div>
-            </div>
-          </Card>
+              />
+            }
+          />
+
+          // <Card key={project.id} className={"card projectsCard"}>
+          //   <ImageContainer
+          //     style={{
+          //       width: "55%",
+          //       display: "flex",
+          //       alignItems: "center",
+          //       justifyContent: "end"
+          //     }}
+          //   >
+          //     {project.image_url ? (
+          //       <img
+          //         style={{ width: "100%" }}
+          //         src={project.image_url}
+          //         alt={project.name}
+          //       />
+          //     ) : null}
+          //   </ImageContainer>
+
+          //   <div
+          //     className="leftSideProjectCard"
+          //     style={{ width: "40%", display: "flex", flexDirection: "column" }}
+          //   >
+          //     <div>
+          //       <h1 onClick={() => history.push(`/project/${project.id}`)}>
+          //         {project.name}
+          //       </h1>
+          //       <p>{project.description}</p>
+          //     </div>
+          //     <p>Plans Available</p>
+          //     <h2>{project.plans.length}</h2>
+          //     <div className="buttons">
+          //       {project.projectStatus === "completed" ? (
+          //         // hide when loggedIn !== user
+          //         <Button
+          //           style={displayOnlyOnLoggedInUser()}
+          //           onClick={() => handleOpenFeedback(project.id)}
+          //         >
+          //           + Add Feedback
+          //         </Button>
+          //       ) : null}
+          //       {/* // hide when loggedIn !== user */}
+          //       <Icon
+          //         className={clsx(classes.delete, "far fa-trash-alt")}
+          //         style={displayOnlyOnLoggedInUser()}
+          //         onClick={handleOpen}
+          //       />
+          //       <Modal
+          //         aria-labelledby="simple-modal-title"
+          //         aria-describedby="simple-modal-description"
+          //         open={open}
+          //         onClose={handleClose}
+          //       >
+          //         <div style={modalStyle} className={classes.paper}>
+          //           <h3>Are you sure you want to delete this project?</h3>
+          //           <div
+          //             style={{
+          //               display: "flex",
+          //               justifyContent: "space-around"
+          //             }}
+          //           >
+          //             <div
+          //               className={classes.delete}
+          //               style={{ display: "flex", alignItems: "center" }}
+          //             >
+          //               <Icon
+          //                 className={clsx(
+          //                   classes.accept,
+          //                   "far fa-check-circle"
+          //                 )}
+          //               />
+          //               <p className={classes.accept}> Delete</p>
+          //             </div>
+          //             <div
+          //               className={classes.delete}
+          //               style={{ display: "flex", alignItems: "center" }}
+          //             >
+          //               <Icon
+          //                 className={clsx(
+          //                   classes.delete,
+          //                   "far fa-times-circle"
+          //                 )}
+          //               />
+          //               <p> Cancel</p>
+          //             </div>
+          //           </div>
+          //         </div>
+          //       </Modal>
+          //     </div>
+          //   </div>
+          // </Card>
         ))
       )}
       <Route

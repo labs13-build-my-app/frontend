@@ -76,16 +76,20 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
       { route: `/profile/${user.id}`, label: "Home", icon: "fa fa-home" },
       {
         route: "/projects/proposals",
-        label: "Projects",
+        label: "View Available Projects",
         icon: "fa fa-project-diagram"
       },
-      { route: "/developers", label: "Developers", icon: "fa fa-address-book" }
+      {
+        route: "/developers",
+        label: "Find A Developer",
+        icon: "fa fa-address-book"
+      }
     ];
     if (isToken) {
       navLinks.push(
         {
           route: newUser ? "/signup" : `/profile/${user.id}`,
-          label: "Profile",
+          label: "My Dashboard",
           state: { id: user.id, role },
           icon: "fa fa-user"
         },
