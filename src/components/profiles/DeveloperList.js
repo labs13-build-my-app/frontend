@@ -116,23 +116,11 @@ const Developers = ({ history }) => {
                     )}
                     <CardHeader
                       subheader={`${dev.firstName} ${dev.lastName}`}
-                      // subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
                     />
                     <Pill devType={dev.devType}>{dev.devType}</Pill>
                   </Grid>
                   <Divider variant="middle" />
-                  {/* <div className={classes.name}>
-                  {dev.firstName} {dev.devType} developer
-                </div> */}
-
                   <p>Skills: {dev.skills}</p>
-                  {/* <Button
-                  variant="outlined"
-                  className={classes.button}
-                  onClick={() => history.push(`/profile/${dev.id}`)}
-                >
-                  View Profile
-                </Button> */}
                 </Card>
               </div>
             );
