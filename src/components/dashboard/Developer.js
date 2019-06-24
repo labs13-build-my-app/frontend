@@ -12,6 +12,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import EmailDrawer from "../EmailDrawer";
+import ExpansionPanel from "../ExpansionPanel";
+import Plan from "../projects/Plan";
 
 import {
   FaGithub,
@@ -22,27 +24,42 @@ import {
   FaDev,
   FaBook
 } from "react-icons/fa";
-import { PageTitle } from "../../custom-styles";
+import { PageTitle, Card, FeedbackCard, Button } from "../../custom-styles";
 
-const Card = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  margin: 20px auto;
-  border: 1px solid lightgrey;
-  border-radius: 15px;
-  box-shadow: lightgrey 15px 15px 15px;
-  padding: 10px;
-`;
-
+// const Card = styled.div`
+//   display: flex;
+//   justify-content: space-around;
+//   align-items: center;
+//   margin: 20px auto;
+//   border: 1px solid lightgrey;
+//   border-radius: 15px;
+//   box-shadow: lightgrey 15px 15px 15px;
+//   padding: 10px;
+// `;
+// const divStyle = {
+//   display: "flex",
+//   justifyContent: "space-around",
+//   alignItems: "center",
+//   flexDirection: "column",
+//   margin: "20px auto",
+//   border: "1px solid lightgrey",
+//   borderRadius: "4px",
+//   boxShadow:
+//     "0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)",
+//   padding: "10px",
+//   backgroundColor: "white",
+//   color: "rgba(0, 0, 0, 0.87)",
+//   transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
+//   backgroundColor: "#fff"
+// };
 const UserInfo = styled.div`
   text-align: left;
   width: 50%;
 `;
 
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
+// function ListItemLink(props) {
+//   return <ListItem button component="a" {...props} />;
+// }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
   const [state, setState] = React.useState({
@@ -72,7 +89,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
     fetchDeveloperPlans(user.id, setPlans);
     getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans]);
-
+  console.log(feedbacks);
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -81,87 +98,57 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             src={
               user.profile_picture_url ? user.profile_picture_url : placeholder
             }
-            alt={"avatar"}
+            alt={user.firstName}
             style={{
               borderRadius: "100%",
               width: "50%"
             }}
           />
+          <p style={{ fontSize: "20px" }}>
+            {user.firstName} {user.lastName}
+          </p>
         </div>
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
-            <ListItem>
-              <ListItemIcon>
-                <FaUser />
-              </ListItemIcon>
-              <ListItemText>
-                {user.firstName} {user.lastName}
-              </ListItemText>
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <FaEnvelope />
-              </ListItemIcon>
-              <ListItemText>{user.email}</ListItemText>
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <FaDev />
-              </ListItemIcon>
-              <ListItemText>{user.devType}</ListItemText>
-            </ListItem>
-
-            <ListItem>
-              <ListItemIcon>
-                <FaBook />
-              </ListItemIcon>
-              <ListItemText>{user.skills}</ListItemText>
-            </ListItem>
-
-            <Divider />
-            <ListItem>
-              <ListItemIcon>
-                <FaGithub />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://github.com/${user.gitHub}`}
-              >
-                <ListItemText primary={`${user.gitHub}`} />
-              </ListItemLink>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <FaLinkedin />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://www.linkedin.com/in/${user.linkedIn}`}
-              >
-                <ListItemText primary={`${user.linkedIn}`} />
-              </ListItemLink>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon>
-                <FaTwitter />
-              </ListItemIcon>
-              <ListItemLink
-                target="_blank"
-                href={`https://twitter.com/${user.twitter}`}
-              >
-                <ListItemText primary={`${user.twitter}`} />
-              </ListItemLink>
-            </ListItem>
+            <span style={{ fontSize: "20px" }}>
+              {user.devType} {user.role}
+            </span>
+            <Divider style={{ margin: "10px 0px" }} />
+            <div style={{ display: "flex", alignItems: "center" }}>
+              {user.gitHub ? (
+                <a target="_blank" href={`${user.gitHub}`}>
+                  <FaGithub
+                    style={{ margin: "10 10px 10 0px", color: "#211F1F" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+              {user.linkedIn ? (
+                <a target="_blank" href={`${user.linkedIn}`}>
+                  <FaLinkedin
+                    style={{ margin: "10 10px", color: "#0077B5" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+              {user.twitter ? (
+                <a target="_blank" href={`${user.twitter}`}>
+                  <FaTwitter
+                    style={{ margin: "10 10px", color: "#00aced" }}
+                    size="35px"
+                  />
+                </a>
+              ) : null}
+            </div>
+            {loggedInUser.id === user.id ? null : (
+              <EmailDrawer
+                buttonSize
+                emailAddress={user.email}
+                firstName={loggedInUser.firstName}
+                buttonText={`Message ${user.firstName}`}
+              />
+            )}
           </List>
-          <p>{user.role}</p>
-          {loggedInUser.id === user.id ? null : (
-            <EmailDrawer
-              emailAddress={user.email}
-              firstName={loggedInUser.firstName}
-            />
-          )}
         </UserInfo>
       </Card>
       <PageTitle>Plans</PageTitle>
@@ -224,51 +211,89 @@ const Developer = ({ loggedInUser, user, role, history }) => {
           plans.map(
             plan =>
               !filters.includes(plan.planStatus.toLowerCase()) && (
-                <Card
+                <ExpansionPanel
                   key={plan.id}
-                  className={"card plansCard"}
-                  onClick={() => history.push(`/plan/${plan.id}`)}
-                >
-                  {plan.image_url ? (
-                    <img src={plan.image_url} alt={"avatar"} />
-                  ) : null}
-                  <h1>{plan.name}</h1>
-                  <p>{plan.description}</p>
-                  <p>{plan.planStatus}</p>
-                </Card>
+                  component={
+                    <div style={{ width: "100%" }}>
+                      <PageTitle>Plan Description</PageTitle>
+                      <p>{plan.description}</p>
+                      {loggedInUser.id === user.id &&
+                      plan.planStatus === "selected" ? (
+                        <>
+                          <h4>Update Plan Status</h4>
+                          <Plan planID={plan.id} />
+                        </>
+                      ) : null}
+                      <Divider style={{ margin: "10px 0px" }} />
+                      <Button
+                        small
+                        onClick={() =>
+                          history.push(`/project/${plan.project_id}`)
+                        }
+                      >
+                        See Project Page
+                      </Button>
+                    </div>
+                  }
+                  plan={plan}
+                />
+                // <Card
+                //   key={plan.id}
+                //   className={"card plansCard"}
+                //   onClick={() => history.push(`/plan/${plan.id}`)}
+                // >
+                //   {plan.image_url ? (
+                //     <img src={plan.image_url} alt={plan.name} />
+                //   ) : null}
+                //   <StatusPill status={plan.planStatus}>
+                //     {plan.planStatus}
+                //   </StatusPill>
+                //   <p>{plan.name}</p>
+                //   <p>{plan.description}</p>
+                // </Card>
               )
           )
         )}
       </div>
 
-      <PageTitle>Feedback</PageTitle>
-      <div className="projectsFeedback" style={{ width: "80%" }}>
+      <PageTitle>Completed Projects</PageTitle>
+      <div style={{ width: "100%" }}>
         {feedbacks.length === 0 ? (
-          <Card style={{ width: "80%" }} className={"card plansCard"}>
+          <FeedbackCard style={{ width: "100%" }} className={"card plansCard"}>
             No Feedback
-          </Card>
+          </FeedbackCard>
         ) : (
           feedbacks.map(feedback => (
-            <Card
-              style={{ width: "80%" }}
+            <FeedbackCard
+              style={{ width: "100%", flexDirection: "column" }}
               key={feedback.planID}
               className={"card plansCard"}
             >
-              <h1
+              <h4
                 onClick={() => history.push(`/project/${feedback.projectID}`)}
               >
-                {feedback.projectName}
-              </h1>
-              <p
+                {`${feedback.projectOwnerFirstName} ${
+                  feedback.projectOwnerLastName
+                }
+                said this about ${user.firstName}`}
+              </h4>
+              {/* <p
                 onClick={() =>
                   history.push(`/profile/${feedback.projectOwnerID}`)
                 }
               >
                 {feedback.projectOwnerFirstName}
                 {""} {feedback.projectOwnerLastName}
-              </p>
+              </p> */}
               <p>{feedback.feedback}</p>
-            </Card>
+              {/* <Divider style={{ margin: "10px 0px" }} /> */}
+              <Button
+                small
+                onClick={() => history.push(`/project/${feedback.projectID}`)}
+              >
+                View This Project
+              </Button>
+            </FeedbackCard>
           ))
         )}
       </div>

@@ -37,7 +37,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = false ? local : heroku;
+const connection = process.env.NODE_ENV === 'development' ? local : heroku;
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -298,8 +298,7 @@ export const deleteProject = (project_id, dispatch) => {
 };
 
 // create a new plan
-export const createPlan = (plan, project_id, dispatch) => {
-  dispatch({ type: FETCH_START });
+export const createPlan = (plan, project_id) => {
   axios({
     method: "POST",
     headers: {
@@ -310,12 +309,9 @@ export const createPlan = (plan, project_id, dispatch) => {
     data: plan
   })
     .then(res => {
-      dispatch({
-        type: CREATE_PLAN_SUCCESS
-      });
+      console.log(res)
     })
     .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };
