@@ -1,32 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Route } from "react-router";
-import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
 import { Button, Card } from "../../custom-styles";
-import ProjectExpansionPanel from "../ProjectExpansionPanel";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  fecthProjectOwnerProjectsList,
-  updateProject
-} from "../../store/actions";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
-// import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import {
-  FaGithub,
-  FaTwitter,
-  FaLinkedin
-  // FaUser,
-  // FaEnvelope
-  // FaDev,
-  // FaBook
-} from "react-icons/fa";
-import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
+import { listProjectPlans } from "../../store/actions";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -47,8 +26,16 @@ const ProjectByProjectOwner = ({
   setOpen,
   handleOpen,
   modalStyle,
-  open
+  open,
+  updateProjectStatus,
+  setProjects
 }) => {
+  const [projectPlans, setProjectPlans] = useState({});
+
+  useEffect(() => {
+    listProjectPlans(project.id, setProjectPlans);
+  }, [project.id]);
+  console.log(projectPlans, "<<<<<<<<<<");
   function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -126,7 +113,12 @@ const ProjectByProjectOwner = ({
 
         <div
           className="leftSideProjectCard"
-          style={{ width: "40%", display: "flex", flexDirection: "column" }}
+          style={{
+            width: "40%",
+            display: "flex",
+            flexDirection: "column",
+            wordWrap: "break-word"
+          }}
         >
           <div>
             <h1 onClick={() => history.push(`/project/${project.id}`)}>
@@ -137,6 +129,20 @@ const ProjectByProjectOwner = ({
           <p>Plans Available</p>
           <h2>{project.plans.length}</h2>
           <div className="buttons">
+            {/* Conditionally rendering the button for marking the project as complete */}
+            {/* Also conditionally rendering so that only the person that created the project
+              can change the status */}
+            {project.plans.length === 0 ? null : project.plans[0].planStatus ===
+                "completed" && project.projectStatus === "in progress" ? (
+              <Button
+                style={displayOnlyOnLoggedInUser()}
+                onClick={() => {
+                  updateProjectStatus(project, setProjects);
+                }}
+              >
+                <i class="fas fa-check" /> &nbsp; Mark Completed
+              </Button>
+            ) : null}
             {project.projectStatus === "completed" ? (
               // hide when loggedIn !== user
               <Button
