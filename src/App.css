@@ -59,3 +59,30 @@
   height: 100%;
   border-radius: 50%;
 }
+
+.plan-card-info {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+span {
+}
+.plan-desc {
+  display: block;
+  padding-top: 5px;
+  font-family: "Open Sans", sans-serif;
+}
+
+li.plan-card-list {
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+span.plan-tag-title {
+  margin-right: 20px;
+  letter-spacing: 1.125px;
+  font-weight: 500;
+  font-size: larger;
+}
