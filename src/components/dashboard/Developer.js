@@ -89,6 +89,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
     getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans]);
 
+  let userSkills = user.skills ? user.skills.split(",") : [];
+  console.log("HERE", userSkills);
+
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
       <Card className={"card userCard"}>
@@ -103,15 +106,24 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               width: "50%"
             }}
           />
-          <p style={{ fontSize: "20px" }}>
-            {user.firstName} {user.lastName}
-          </p>
         </div>
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
-            <span style={{ fontSize: "20px" }}>
+            <p style={{ fontSize: "20px" }}>
+              {user.firstName} {user.lastName}
+            </p>
+            <span className="dev-type">
               {user.devType} {user.role}
             </span>
+            {userSkills ? (
+              <div className="dev-skills">
+                <span className="skill-tag">Specializing in</span>
+                {userSkills.map(el => {
+                  return <span className="skill">{el}</span>;
+                })}
+              </div>
+            ) : null}
+
             <Divider style={{ margin: "10px 0px" }} />
             <div style={{ display: "flex", alignItems: "center" }}>
               {user.gitHub ? (

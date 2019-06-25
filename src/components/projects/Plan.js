@@ -71,14 +71,6 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID, history }) => {
     fetchPlan(currentPlanID, setPlan);
   }, [currentPlanID]);
 
-  console.log(
-    plan.description !== undefined
-      ? plan.description.length >= 100
-        ? `${plan.description.slice(0, 100)}...`
-        : null
-      : null
-  );
-
   return (
     <div>
       {/* <h1>Name: {plan.name}</h1> */}
