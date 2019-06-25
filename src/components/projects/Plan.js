@@ -37,8 +37,8 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  const [plan, setPlan] = useState([]);
-  const [planStatus, setPlanStatus] = useState([]);
+  const [plan, setPlan] = useState({});
+  const [planStatus, setPlanStatus] = useState("");
 
   // function handleClickOpen() {
   //   setOpen(true);
@@ -48,20 +48,23 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
   //   setOpen(false);
   // }
 
-  const changeHandler = e => {
-    let planUpdate = e.target.value;
-    setPlanStatus(planUpdate);
-  };
+  // const changeHandler = e => {
+  //   let planUpdate = e.target.value;
+  //   setPlanStatus(planUpdate);
+  // };
   const currentPlanID = planID || match.params.plan_id;
 
-  const submitHandler = e => {
-    e.preventDefault();
-    updatePlan({ planStatus: planStatus }, currentPlanID);
+  const submitHandler = () => {
+    // e.preventDefault();
+    let planUpdate = "completed";
+    setPlanStatus(planUpdate);
+    console.log(planStatus);
+    updatePlan({ planStatus: planUpdate }, currentPlanID);
     setPlan(prevState => ({
       ...prevState,
-      planStatus
+      planStatus: planUpdate
     }));
-    setPlanStatus([]);
+    setPlanStatus("");
   };
 
   useEffect(() => {
@@ -77,24 +80,31 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
       <h1>date: {plan.dueDate}</h1>
       <h1>status: {plan.planStatus}</h1> */}
       {plan.planStatus === "selected" ? (
-        <form onSubmit={submitHandler}>
-          <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
-            <Select
-              // className={classes.select}
-              value={planStatus}
-              onChange={e => changeHandler(e)}
-            >
-              <MenuItem value="" />
+        <Button
+          onClick={submitHandler}
+          type={"submit"}
+          style={{ margin: "20px" }}
+        >
+          Mark Completed
+        </Button>
+      ) : // <form onSubmit={submitHandler}>
+      //   <FormControl className={classes.formControl}>
+      //     <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
+      //     <Select
+      //       // className={classes.select}
+      //       value={planStatus}
+      //       onChange={e => changeHandler(e)}
+      //     >
+      //       <MenuItem value="" />
 
-              <MenuItem value={"completed"}>Completed</MenuItem>
-            </Select>
-            <Button type={"submit"} style={{ margin: "20px" }}>
-              Submit
-            </Button>
-          </FormControl>
-        </form>
-      ) : null}
+      //       <MenuItem value={"completed"}>Completed</MenuItem>
+      //     </Select>
+      //     <Button type={"submit"} style={{ margin: "20px" }}>
+      //       Submit
+      //     </Button>
+      //   </FormControl>
+      // </form>
+      null}
     </div>
   );
 };
