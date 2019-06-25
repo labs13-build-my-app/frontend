@@ -248,6 +248,7 @@ const Project = ({
               <EmailDrawer
                 emailAddress={project.email}
                 firstName={user.firstName}
+                buttonText={`Message ${project.firstName} `}
               />
             )}
           </CardContent>

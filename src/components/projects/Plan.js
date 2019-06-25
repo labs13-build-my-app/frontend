@@ -76,11 +76,11 @@ const Plan = ({
       planStatus: planUpdate
     }));
     setPlanStatus("");
-    // sendUpdateMessage({
-    //   projectID: plan.project_id,
-    //   userEmail: user.email,
-    //   name: user.firstName
-    // });
+    sendUpdateMessage({
+      projectID: plan.project_id,
+      userEmail: user.email,
+      name: user.firstName
+    });
     setReload(!reload);
   };
 
