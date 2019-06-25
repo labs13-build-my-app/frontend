@@ -131,3 +131,52 @@ export const FeedbackCard = styled.div`
   
 }
 `;
+
+export const ExitButton = styled.div`
+
+float:right;
+cursor:pointer;
+color: #fff;
+background-color: #DC143C;
+border: 1px solid #DC143C;
+border-radius: 30px;
+font-size: 31px;
+font-weight: bold;
+display: inline-block;
+line-height: 12px;
+padding: 11px 11px; 
+outline: none;
+:before {
+  content: "×";
+
+}
+
+&:hover {
+  background: white;
+  color: #DC143C;
+}
+  
+}
+`;
+
+// export const Button = styled.button`
+//   background-color: #4e72b7;
+//   border: 1px solid #4e72b7;
+//   color: white;
+//   ${props => props.small && `font-size: 1.0rem, padding: 5px 15px;`}
+//   ${props => (props.medium ? `font-size: 1.2rem;` : null)}
+//   ${props => (props.large ? `font-size: 1.5rem;` : null)}
+//   padding: 10px 25px;
+//   ${props => (props.buttonSize ? `padding: 10px 20px;` : null)}
+//   font-weight: bold;
+//   border-radius: 25px;
+//   cursor: pointer;
+//   outline: none;
+//   margin-top: 25px;
+//   margin-bottom: 25px
+
+//   &:hover {
+//     background: white;
+//     color: #4e72b7;
+//   }
+// `;

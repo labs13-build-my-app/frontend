@@ -229,7 +229,6 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       ) : (
         projects.map(project => (
           <ProjectExpansionPanel
-            
             key={project.id}
             project={project}
             component={
