@@ -62,6 +62,7 @@ const UserInfo = styled.div`
 // }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
+  console.log("LOG", loggedInUser, "USER", user);
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
@@ -219,10 +220,11 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                       <p>{plan.description}</p>
                       {loggedInUser.id === user.id &&
                       plan.planStatus === "selected" ? (
-                        <>
-                          <h4>Update Plan Status</h4>
-                          <Plan planID={plan.id} />
-                        </>
+                        <Plan
+                          user={user}
+                          loggedInUser={loggedInUser}
+                          planID={plan.id}
+                        />
                       ) : null}
                       <Divider style={{ margin: "10px 0px" }} />
                       <Button

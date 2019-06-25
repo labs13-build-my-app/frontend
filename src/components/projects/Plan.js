@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPlan, updatePlan } from "../../store/actions";
+import { fetchPlan, updatePlan, sendUpdateMessage } from "../../store/actions";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,7 +33,15 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
+const Plan = ({
+  match,
+  isLoading,
+  isSignedIn,
+  role,
+  planID,
+  loggedInUser,
+  user
+}) => {
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -62,14 +70,28 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
       planStatus
     }));
     setPlanStatus([]);
+    sendUpdateMessage({
+      projectID: plan.project_id,
+      userEmail: user.email,
+      name: user.firstName
+    });
   };
 
   useEffect(() => {
     fetchPlan(currentPlanID, setPlan);
   }, [currentPlanID]);
 
+  // const sendUpdate = () => {
+  //   console.log(plan.project_id, user.email, user.firstName);
+  //   sendUpdateMessage({
+  //     projectID: plan.project_id,
+  //     userEmail: user.email,
+  //     name: user.firstName
+  //   });
+  // };
   return (
     <div>
+      {/* <h1 onClick={sendUpdate}>CLICK</h1> */}
       {/* <h1>Name: {plan.name}</h1>
       <h1>desc: {plan.description}</h1>
       <h1>tech: {plan.technologiesToUse}</h1>
@@ -78,6 +100,7 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID }) => {
       <h1>status: {plan.planStatus}</h1> */}
       {plan.planStatus === "selected" ? (
         <form onSubmit={submitHandler}>
+          <h4>Update Plan Status</h4>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
             <Select

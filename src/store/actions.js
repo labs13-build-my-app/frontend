@@ -37,7 +37,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = process.env.NODE_ENV === 'development' ? local : heroku;
+const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -309,7 +309,7 @@ export const createPlan = (plan, project_id) => {
     data: plan
   })
     .then(res => {
-      console.log(res)
+      console.log(res);
     })
     .catch(error => {
       console.log(error.message);
@@ -528,6 +528,37 @@ export const sendEmail = email => {
   })
     .then(res => {
       console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};
+export const sendUpdateMessage = (projectID, userEmail, userName) => {
+  axios({
+    method: "POST",
+    url: `${connection}/api/message/update`,
+    data: projectID,
+    userEmail,
+    userName
+  })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};
+export const updateProjectStatus = (project, cb) => {
+  const { id, user_id } = project;
+  console.log(id, user_id);
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/project-owner/update-completed-project/${id}`,
+    data: { user_id }
+  })
+    .then(res => {
+      console.log(res.data);
+      cb(res.data);
     })
     .catch(err => console.log(err));
 };
