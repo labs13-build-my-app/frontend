@@ -65,12 +65,13 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
+    completed: true
   });
 
-  const [filters, setFilters] = useState(['completed','declined']);
+  const [filters, setFilters] = useState(["declined"]);
 
   useEffect(() => {
-    const newFilters = ['completed', 'declined'];
+    const newFilters = ["declined"];
     Object.keys(state).forEach(filter => {
       !state[filter] && newFilters.push(filter);
     });
@@ -179,56 +180,77 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               }
               label="Selected"
             />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={state.completed}
+                  onChange={handleChange("completed")}
+                  value="completed"
+                  color="primary"
+                />
+              }
+              label="Completed"
+            />
           </FormGroup>
         </div>
         {plans.length === 0 ? (
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
-          plans.map(
-            plan =>
-              !filters.includes(plan.planStatus.toLowerCase()) && (
-                <ExpansionPanel
-                  key={plan.id}
-                  component={
-                    <div style={{ width: "100%" }}>
-                      <PageTitle>Plan Description</PageTitle>
-                      <p>{plan.description}</p>
-                      {loggedInUser.id === user.id &&
-                      plan.planStatus === "selected" ? (
-                        <>
-                          <h4>Update Plan Status</h4>
-                          <Plan planID={plan.id} />
-                        </>
-                      ) : null}
-                      <Divider style={{ margin: "10px 0px" }} />
-                      <Button
-                        small
-                        onClick={() =>
-                          history.push(`/project/${plan.project_id}`)
-                        }
-                      >
-                        See Project Page
-                      </Button>
-                    </div>
-                  }
-                  plan={plan}
-                />
-                // <Card
-                //   key={plan.id}
-                //   className={"card plansCard"}
-                //   onClick={() => history.push(`/plan/${plan.id}`)}
-                // >
-                //   {plan.image_url ? (
-                //     <img src={plan.image_url} alt={plan.name} />
-                //   ) : null}
-                //   <StatusPill status={plan.planStatus}>
-                //     {plan.planStatus}
-                //   </StatusPill>
-                //   <p>{plan.name}</p>
-                //   <p>{plan.description}</p>
-                // </Card>
-              )
-          )
+          plans
+            .filter(plan => {
+              let planState = true;
+              feedbacks.forEach((feedback, i) => {
+                if (plan.id === feedbacks[i].planID) {
+                  if (feedback.feedback !== null) planState = false;
+                }
+              });
+              return planState;
+            })
+            .map(
+              plan =>
+                !filters.includes(plan.planStatus.toLowerCase()) && (
+                  <ExpansionPanel
+                    key={plan.id}
+                    component={
+                      <div style={{ width: "100%" }}>
+                        <PageTitle>Plan Description</PageTitle>
+                        <p>{plan.description}</p>
+                        {loggedInUser.id === user.id &&
+                        plan.planStatus === "selected" ? (
+                          <>
+                            <h4>Update Plan Status</h4>
+                            <Plan planID={plan.id} />
+                          </>
+                        ) : null}
+                        <Divider style={{ margin: "10px 0px" }} />
+                        <Button
+                          small
+                          onClick={() =>
+                            history.push(`/project/${plan.project_id}`)
+                          }
+                        >
+                          See Project Page
+                        </Button>
+                      </div>
+                    }
+                    plan={plan}
+                  />
+                  // <Card
+                  //   key={plan.id}
+                  //   className={"card plansCard"}
+                  //   onClick={() => history.push(`/plan/${plan.id}`)}
+                  // >
+                  //   {plan.image_url ? (
+                  //     <img src={plan.image_url} alt={plan.name} />
+                  //   ) : null}
+                  //   <StatusPill status={plan.planStatus}>
+                  //     {plan.planStatus}
+                  //   </StatusPill>
+                  //   <p>{plan.name}</p>
+                  //   <p>{plan.description}</p>
+                  // </Card>
+                )
+            )
         )}
       </div>
 
