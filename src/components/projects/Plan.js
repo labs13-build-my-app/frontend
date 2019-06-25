@@ -38,18 +38,18 @@ const Plan = ({
   isLoading,
   isSignedIn,
   role,
-  plan,
+  planID,
   loggedInUser,
   user,
   history,
-  fetchDeveloperPlans,
-  setPlans
+  reload,
+  setReload
 }) => {
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-  // const [plan, setPlan] = useState({});
-  // const [planStatus, setPlanStatus] = useState("");
+  const [plan, setPlan] = useState({});
+  const [planStatus, setPlanStatus] = useState("");
 
   // function handleClickOpen() {
   //   setOpen(true);
@@ -59,34 +59,34 @@ const Plan = ({
   //   setOpen(false);
   // }
 
-  // const changeHandler = e => {
-  //   let planUpdate = e.target.value;
-  //   setPlanStatus(planUpdate);
-  // };
-  const currentPlanID = plan.id || match.params.plan_id;
+  const changeHandler = e => {
+    let planUpdate = e.target.value;
+    setPlanStatus(planUpdate);
+  };
+  const currentPlanID = planID || match.params.plan_id;
 
-  const submitHandler = () => {
-    // e.preventDefault();
+  const submitHandler = e => {
+    e.preventDefault();
     let planUpdate = "completed";
-    // setPlanStatus(planUpdate);
+    setPlanStatus(planUpdate);
     // console.log(planStatus);
     updatePlan({ planStatus: planUpdate }, currentPlanID);
-    // setPlan(prevState => ({
-    //   ...prevState,
-    //   planStatus: planUpdate
-    // }));
-    // setPlanStatus("");
-    fetchDeveloperPlans(user.id, setPlans);
-    sendUpdateMessage({
-      projectID: plan.project_id,
-      userEmail: user.email,
-      name: user.firstName
-    });
+    setPlan(prevState => ({
+      ...prevState,
+      planStatus: planUpdate
+    }));
+    setPlanStatus("");
+    // sendUpdateMessage({
+    //   projectID: plan.project_id,
+    //   userEmail: user.email,
+    //   name: user.firstName
+    // });
+    setReload(!reload);
   };
 
-  // useEffect(() => {
-  //   fetchPlan(currentPlanID, setPlan);
-  // }, [currentPlanID]);
+  useEffect(() => {
+    fetchPlan(currentPlanID, setPlan);
+  }, [currentPlanID]);
 
   console.log(
     plan.description !== undefined

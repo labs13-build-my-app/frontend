@@ -71,6 +71,8 @@ const Developer = ({ loggedInUser, user, role, history }) => {
 
   const [filters, setFilters] = useState(["declined"]);
 
+  const [reload, setReload] = useState(false);
+
   useEffect(() => {
     const newFilters = ["declined"];
     Object.keys(state).forEach(filter => {
@@ -86,9 +88,10 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
+    console.log(reload, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     fetchDeveloperPlans(user.id, setPlans);
     getDeveloperFeedback(user.id, setfeedback);
-  }, [user.id, setPlans, plans]);
+  }, [user.id, setPlans, reload]);
 
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
@@ -265,11 +268,12 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                         {loggedInUser.id === user.id ? (
                           <>
                             <Plan
-                              plan={plan}
+                              planID={plan.id}
                               user={user}
-                              fetchDeveloperPlans={fetchDeveloperPlans}
                               history={history}
                               setPlans={setPlans}
+                              reload={reload}
+                              setReload={setReload}
                             />
                           </>
                         ) : null}
