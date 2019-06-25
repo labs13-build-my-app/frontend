@@ -213,24 +213,14 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                     key={plan.id}
                     component={
                       <div style={{ width: "100%" }}>
-                        <PageTitle>Plan Description</PageTitle>
-                        <p>{plan.description}</p>
-                        {loggedInUser.id === user.id &&
-                        plan.planStatus === "selected" ? (
+                        {/* <PageTitle>Plan Description</PageTitle> */}
+                        {/* <p>{plan.description}</p> */}
+                        {loggedInUser.id === user.id ? (
                           <>
-                            <h4>Update Plan Status</h4>
-                            <Plan planID={plan.id} />
+                            <Plan planID={plan.id} history={history} />
                           </>
                         ) : null}
                         <Divider style={{ margin: "10px 0px" }} />
-                        <Button
-                          small
-                          onClick={() =>
-                            history.push(`/project/${plan.project_id}`)
-                          }
-                        >
-                          See Project Page
-                        </Button>
                       </div>
                     }
                     plan={plan}
