@@ -68,6 +68,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
           margin="normal"
           variant="outlined"
           label="Project Name"
+          placeholder="Add a concise name that gives a clear image of your vision for the project"
         />
         <br />
         <br />
@@ -80,9 +81,11 @@ const CreateProjectForm = ({ history, dispatch }) => {
           className={classes.textField}
           margin="normal"
           variant="outlined"
-          label="Description"
+          label="Project Description"
           multiline
           rows="6"
+          placeholder="Add a description of the project that would allow a developer to get a good idea of what problem this application solves,
+           and how you would like them to go about accomplishing that"
         />
         <br />
         <br />
@@ -95,6 +98,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
           margin="normal"
           variant="outlined"
           label="Image Url"
+          placeholder="Add anything to aid in portraying your vision of the project here, such as preliminary design files or sketches"
         />
         <br />
         <br />
@@ -111,6 +115,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
           InputProps={{
             startAdornment: <InputAdornment position="start">$</InputAdornment>
           }}
+          placeholder="How much are you willing to spend to finance the creation of this application?"
         />
         <br />
         <br />
@@ -120,9 +125,12 @@ const CreateProjectForm = ({ history, dispatch }) => {
           type="date"
           onChange={handleInputChange}
           className={classes.textField}
+          variant="outlined"
           InputLabelProps={{
             shrink: true
           }}
+          placeholder="When would you like the project to be completed? Remember to be reasonable,
+           we recommend overbudgeting on time as you might not be aware of what it might take to complete this."
         />
         <br />
         <br />

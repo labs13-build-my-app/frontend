@@ -125,6 +125,7 @@ const CreatePlan = ({ history, user, projectId }) => {
         type="date"
         onChange={handleInputChange}
         className={classes.textField}
+        variant="outlined"
         InputLabelProps={{
           shrink: true
         }}
