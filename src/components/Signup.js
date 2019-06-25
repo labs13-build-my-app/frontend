@@ -69,6 +69,7 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
+  const [profilePictureUrl, setprofilePictureUrl] = useState("");
 
   const inputLabel = React.useRef(0);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -100,7 +101,8 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
         devType,
         linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
         gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
-        twitter: twitter.split("/")[twitter.split("/").length - 1]
+        twitter: twitter.split("/")[twitter.split("/").length - 1],
+        profilePictureUrl
       },
       dispatch
     );
@@ -169,6 +171,16 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
             className={classes.textField}
             value={email}
             onChange={event => changeHandler(event, setEmail)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="profile-image"
+            label="Profile-Image"
+            className={classes.textField}
+            value={profilePictureUrl}
+            onChange={event => changeHandler(event, setprofilePictureUrl)}
             type="text"
             margin="normal"
             variant="outlined"
