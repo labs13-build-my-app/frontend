@@ -43,102 +43,101 @@ const CreatePlan = ({ history, user, projectId }) => {
   const classes = useStyles();
 
   return (
-    <form 
+    <form
       onSubmit={handleSubmit}
-      style={{ 
-        display:'flex', 
-        flexDirection: 'column', 
-        alignItems: 'center', 
-        justifyContent: 'space-around' 
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-around"
       }}
       onClick={e => {
         e.stopPropagation();
       }}
-      
-      >
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="name"
-            type="text"
-            value={state.name}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Plan Name"
-          />
-          <br />
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="description"
-            type="text"
-            value={state.description}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Description"
-            multiline
-            rows="6"
-          />
-          <br />
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="technologiesToUse"
-            type="text"
-            value={state.technologiesToUse}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Technologies"
-            multiline
-            rows="6"
-          />
-          <br />
-          <br />
-          <TextField
-            onChange={handleInputChange}
-            name="budget"
-            type="text"
-            value={state.budget}
-            required
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            label="Budget"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              )
-            }}
-          />
-          <br />
-          <br />
-          <TextField
-            label="Finish By"
-            name="dueDate"
-            type="date"
-            onChange={handleInputChange}
-            className={classes.textField}
-            InputLabelProps={{
-              shrink: true
-            }}
-          />
-          <br />
-          <br />
-          <Button 
-            style={{margin: '0 auto'}}
-            type="submit"
-          >
-              Submit
-        </Button>
-          <br />
-          <br />
-        </form>
+    >
+      <br />
+      <TextField
+        onChange={handleInputChange}
+        name="name"
+        type="text"
+        value={state.name}
+        required
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        label="Plan Name"
+        placeholder="Add a descriptive name for your project that gives a hint at what the project involves"
+      />
+      <br />
+      <br />
+      <TextField
+        onChange={handleInputChange}
+        name="description"
+        type="text"
+        value={state.description}
+        required
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        label="Plan Description"
+        multiline
+        rows="6"
+        placeholder="Be as descriptive as possible to give the project owner an idea of how you will complete this project, and how it aligns with their vision"
+      />
+      <br />
+      <br />
+      <TextField
+        onChange={handleInputChange}
+        name="technologiesToUse"
+        type="text"
+        value={state.technologiesToUse}
+        required
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        label="Technologies to Implement"
+        multiline
+        rows="6"
+        placeholder="What tech stack do you suggest? What libraries and frameworks work for this application? Why?"
+      />
+      <br />
+      <br />
+      <TextField
+        onChange={handleInputChange}
+        name="budget"
+        type="text"
+        value={state.budget}
+        required
+        className={classes.textField}
+        margin="normal"
+        variant="outlined"
+        label="Budget"
+        InputProps={{
+          startAdornment: <InputAdornment position="start">$</InputAdornment>
+        }}
+        placeholder="Propose a dollar amount required to complete this project"
+      />
+      <br />
+      <br />
+      <TextField
+        label="Finish By"
+        name="dueDate"
+        type="date"
+        onChange={handleInputChange}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true
+        }}
+        placeholder="When can you reasonably complete this project?"
+      />
+      <br />
+      <br />
+      <Button style={{ margin: "0 auto" }} type="submit">
+        Submit
+      </Button>
+      <br />
+      <br />
+    </form>
   );
 };
 
