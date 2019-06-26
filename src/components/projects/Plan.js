@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { fetchPlan, updatePlan, sendUpdateMessage } from "../../store/actions";
+import {
+  fetchPlan,
+  updatePlan,
+  sendUpdateMessage,
+  formatDate
+} from "../../store/actions";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "../../custom-styles";
+import moment from "moment";
 // import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
@@ -118,7 +124,7 @@ const Plan = ({
         </li>
         <li className={"plan-card-list"}>
           <span className={"plan-tag-title"}>Finish By:</span>
-          <span className={"plan-title-info"}>{plan.dueDate}</span>
+          <span className={"plan-title-info"}>{formatDate(plan.dueDate)}</span>
         </li>
       </ul>
 
