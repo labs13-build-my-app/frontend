@@ -217,7 +217,7 @@ export const signup = (user, dispatch) => {
 };
 
 // create a project for project owner
-export const createProject = (project, project_Owner_Id, setProjects) => {
+export const createProject = (project, project_Owner_Id, setProjects, cb) => {
   axios({
     method: "POST",
     headers: {
@@ -231,6 +231,7 @@ export const createProject = (project, project_Owner_Id, setProjects) => {
       console.log("project owner id", project_Owner_Id);
       console.log(res.data);
       fecthProjectOwnerProjectsList(project_Owner_Id, setProjects);
+      cb();
     })
     .catch(error => {
       console.log(error.message);
