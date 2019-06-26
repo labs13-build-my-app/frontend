@@ -204,13 +204,14 @@ const ProjectView = ({
         <CardHeader
           classes={{ title: classes.cardText, subheader: classes.subheader }}
           avatar={
-            project.image_url ? (
-              <Avatar
-                alt="Remy Sharp"
-                src={project.projectOwnerAvatar}
-                className={classes.bigAvatar}
-              />
-            ) : null
+            <Avatar
+              alt="Profile image"
+              src={
+                project.projectOwnerAvatar ||
+                require("../../assets/images/profile-placeholder.png")
+              }
+              className={classes.bigAvatar}
+            />
           }
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
@@ -273,19 +274,20 @@ const ProjectView = ({
           </li>
         </ul>
 
-        {project.image_url ? (
-          <>
-            <p className="project-card-tag"> Project Design Ideas </p>
-            <div className="project-card-image">
-              <img style={{ width: "90%" }} src={project.image_url} />
-            </div>
-            {/* <CardMedia
+        <>
+          <p className="project-card-tag"> Project Design Ideas </p>
+          <div className="project-card-image">
+            <img
+              style={{ width: "90%" }}
+              src={project.image_url || require("../../assets/images/grey.jpg")}
+            />
+          </div>
+          {/* <CardMedia
               className={classes.media}
               image={project.image_url}
               title={project.name}
             /> */}
-          </>
-        ) : null}
+        </>
 
         {/* <CardContent className={classes.content}>
           <p>{project.description}</p>
