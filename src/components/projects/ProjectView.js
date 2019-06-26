@@ -10,10 +10,8 @@ import {
 import ProjectPlanList from "./ProjectPlanList";
 import ProjectPlan from "./ProjectPlan";
 import { Button } from "../../custom-styles";
-// import Button from "@material-ui/core/Button";
 import moment from "moment";
 import PlanForm from "./CreatePlanForm";
-///////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
 import Card from "@material-ui/core/Card";
@@ -74,7 +72,7 @@ const ProjectView = ({
   const modalClasses = useStyles();
 
   const [project, setProject] = useState([]);
-  // console.log("USER <===========", user);
+
   useEffect(() => {
     const formatDate = unixDate => {
       //function to format unix date
@@ -86,6 +84,7 @@ const ProjectView = ({
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
     if (!match.params.project_id && !isLoading) {
+      // DUEDATE IS UNDEFINED
       const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
       setProject({
@@ -125,8 +124,6 @@ const ProjectView = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    console.log("is this use effect being invoked?");
-    // const { reload } = history.location.state || false;
     if ((match.params.project_id && !isLoading) || reload) {
       listProjectPlans(match.params.project_id, setProjectPlans);
     }
@@ -204,7 +201,9 @@ const ProjectView = ({
     }));
   };
   const { modal } = history.location.state || false;
-  console.log(user.id === project.user_id);
+  console.log(project);
+
+  const date = new Date(Number(project.dueDate));
   return (
     <>
       <Card classes={{ root: classes.projectCard }}>
@@ -276,7 +275,9 @@ const ProjectView = ({
           </li>
           <li className={"plan-card-list"}>
             <span className={"plan-tag-title"}>Need By:</span>
-            <span className={"plan-title-info"}>{project.dueDate}</span>
+            <span className={"plan-title-info"}>
+              {moment(date).format("MMMM Do YYYY")}
+            </span>
           </li>
         </ul>
 

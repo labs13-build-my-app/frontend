@@ -187,14 +187,6 @@ const Project = ({
   };
   const { modal } = history.location.state || false;
 
-  console.log(
-    project.description !== undefined
-      ? project.description.length >= 100
-        ? `${project.description.slice(0, 100)}...`
-        : null
-      : null
-  );
-
   return (
     <>
       <Card
