@@ -150,6 +150,22 @@ const ProjectView = ({
 
   ////////////////////////  MUI STYLINGS
   const getStyles = makeStyles(theme => ({
+    projectCard: {
+      display: "flex",
+      alignItems: "center",
+      width: "80%",
+      maxWidth: "1000px",
+      margin: "0 auto",
+      border: " 2px solid red",
+      justifyContent: "space-around"
+    },
+    cardText: {
+      fontSize: "larger",
+      fontWeight: "600"
+    },
+    subheader: {
+      marginTop: "10px"
+    },
     card: {
       // maxWidth: 345,
       // display: "flex",
@@ -163,9 +179,9 @@ const ProjectView = ({
       backgroundColor: red[500]
     },
     bigAvatar: {
-      margin: 10,
-      width: 75,
-      height: 75
+      width: "120px",
+      margin: "10px",
+      height: "120px"
     },
     buttonWrapper: {
       display: "flex",
@@ -176,7 +192,6 @@ const ProjectView = ({
   const classes = getStyles();
 
   const clickHandler = (e, id, status) => {
-    // e.preventDefault();
     acceptPlan(match.params.project_id, { planStatus: status, id: id });
     const plan = projectPlans.find(plan => plan.id === id);
     setSelectedPlan(() => ({
@@ -187,24 +202,14 @@ const ProjectView = ({
       ...prevState,
       projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
-    // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
 
   return (
     <>
-      <Card
-        className="project-card"
-        style={{ width: "100%", marginBottom: "20px", minHeight: "700px" }}
-      >
-        {project.image_url ? (
-          <CardMedia
-            className={classes.media}
-            image={project.image_url}
-            title={project.name}
-          />
-        ) : null}
+      <Card classes={{ root: classes.projectCard }}>
         <CardHeader
+          classes={{ title: classes.cardText, subheader: classes.subheader }}
           avatar={
             project.image_url ? (
               <Avatar
@@ -214,46 +219,54 @@ const ProjectView = ({
               />
             ) : null
           }
-          // action={
-          //   <IconButton aria-label="Settings">
-          //     <MoreVertIcon />
-          //   </IconButton>
-          // }
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
         />
+        <div
+          className="btn-wrap"
+          style={{
+            display: "flex",
+            minWidth: "400px",
+            justifyContent: "space-evenly"
+          }}
+        >
+          <Button
+            medium
+            variant="outlined"
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              history.push(`/profile/${project.user_id}`);
+            }}
+          >
+            View Profile
+          </Button>
+          {project.user_id === user.id ? null : (
+            <EmailDrawer
+              emailAddress={project.email}
+              firstName={user.firstName}
+            />
+          )}
+        </div>
+      </Card>
+
+      <Card className="project-card" style={{ width: "80%" }}>
+        {/* Image >>>> */}
+        {project.image_url ? (
+          <CardMedia
+            className={classes.media}
+            image={project.image_url}
+            title={project.name}
+          />
+        ) : null}
+        {/* Image <<< */}
+
         <div>
           <CardContent className={classes.content}>
             <p>{project.description}</p>
             <p>Willing to pay {project.budget}</p>
             <p>Need by {project.dueDate}</p>
           </CardContent>
-          {/* <div className={classes.buttonWrapper}> */}
-          <CardContent className={classes.buttonWrapper}>
-            <Button
-              className="TEST"
-              small
-              variant="outlined"
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("HERE", project.user_id);
-                history.push(`/profile/${project.user_id}`);
-              }}
-            >
-              View Profile
-            </Button>
-
-            {/* added conditions to only render email option if project does not belong to current user */}
-
-            {project.user_id === user.id ? null : (
-              <EmailDrawer
-                emailAddress={project.email}
-                firstName={user.firstName}
-              />
-            )}
-          </CardContent>
-          {/* </div> */}
 
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
