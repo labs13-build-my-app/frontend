@@ -196,7 +196,7 @@ const Project = ({
     <>
       <Card
         className="project-card"
-        style={{ width: "100%", marginBottom: "20px", minHeight: "660px" }}
+        style={{ width: "100%", marginBottom: "20px", minHeight: "700px" }}
       >
         {project.image_url ? (
           <CardMedia
