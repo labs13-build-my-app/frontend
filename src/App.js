@@ -148,7 +148,6 @@ const App = ({ history, match }) => {
           />
         ) : null}
       </Background>
-      1
     </div>
   );
 };
