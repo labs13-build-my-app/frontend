@@ -42,6 +42,16 @@ const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
       }}
     >
       <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-around"
+        }}
+      >
+        <h1>Add Plan</h1>
+      </div>
+      <div
         className="createPlanFormContainer"
         style={{
           display: "flex",
@@ -56,7 +66,6 @@ const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
             width: "40%"
           }}
         >
-          <h1>Add Plan</h1>
           <ListDesc>
             <h4>Project Name: </h4>
             <span>{project.name}</span>
