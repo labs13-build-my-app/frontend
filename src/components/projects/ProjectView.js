@@ -280,7 +280,7 @@ const ProjectView = ({
           <>
             <p className="project-card-tag"> Project Design Ideas </p>
             <div className="project-card-image">
-              <img style={{ width: "90%" }} />
+              <img style={{ width: "90%" }} src={project.image_url} />
             </div>
             {/* <CardMedia
               className={classes.media}
