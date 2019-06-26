@@ -77,17 +77,17 @@ const Project = ({
   const [project, setProject] = useState([]);
 
   useEffect(() => {
-    const formatDate = unixDate => {
-      //function to format unix date
-      const date = new Date(Number(unixDate)); //make date string into date object
-      return moment(date).format("MMMM Do YYYY"); //return formatted date object
-    };
+    // const formatDate = unixDate => {
+    //   //function to format unix date
+    //   const date = new Date(Number(unixDate)); //make date string into date object
+    //   return moment(date).format("MMMM Do YYYY"); //return formatted date object
+    // };
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
     if (!match.params.project_id && !isLoading) {
-      const newDueDate = formatDate(dueDate); //run res.data.date through formatter
+      // const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
 
       setProject({
@@ -96,7 +96,7 @@ const Project = ({
         email,
         image_url,
         budget: newBudget,
-        dueDate: newDueDate,
+        dueDate,
         budget,
         firstName,
         lastName,
