@@ -47,8 +47,8 @@ const Projects = ({
 
   return (
     <>
-      <PageTitle>Available Projects</PageTitle>
-      {/* <div style={{ width: "100%", margin: "auto auto" }}> */}
+      <PageTitle className="projects-list-header">Available Projects</PageTitle>
+
       <div className="projects-list-wrapper">
         {filteredArr.map(project => (
           <Link

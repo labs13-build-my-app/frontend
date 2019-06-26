@@ -156,11 +156,11 @@ const ProjectView = ({
       width: "80%",
       maxWidth: "1000px",
       margin: "0 auto",
-      border: " 2px solid red",
-      justifyContent: "space-around"
+      justifyContent: "space-around",
+      marginTop: "5px"
     },
     cardText: {
-      fontSize: "larger",
+      fontSize: "x-large",
       fontWeight: "600"
     },
     subheader: {
@@ -204,7 +204,7 @@ const ProjectView = ({
     }));
   };
   const { modal } = history.location.state || false;
-
+  console.log(user.id === project.user_id);
   return (
     <>
       <Card classes={{ root: classes.projectCard }}>
@@ -250,24 +250,57 @@ const ProjectView = ({
         </div>
       </Card>
 
-      <Card className="project-card" style={{ width: "80%" }}>
-        {/* Image >>>> */}
+      <Card
+        className="project-card"
+        style={{ width: "80%", maxWidth: "1000px", margin: "10px auto" }}
+      >
+        <ul
+          className={"plan-card-info"}
+          style={{
+            paddingLeft: "35px",
+            paddingRight: "25px",
+            marginBottom: "5px"
+          }}
+        >
+          <li className={"plan-card-list"}>
+            <span className={"plan-tag-title"}>Description:</span>
+            <span className={"plan-title-info plan-desc"}>
+              {project.description}
+            </span>
+          </li>
+          <li className={"plan-card-list"}>
+            <span className={"plan-tag-title"}>Willing to pay:</span>
+            <span className={"plan-title-info"}>
+              $ &nbsp;{(project.budget / 100).toFixed(2)}
+            </span>
+          </li>
+          <li className={"plan-card-list"}>
+            <span className={"plan-tag-title"}>Need By:</span>
+            <span className={"plan-title-info"}>{project.dueDate}</span>
+          </li>
+        </ul>
+
         {project.image_url ? (
-          <CardMedia
-            className={classes.media}
-            image={project.image_url}
-            title={project.name}
-          />
+          <>
+            <p className="project-card-tag"> Project Design Ideas </p>
+            <div className="project-card-image">
+              <img src={project.image_url} />
+            </div>
+            {/* <CardMedia
+              className={classes.media}
+              image={project.image_url}
+              title={project.name}
+            /> */}
+          </>
         ) : null}
-        {/* Image <<< */}
+
+        {/* <CardContent className={classes.content}>
+          <p>{project.description}</p>
+          <p>Willing to pay {project.budget}</p>
+          <p>Need by {project.dueDate}</p>
+        </CardContent> */}
 
         <div>
-          <CardContent className={classes.content}>
-            <p>{project.description}</p>
-            <p>Willing to pay {project.budget}</p>
-            <p>Need by {project.dueDate}</p>
-          </CardContent>
-
           {project.projectStatus === "completed" ? (
             <p>{project.feedback}</p>
           ) : null}
@@ -289,8 +322,11 @@ const ProjectView = ({
                 </div>
               </Modal>
             </div>
-          ) : completedPlan && project.projectStatus !== "completed" ? (
+          ) : completedPlan &&
+            project.projectStatus !== "completed" &&
+            user.id === project.user_id ? (
             <Button
+              medium
               onClick={() => {
                 updateProject(
                   project.id,
@@ -299,7 +335,7 @@ const ProjectView = ({
                 );
               }}
             >
-              <i class="fas fa-check" /> &nbsp; Mark Completed
+              <i className="fas fa-check" /> &nbsp; Mark Completed
             </Button>
           ) : null}
         </div>

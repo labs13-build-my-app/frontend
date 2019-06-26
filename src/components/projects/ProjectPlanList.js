@@ -8,7 +8,6 @@ const ProjectPlanList = ({
   clickHandler,
   history
 }) => {
-  console.log("<<<======= PLANNNNNN", projectPlans);
   return (
     <div className={"project-plans"}>
       {projectPlans &&
@@ -17,6 +16,7 @@ const ProjectPlanList = ({
           .map(plan => {
             return (
               <ProjectPlan
+                key={plan.id}
                 {...{ plan, user, project, clickHandler, history }}
               />
             );

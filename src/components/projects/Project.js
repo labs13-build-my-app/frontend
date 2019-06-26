@@ -199,7 +199,7 @@ const Project = ({
     <>
       <Card
         className="project-card"
-        style={{ width: "100%", marginBottom: "20px", minHeight: "700px" }}
+        style={{ width: "100%", marginBottom: "20px", minHeight: "660px" }}
       >
         {project.image_url ? (
           <CardMedia
@@ -237,7 +237,7 @@ const Project = ({
           <CardContent className={classes.buttonWrapper}>
             <Button
               className="TEST"
-              small
+              medium
               variant="outlined"
               onClick={e => {
                 e.preventDefault();

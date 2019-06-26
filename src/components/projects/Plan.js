@@ -74,6 +74,7 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID, history }) => {
   return (
     <div>
       {/* <h1>Name: {plan.name}</h1> */}
+      <div className="left" />
       <ul className={"plan-card-info"}>
         <li className={"plan-card-list"}>
           <span className={"plan-tag-title"}>Description:</span>
