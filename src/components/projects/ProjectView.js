@@ -198,7 +198,8 @@ const ProjectView = ({
   const { modal } = history.location.state || false;
   console.log(project);
 
-  const date = new Date(Number(project.dueDate));
+  // const date = new Date(Number(project.dueDate));
+  console.log("HELOO>>>>>>>>>>>>>>>>", project.dueDate);
   return (
     <>
       <Card classes={{ root: classes.projectCard }}>
@@ -271,7 +272,8 @@ const ProjectView = ({
           <li className={"plan-card-list"}>
             <span className={"plan-tag-title"}>Need By:</span>
             <span className={"plan-title-info"}>
-              {moment(date).format("MMMM Do YYYY")}
+              {/* {moment(date).format("MMMM Do YYYY")} */}
+              {project.dueDate}
             </span>
           </li>
         </ul>

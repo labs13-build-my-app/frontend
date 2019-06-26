@@ -468,9 +468,8 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       )
       .then(res => {
         const { projects, page, total_pages } = res.data;
-        console.log("TEST PAGE", res.data);
+
         const resultedProject = projects.map(project => {
-          console.log(project);
           return {
             id: project.projectID,
             user_id: project.projectProjectOwnerID,
