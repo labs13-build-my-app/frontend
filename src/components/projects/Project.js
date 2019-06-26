@@ -1,11 +1,11 @@
 import React, { useEffect, useState, Children } from "react";
 import EmailDrawer from "../EmailDrawer.js";
-import { NavLink } from "react-router-dom";
 import {
   fetchProject,
   listProjectPlans,
   acceptPlan,
-  updateProject
+  updateProject,
+  formatDate
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
 import ProjectPlan from "./ProjectPlan";
@@ -15,23 +15,22 @@ import moment from "moment";
 import PlanForm from "./CreatePlanForm";
 ///////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
+// import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+// import IconButton from "@material-ui/core/IconButton";
+// import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import Modal from "@material-ui/core/Modal";
 
 const useStyles = makeStyles(theme => ({
   paperModal: {
     position: "absolute",
-    width: "50%",
+    width: "85%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
@@ -60,12 +59,14 @@ const Project = ({
   user_id
 }) => {
   const [open, setOpen] = useState(false);
+  const [openPlan, setOpenPlan] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpenPlan = () => {
+    setOpenPlan(true);
   };
+
   const modalStyle = {
     top: "50%",
     left: "50%",
@@ -76,11 +77,11 @@ const Project = ({
   const [project, setProject] = useState([]);
 
   useEffect(() => {
-    const formatDate = unixDate => {
-      //function to format unix date
-      const date = new Date(Number(unixDate)); //make date string into date object
-      return moment(date).format("MMMM Do YYYY"); //return formatted date object
-    };
+    // const formatDate = unixDate => {
+    //   //function to format unix date
+    //   const date = new Date(Number(unixDate)); //make date string into date object
+    //   return moment(date).format("MMMM Do YYYY"); //return formatted date object
+    // };
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
@@ -95,6 +96,8 @@ const Project = ({
         image_url,
         budget: newBudget,
         dueDate: newDueDate,
+        budget,
+        dueDate,
         firstName,
         lastName,
         projectOwnerAvatar,
@@ -120,7 +123,8 @@ const Project = ({
     image_url,
     firstName,
     lastName,
-    projectOwnerAvatar
+    projectOwnerAvatar,
+    user_id
   ]);
 
   const [projectPlans, setProjectPlans] = useState([]);
@@ -147,6 +151,7 @@ const Project = ({
   }
 
   ////////////////////////  MUI STYLINGS
+
   const getStyles = makeStyles(theme => ({
     card: {
       // maxWidth: 345,
@@ -247,6 +252,7 @@ const Project = ({
               <EmailDrawer
                 emailAddress={project.email}
                 firstName={user.firstName}
+                buttonText={`Message ${project.firstName} `}
               />
             )}
           </CardContent>
@@ -262,15 +268,26 @@ const Project = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button onClick={handleOpen} className="create-plan">
+              <Button
+                onClick={handleOpenPlan}
+                className="create-plan"
+                //              to={{
+                //state: {
+                //    project_id: project.id,
+                //    modal: modal === true ? false : true
+                //  }
+                //}}
+              >
                 + Apply to this project
               </Button>
-              <Modal open={open} onClose={handleClose}>
+              <Modal open={openPlan}>
                 <div style={modalStyle} className={modalClasses.paperModal}>
                   <PlanForm
                     projectId={project.id}
                     user={user}
                     history={history}
+                    setOpenPlan={setOpenPlan}
+                    project={project}
                   />
                 </div>
               </Modal>

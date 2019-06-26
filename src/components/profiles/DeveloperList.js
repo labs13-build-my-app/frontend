@@ -7,12 +7,13 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import { Pill } from "../../custom-styles";
+// import Button from "@material-ui/core/Button";
+import { Pill, Button } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
 import { PageTitle } from "../../custom-styles";
+import EmailDrawer from "../EmailDrawer";
 
-const Developers = ({ history }) => {
+const Developers = ({ history, user }) => {
   const useStyles = makeStyles(theme => ({
     root: {
       width: "100%",
@@ -84,6 +85,12 @@ const Developers = ({ history }) => {
   useEffect(() => {
     fetchDevelopers(setDevelopers, setPage);
   }, []);
+
+  const connectWithDeveloper = e => {
+    e.stopPropagation();
+    console.log("clicked");
+  };
+
   if (developers.length === 0) {
     return <h1>Loading...</h1>;
   } else {
@@ -124,6 +131,14 @@ const Developers = ({ history }) => {
                   </Grid>
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
+                  {/* <Button
+                    onClick={e => connectWithDeveloper(e)}
+                  >{`Connect With ${dev.firstName} `}</Button> */}
+                  <EmailDrawer
+                    buttonText={`Message ${dev.firstName} `}
+                    emailAddress={dev.email}
+                    firstName={user.firstName}
+                  />
                 </Card>
               </div>
             );

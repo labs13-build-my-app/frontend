@@ -83,6 +83,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
           margin="normal"
           variant="outlined"
           label="Your E-mail"
+          onClick={e => e.stopPropagation()}
         />
         <br />
 
@@ -99,12 +100,13 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
           label="Message"
           multiline
           rows="6"
+          onClick={e => e.stopPropagation()}
         />
         {/* <br />
         <br />
         <br />
         <br /> */}
-        <Button small type="submit">
+        <Button small type="submit" onClick={e => e.stopPropagation()}>
           Submit
         </Button>
         <br />
