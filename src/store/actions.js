@@ -531,3 +531,34 @@ export const sendEmail = email => {
     })
     .catch(err => console.log(err));
 };
+export const sendUpdateMessage = (projectID, userEmail, userName) => {
+  axios({
+    method: "POST",
+    url: `${connection}/api/message/update`,
+    data: projectID,
+    userEmail,
+    userName
+  })
+    .then(res => {
+      console.log(res.data);
+    })
+    .catch(err => console.log(err));
+};
+export const updateProjectStatus = (project, cb) => {
+  const { id, user_id } = project;
+  console.log(id, user_id);
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/project-owner/update-completed-project/${id}`,
+    data: { user_id }
+  })
+    .then(res => {
+      console.log(res.data);
+      cb(res.data);
+    })
+    .catch(err => console.log(err));
+};

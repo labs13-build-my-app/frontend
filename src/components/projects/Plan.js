@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPlan, updatePlan } from "../../store/actions";
+import { fetchPlan, updatePlan, sendUpdateMessage } from "../../store/actions";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
@@ -33,7 +33,18 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Plan = ({ match, isLoading, isSignedIn, role, planID, history }) => {
+const Plan = ({
+  match,
+  isLoading,
+  isSignedIn,
+  role,
+  planID,
+  loggedInUser,
+  user,
+  history,
+  reload,
+  setReload
+}) => {
   // const { fullScreen } = props;
   // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
@@ -48,23 +59,29 @@ const Plan = ({ match, isLoading, isSignedIn, role, planID, history }) => {
   //   setOpen(false);
   // }
 
-  // const changeHandler = e => {
-  //   let planUpdate = e.target.value;
-  //   setPlanStatus(planUpdate);
-  // };
+  const changeHandler = e => {
+    let planUpdate = e.target.value;
+    setPlanStatus(planUpdate);
+  };
   const currentPlanID = planID || match.params.plan_id;
 
-  const submitHandler = () => {
-    // e.preventDefault();
+  const submitHandler = e => {
+    e.preventDefault();
     let planUpdate = "completed";
     setPlanStatus(planUpdate);
-    console.log(planStatus);
+    // console.log(planStatus);
     updatePlan({ planStatus: planUpdate }, currentPlanID);
     setPlan(prevState => ({
       ...prevState,
       planStatus: planUpdate
     }));
     setPlanStatus("");
+    sendUpdateMessage({
+      projectID: plan.project_id,
+      userEmail: user.email,
+      name: user.firstName
+    });
+    setReload(!reload);
   };
 
   useEffect(() => {

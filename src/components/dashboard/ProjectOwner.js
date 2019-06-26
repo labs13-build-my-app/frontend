@@ -9,7 +9,9 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   fecthProjectOwnerProjectsList,
-  updateProject
+  updateProject,
+  updateProjectStatus,
+  listProjectPlans
 } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -257,16 +259,27 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
             key={project.id}
             project={project}
             component={
-              <ProjectsByProjectOwner
-                setOpen={setOpen}
-                user={user}
-                loggedInUser={loggedInUser}
-                handleOpen={handleOpen}
-                modalStyle={modalStyle}
-                project={project}
-                history={history}
-                open={open}
-              />
+              <>
+                <ProjectsByProjectOwner
+                  setOpen={setOpen}
+                  user={user}
+                  loggedInUser={loggedInUser}
+                  handleOpen={handleOpen}
+                  modalStyle={modalStyle}
+                  project={project}
+                  history={history}
+                  open={open}
+                  updateProjectStatus={updateProjectStatus}
+                  setProjects={setProjects}
+                />
+                {/* <Button
+                  onClick={() => {
+                    updateProjectStatus(project, setProjects);
+                  }}
+                >
+                  <i class="fas fa-check" /> &nbsp; Mark Completed
+                </Button> */}
+              </>
             }
           />
 
