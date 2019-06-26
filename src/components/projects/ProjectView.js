@@ -1,6 +1,6 @@
-import React, { useEffect, useState, Children } from "react";
+import React, { useEffect, useState } from "react";
 import EmailDrawer from "../EmailDrawer.js";
-import { NavLink } from "react-router-dom";
+
 import {
   fetchProject,
   listProjectPlans,
@@ -13,16 +13,11 @@ import { Button } from "../../custom-styles";
 import moment from "moment";
 import PlanForm from "./CreatePlanForm";
 import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
+
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia";
-import CardContent from "@material-ui/core/CardContent";
-import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
+
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import Modal from "@material-ui/core/Modal";
 
@@ -285,7 +280,7 @@ const ProjectView = ({
           <>
             <p className="project-card-tag"> Project Design Ideas </p>
             <div className="project-card-image">
-              <img src={project.image_url} />
+              <img style={{ width: "90%" }} />
             </div>
             {/* <CardMedia
               className={classes.media}
