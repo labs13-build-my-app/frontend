@@ -41,11 +41,15 @@ const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const formatDate = date => {
+  date = date.includes("Z") ? date.slice(0, -1) : date;
+  date = date.includes(".") ? new Date(Number(date)) : date;
+
   const someDate =
     process.env.NODE_ENV === "development"
-      ? moment(date).format("MMMM Do YYYY")
-      : moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+      ? moment(date).format("MMMM DD YYYY")
+      : moment(date, moment.ISO_8601).format("MMMM DD YYYY");
   // const someDate = moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+
   return someDate;
 };
 
@@ -172,22 +176,6 @@ export const fetchDevelopers = (dispatch, setPage) => {
     });
 };
 
-// export const fetchDevelopers = () => dispatch => {
-//   axios({
-//     method: "GET",
-//     url: "http://localhost:8000/api/users/developers",
-//     headers: {
-//       "content-type": "application/json",
-//       Authorization: localStorage.getItem("token")
-//     }
-//   })
-//     .then(res => {
-//       console.log(res.data);
-//       dispatch(res.data);
-//     })
-//     .catch(err => console.log(err));
-// };
-
 // update user account info
 export const updateUser = (user, dispatch) => {};
 
@@ -226,8 +214,7 @@ export const signup = (user, dispatch) => {
 };
 
 // create a project for project owner
-export const createProject = (project, dispatch) => {
-  dispatch({ type: FETCH_START });
+export const createProject = (project, project_Owner_Id, setProjects) => {
   axios({
     method: "POST",
     headers: {
@@ -238,40 +225,14 @@ export const createProject = (project, dispatch) => {
     data: project
   })
     .then(res => {
-      dispatch({
-        type: CREATE_PROJECT_SUCCESS,
-        payload: res.data
-      });
+      console.log("project owner id", project_Owner_Id);
+      console.log(res.data);
+      fecthProjectOwnerProjectsList(project_Owner_Id, setProjects);
     })
     .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };
-
-// export const updateProject = (project, id) => dispatch => {
-//   dispatch({ type: FETCH_START });
-//   axios({
-//     method: "PUT",
-//     headers: {
-//       "content-type": "application/json",
-//       Authorization: localStorage.getItem("token")
-//     },
-//     url: `${connection}/api/account/project-owner/update-profile-project-owner/${id}`,
-//     data: project
-//   })
-//     .then(res => {
-//       dispatch({
-//         type: UPDATE_PROJECT_SUCCESS
-//         // Should there be a payload? or invoke fetch list or page for plan
-//         // payload: res.data
-//       });
-//     })
-//     .catch(error => {
-//       dispatch({ type: FETCH_FAILURE });
-//       console.log(error.message);
-//     });
-// };
 
 // update a project
 export const updateProject = (project_id, project, history, dispatch) => {
@@ -407,6 +368,7 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
     url: `${connection}/api/projects/project-list/${project_Owner_Id}`
   })
     .then(res => {
+      console.log("fetching projects", res.data);
       res.data.message === "No Projects" ? dispatch([]) : dispatch(res.data);
     })
     .catch(error => {
@@ -417,25 +379,18 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 // page view of a project
 export const fetchProject = (
   project_id,
-  formatDate,
+  // formatDate,
   formatBudget,
-  dispatch
+  setProject
 ) => {
   console.log("fetching data");
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      dispatch({ ...res.data, dueDate: formatDate(res.data.dueDate) });
+      console.log("RES in Fetch Project", setProject);
+      setProject({ ...res.data, dueDate: formatDate(res.data.dueDate) });
     })
     .catch(err => console.log(err));
-  // axios
-  //   .get(`${connection}/api/projects/project-view/${projectId}`)
-  //   .then(res => {
-  //     const newDueDate = formatDate(res.data.dueDate);
-  //     const newBudget = formatBudget(res.data.budget);
-  //     dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
-  //   })
-  //   .catch(err => console.log(err));
 };
 
 // page view of a plan
@@ -468,16 +423,15 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       )
       .then(res => {
         const { projects, page, total_pages } = res.data;
-        console.log("TEST PAGE", res.data);
+
         const resultedProject = projects.map(project => {
-          console.log(project);
           return {
             id: project.projectID,
             user_id: project.projectProjectOwnerID,
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: formatDate(project.projectDueDate),
+            dueDate: project.projectDueDate,
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
