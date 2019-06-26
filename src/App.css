@@ -128,3 +128,19 @@ span.plan-tag-title {
   text-align: center;
   padding-bottom: 15px;
 }
+
+.project-feedback-tag {
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: larger;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  text-align: left;
+  display: block;
+  margin-left: 40px;
+}
+.project-feedback-text {
+  text-align: left;
+  margin-left: 40px;
+}
