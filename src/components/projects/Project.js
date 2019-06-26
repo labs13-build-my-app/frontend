@@ -104,14 +104,14 @@ const Project = ({
         user_id
       });
     }
-    if (match.params.project_id && !isLoading) {
-      fetchProject(
-        match.params.project_id,
-        formatDate,
-        formatBudget,
-        setProject
-      );
-    }
+    // if (match.params.project_id && !isLoading) {
+    //   fetchProject(
+    //     match.params.project_id,
+    //     // formatDate,
+    //     formatBudget,
+    //     setProject
+    //   );
+    // }
   }, [
     match.params.project_id,
     isLoading,
