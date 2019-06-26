@@ -187,13 +187,22 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               width: "50%"
             }}
           />
-          <p style={{ fontSize: "20px" }}>
-            {user.firstName} {user.lastName}
-          </p>
         </div>
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
-            <span style={{ fontSize: "20px" }}>{user.role}</span>
+            <p style={{ fontSize: "20px" }}>
+              {user.firstName} {user.lastName}
+            </p>
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: "bolder",
+                marginBottom: "20px",
+                display: "block"
+              }}
+            >
+              {user.role}
+            </span>
             <Divider style={{ margin: "10px 0px" }} />
             <div style={{ display: "flex", alignItems: "center" }}>
               {user.gitHub ? (
