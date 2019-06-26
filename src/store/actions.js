@@ -476,7 +476,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: formatDate(project.projectDueDate),
+            dueDate: project.projectDueDate,
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
