@@ -41,21 +41,18 @@ const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const formatDate = date => {
-  console.log("Before", date, typeof date);
   date = date.includes("Z") ? date.slice(0, -1) : date;
   date =
     date.includes(".") && process.env.NODE_ENV === "development"
       ? new Date(Number(date))
       : date;
-  console.log("DATE IS", date);
-  console.log("AFTER", moment(date, moment.ISO_8601).format("MMMM DD YYYY"));
-  console.log(moment(date).format("MMMM DD YYYY"));
+
   const someDate =
     process.env.NODE_ENV === "development"
       ? moment(date).format("MMMM DD YYYY")
       : moment(date, moment.ISO_8601).format("MMMM DD YYYY");
   // const someDate = moment(date, moment.ISO_8601).format("MMMM Do YYYY");
-  console.log("someDate", someDate);
+
   return someDate;
 };
 
