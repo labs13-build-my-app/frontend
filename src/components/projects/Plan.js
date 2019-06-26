@@ -94,17 +94,10 @@ const Plan = ({
     fetchPlan(currentPlanID, setPlan);
   }, [currentPlanID]);
 
-  console.log(
-    plan.description !== undefined
-      ? plan.description.length >= 100
-        ? `${plan.description.slice(0, 100)}...`
-        : null
-      : null
-  );
-
   return (
     <div>
       {/* <h1>Name: {plan.name}</h1> */}
+      <div className="left" />
       <ul className={"plan-card-info"}>
         <li className={"plan-card-list"}>
           <span className={"plan-tag-title"}>Description:</span>

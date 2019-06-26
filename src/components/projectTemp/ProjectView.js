@@ -66,7 +66,9 @@ const ProjectView = ({
           </div>
 
           {project.projectStatus === "completed" ? (
-            <p>{project.feedback}</p>
+            <p className="project-feedback">
+              Project Feedback: {project.feedback}
+            </p>
           ) : null}
 
           {project.projectStatus === "proposal" &&

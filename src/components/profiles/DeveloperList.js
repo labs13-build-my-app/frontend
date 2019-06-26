@@ -10,6 +10,7 @@ import Avatar from "@material-ui/core/Avatar";
 // import Button from "@material-ui/core/Button";
 import { Pill, Button } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
+import { PageTitle } from "../../custom-styles";
 import EmailDrawer from "../EmailDrawer";
 
 const Developers = ({ history, user }) => {
@@ -95,7 +96,9 @@ const Developers = ({ history, user }) => {
   } else {
     return (
       <>
-        <h2>Available Developers</h2>
+        <PageTitle className="projects-list-header">
+          Available Developers
+        </PageTitle>
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev => {
             const initials = dev.firstName.charAt(0) + dev.lastName.charAt(0);
