@@ -247,7 +247,12 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       <Modal open={openProject}>
         {/*  onClose={handleClose} */}
         <div style={modalStyle} className={modalClasses.paperModal}>
-          <ProjectForm history={history} setOpenProject={setOpenProject} />
+          <ProjectForm
+            history={history}
+            setOpenProject={setOpenProject}
+            setProjects={setProjects}
+            projectOwnerID={user.id}
+          />
         </div>
       </Modal>
       {console.log(projects)}
