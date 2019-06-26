@@ -1,4 +1,5 @@
 import axios from "axios";
+import moment from "moment";
 export const FETCH_START = "FETCH_START";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
@@ -38,6 +39,21 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
+
+export const formatDate = date => {
+  const someDate =
+    process.env.NODE_ENV === "development"
+      ? moment(date).format("MMMM Do YYYY")
+      : moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+  // const someDate = moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+  return someDate;
+};
+
+// const formatDate = unixDate => {
+//   //function to format unix date
+//   const date = new Date(Number(unixDate)); //make date string into date object
+//   return moment(date).format("MMMM Do YYYY"); //return formatted date object
+// };
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -409,7 +425,7 @@ export const fetchProject = (
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      dispatch({ ...res.data });
+      dispatch({ ...res.data, dueDate: formatDate(res.data.dueDate) });
     })
     .catch(err => console.log(err));
   // axios
@@ -443,6 +459,7 @@ export const fetchProjectSelectedPlan = (project_id, dispatch) => {
 
 // paginated list of projects
 export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
+  console.log(formatDate("2019-06-29T00:00:00.000+00:00"));
   if (user_id) {
     console.log("PRINT USER ID", user_id, "PAGE", page);
     axios
@@ -450,17 +467,17 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
         `${connection}/api/projects/paginated-list-of-projects?page=${page}&user_id=${user_id}`
       )
       .then(res => {
-        console.log(res.data);
         const { projects, page, total_pages } = res.data;
         console.log("TEST PAGE", res.data);
         const resultedProject = projects.map(project => {
+          console.log(project);
           return {
             id: project.projectID,
             user_id: project.projectProjectOwnerID,
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: project.projectDueDate,
+            dueDate: formatDate(project.projectDueDate),
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,

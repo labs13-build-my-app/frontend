@@ -4,7 +4,8 @@ import {
   fetchProject,
   listProjectPlans,
   acceptPlan,
-  updateProject
+  updateProject,
+  formatDate
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
 import ProjectPlan from "./ProjectPlan";
@@ -19,10 +20,10 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-import Collapse from "@material-ui/core/Collapse";
+// import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
+// import IconButton from "@material-ui/core/IconButton";
+// import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import Modal from "@material-ui/core/Modal";
 
@@ -74,11 +75,11 @@ const Project = ({
   const [project, setProject] = useState([]);
   // console.log("USER <===========", user);
   useEffect(() => {
-    const formatDate = unixDate => {
-      //function to format unix date
-      const date = new Date(Number(unixDate)); //make date string into date object
-      return moment(date).format("MMMM Do YYYY"); //return formatted date object
-    };
+    // const formatDate = unixDate => {
+    //   //function to format unix date
+    //   const date = new Date(Number(unixDate)); //make date string into date object
+    //   return moment(date).format("MMMM Do YYYY"); //return formatted date object
+    // };
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
@@ -93,6 +94,8 @@ const Project = ({
         image_url,
         budget: newBudget,
         dueDate: newDueDate,
+        budget,
+        dueDate,
         firstName,
         lastName,
         projectOwnerAvatar,
@@ -148,6 +151,7 @@ const Project = ({
   }
 
   ////////////////////////  MUI STYLINGS
+
   const getStyles = makeStyles(theme => ({
     card: {
       // maxWidth: 345,
@@ -199,7 +203,7 @@ const Project = ({
         marginBottom: "20px"
       }}
     >
-      <Card>
+      <Card className={classes.card}>
         {project.image_url ? (
           <CardMedia
             className={classes.media}
