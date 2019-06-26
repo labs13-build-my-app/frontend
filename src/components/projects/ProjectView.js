@@ -66,7 +66,7 @@ const ProjectView = ({
   };
   const modalClasses = useStyles();
 
-  const [project, setProject] = useState([]);
+  const [project, setProject] = useState({});
 
   useEffect(() => {
     const formatDate = unixDate => {
@@ -78,27 +78,28 @@ const ProjectView = ({
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
-    if (!match.params.project_id && !isLoading) {
-      // DUEDATE IS UNDEFINED
-      const newDueDate = formatDate(dueDate); //run res.data.date through formatter
-      const newBudget = formatBudget(budget); //change budget from dollars to cents
-      setProject({
-        name,
-        description,
-        email,
-        image_url,
-        budget: newBudget,
-        dueDate: newDueDate,
-        firstName,
-        lastName,
-        projectOwnerAvatar,
-        user_id
-      });
-    }
+    // if (!match.params.project_id && !isLoading) {
+    //   // DUEDATE IS UNDEFINED
+    //   // const newDueDate = formatDate(project.dueDate); //run res.data.date through formatter
+    //   // const newBudget = formatBudget(project.budget); //change budget from dollars to cents
+
+    //   setProject({
+    //     name,
+    //     description,
+    //     email,
+    //     image_url,
+    //     budget: newBudget,
+    //     dueDate: newDueDate,
+    //     firstName,
+    //     lastName,
+    //     projectOwnerAvatar,
+    //     user_id
+    //   });
+    // }
     if (match.params.project_id && !isLoading) {
       fetchProject(
         match.params.project_id,
-        formatDate,
+        // formatDate,
         formatBudget,
         setProject
       );

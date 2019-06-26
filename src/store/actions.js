@@ -41,11 +41,15 @@ const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const formatDate = date => {
+  date = date.includes("Z") ? date.slice(0, -1) : date;
+  date = date.includes(".") ? new Date(Number(date)) : date;
+
   const someDate =
     process.env.NODE_ENV === "development"
-      ? moment(date).format("MMMM Do YYYY")
-      : moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+      ? moment(date).format("MMMM DD YYYY")
+      : moment(date, moment.ISO_8601).format("MMMM DD YYYY");
   // const someDate = moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+
   return someDate;
 };
 
@@ -375,15 +379,16 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 // page view of a project
 export const fetchProject = (
   project_id,
-  formatDate,
+  // formatDate,
   formatBudget,
-  dispatch
+  setProject
 ) => {
   console.log("fetching data");
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      dispatch({ ...res.data, dueDate: formatDate(res.data.dueDate) });
+      console.log("RES in Fetch Project", setProject);
+      setProject({ ...res.data, dueDate: formatDate(res.data.dueDate) });
     })
     .catch(err => console.log(err));
 };
