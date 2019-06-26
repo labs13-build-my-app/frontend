@@ -27,15 +27,20 @@ import styled from "styled-components";
 //   }
 // `;
 
-const CreateProjectForm = ({ history, dispatch, setOpenProject }) => {
+const CreateProjectForm = ({
+  history,
+  setOpenProject,
+  projectOwnerID,
+  setProjects
+}) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     const project = { ...state, budget: state.budget * 100 };
-    createProject(project, dispatch);
+    createProject(project, projectOwnerID, setProjects);
 
-    history.push({
-      pathname: `/profile/${history.location.state.projectOwner_id}`,
-      state: { reload: true }
-    });
+    // history.push({
+    //   pathname: `/profile/${projectOwnerID}`,
+    //   state: { reload: true }
+    // });
   });
 
   const useStyles = makeStyles(theme => ({
