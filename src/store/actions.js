@@ -40,7 +40,7 @@ const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
-export const formatDate = date => {
+export const formatDate = (date = "") => {
   date = date.includes("Z") ? date.slice(0, -1) : date;
   date =
     date.includes(".") && process.env.NODE_ENV === "development"
