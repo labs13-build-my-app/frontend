@@ -88,13 +88,11 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
-    console.log(reload, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     fetchDeveloperPlans(user.id, setPlans);
     getDeveloperFeedback(user.id, setfeedback);
   }, [user.id, setPlans, reload]);
 
   let userSkills = user.skills ? user.skills.split(",") : [];
-  console.log("HERE", userSkills);
 
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>

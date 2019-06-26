@@ -210,7 +210,7 @@ export const signup = (user, dispatch) => {
 };
 
 // create a project for project owner
-export const createProject = (project, project_Owner_Id, setProjects) => {
+export const createProject = (project, project_Owner_Id, setProjects, cb) => {
   axios({
     method: "POST",
     headers: {
@@ -224,6 +224,7 @@ export const createProject = (project, project_Owner_Id, setProjects) => {
       console.log("project owner id", project_Owner_Id);
       console.log(res.data);
       fecthProjectOwnerProjectsList(project_Owner_Id, setProjects);
+      cb();
     })
     .catch(error => {
       console.log(error.message);
@@ -418,16 +419,15 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       )
       .then(res => {
         const { projects, page, total_pages } = res.data;
-        console.log("TEST PAGE", res.data);
+
         const resultedProject = projects.map(project => {
-          console.log(project);
           return {
             id: project.projectID,
             user_id: project.projectProjectOwnerID,
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: formatDate(project.projectDueDate),
+            dueDate: project.projectDueDate,
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,

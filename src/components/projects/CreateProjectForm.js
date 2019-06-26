@@ -7,26 +7,6 @@ import { Button, ExitButton } from "../../custom-styles";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 
-// const StyledCard = styled.form`
-//   background-color: white;
-//   border: 1px lightgrey solid;
-//   border-radius: 20px;
-//   margin: 25px auto;
-//   height: 85%;
-//   width: 85%;
-//   box-shadow: 10px 10px 10px grey;
-//   position: fixed;
-//   top: 50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   .exit {
-//     position: absolute;
-//     right: 2%;
-//     top: 3.5%;
-//     height: 20px;
-//   }
-// `;
-
 const CreateProjectForm = ({
   history,
   setOpenProject,
@@ -34,13 +14,16 @@ const CreateProjectForm = ({
   setProjects
 }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
+    const cb = () => {
+      setOpenProject(false);
+    };
     const project = { ...state, budget: state.budget * 100 };
-    createProject(project, projectOwnerID, setProjects);
+    createProject(project, projectOwnerID, setProjects, cb);
 
-    // history.push({
-    //   pathname: `/profile/${projectOwnerID}`,
-    //   state: { reload: true }
-    // });
+    history.push({
+      pathname: `/profile/${projectOwnerID}`
+      // state: { reload: true }
+    });
   });
 
   const useStyles = makeStyles(theme => ({
