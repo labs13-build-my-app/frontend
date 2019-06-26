@@ -62,6 +62,7 @@ const UserInfo = styled.div`
 // }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
+  console.log("LOG", loggedInUser, "USER", user);
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
@@ -69,6 +70,8 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   });
 
   const [filters, setFilters] = useState(["declined"]);
+
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     const newFilters = ["declined"];
@@ -85,9 +88,10 @@ const Developer = ({ loggedInUser, user, role, history }) => {
   const [plans, setPlans] = useState([]);
   const [feedbacks, setfeedback] = useState([]);
   useEffect(() => {
+    console.log(reload, "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
     fetchDeveloperPlans(user.id, setPlans);
     getDeveloperFeedback(user.id, setfeedback);
-  }, [user.id, setPlans]);
+  }, [user.id, setPlans, reload]);
 
   return (
     <div style={{ width: "80%", margin: "0 auto" }}>
@@ -196,6 +200,52 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         {plans.length === 0 ? (
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
+          // plans.map(
+          //   plan =>
+          //     !filters.includes(plan.planStatus.toLowerCase()) && (
+          //       <ExpansionPanel
+          //         key={plan.id}
+          //         component={
+          //           <div style={{ width: "100%" }}>
+          //             <PageTitle>Plan Description</PageTitle>
+          //             <p>{plan.description}</p>
+          //             {loggedInUser.id === user.id &&
+          //             plan.planStatus === "selected" ? (
+          //               <Plan
+          //                 user={user}
+          //                 loggedInUser={loggedInUser}
+          //                 planID={plan.id}
+          //               />
+          //             ) : null}
+          //             <Divider style={{ margin: "10px 0px" }} />
+          //             <Button
+          //               small
+          //               onClick={() =>
+          //                 history.push(`/project/${plan.project_id}`)
+          //               }
+          //             >
+          //               See Project Page
+          //             </Button>
+          //           </div>
+          //         }
+          //         plan={plan}
+          //       />
+          //       // <Card
+          //       //   key={plan.id}
+          //       //   className={"card plansCard"}
+          //       //   onClick={() => history.push(`/plan/${plan.id}`)}
+          //       // >
+          //       //   {plan.image_url ? (
+          //       //     <img src={plan.image_url} alt={plan.name} />
+          //       //   ) : null}
+          //       //   <StatusPill status={plan.planStatus}>
+          //       //     {plan.planStatus}
+          //       //   </StatusPill>
+          //       //   <p>{plan.name}</p>
+          //       //   <p>{plan.description}</p>
+          //       // </Card>
+          //     )
+          // )
           plans
             .filter(plan => {
               let planState = true;
@@ -217,7 +267,14 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                         {/* <p>{plan.description}</p> */}
                         {loggedInUser.id === user.id ? (
                           <>
-                            <Plan planID={plan.id} history={history} />
+                            <Plan
+                              planID={plan.id}
+                              user={user}
+                              history={history}
+                              setPlans={setPlans}
+                              reload={reload}
+                              setReload={setReload}
+                            />
                           </>
                         ) : null}
                         <Divider style={{ margin: "10px 0px" }} />
