@@ -131,3 +131,37 @@ export const FeedbackCard = styled.div`
   
 }
 `;
+
+export const ExitButton = styled.div`
+
+float:right;
+cursor:pointer;
+color: #fff;
+background-color: #DC143C;
+border: 1px solid #DC143C;
+border-radius: 30px;
+font-size: 31px;
+font-weight: bold;
+display: inline-block;
+line-height: 12px;
+padding: 11px 11px; 
+outline: none;
+:before {
+  content: "×";
+
+}
+
+&:hover {
+  background: white;
+  color: #DC143C;
+}
+  
+}
+`;
+
+export const ListDesc = styled.div`
+  display: flex;
+  flex-direction: column;
+  liststyle: none;
+  align-items: start;
+`;

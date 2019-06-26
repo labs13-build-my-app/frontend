@@ -9,7 +9,9 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   fecthProjectOwnerProjectsList,
-  updateProject
+  updateProject,
+  updateProjectStatus,
+  listProjectPlans
 } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -28,6 +30,7 @@ import {
 import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
+import ProjectForm from "../../components/projects/CreateProjectForm";
 
 // const Card = styled.div`
 //   display: flex;
@@ -100,16 +103,30 @@ const useStyles = makeStyles(theme => ({
     socialIcons: {
       margin: "0px 10px"
     }
+  },
+  paperModal: {
+    position: "absolute",
+    width: "50%",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    outline: "none"
   }
 }));
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
+  const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
+
+  const modalClasses = useStyles();
 
   const handleOpen = () => {
     setOpen(true);
+  };
+  const handleOpenProject = () => {
+    setOpenProject(true);
   };
   const handleOpenFeedback = projectID => {
     setOpen(true);
@@ -120,6 +137,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseProject = () => {
+    setOpenProject(false);
   };
 
   const classes = useStyles();
@@ -215,34 +235,51 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       <Button
         large
         style={displayOnlyOnLoggedInUser()}
-        onClick={() =>
-          history.push({
-            state: { modal: true, projectOwner_id: loggedInUser.id }
-          })
-        }
+        onClick={handleOpenProject}
+        // onClick={() =>
+        //   history.push({
+        //     state: { modal: true, projectOwner_id: loggedInUser.id }
+        //   })
+        // }
       >
         + Create New Project
       </Button>
+      <Modal open={openProject}>
+        {/*  onClose={handleClose} */}
+        <div style={modalStyle} className={modalClasses.paperModal}>
+          <ProjectForm history={history} setOpenProject={setOpenProject} />
+        </div>
+      </Modal>
       {console.log(projects)}
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
         projects.map(project => (
           <ProjectExpansionPanel
-            
             key={project.id}
             project={project}
             component={
-              <ProjectsByProjectOwner
-                setOpen={setOpen}
-                user={user}
-                loggedInUser={loggedInUser}
-                handleOpen={handleOpen}
-                modalStyle={modalStyle}
-                project={project}
-                history={history}
-                open={open}
-              />
+              <>
+                <ProjectsByProjectOwner
+                  setOpen={setOpen}
+                  user={user}
+                  loggedInUser={loggedInUser}
+                  handleOpen={handleOpen}
+                  modalStyle={modalStyle}
+                  project={project}
+                  history={history}
+                  open={open}
+                  updateProjectStatus={updateProjectStatus}
+                  setProjects={setProjects}
+                />
+                {/* <Button
+                  onClick={() => {
+                    updateProjectStatus(project, setProjects);
+                  }}
+                >
+                  <i class="fas fa-check" /> &nbsp; Mark Completed
+                </Button> */}
+              </>
             }
           />
 

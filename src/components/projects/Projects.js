@@ -47,31 +47,33 @@ const Projects = ({
 
   return (
     <>
-      <PageTitle>Available Projects</PageTitle>
-      {/* <div style={{ width: "100%", margin: "auto auto" }}> */}
-      {filteredArr.map(project => (
-        <Link
-          style={{ textDecoration: "none" }}
-          className="project-link"
-          to={`/project/${project.id}`}
-          key={project.id}
-        >
-          <Project
-            {...props}
-            name={project.name}
-            description={project.description}
-            budget={project.budget}
-            dueDate={project.dueDate}
-            email={project.email}
-            image_url={project.image_url}
-            firstName={project.firstName}
-            lastName={project.lastName}
-            user={user}
-            projectOwnerAvatar={project.projectOwnerAvatar}
-            user_id={project.user_id}
-          />
-        </Link>
-      ))}
+      <PageTitle className="projects-list-header">Available Projects</PageTitle>
+
+      <div className="projects-list-wrapper">
+        {filteredArr.map(project => (
+          <Link
+            style={{ textDecoration: "none", width: "30%" }}
+            className="project-link"
+            to={`/project/${project.id}`}
+            key={project.id}
+          >
+            <Project
+              {...props}
+              name={project.name}
+              description={project.description}
+              budget={project.budget}
+              dueDate={project.dueDate}
+              email={project.email}
+              image_url={project.image_url}
+              firstName={project.firstName}
+              lastName={project.lastName}
+              user={user}
+              projectOwnerAvatar={project.projectOwnerAvatar}
+              user_id={project.user_id}
+            />
+          </Link>
+        ))}
+      </div>
       {pageCount.page > 1 ? (
         <Button
           medium
