@@ -116,9 +116,9 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
   );
 
   return (
-    <div>
+    <>
       {email ? (
-        <Button email onClick={toggleDrawer("bottom", true)}>
+        <Button medium email onClick={toggleDrawer("bottom", true)}>
           {buttonText || "Send Email"}
         </Button>
       ) : (
@@ -133,7 +133,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
       >
         {fullList("bottom")}
       </Drawer>
-    </div>
+    </>
   );
 };
 export default EmailDrawer;

@@ -75,7 +75,7 @@ const Project = ({
   const modalClasses = useStyles();
 
   const [project, setProject] = useState([]);
-  // console.log("USER <===========", user);
+
   useEffect(() => {
     // const formatDate = unixDate => {
     //   //function to format unix date
@@ -129,8 +129,6 @@ const Project = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    console.log("is this use effect being invoked?");
-    // const { reload } = history.location.state || false;
     if ((match.params.project_id && !isLoading) || reload) {
       listProjectPlans(match.params.project_id, setProjectPlans);
     }
@@ -181,7 +179,6 @@ const Project = ({
   const classes = getStyles();
 
   const clickHandler = (e, id, status) => {
-    // e.preventDefault();
     acceptPlan(match.params.project_id, { planStatus: status, id: id });
     const plan = projectPlans.find(plan => plan.id === id);
     setSelectedPlan(() => ({
@@ -192,20 +189,15 @@ const Project = ({
       ...prevState,
       projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
-    // window.location.reload(); // need to change this. this might be giving us a bug
   };
   const { modal } = history.location.state || false;
 
   return (
-    <div
-      style={{
-        width: "80%",
-        color: "black",
-        margin: "0 auto",
-        marginBottom: "20px"
-      }}
-    >
-      <Card className={classes.card}>
+    <>
+      <Card
+        className="project-card"
+        style={{ width: "100%", marginBottom: "20px", minHeight: "660px" }}
+      >
         {project.image_url ? (
           <CardMedia
             className={classes.media}
@@ -228,15 +220,21 @@ const Project = ({
         />
         <div>
           <CardContent className={classes.content}>
-            <p>{project.description}</p>
+            <p>
+              {project.description !== undefined
+                ? project.description.length >= 100
+                  ? `${project.description.slice(0, 100)}...`
+                  : project.description
+                : null}
+            </p>
             <p>Willing to pay {project.budget}</p>
             <p>Need by {project.dueDate}</p>
           </CardContent>
-          {/* <div className={classes.buttonWrapper}> */}
+
           <CardContent className={classes.buttonWrapper}>
             <Button
               className="TEST"
-              small
+              medium
               variant="outlined"
               onClick={e => {
                 e.preventDefault();
@@ -260,7 +258,10 @@ const Project = ({
           </CardContent>
 
           {project.projectStatus === "completed" ? (
-            <p>{project.feedback}</p>
+            <>
+              <span className="project-feedback-tag">Project Feedback: </span>
+              <p className="project-feedback-text">{project.feedback}</p>
+            </>
           ) : null}
 
           {project.projectStatus === "proposal" &&
@@ -323,7 +324,7 @@ const Project = ({
           clickHandler={clickHandler}
         />
       ) : null}
-    </div>
+    </>
   );
 };
 
