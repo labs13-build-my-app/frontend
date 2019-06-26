@@ -159,24 +159,9 @@ outline: none;
 }
 `;
 
-// export const Button = styled.button`
-//   background-color: #4e72b7;
-//   border: 1px solid #4e72b7;
-//   color: white;
-//   ${props => props.small && `font-size: 1.0rem, padding: 5px 15px;`}
-//   ${props => (props.medium ? `font-size: 1.2rem;` : null)}
-//   ${props => (props.large ? `font-size: 1.5rem;` : null)}
-//   padding: 10px 25px;
-//   ${props => (props.buttonSize ? `padding: 10px 20px;` : null)}
-//   font-weight: bold;
-//   border-radius: 25px;
-//   cursor: pointer;
-//   outline: none;
-//   margin-top: 25px;
-//   margin-bottom: 25px
-
-//   &:hover {
-//     background: white;
-//     color: #4e72b7;
-//   }
-// `;
+export const ListDesc = styled.div`
+  display: flex;
+  flex-direction: column;
+  liststyle: none;
+  align-items: start;
+`;

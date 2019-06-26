@@ -7,27 +7,27 @@ import { Button, ExitButton } from "../../custom-styles";
 import TextField from "@material-ui/core/TextField";
 import styled from "styled-components";
 
-const StyledCard = styled.form`
-  background-color: white;
-  border: 1px lightgrey solid;
-  border-radius: 20px;
-  margin: 25px auto;
-  height: 85%;
-  width: 85%;
-  box-shadow: 10px 10px 10px grey;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  .exit {
-    position: absolute;
-    right: 2%;
-    top: 3.5%;
-    height: 20px;
-  }
-`;
+// const StyledCard = styled.form`
+//   background-color: white;
+//   border: 1px lightgrey solid;
+//   border-radius: 20px;
+//   margin: 25px auto;
+//   height: 85%;
+//   width: 85%;
+//   box-shadow: 10px 10px 10px grey;
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   .exit {
+//     position: absolute;
+//     right: 2%;
+//     top: 3.5%;
+//     height: 20px;
+//   }
+// `;
 
-const CreateProjectForm = ({ history, dispatch }) => {
+const CreateProjectForm = ({ history, dispatch, setOpenProject }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
     const project = { ...state, budget: state.budget * 100 };
     createProject(project, dispatch);
@@ -46,7 +46,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
     textField: {
       marginLeft: theme.spacing(1),
       marginRight: theme.spacing(1),
-      width: "80%"
+      width: "95%"
     },
     dense: {
       marginTop: theme.spacing(2)
@@ -56,25 +56,36 @@ const CreateProjectForm = ({ history, dispatch }) => {
     }
   }));
   const classes = useStyles();
+
   return (
-    <StyledCard
+    <form
       onClick={e => {
         e.stopPropagation();
       }}
     >
-      <ExitButton
-        className="exit"
-        onClick={() =>
-          history.push({
-            state: { modal: false }
-          })
-        }
-      />
-
       <div className="createProjectFormInputs">
         <h2>Add Project</h2>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "space-around"
+          }}
+        >
           <br />
+          <ExitButton
+            className="exit"
+            onClick={() => setOpenProject(false)}
+            style={{
+              // width: "",
+              position: "absolute",
+              right: "2%",
+              top: "2%",
+              height: "20px"
+            }}
+          />
           <TextField
             onChange={handleInputChange}
             name="name"
@@ -87,7 +98,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
             label="Project Name"
             placeholder="Add a concise name that gives a clear image of your vision for the project"
           />
-          <br />
+
           <br />
           <TextField
             onChange={handleInputChange}
@@ -104,7 +115,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
             placeholder="Add a description of the project that would allow a developer to get a good idea of what problem this application solves,
            and how you would like them to go about accomplishing that"
           />
-          <br />
+
           <br />
           <TextField
             onChange={handleInputChange}
@@ -117,7 +128,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
             label="Image Url"
             placeholder="Anything useful, such as preliminary design files or mockups."
           />
-          <br />
+
           <br />
           <TextField
             onChange={handleInputChange}
@@ -136,7 +147,7 @@ const CreateProjectForm = ({ history, dispatch }) => {
             }}
             placeholder="How much are you willing to spend to finance the creation of this application?"
           />
-          <br />
+
           <br />
           <TextField
             label="Due Date"
@@ -151,14 +162,14 @@ const CreateProjectForm = ({ history, dispatch }) => {
             placeholder="When would you like the project to be completed? Remember to be reasonable,
            we recommend overbudgeting on time as you might not be aware of what it might take to complete this."
           />
-          <br />
+
           <br />
           <Button type="submit">Submit</Button>
           <br />
           <br />
         </form>
       </div>
-    </StyledCard>
+    </form>
   );
 };
 

@@ -12,7 +12,7 @@ import ProjectPlan from "./ProjectPlan";
 import { Button } from "../../custom-styles";
 // import Button from "@material-ui/core/Button";
 import moment from "moment";
-import PlanForm from './CreatePlanForm';
+import PlanForm from "./CreatePlanForm";
 ///////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
 import clsx from "clsx";
@@ -26,17 +26,17 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
-import Modal from '@material-ui/core/Modal';
+import Modal from "@material-ui/core/Modal";
 
 const useStyles = makeStyles(theme => ({
   paperModal: {
-    position: 'absolute',
-    width: '50%',
+    position: "absolute",
+    width: "85%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
-    outline: 'none',
-  },
+    outline: "none"
+  }
 }));
 
 const Project = ({
@@ -59,19 +59,20 @@ const Project = ({
   projectOwnerAvatar,
   user_id
 }) => {
-  
   const [open, setOpen] = useState(false);
+  const [openPlan, setOpenPlan] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpenPlan = () => {
+    setOpenPlan(true);
   };
+
   const modalStyle = {
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)'
-  }
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)"
+  };
   const modalClasses = useStyles();
 
   const [project, setProject] = useState([]);
@@ -269,23 +270,26 @@ const Project = ({
           role === "Developer" ? (
             <div>
               <Button
-               onClick={handleOpen}
-               className="create-plan"
-               //              to={{
-             //state: {
-             //    project_id: project.id,
-             //    modal: modal === true ? false : true
-             //  }
-              //}}
+                onClick={handleOpenPlan}
+                className="create-plan"
+                //              to={{
+                //state: {
+                //    project_id: project.id,
+                //    modal: modal === true ? false : true
+                //  }
+                //}}
               >
                 + Apply to this project
               </Button>
-              <Modal
-                open={open}
-                onClose={handleClose}
-              >
+              <Modal open={openPlan}>
                 <div style={modalStyle} className={modalClasses.paperModal}>
-                  <PlanForm projectId={project.id} user={user} history={history}/> 
+                  <PlanForm
+                    projectId={project.id}
+                    user={user}
+                    history={history}
+                    setOpenPlan={setOpenPlan}
+                    project={project}
+                  />
                 </div>
               </Modal>
             </div>
