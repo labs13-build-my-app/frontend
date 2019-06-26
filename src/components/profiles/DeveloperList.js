@@ -7,14 +7,16 @@ import CardHeader from "@material-ui/core/CardHeader";
 import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import { Pill, PageTitle } from "../../custom-styles";
+//import Button from "@material-ui/core/Button";
+import { Pill, Button, PageTitle } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+import EmailDrawer from "../EmailDrawer";
 
-const Developers = ({ history }) => {
+
+const Developers = ({ history, user }) => {
   const useStyles = makeStyles(theme => ({
     root: {
       width: "100%",
@@ -100,11 +102,17 @@ const Developers = ({ history }) => {
     fetchDevelopers(setDevelopers, setPage);
   }, []);
 
+  const connectWithDeveloper = e => {
+    e.stopPropagation();
+    console.log("clicked");
+  };
+
   if (developers.length === 0) {
     return <h1>Loading...</h1>;
   } else {
     return (
       <>
+
         <PageTitle style={{width: '100%', paddingLeft:'4%'}}>Available Developers</PageTitle>
         <AppBar position="static" color="default">
           <Tabs
@@ -120,6 +128,7 @@ const Developers = ({ history }) => {
             <Tab label="Android" />
           </Tabs>
         </AppBar>
+
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev => (
             (dev.devType.toLowerCase() === filter || filter === 'all') 
@@ -151,6 +160,14 @@ const Developers = ({ history }) => {
                   </Grid>
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
+                  {/* <Button
+                    onClick={e => connectWithDeveloper(e)}
+                  >{`Connect With ${dev.firstName} `}</Button> */}
+                  <EmailDrawer
+                    buttonText={`Message ${dev.firstName} `}
+                    emailAddress={dev.email}
+                    firstName={user.firstName}
+                  />
                 </Card>
               </div>)
             :null
