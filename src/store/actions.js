@@ -43,7 +43,7 @@ const connection = process.env.NODE_ENV === "development" ? local : heroku;
 export const formatDate = date => {
   console.log("Before", date, typeof date);
   date = date.includes("Z") ? date.slice(0, -1) : date;
-  date = date.includes(".") ? new Date(Number(date)) : date;
+  // date = date.includes(".") ? new Date(Number(date)) : date;
   console.log("DATE IS", date);
   console.log("AFTER", moment(date, moment.ISO_8601).format("MMMM DD YYYY"));
   console.log(moment(date).format("MMMM DD YYYY"));
