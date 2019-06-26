@@ -171,7 +171,10 @@ const Project = ({
     },
     buttonWrapper: {
       display: "flex",
-      justifyContent: "space-evenly"
+      justifyContent: "space-evenly",
+      alignItems: "center",
+      width: "80%",
+      margin: "0 auto"
     }
   }));
 
@@ -190,29 +193,28 @@ const Project = ({
     }));
   };
   const { modal } = history.location.state || false;
-  console.log("HELO 2", project.dueDate);
+
   return (
     <>
       <Card
         className="project-card"
         style={{ width: "100%", marginBottom: "20px", minHeight: "700px" }}
       >
-        {project.image_url ? (
-          <CardMedia
-            className={classes.media}
-            image={project.image_url}
-            title={project.name}
-          />
-        ) : null}
+        <CardMedia
+          className={classes.media}
+          image={project.image_url || require("../../assets/images/grey.jpg")}
+          title={project.name}
+        />
         <CardHeader
           avatar={
-            project.image_url ? (
-              <Avatar
-                alt="Remy Sharp"
-                src={project.projectOwnerAvatar}
-                className={classes.bigAvatar}
-              />
-            ) : null
+            <Avatar
+              alt="Profile image"
+              src={
+                project.projectOwnerAvatar ||
+                require("../../assets/images/profile-placeholder.png")
+              }
+              className={classes.bigAvatar}
+            />
           }
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
@@ -232,13 +234,13 @@ const Project = ({
 
           <CardContent className={classes.buttonWrapper}>
             <Button
-              className="TEST"
-              medium
+              // style={{ marginBottom: "25px", marginTop: "25px" }}
+              small
               variant="outlined"
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("HERE", project.user_id);
+
                 history.push(`/profile/${project.user_id}`);
               }}
             >

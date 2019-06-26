@@ -224,7 +224,7 @@ const ProjectView = ({
           }}
         >
           <Button
-            medium
+            small
             variant="outlined"
             onClick={e => {
               e.preventDefault();
