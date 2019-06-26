@@ -29,7 +29,7 @@ import Modal from "@material-ui/core/Modal";
 const useStyles = makeStyles(theme => ({
   paperModal: {
     position: "absolute",
-    width: "50%",
+    width: "85%",
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
@@ -58,12 +58,14 @@ const Project = ({
   user_id
 }) => {
   const [open, setOpen] = useState(false);
+  const [openPlan, setOpenPlan] = useState(false);
   const handleOpen = () => {
     setOpen(true);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleOpenPlan = () => {
+    setOpenPlan(true);
   };
+
   const modalStyle = {
     top: "50%",
     left: "50%",
@@ -261,15 +263,26 @@ const Project = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button onClick={handleOpen} className="create-plan">
+              <Button
+                onClick={handleOpenPlan}
+                className="create-plan"
+                //              to={{
+                //state: {
+                //    project_id: project.id,
+                //    modal: modal === true ? false : true
+                //  }
+                //}}
+              >
                 + Apply to this project
               </Button>
-              <Modal open={open} onClose={handleClose}>
+              <Modal open={openPlan}>
                 <div style={modalStyle} className={modalClasses.paperModal}>
                   <PlanForm
                     projectId={project.id}
                     user={user}
                     history={history}
+                    setOpenPlan={setOpenPlan}
+                    project={project}
                   />
                 </div>
               </Modal>
