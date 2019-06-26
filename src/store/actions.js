@@ -410,7 +410,7 @@ export const fetchProjectSelectedPlan = (project_id, dispatch) => {
 
 // paginated list of projects
 export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
-  console.log(formatDate("2019-06-29T00:00:00.000+00:00"));
+  console.log(formatDate("“2020-02-17T00:00:00.000Z”"));
   if (user_id) {
     console.log("PRINT USER ID", user_id, "PAGE", page);
     axios
