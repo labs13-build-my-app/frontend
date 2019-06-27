@@ -55,8 +55,7 @@ const EditDeveloperDrawer = ({
     // const profileConfig = {
     //   ...profile,
     // };
-    updateProjectOwner(profile, setRefresh, refresh);
-    console.log(profile);
+    updateDeveloper(profile, setRefresh, refresh);
     setState({ ...state, bottom: false });
     setProfile({});
   };
@@ -110,17 +109,6 @@ const EditDeveloperDrawer = ({
           margin="normal"
           variant="outlined"
           label="Email Address"
-        />
-        <br />
-        <TextField
-          onChange={handleInputChange}
-          name="skills"
-          type="text"
-          value={profile.skills}
-          className={classes.textField}
-          margin="normal"
-          variant="outlined"
-          label="Skills"
         />
         <br />
         <TextField
@@ -218,4 +206,4 @@ const EditDeveloperDrawer = ({
     </div>
   );
 };
-export default EditProjectOwnerDrawer;
+export default EditDeveloperDrawer;

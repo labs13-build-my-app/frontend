@@ -25,6 +25,7 @@ import {
   FaBook
 } from "react-icons/fa";
 import { PageTitle, Card, FeedbackCard, Button } from "../../custom-styles";
+import EditDeveloperDrawer from "../projects/EditDeveloperDrawer";
 
 // const Card = styled.div`
 //   display: flex;
@@ -61,7 +62,14 @@ const UserInfo = styled.div`
 //   return <ListItem button component="a" {...props} />;
 // }
 
-const Developer = ({ loggedInUser, user, role, history }) => {
+const Developer = ({
+  loggedInUser,
+  user,
+  role,
+  history,
+  setRefresh,
+  refresh
+}) => {
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
@@ -140,6 +148,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 </a>
               ) : null}
             </div>
+            {loggedInUser.id === user.id ? (
+              <EditDeveloperDrawer setRefresh={setRefresh} refresh={refresh} />
+            ) : null}
             {loggedInUser.id === user.id ? null : (
               <EmailDrawer
                 buttonSize

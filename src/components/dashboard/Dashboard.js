@@ -39,6 +39,8 @@ const Dashboard = ({
           loggedInUser={loggedInUser}
           history={history}
           reload={reload}
+          setRefresh={setRefresh}
+          refresh={refresh}
         />
       );
     } else {

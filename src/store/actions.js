@@ -552,3 +552,22 @@ export const updateProjectOwner = (profileChanges, setRefresh, refresh) => {
       console.log(error.message);
     });
 };
+
+export const updateDeveloper = (profileChanges, setRefresh, refresh) => {
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/developer/update-profile-developer/`,
+    data: profileChanges
+  })
+    .then(res => {
+      setRefresh(!refresh);
+    })
+    .catch(error => {
+      // dispatch({ type: FETCH_FAILURE });
+      console.log(error.message);
+    });
+};
