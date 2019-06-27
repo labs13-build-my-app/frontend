@@ -58,8 +58,12 @@ export const Background = styled.div`
   background-color: rgba(245, 245, 245, 1);
   min-height: 100vh;
   padding: 1px 0px;
-  width: 75%;
-  margin-left: 25%;
+  width: ${props => props.displayNav.width};
+  margin-left: ${props => props.displayNav.marginLeft};
+  @media (max-width: 750px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 export const Pill = styled.div`
   ${props =>
@@ -150,4 +154,26 @@ export const ListDesc = styled.div`
   flex-direction: column;
   liststyle: none;
   align-items: start;
+`;
+
+export const MenuButtonClose = styled.button`
+position: absolute,
+top: 0,
+right: 25px,
+font-size: 36px,
+margin-left: 50px
+`;
+
+export const MenuButtonOpen = styled.button`
+  display: none;
+  border: 2px solid red;
+  @media (max-width: 750px) {
+    font-size: 30px;
+    cursor: pointer;
+    display: block;
+    text-align: left;
+    margin: 15px;
+    position: absolute;
+    display: block;
+  }
 `;

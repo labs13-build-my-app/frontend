@@ -6,6 +6,7 @@ import { loadCSS } from "fg-loadcss";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import styled from "styled-components";
+import { MenuButtonClose, MenuButtonOpen } from "../custom-styles";
 
 const useStyles = makeStyles(theme => ({
   link: {
@@ -45,6 +46,11 @@ const useStyles = makeStyles(theme => ({
     textAlign: "left",
     backgroundImage: "linear-gradient(to top right, #001740, #001740)"
   },
+  closeNavBar: {
+    "@media (max-width: 750px)": {
+      display: "none"
+    }
+  },
   logo: {
     width: " 90%",
     height: "auto",
@@ -54,8 +60,18 @@ const useStyles = makeStyles(theme => ({
 
 const auth = new Auth();
 
-const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
+const NavContainer = ({
+  isSignedIn,
+  isToken,
+  newUser,
+  user,
+  role,
+  setDisplayNav,
+  displayNav
+}) => {
   const [nav, setNav] = useState([]);
+
+  const [navIsOpen, setNavIsOpen] = useState(true);
 
   const [active, setActive] = useState("Home");
 
@@ -105,42 +121,66 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
     setNav(navLinks);
   }, [isSignedIn, isToken, newUser, role, user.id]);
 
+  function openNav() {
+    setNavIsOpen(true);
+    // setDisplayNav(prevState => ({
+    //   ...prevState,
+    //   nav: false
+    // }));
+  }
+  console.log("Frogsssssssss", displayNav);
+
+  function closeNav() {
+    setNavIsOpen(false);
+    // setDisplayNav(prevState => ({
+    //   ...prevState,
+    //   nav: true,
+    //   width: "100%",
+    //   marginLeft: "0%"
+    // }));
+  }
+
   return (
-    <div className={classes.navBar}>
-      <img
-        src={require("../assets/images/logo.png")}
-        alt="logo"
-        className={classes.logo}
-      />
-      <nav
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-around",
-          listStyleType: "none"
-        }}
-      >
-        {nav.map(link => {
-          return (
-            <Link
-              key={link.label}
-              className={
-                active === link.label ? classes.selectedLink : classes.link
-              }
-              onClick={() => setActive(link.label)}
-              to={{ pathname: link.route, state: link.state }}
-            >
-              <Icon
-                className={clsx(classes.icon, link.icon)}
-                style={{ marginLeft: "40px" }}
-              />
-              {link.label}
-            </Link>
-          );
-        })}
-      </nav>
-    </div>
+    <>
+      <MenuButtonOpen onClick={() => openNav()}>☰</MenuButtonOpen>
+      {navIsOpen ? (
+        <div className={navIsOpen ? classes.navBar : classes.closeNavBar}>
+          <MenuButtonClose onClick={() => closeNav()}>&times;</MenuButtonClose>
+          <img
+            src={require("../assets/images/logo.png")}
+            alt="logo"
+            className={classes.logo}
+          />
+          <nav
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-around",
+              listStyleType: "none"
+            }}
+          >
+            {nav.map(link => {
+              return (
+                <Link
+                  key={link.label}
+                  className={
+                    active === link.label ? classes.selectedLink : classes.link
+                  }
+                  onClick={() => setActive(link.label)}
+                  to={{ pathname: link.route, state: link.state }}
+                >
+                  <Icon
+                    className={clsx(classes.icon, link.icon)}
+                    style={{ marginLeft: "40px" }}
+                  />
+                  {link.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </div>
+      ) : null}
+    </>
   );
 };
-
 export default NavContainer;

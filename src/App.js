@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import store from "./store";
 import { withRouter } from "react-router";
 import { locationRestore, fetchUser } from "./store/actions";
@@ -24,6 +24,12 @@ const App = ({ history, match }) => {
     isLoading
   } = state;
   const { pathname } = history.location;
+
+  const [displayNav, setDisplayNav] = useState({
+    nav: false,
+    width: "75%",
+    marginLeft: "25%"
+  });
 
   useEffect(() => {
     if (
@@ -118,8 +124,13 @@ const App = ({ history, match }) => {
 
   return (
     <div className="App">
-      <NavContainer {...state} />
-      <Background>
+      <NavContainer
+        {...state}
+        displayNav={displayNav}
+        setDisplayNav={setDisplayNav}
+      />
+
+      <Background displayNav={displayNav}>
         <RouteContainer {...{ ...state, dispatch, reload }} />
         {modal ? (
           <ModalContainer

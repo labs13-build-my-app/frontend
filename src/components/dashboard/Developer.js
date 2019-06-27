@@ -78,6 +78,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             }}
           />
         </div>
+
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
             <p style={{ fontSize: "20px" }}>
@@ -90,7 +91,11 @@ const Developer = ({ loggedInUser, user, role, history }) => {
               <div className="dev-skills">
                 <span className="skill-tag">Specializing in</span>
                 {userSkills.map(el => {
-                  return <span className="skill">{el}</span>;
+                  return (
+                    <span key={el} className="skill">
+                      {el}
+                    </span>
+                  );
                 })}
               </div>
             ) : null}

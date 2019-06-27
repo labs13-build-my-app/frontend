@@ -98,6 +98,10 @@ span.plan-tag-title {
 }
 .skill {
   margin-right: 20px;
+  background: lightgray;
+  border-radius: 7px;
+  padding: 7px;
+  text-align: center;
 }
 
 .projects-list-wrapper {
