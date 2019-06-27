@@ -9,13 +9,6 @@ import { Background } from "./custom-styles";
 
 import "./App.css";
 
-// complete routing
-// must implement propTypes for testing
-// review state and actions
-
-// routes should only load data when isLoading is false
-// login and sign up changes isloading from false back to true
-
 const App = ({ history, match }) => {
   // step 1 set initial state
   const [state, dispatch] = useReducer(store.usersReducer, store.initialState);
@@ -29,20 +22,14 @@ const App = ({ history, match }) => {
     isNewUser,
     location,
     isLoading
-    // fetch
   } = state;
   const { pathname } = history.location;
-
-  // logging state here
-  // console.log("STATE", state, isLoading, history.location.state, pathname);
-  // console.log("HISTORY FUOOL", history);
 
   useEffect(() => {
     if (
       pathname !== location &&
       pathname !== "/login" &&
       pathname !== "/signup" &&
-      // pathname !== "/callback" &&
       pathname !== undefined &&
       isToken === false
     ) {
@@ -65,10 +52,9 @@ const App = ({ history, match }) => {
             isNewUser: false,
             user: {}
           }
-          // history.push("/home");
         });
       } else if (isToken && isLoading && !role && !isSignedIn && !isNewUser) {
-        fetchUser(localStorage.getItem("token"), dispatch); //I wonder if I can do a function with a call back and pass in the action with out importing. something to test later
+        fetchUser(localStorage.getItem("token"), dispatch);
       } else if (isToken && isLoading && role && !isSignedIn) {
         dispatch({
           type: "LOADING_STATUS",
@@ -98,7 +84,6 @@ const App = ({ history, match }) => {
           pathname: `/profile/${user.id}`
         });
       } else if (!isToken && !localStorage.getItem("token") && !isLoading) {
-        // history.push(location); // could push to dynamic location
       } else if (history.location.state === "logout") {
         localStorage.removeItem("isLoggedIn");
         localStorage.removeItem("token");

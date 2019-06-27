@@ -111,10 +111,6 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
           rows="6"
           onClick={e => e.stopPropagation()}
         />
-        {/* <br />
-        <br />
-        <br />
-        <br /> */}
         <Button
           small
           style={{ width: "15%", margin: "15px auto", textAlign: "center" }}

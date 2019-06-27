@@ -96,8 +96,6 @@ export const fetchUser = (token, dispatch) => {
     url: `${connection}/api/account/onboarding/login`
   })
     .then(res => {
-      // Step 9 (b) Step 15 (a)  client sets role and basic user info to state -- ex. role:”Project Owner” user: {basic info}
-      // Step 10 (b) Step 16 (a) client sets state isSignedIn to true and isLoading to false -- isSignedIn: true, isLoading: false
       if (!res.data.role) {
         dispatch({
           type: USER_SIGNUP,
@@ -290,7 +288,6 @@ export const createPlan = (plan, project_id) => {
 
 // update  plan
 export const updatePlan = (plan, plan_id, dispatch) => {
-  // dispatch({ type: FETCH_START });
   axios({
     method: "PUT",
     headers: {
@@ -307,7 +304,6 @@ export const updatePlan = (plan, plan_id, dispatch) => {
       });
     })
     .catch(error => {
-      // dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };
@@ -371,12 +367,7 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 };
 
 // page view of a project
-export const fetchProject = (
-  project_id,
-  // formatDate,
-  formatBudget,
-  setProject
-) => {
+export const fetchProject = (project_id, formatBudget, setProject) => {
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {

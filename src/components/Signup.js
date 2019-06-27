@@ -9,23 +9,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
-// import "./Signup.css";
+
 import { Button } from "../custom-styles";
 
 const SignupForm = styled.form``;
-// display: flex;
-// flex-direction: column;
-// align-items: center;
-// background-color: white;
-// border: 1px lightgrey solid;
-// border-radius: 20px;
-// margin: 25px auto;
-// padding: 15px 10px;
-// width: 700px;
-// box-shadow: 10px 10px 10px grey;
-// div {
-//   display: flex;
-// }
+
 const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
@@ -53,9 +41,6 @@ const useStyles = makeStyles(theme => ({
   selectEmpty: {
     marginTop: theme.spacing(1)
   }
-  // root: {
-  //   width: "100%"
-  // }
 }));
 
 const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
@@ -108,11 +93,6 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
       },
       dispatch
     );
-    // new user is still set to true
-    // need to set newUser to false after signup
-    // should not push to dashboard
-    // should push to profile page
-    // history.push("/dashboard");
   };
   if (isSignedIn || isLoading || !localStorage.getItem("token")) {
     return <div>loading...</div>;

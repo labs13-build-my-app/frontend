@@ -17,7 +17,7 @@ const Projects = ({
   match
 }) => {
   const props = { match, role, isLoading, isSignedIn };
-  const [projects, setProjects] = useState([]); // public PO or not loggin User
+  const [projects, setProjects] = useState([]);
 
   const [pageCount, setPageCount] = useState(1);
 
@@ -105,7 +105,6 @@ const Projects = ({
           Next
         </Button>
       ) : null}
-      {/* </div> */}
     </>
   );
 };

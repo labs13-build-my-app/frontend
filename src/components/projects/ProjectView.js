@@ -75,28 +75,10 @@ const ProjectView = ({
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
-    // if (!match.params.project_id && !isLoading) {
-    //   // DUEDATE IS UNDEFINED
-    //   // const newDueDate = formatDate(project.dueDate); //run res.data.date through formatter
-    //   // const newBudget = formatBudget(project.budget); //change budget from dollars to cents
-
-    //   setProject({
-    //     name,
-    //     description,
-    //     email,
-    //     image_url,
-    //     budget: newBudget,
-    //     dueDate: newDueDate,
-    //     firstName,
-    //     lastName,
-    //     projectOwnerAvatar,
-    //     user_id
-    //   });
-    // }
     if (match.params.project_id && !isLoading) {
       fetchProject(
         match.params.project_id,
-        // formatDate,
+
         formatBudget,
         setProject
       );
@@ -138,7 +120,6 @@ const ProjectView = ({
     return <h1>Loading...</h1>;
   }
 
-  ////////////////////////  MUI STYLINGS
   const getStyles = makeStyles(theme => ({
     projectCard: {
       display: "flex",
@@ -278,18 +259,7 @@ const ProjectView = ({
               src={project.image_url || require("../../assets/images/grey.jpg")}
             />
           </div>
-          {/* <CardMedia
-              className={classes.media}
-              image={project.image_url}
-              title={project.name}
-            /> */}
         </>
-
-        {/* <CardContent className={classes.content}>
-          <p>{project.description}</p>
-          <p>Willing to pay {project.budget}</p>
-          <p>Need by {project.dueDate}</p>
-        </CardContent> */}
 
         <div>
           {project.projectStatus === "completed" ? (

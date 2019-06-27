@@ -22,20 +22,6 @@ export const Button = styled.button`
   }
 `;
 
-// CARD COMPONENT MADE BY JOE
-
-// export const Card = styled.div`
-// display: flex;
-// justify-content: space-around;
-// align-items: center;
-// margin: 20px auto;
-// border: 1px solid lightgrey;
-// border-radius: 15px;
-// box-shadow: lightgrey 15px 15px 15px;
-// padding: 10px;
-// }
-// `;
-
 export const Card = styled.div`
   display: -webkit-box;
   display: -webkit-flex;

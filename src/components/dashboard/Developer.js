@@ -26,40 +26,10 @@ import {
 } from "react-icons/fa";
 import { PageTitle, Card, FeedbackCard, Button } from "../../custom-styles";
 
-// const Card = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   margin: 20px auto;
-//   border: 1px solid lightgrey;
-//   border-radius: 15px;
-//   box-shadow: lightgrey 15px 15px 15px;
-//   padding: 10px;
-// `;
-// const divStyle = {
-//   display: "flex",
-//   justifyContent: "space-around",
-//   alignItems: "center",
-//   flexDirection: "column",
-//   margin: "20px auto",
-//   border: "1px solid lightgrey",
-//   borderRadius: "4px",
-//   boxShadow:
-//     "0px 1px 3px 0px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 2px 1px -1px rgba(0,0,0,0.12)",
-//   padding: "10px",
-//   backgroundColor: "white",
-//   color: "rgba(0, 0, 0, 0.87)",
-//   transition: "box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms",
-//   backgroundColor: "#fff"
-// };
 const UserInfo = styled.div`
   text-align: left;
   width: 50%;
 `;
-
-// function ListItemLink(props) {
-//   return <ListItem button component="a" {...props} />;
-// }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
   const [state, setState] = React.useState({
@@ -209,52 +179,6 @@ const Developer = ({ loggedInUser, user, role, history }) => {
         {plans.length === 0 ? (
           <Card className={"card plansCard"}>No plans</Card>
         ) : (
-          // plans.map(
-          //   plan =>
-          //     !filters.includes(plan.planStatus.toLowerCase()) && (
-          //       <ExpansionPanel
-          //         key={plan.id}
-          //         component={
-          //           <div style={{ width: "100%" }}>
-          //             <PageTitle>Plan Description</PageTitle>
-          //             <p>{plan.description}</p>
-          //             {loggedInUser.id === user.id &&
-          //             plan.planStatus === "selected" ? (
-          //               <Plan
-          //                 user={user}
-          //                 loggedInUser={loggedInUser}
-          //                 planID={plan.id}
-          //               />
-          //             ) : null}
-          //             <Divider style={{ margin: "10px 0px" }} />
-          //             <Button
-          //               small
-          //               onClick={() =>
-          //                 history.push(`/project/${plan.project_id}`)
-          //               }
-          //             >
-          //               See Project Page
-          //             </Button>
-          //           </div>
-          //         }
-          //         plan={plan}
-          //       />
-          //       // <Card
-          //       //   key={plan.id}
-          //       //   className={"card plansCard"}
-          //       //   onClick={() => history.push(`/plan/${plan.id}`)}
-          //       // >
-          //       //   {plan.image_url ? (
-          //       //     <img src={plan.image_url} alt={plan.name} />
-          //       //   ) : null}
-          //       //   <StatusPill status={plan.planStatus}>
-          //       //     {plan.planStatus}
-          //       //   </StatusPill>
-          //       //   <p>{plan.name}</p>
-          //       //   <p>{plan.description}</p>
-          //       // </Card>
-          //     )
-          // )
           plans
             .filter(plan => {
               let planState = true;
@@ -291,20 +215,6 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                     }
                     plan={plan}
                   />
-                  // <Card
-                  //   key={plan.id}
-                  //   className={"card plansCard"}
-                  //   onClick={() => history.push(`/plan/${plan.id}`)}
-                  // >
-                  //   {plan.image_url ? (
-                  //     <img src={plan.image_url} alt={plan.name} />
-                  //   ) : null}
-                  //   <StatusPill status={plan.planStatus}>
-                  //     {plan.planStatus}
-                  //   </StatusPill>
-                  //   <p>{plan.name}</p>
-                  //   <p>{plan.description}</p>
-                  // </Card>
                 )
             )
         )}
@@ -351,16 +261,7 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                   }
                 said this about ${user.firstName}`}
                 </h4>
-                {/* <p
-                onClick={() =>
-                  history.push(`/profile/${feedback.projectOwnerID}`)
-                }
-              >
-                {feedback.projectOwnerFirstName}
-                {""} {feedback.projectOwnerLastName}
-              </p> */}
                 <em>{feedback.feedback}</em>
-                {/* <Divider style={{ margin: "10px 0px" }} /> */}
                 <Button
                   small
                   onClick={() => history.push(`/project/${feedback.projectID}`)}

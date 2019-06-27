@@ -49,11 +49,6 @@ const useStyles = makeStyles(theme => ({
     width: " 90%",
     height: "auto",
     padding: "10% 5%"
-    // width: "100%",
-    // height: "auto",
-    // margin: "45px 0 75px",
-    // marginLeft: "25px",
-    // marginRight: "15px"
   }
 }));
 
@@ -63,7 +58,6 @@ const NavContainer = ({ isSignedIn, isToken, newUser, user, role }) => {
   const [nav, setNav] = useState([]);
 
   const [active, setActive] = useState("Home");
-  //need to set initial active tab to current page. Maybe get current URL path and match to .route in navLinks and then set active to that .label
 
   const classes = useStyles();
 
