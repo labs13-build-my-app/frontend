@@ -5,6 +5,7 @@ import Dashboard from "./dashboard/Dashboard";
 import Developers from "./profiles/DeveloperList";
 import Projects from "./projects/Projects";
 import ProjectView from "./projects/ProjectView";
+import HomeComponent from "./HomeComponent";
 import Project from "./projects/Project";
 import ProjectsContainer from "./projectTemp/ProjectsContainer";
 import Plan from "./projects/Plan";
@@ -59,7 +60,10 @@ const RouteContainer = ({
       {/* can add a marketing Routing component for home */}
       {!isLoading ? (
         <>
-          <Route path={"/home"} render={() => <h1>home component</h1>} />
+          <Route
+            path={"/home"}
+            render={props => <HomeComponent {...props} {...state} />}
+          />
 
           <Route
             path={"/profile/:user_id"}
