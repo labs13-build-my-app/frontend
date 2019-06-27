@@ -30,6 +30,7 @@ export const USER_SIGNUP = "USER_SIGNUP";
 export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const LOADING_COMPLETE = "LOADING_COMPLETE";
+export const UPDATE_DEV_SUCCESS = "UPDATE_DEV_SUCCESS";
 
 export const FETCH_DEVELOPER_LIST_START = "FETCH_DEVELOPER_LIST_START";
 export const FETCH_DEVELOPER_LIST_SUCCESS = "FETCH_DEVELOPER_LIST_SUCCESS";
@@ -37,7 +38,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
-const connection = process.env.NODE_ENV === 'development' ? local : heroku;
+const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -309,7 +310,7 @@ export const createPlan = (plan, project_id) => {
     data: plan
   })
     .then(res => {
-      console.log(res)
+      console.log(res);
     })
     .catch(error => {
       console.log(error.message);
@@ -530,4 +531,24 @@ export const sendEmail = email => {
       console.log(res.data);
     })
     .catch(err => console.log(err));
+};
+
+export const updateProjectOwner = (profileChanges, setRefresh, refresh) => {
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/developer/update-profile-project-owner/`,
+    data: profileChanges
+  })
+    .then(res => {
+      console.log(res.data);
+      setRefresh(!refresh);
+    })
+    .catch(error => {
+      // dispatch({ type: FETCH_FAILURE });
+      console.log(error.message);
+    });
 };
