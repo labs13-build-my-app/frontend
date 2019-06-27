@@ -4,17 +4,15 @@ import { deepPurple } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
 //import Button from "@material-ui/core/Button";
 import { Pill, Button, PageTitle } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 import EmailDrawer from "../EmailDrawer";
-
 
 const Developers = ({ history, user }) => {
   const useStyles = makeStyles(theme => ({
@@ -82,13 +80,13 @@ const Developers = ({ history, user }) => {
     }
   }));
   const classes = useStyles();
-  
+
   const theme = useTheme();
   const [value, setValue] = useState(0);
-  const [filter, setFilter] = useState('');
-  const filters = ['all', 'web', 'ios' ,'android'];
+  const [filter, setFilter] = useState("");
+  const filters = ["all", "web", "ios", "android"];
 
-  useEffect(()=>{
+  useEffect(() => {
     setFilter(filters[value]);
   }, [value]);
 
@@ -112,8 +110,9 @@ const Developers = ({ history, user }) => {
   } else {
     return (
       <>
-
-        <PageTitle style={{width: '100%', paddingLeft:'4%'}}>Available Developers</PageTitle>
+        <PageTitle style={{ width: "100%", paddingLeft: "4%" }}>
+          Available Developers
+        </PageTitle>
         <AppBar position="static" color="default">
           <Tabs
             value={value}
@@ -130,9 +129,9 @@ const Developers = ({ history, user }) => {
         </AppBar>
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
-          {developers.map(dev => (
-            (dev.devType.toLowerCase() === filter || filter === 'all') 
-              ? (<div className={classes.cardContainer} key={dev.id}>
+          {developers.map(dev =>
+            dev.devType.toLowerCase() === filter || filter === "all" ? (
+              <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
                   onClick={() => history.push(`/profile/${dev.id}`)}
@@ -169,9 +168,9 @@ const Developers = ({ history, user }) => {
                     firstName={user.firstName}
                   />
                 </Card>
-              </div>)
-            :null
-          ))}
+              </div>
+            ) : null
+          )}
         </div>
       </>
     );
