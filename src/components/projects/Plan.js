@@ -75,7 +75,7 @@ const Plan = ({
     e.preventDefault();
     let planUpdate = "completed";
     setPlanStatus(planUpdate);
-    // console.log(planStatus);
+
     updatePlan({ planStatus: planUpdate }, currentPlanID);
     setPlan(prevState => ({
       ...prevState,

@@ -89,7 +89,7 @@ const Project = ({
     if (!match.params.project_id && !isLoading) {
       // const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
-      console.log(newBudget);
+
       setProject({
         name,
         description,

@@ -62,7 +62,6 @@ const UserInfo = styled.div`
 // }
 
 const Developer = ({ loggedInUser, user, role, history }) => {
-  console.log("LOG", loggedInUser, "USER", user);
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,

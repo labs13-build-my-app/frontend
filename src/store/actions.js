@@ -126,13 +126,11 @@ export const fetchUser = (token, dispatch) => {
 
 // fetch user profile
 export const fetchProfile = (userId, dispatch) => {
-  console.log(userId);
   axios({
     method: "GET",
     url: `${connection}/api/users/profile/${userId}`
   })
     .then(res => {
-      console.log(res);
       dispatch(res.data);
     })
     .catch(error => {
@@ -159,8 +157,6 @@ export const fetchDeveloper = (developer_id, dispatch) => {
 // fetch list of developers
 // list are paginated
 export const fetchDevelopers = (dispatch, setPage) => {
-  // dispatch({ type: FETCH_START });
-  console.log(" in fetch Developers");
   axios({
     method: "GET",
     url: `${connection}/api/users/list-developers`,
@@ -170,8 +166,6 @@ export const fetchDevelopers = (dispatch, setPage) => {
     }
   })
     .then(res => {
-      // what this here? this doesn't look right
-      console.log(res);
       dispatch(prevState => [...prevState, ...res.data.developers]);
     })
     .catch(err => {
@@ -228,8 +222,6 @@ export const createProject = (project, project_Owner_Id, setProjects, cb) => {
     data: project
   })
     .then(res => {
-      console.log("project owner id", project_Owner_Id);
-      console.log(res.data);
       fecthProjectOwnerProjectsList(project_Owner_Id, setProjects);
       cb();
     })
@@ -250,7 +242,6 @@ export const updateProject = (project_id, project, history, dispatch) => {
     data: project
   })
     .then(res => {
-      console.log(res);
       history.push(`/project/${res.data.id}`);
     })
     .catch(err => console.log(err));
@@ -372,7 +363,6 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
     url: `${connection}/api/projects/project-list/${project_Owner_Id}`
   })
     .then(res => {
-      console.log("fetching projects", res.data);
       res.data.message === "No Projects" ? dispatch([]) : dispatch(res.data);
     })
     .catch(error => {
@@ -387,11 +377,9 @@ export const fetchProject = (
   formatBudget,
   setProject
 ) => {
-  console.log("fetching data");
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      console.log("RES in Fetch Project", setProject);
       setProject({ ...res.data, dueDate: formatDate(res.data.dueDate) });
     })
     .catch(err => console.log(err));
@@ -418,9 +406,7 @@ export const fetchProjectSelectedPlan = (project_id, dispatch) => {
 
 // paginated list of projects
 export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
-  // console.log(formatDate("2019-06-29T00:00:00.000+00:00"));
   if (user_id) {
-    console.log("PRINT USER ID", user_id, "PAGE", page);
     axios
       .get(
         `${connection}/api/projects/paginated-list-of-projects?page=${page}&user_id=${user_id}`
@@ -495,7 +481,7 @@ export const acceptPlan = (project_id, plan, dispatch) => {
     url: `${connection}/api/account/project-owner/accept-plan/${project_id}`,
     data: plan
   })
-    .then(res => console.log(res, "here"))
+    .then(res => console.log(res))
     .catch(err => console.log(err));
 };
 export const sendEmail = email => {
@@ -524,7 +510,7 @@ export const sendUpdateMessage = (projectID, userEmail, userName) => {
 };
 export const updateProjectStatus = (project, cb) => {
   const { id, user_id } = project;
-  console.log(id, user_id);
+
   axios({
     method: "PUT",
     headers: {
@@ -535,7 +521,6 @@ export const updateProjectStatus = (project, cb) => {
     data: { user_id }
   })
     .then(res => {
-      console.log(res.data);
       cb(res.data);
     })
     .catch(err => console.log(err));

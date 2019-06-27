@@ -74,7 +74,6 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const inputLabel = React.useRef(0);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
-    console.log(labelWidth);
     setLabelWidth(inputLabel.current.offsetWidth);
     return () => setLabelWidth(null);
   }, [labelWidth]);
@@ -88,7 +87,6 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const changeHandler = (e, setState) => {
     let user = e.target.value;
     setState(user);
-    console.log(user);
   };
   const submitHandler = e => {
     e.preventDefault();

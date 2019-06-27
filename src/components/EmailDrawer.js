@@ -51,7 +51,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
       name: firstName
     };
     sendEmail(emailConfig);
-    console.log(emailConfig);
+
     setState({ ...state, bottom: false });
   };
 

@@ -43,7 +43,7 @@ const Projects = ({
       return acc;
     }
   }, []);
-  // console.log("HELOO", project.dueDate);
+
   return (
     <>
       <PageTitle className="projects-list-header">Available Projects</PageTitle>

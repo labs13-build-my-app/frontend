@@ -102,7 +102,6 @@ const Developers = ({ history, user }) => {
 
   const connectWithDeveloper = e => {
     e.stopPropagation();
-    console.log("clicked");
   };
 
   if (developers.length === 0) {

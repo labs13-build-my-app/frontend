@@ -115,7 +115,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProjectOwner = ({ loggedInUser, user, role, history }) => {
-  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
@@ -264,7 +263,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
           />
         </div>
       </Modal>
-      {console.log(projects)}
+
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (

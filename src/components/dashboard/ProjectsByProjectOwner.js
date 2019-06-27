@@ -35,7 +35,7 @@ const ProjectByProjectOwner = ({
   useEffect(() => {
     listProjectPlans(project.id, setProjectPlans);
   }, [project.id]);
-  console.log(projectPlans, "<<<<<<<<<<");
+
   function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -88,7 +88,7 @@ const ProjectByProjectOwner = ({
   };
 
   const classes = useStyles();
-  console.log(project);
+
   return (
     <div style={{ width: "100%" }}>
       <Card key={project.id} className={"card projectsCard"}>
