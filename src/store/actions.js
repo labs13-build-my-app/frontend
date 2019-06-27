@@ -277,8 +277,7 @@ export const updateProject = (project_id, project, history, dispatch) => {
 };
 
 // delete a project
-export const deleteProject = (project_id, dispatch) => {
-  dispatch({ type: FETCH_START });
+export const deleteProject = (project_id, reload, setReload) => {
   axios({
     method: "DELETE",
     headers: {
@@ -288,12 +287,10 @@ export const deleteProject = (project_id, dispatch) => {
     url: `${connection}/api/account/project-owner/delete-project/${project_id}`
   })
     .then(res => {
-      dispatch({
-        type: DELETE_PROJECT_SUCCESS
-      });
+      console.log(res);
+      setReload(!reload);
     })
     .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };

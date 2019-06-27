@@ -5,7 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
-import { listProjectPlans } from "../../store/actions";
+import { listProjectPlans, deleteProject } from "../../store/actions";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -28,7 +28,9 @@ const ProjectByProjectOwner = ({
   modalStyle,
   open,
   updateProjectStatus,
-  setProjects
+  setProjects,
+  reload,
+  setReload
 }) => {
   const [projectPlans, setProjectPlans] = useState({});
 
@@ -143,9 +145,11 @@ const ProjectByProjectOwner = ({
                 <i class="fas fa-check" /> &nbsp; Mark Completed
               </Button>
             ) : null}
+            <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
             {project.projectStatus === "completed" ? (
               // hide when loggedIn !== user
               <Button
+                medium 
                 style={displayOnlyOnLoggedInUser()}
                 onClick={() => handleOpenFeedback(project.id)}
               >
@@ -156,13 +160,14 @@ const ProjectByProjectOwner = ({
             <Icon
               className={clsx(classes.delete, "far fa-trash-alt")}
               style={displayOnlyOnLoggedInUser()}
-              onClick={handleOpen}
+              onClick={() => handleOpen()}
             />
+            </div>
             <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
               open={open}
-              onClose={handleClose}
+              //onClose={handleClose}
             >
               <div style={modalStyle} className={classes.paper}>
                 <h3>Are you sure you want to delete this project?</h3>
@@ -172,24 +177,33 @@ const ProjectByProjectOwner = ({
                     justifyContent: "space-around"
                   }}
                 >
-                  <div
-                    className={classes.delete}
-                    style={{ display: "flex", alignItems: "center" }}
+                  <Button
+                      backgroundColor='green' 
+                      color='white'
+                      width='35%dd'
+                      small
+                      onClick={() => {
+                        deleteProject(project.id, reload, setReload)
+                        handleClose()
+                      }}
                   >
                     <Icon
-                      className={clsx(classes.accept, "far fa-check-circle")}
+                      className={clsx('', "far fa-check-circle")}
                     />
-                    <p className={classes.accept}> Delete</p>
-                  </div>
-                  <div
-                    className={classes.delete}
-                    style={{ display: "flex", alignItems: "center" }}
+                    <p> Delete</p>
+                  </Button>
+                  <Button
+                      backgroundColor='red' 
+                      color='white'
+                      width='35%'
+                      small 
+                      onClick={handleClose}
                   >
                     <Icon
-                      className={clsx(classes.delete, "far fa-times-circle")}
+                      className={clsx('', "far fa-times-circle")}
                     />
                     <p> Cancel</p>
-                  </div>
+                  </Button>
                 </div>
               </div>
             </Modal>

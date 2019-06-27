@@ -174,6 +174,7 @@ const Developers = ({ history, user }) => {
                     onClick={e => connectWithDeveloper(e)}
                   >{`Connect With ${dev.firstName} `}</Button> */}
                   <EmailDrawer
+                    center
                     buttonText={`Message ${dev.firstName} `}
                     emailAddress={dev.email}
                     firstName={user.firstName}
