@@ -30,6 +30,7 @@ import {
 import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
+import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
 import ProjectForm from "../../components/projects/CreateProjectForm";
 
 // const Card = styled.div`
@@ -114,7 +115,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProjectOwner = ({ loggedInUser, user, role, history }) => {
+const ProjectOwner = ({
+  loggedInUser,
+  user,
+  role,
+  history,
+  setRefresh,
+  refresh
+}) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
@@ -239,6 +247,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               />
             )}
           </List>
+          {loggedInUser.id === user.id ? (
+            <EditProjectOwnerDrawer setRefresh={setRefresh} refresh={refresh} />
+          ) : null}
         </UserInfo>
       </Card>
       <Button
