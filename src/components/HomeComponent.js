@@ -19,6 +19,10 @@ const HomeComponent = () => {
           //   subheading="See More"
           component={
             <>
+              <img
+                src="../../assets/images/createproject.png"
+                alt="create a project"
+              />
               <Button onClick={() => setComplete("completed")}>
                 Mark Complete
               </Button>
