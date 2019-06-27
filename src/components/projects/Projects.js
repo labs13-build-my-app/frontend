@@ -14,10 +14,9 @@ const Projects = ({
   error,
   role,
   user,
-  match,
-  history
+  match
 }) => {
-  const props = { history, match, role, isLoading, isSignedIn };
+  const props = { match, role, isLoading, isSignedIn };
   const [projects, setProjects] = useState([]); // public PO or not loggin User
 
   const [pageCount, setPageCount] = useState(1);
@@ -26,7 +25,7 @@ const Projects = ({
     if (projects.length === 0 && !isLoading && pageCount) {
       fetchProjects(user.id, pageCount, setProjects, setPageCount);
     }
-  }, [isLoading, history.location.state, pageCount, user.id, projects.length]);
+  }, [isLoading, pageCount, user.id, projects.length]);
 
   if (!projects) {
     return <h1>Loading...</h1>;

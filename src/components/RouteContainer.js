@@ -6,8 +6,6 @@ import Developers from "./profiles/DeveloperList";
 import Projects from "./projects/Projects";
 import ProjectView from "./projects/ProjectView";
 import HomeComponent from "./HomeComponent";
-import Project from "./projects/Project";
-import ProjectsContainer from "./projectTemp/ProjectsContainer";
 import Plan from "./projects/Plan";
 import Callback from "./Auth/Callback";
 import "./Signup.css";
@@ -41,7 +39,7 @@ const RouteContainer = ({
   return (
     <>
       {/* Home component  */}
-      <Route path={"/"} render={props => <Home {...props} {...state} />} />
+      {/* <Route path={"/"} render={props => <Home {...props} {...state} />} /> */}
 
       {!isSignedIn && !isLoading ? (
         <>

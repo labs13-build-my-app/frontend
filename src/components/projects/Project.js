@@ -192,7 +192,6 @@ const Project = ({
       projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
   };
-  const { modal } = history.location.state || false;
 
   return (
     <>
