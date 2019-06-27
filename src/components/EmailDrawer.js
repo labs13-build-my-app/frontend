@@ -132,7 +132,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
   return (
     <>
       {email ? (
-        <Button medium email onClick={toggleDrawer("bottom", true)}>
+        <Button small email onClick={toggleDrawer("bottom", true)}>
           {buttonText || "Send Email"}
         </Button>
       ) : (

@@ -40,12 +40,19 @@ const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
-export const formatDate = date => {
+export const formatDate = (date = "") => {
+  date = date.includes("Z") ? date.slice(0, -1) : date;
+  date =
+    date.includes(".") && process.env.NODE_ENV === "development"
+      ? new Date(Number(date))
+      : date;
+
   const someDate =
     process.env.NODE_ENV === "development"
-      ? moment(date).format("MMMM Do YYYY")
-      : moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+      ? moment(date).format("MMMM DD YYYY")
+      : moment(date, moment.ISO_8601).format("MMMM DD YYYY");
   // const someDate = moment(date, moment.ISO_8601).format("MMMM Do YYYY");
+
   return someDate;
 };
 
@@ -376,15 +383,16 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 // page view of a project
 export const fetchProject = (
   project_id,
-  formatDate,
+  // formatDate,
   formatBudget,
-  dispatch
+  setProject
 ) => {
   console.log("fetching data");
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      dispatch({ ...res.data, dueDate: formatDate(res.data.dueDate) });
+      console.log("RES in Fetch Project", setProject);
+      setProject({ ...res.data, dueDate: formatDate(res.data.dueDate) });
     })
     .catch(err => console.log(err));
 };
@@ -410,7 +418,7 @@ export const fetchProjectSelectedPlan = (project_id, dispatch) => {
 
 // paginated list of projects
 export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
-  console.log(formatDate("“2020-02-17T00:00:00.000Z”"));
+  // console.log(formatDate("2019-06-29T00:00:00.000+00:00"));
   if (user_id) {
     console.log("PRINT USER ID", user_id, "PAGE", page);
     axios
@@ -427,7 +435,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: project.projectDueDate,
+            dueDate: formatDate(project.projectDueDate),
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
@@ -446,7 +454,10 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       .then(res => {
         const { projects, page, total_pages } = res.data;
 
-        setProjects(projects);
+        const formatedProjects = projects.map(project => {
+          return { ...project, dueDate: formatDate(project.dueDate) };
+        });
+        setProjects(formatedProjects);
         setPageCount({ page: Number(page), total_pages });
       })
       .catch(err => console.log(err));

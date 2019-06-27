@@ -5,7 +5,9 @@ const auth = new auth0.WebAuth({
   domain: "dev-juy4gqyj.auth0.com",
   clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
   redirectUri: process.env.NODE_ENV === 'production' 
-    ? 'https://build-my-app-fe.onrender.com/callback' 
+    ? process.env.REACT_APP_TEST_DEPLOY 
+      ? 'https://build-my-app-test-deploy.onrender.com/callback'
+      : 'https://build-my-app-fe.onrender.com/callback'
     : 'http://localhost:3000/callback',
   responseType: "token id_token",
   scope: "openid profile"
