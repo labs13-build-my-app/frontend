@@ -114,8 +114,7 @@ const ProjectView = ({
     image_url,
     firstName,
     lastName,
-    projectOwnerAvatar,
-    user_id
+    projectOwnerAvatar
   ]);
 
   const [projectPlans, setProjectPlans] = useState([]);
