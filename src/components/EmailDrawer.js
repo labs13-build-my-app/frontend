@@ -70,10 +70,18 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
   };
 
   const fullList = side => (
-    <div className={classes.fullList} role="presentation">
-      <form onSubmit={handleSubmit}>
+    <div
+      className={classes.fullList}
+      role="presentation"
+      style={{ width: "auto", display: "flex", justifyContent: "space-around" }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{ width: "50%", display: "flex", flexDirection: "column" }}
+      >
         <br />
         <TextField
+          style={{ width: "100%", marginLeft: "8px", marginRight: "8px" }}
           onChange={handleInputChange}
           name="replyTo"
           type="text"
@@ -83,11 +91,13 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
           margin="normal"
           variant="outlined"
           label="Your E-mail"
+          onClick={e => e.stopPropagation()}
         />
         <br />
 
         <br />
         <TextField
+          style={{ width: "100%", marginLeft: "8px", marginRight: "8px" }}
           onChange={handleInputChange}
           name="text"
           type="text"
@@ -99,12 +109,18 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
           label="Message"
           multiline
           rows="6"
+          onClick={e => e.stopPropagation()}
         />
         {/* <br />
         <br />
         <br />
         <br /> */}
-        <Button small type="submit">
+        <Button
+          small
+          style={{ width: "15%", margin: "15px auto", textAlign: "center" }}
+          type="submit"
+          onClick={e => e.stopPropagation()}
+        >
           Submit
         </Button>
         <br />
@@ -114,9 +130,9 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
   );
 
   return (
-    <div>
+    <>
       {email ? (
-        <Button email onClick={toggleDrawer("bottom", true)}>
+        <Button small email onClick={toggleDrawer("bottom", true)}>
           {buttonText || "Send Email"}
         </Button>
       ) : (
@@ -131,7 +147,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize }) => {
       >
         {fullList("bottom")}
       </Drawer>
-    </div>
+    </>
   );
 };
 export default EmailDrawer;

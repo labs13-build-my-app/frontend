@@ -43,3 +43,104 @@
   outline: none;
   margin: 10px;
 }
+.completed-projects-feedback {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.project-avatar-feedback {
+  display: flex;
+  align-items: center;
+}
+.project-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.plan-card-info {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+
+.plan-desc {
+  display: block;
+  padding-top: 5px;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+li.plan-card-list {
+  margin-bottom: 20px;
+  text-align: justify;
+}
+
+span.plan-tag-title {
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: larger;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+}
+
+.dev-type {
+  font-size: 20px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  display: block;
+}
+.skill-tag {
+  margin-right: 20px;
+}
+.skill {
+  margin-right: 20px;
+}
+
+.projects-list-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 90%;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-top: 15px;
+  margin-left: 78px;
+}
+.project-card-tag {
+  text-align: center;
+  font-weight: 600;
+  font-size: larger;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  margin-top: 0px;
+}
+.project-card-image {
+  margin-bottom: 25px;
+}
+.projects-list-header {
+  margin-top: 10px;
+  margin-bottom: 27px;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.project-feedback-tag {
+  margin-right: 20px;
+  font-weight: 600;
+  font-size: larger;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.43;
+  letter-spacing: 0.01071em;
+  text-align: left;
+  display: block;
+  margin-left: 40px;
+}
+.project-feedback-text {
+  text-align: left;
+  margin-left: 40px;
+}

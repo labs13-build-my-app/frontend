@@ -11,7 +11,11 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: "dev-juy4gqyj.auth0.com",
     clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-    redirectUri: "https://build-my-app-fe.onrender.com/callback",
+    redirectUri: process.env.NODE_ENV === 'production' 
+      ? process.env.REACT_APP_TEST_DEPLOY 
+        ? 'https://build-my-app-test-deploy.onrender.com/callback'
+        : 'https://build-my-app-fe.onrender.com/callback'
+      : 'http://localhost:3000/callback',
     responseType: "token id_token",
     scope: "openid profile"
   });

@@ -12,22 +12,20 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 // import "./Signup.css";
 import { Button } from "../custom-styles";
 
-const SignupForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: white;
-  border: 1px lightgrey solid;
-  border-radius: 20px;
-  margin: 25px auto;
-  padding: 15px 10px;
-  width: 700px;
-  box-shadow: 10px 10px 10px grey;
-  div {
-    display: flex;
-  }
-`;
-
+const SignupForm = styled.form``;
+// display: flex;
+// flex-direction: column;
+// align-items: center;
+// background-color: white;
+// border: 1px lightgrey solid;
+// border-radius: 20px;
+// margin: 25px auto;
+// padding: 15px 10px;
+// width: 700px;
+// box-shadow: 10px 10px 10px grey;
+// div {
+//   display: flex;
+// }
 const auth = new Auth();
 const useStyles = makeStyles(theme => ({
   container: {
@@ -37,14 +35,16 @@ const useStyles = makeStyles(theme => ({
   },
   textField: {
     marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    width: "40%"
   },
   dense: {
     marginTop: theme.spacing(2)
   },
   root: {
-    display: "flex",
-    flexWrap: "wrap"
+    // display: "flex",
+    // flexWrap: "wrap",
+    // width: "100%"
   },
   formControl: {
     margin: theme.spacing(1),
@@ -52,10 +52,10 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(1)
-  },
-  root: {
-    width: "100%"
   }
+  // root: {
+  //   width: "100%"
+  // }
 }));
 
 const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
@@ -69,6 +69,7 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const [linkedIn, setLinkedIn] = useState("");
   const [gitHub, setGitHub] = useState("");
   const [twitter, setTwitter] = useState("");
+  const [profilePictureUrl, setprofilePictureUrl] = useState("");
 
   const inputLabel = React.useRef(0);
   const [labelWidth, setLabelWidth] = React.useState(0);
@@ -87,6 +88,7 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
   const changeHandler = (e, setState) => {
     let user = e.target.value;
     setState(user);
+    console.log(user);
   };
   const submitHandler = e => {
     e.preventDefault();
@@ -98,9 +100,13 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
         email,
         skills,
         devType,
-        linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
-        gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
-        twitter: twitter.split("/")[twitter.split("/").length - 1]
+        linkedIn,
+        gitHub,
+        twitter,
+        // // linkedIn: linkedIn.split("/")[linkedIn.split("/").length - 1],
+        // gitHub: gitHub.split("/")[gitHub.split("/").length - 1],
+        // twitter: twitter.split("/")[twitter.split("/").length - 1],
+        profile_picture_url: profilePictureUrl
       },
       dispatch
     );
@@ -169,6 +175,16 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
             className={classes.textField}
             value={email}
             onChange={event => changeHandler(event, setEmail)}
+            type="text"
+            margin="normal"
+            variant="outlined"
+          />
+          <TextField
+            id="profile-image"
+            label="Profile-Image"
+            className={classes.textField}
+            value={profilePictureUrl}
+            onChange={event => changeHandler(event, setprofilePictureUrl)}
             type="text"
             margin="normal"
             variant="outlined"

@@ -132,14 +132,7 @@ const App = ({ history, match }) => {
   ]);
 
   return (
-    <div
-      onClick={() => {
-        return modal === true
-          ? history.push({ state: { modal: false } })
-          : null;
-      }}
-      className="App"
-    >
+    <div className="App">
       <NavContainer {...state} />
       <Background>
         <RouteContainer {...{ ...state, dispatch, reload }} />

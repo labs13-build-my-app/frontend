@@ -9,7 +9,9 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   fecthProjectOwnerProjectsList,
-  updateProject
+  updateProject,
+  updateProjectStatus,
+  listProjectPlans
 } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -29,6 +31,7 @@ import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
 import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
+import ProjectForm from "../../components/projects/CreateProjectForm";
 
 // const Card = styled.div`
 //   display: flex;
@@ -101,6 +104,14 @@ const useStyles = makeStyles(theme => ({
     socialIcons: {
       margin: "0px 10px"
     }
+  },
+  paperModal: {
+    position: "absolute",
+    width: "50%",
+    backgroundColor: theme.palette.background.paper,
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(4),
+    outline: "none"
   }
 }));
 
@@ -114,10 +125,16 @@ const ProjectOwner = ({
 }) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
+  const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
+
+  const modalClasses = useStyles();
 
   const handleOpen = () => {
     setOpen(true);
+  };
+  const handleOpenProject = () => {
+    setOpenProject(true);
   };
   const handleOpenFeedback = projectID => {
     setOpen(true);
@@ -128,6 +145,9 @@ const ProjectOwner = ({
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseProject = () => {
+    setOpenProject(false);
   };
 
   const classes = useStyles();
@@ -175,13 +195,22 @@ const ProjectOwner = ({
               width: "50%"
             }}
           />
-          <p style={{ fontSize: "20px" }}>
-            {user.firstName} {user.lastName}
-          </p>
         </div>
         <UserInfo>
           <List component="userInfo" aria-label="Dashboard user info list">
-            <span style={{ fontSize: "20px" }}>{user.role}</span>
+            <p style={{ fontSize: "20px" }}>
+              {user.firstName} {user.lastName}
+            </p>
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: "bolder",
+                marginBottom: "20px",
+                display: "block"
+              }}
+            >
+              {user.role}
+            </span>
             <Divider style={{ margin: "10px 0px" }} />
             <div style={{ display: "flex", alignItems: "center" }}>
               {user.gitHub ? (
@@ -226,14 +255,26 @@ const ProjectOwner = ({
       <Button
         large
         style={displayOnlyOnLoggedInUser()}
-        onClick={() =>
-          history.push({
-            state: { modal: true, projectOwner_id: loggedInUser.id }
-          })
-        }
+        onClick={handleOpenProject}
+        // onClick={() =>
+        //   history.push({
+        //     state: { modal: true, projectOwner_id: loggedInUser.id }
+        //   })
+        // }
       >
         + Create New Project
       </Button>
+      <Modal open={openProject}>
+        {/*  onClose={handleClose} */}
+        <div style={modalStyle} className={modalClasses.paperModal}>
+          <ProjectForm
+            history={history}
+            setOpenProject={setOpenProject}
+            setProjects={setProjects}
+            projectOwnerID={user.id}
+          />
+        </div>
+      </Modal>
       {console.log(projects)}
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
@@ -243,16 +284,27 @@ const ProjectOwner = ({
             key={project.id}
             project={project}
             component={
-              <ProjectsByProjectOwner
-                setOpen={setOpen}
-                user={user}
-                loggedInUser={loggedInUser}
-                handleOpen={handleOpen}
-                modalStyle={modalStyle}
-                project={project}
-                history={history}
-                open={open}
-              />
+              <>
+                <ProjectsByProjectOwner
+                  setOpen={setOpen}
+                  user={user}
+                  loggedInUser={loggedInUser}
+                  handleOpen={handleOpen}
+                  modalStyle={modalStyle}
+                  project={project}
+                  history={history}
+                  open={open}
+                  updateProjectStatus={updateProjectStatus}
+                  setProjects={setProjects}
+                />
+                {/* <Button
+                  onClick={() => {
+                    updateProjectStatus(project, setProjects);
+                  }}
+                >
+                  <i class="fas fa-check" /> &nbsp; Mark Completed
+                </Button> */}
+              </>
             }
           />
 

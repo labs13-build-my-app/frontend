@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { deepPurple } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import { Pill } from "../../custom-styles";
+//import Button from "@material-ui/core/Button";
+import { Pill, Button, PageTitle } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+import EmailDrawer from "../EmailDrawer";
 
-const Developers = ({ history }) => {
+const Developers = ({ history, user }) => {
   const useStyles = makeStyles(theme => ({
     root: {
       width: "100%",
@@ -78,21 +81,67 @@ const Developers = ({ history }) => {
   }));
   const classes = useStyles();
 
-  const [developers, setDevelopers] = useState([]);
-  const [page, setPage] = useState({});
+  const theme = useTheme();
+  const [value, setValue] = useState(0);
+  const [filter, setFilter] = useState("");
+
+  const filters = ["All", "Web", "iOS", "Android"];
+
+
   useEffect(() => {
-    fetchDevelopers(setDevelopers, setPage);
-  }, []);
+    setFilter(filters[value]);
+    fetchDevelopers(setDevelopers, setPageCount, 1, filters[value]);
+  }, [value]);
+
+  function handleChange(event, newValue) {
+    console.log(newValue);
+    setValue(newValue);
+  }
+
+  const [developers, setDevelopers] = useState([]);
+  const [pageCount, setPageCount] = useState({ page: 1 });
+  // useEffect(() => {
+  //   if (developers.length === 0) {
+  //     fetchDevelopers(setDevelopers, setPageCount, pageCount.page);
+  //   }
+  // }, [developers, pageCount]);
+
+  const connectWithDeveloper = e => {
+    e.stopPropagation();
+    console.log("clicked");
+  };
+
   if (developers.length === 0) {
+    // console.log(developers);
     return <h1>Loading...</h1>;
   } else {
+    // console.log("render 3rd time");
+    // console.log(developers);
     return (
       <>
-        <h2>Available Developers</h2>
+        <PageTitle style={{ width: "100%", paddingLeft: "4%" }}>
+          Available Developers
+        </PageTitle>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="fullWidth"
+          >
+            <Tab label="All" />
+            <Tab label="Web" />
+            <Tab label="iOS" />
+            <Tab label="Android" />
+          </Tabs>
+        </AppBar>
+
         <div className={classes.divContainer} style={{ width: "100%" }}>
-          {developers.map(dev => {
-            const initials = dev.firstName.charAt(0) + dev.lastName.charAt(0);
-            return (
+          {developers.map(dev =>
+
+            dev.devType === filter || filter === "All" ? (
+
               <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
@@ -111,7 +160,7 @@ const Developers = ({ history }) => {
                         alt={dev.firstName}
                         className={classes.purpleAvatar}
                       >
-                        {initials}
+                        {dev.firstName.charAt(0) + dev.lastName.charAt(0)}
                       </Avatar>
                     )}
                     <CardHeader
@@ -121,11 +170,51 @@ const Developers = ({ history }) => {
                   </Grid>
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
+                  {/* <Button
+                    onClick={e => connectWithDeveloper(e)}
+                  >{`Connect With ${dev.firstName} `}</Button> */}
+                  <EmailDrawer
+                    buttonText={`Message ${dev.firstName} `}
+                    emailAddress={dev.email}
+                    firstName={user.firstName}
+                  />
                 </Card>
               </div>
-            );
-          })}
+            ) : null
+          )}
         </div>
+        {pageCount.page > 1 ? (
+          <Button
+            medium
+            onClick={() => {
+              if (pageCount.page >= 0)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) - 1,
+                  filter
+                );
+            }}
+          >
+            Prev
+          </Button>
+        ) : null}
+        {pageCount.page < pageCount.total_pages ? (
+          <Button
+            medium
+            onClick={() => {
+              if (pageCount.page <= pageCount.total_pages)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) + 1,
+                  filter
+                );
+            }}
+          >
+            Next
+          </Button>
+        ) : null}
       </>
     );
   }
