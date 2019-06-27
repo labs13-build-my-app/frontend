@@ -48,6 +48,38 @@ const Projects = ({
   return (
     <>
       <PageTitle className="projects-list-header">Available Projects</PageTitle>
+      <div style={{display: 'flex', margin: '0 auto', justifyContent: 'space-evenly', width: '25%'}}>
+        <Button
+          style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
+          medium
+          onClick={() => {
+            if (pageCount.page >= 0)
+              fetchProjects(
+                user.id,
+                Number(pageCount.page) - 1,
+                setProjects,
+                setPageCount
+              );
+          }}
+        >
+          Prev
+        </Button>
+        <Button
+          style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
+          medium
+          onClick={() => {
+            if (pageCount.page <= pageCount.total_pages)
+              fetchProjects(
+                user.id,
+                Number(pageCount.page) + 1,
+                setProjects,
+                setPageCount
+              );
+          }}
+        >
+          Next
+        </Button>
+      </div>
 
       <div className="projects-list-wrapper">
         {filteredArr.map(project => (
@@ -86,6 +118,7 @@ const Projects = ({
                 setProjects,
                 setPageCount
               );
+              window.scrollTo(0,0)
           }}
         >
           Prev
@@ -101,6 +134,7 @@ const Projects = ({
                 setProjects,
                 setPageCount
               );
+              window.scrollTo(0,0)
           }}
         >
           Next

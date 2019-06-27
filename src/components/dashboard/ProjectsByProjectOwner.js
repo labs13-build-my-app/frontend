@@ -5,7 +5,7 @@ import Modal from "@material-ui/core/Modal";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
-import { listProjectPlans } from "../../store/actions";
+import { listProjectPlans, deleteProject } from "../../store/actions";
 
 const ImageContainer = styled.div`
   display: flex;
@@ -28,7 +28,9 @@ const ProjectByProjectOwner = ({
   modalStyle,
   open,
   updateProjectStatus,
-  setProjects
+  setProjects,
+  reload,
+  setReload
 }) => {
   const [projectPlans, setProjectPlans] = useState({});
 
@@ -158,7 +160,7 @@ const ProjectByProjectOwner = ({
             <Icon
               className={clsx(classes.delete, "far fa-trash-alt")}
               style={displayOnlyOnLoggedInUser()}
-              onClick={handleOpen}
+              onClick={() => handleOpen()}
             />
             </div>
             <Modal
@@ -180,7 +182,10 @@ const ProjectByProjectOwner = ({
                       color='white'
                       width='35%dd'
                       small
-                    //onClick={}
+                      onClick={() => {
+                        deleteProject(project.id, reload, setReload)
+                        handleClose()
+                      }}
                   >
                     <Icon
                       className={clsx('', "far fa-check-circle")}
