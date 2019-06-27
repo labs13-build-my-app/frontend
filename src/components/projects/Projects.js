@@ -73,9 +73,10 @@ const Projects = ({
             />
           </Link>
         ))}
-      </div>
-      {pageCount.page > 1 ? (
+        </div>
+      <div style={{display: 'flex', margin: '0 auto', justifyContent: 'space-evenly', width: '25%'}}>
         <Button
+          style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
           medium
           onClick={() => {
             if (pageCount.page >= 0)
@@ -89,9 +90,8 @@ const Projects = ({
         >
           Prev
         </Button>
-      ) : null}
-      {pageCount.page < pageCount.total_pages ? (
         <Button
+          style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
           medium
           onClick={() => {
             if (pageCount.page <= pageCount.total_pages)
@@ -105,8 +105,7 @@ const Projects = ({
         >
           Next
         </Button>
-      ) : null}
-      {/* </div> */}
+      </div>
     </>
   );
 };

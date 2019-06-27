@@ -243,6 +243,7 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
       </Card>
       <Button
         large
+        center
         style={displayOnlyOnLoggedInUser()}
         onClick={handleOpenProject}
         // onClick={() =>

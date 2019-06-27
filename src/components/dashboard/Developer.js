@@ -155,7 +155,6 @@ const Developer = ({ loggedInUser, user, role, history }) => {
             </div>
             {loggedInUser.id === user.id ? null : (
               <EmailDrawer
-                buttonSize
                 emailAddress={user.email}
                 firstName={loggedInUser.firstName}
                 buttonText={`Message ${user.firstName}`}
