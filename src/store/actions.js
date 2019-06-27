@@ -158,24 +158,31 @@ export const fetchDeveloper = (developer_id, dispatch) => {
 
 // fetch list of developers
 // list are paginated
-export const fetchDevelopers = (dispatch, setPage) => {
-  // dispatch({ type: FETCH_START });
+export const fetchDevelopers = (
+  setDevelopers,
+  setPage,
+  page = 1,
+  type = "All"
+) => {
+  // setDevelopers({ type: FETCH_START });
   console.log(" in fetch Developers");
   axios({
     method: "GET",
-    url: `${connection}/api/users/list-developers`,
+    url: `${connection}/api/users/list-developers?page=${page}&type=${type}`,
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     }
   })
     .then(res => {
-      // what this here? this doesn't look right
-      console.log(res);
-      dispatch(prevState => [...prevState, ...res.data.developers]);
+      const { developers, page, total_pages } = res.data;
+      console.log(developers, page, total_pages);
+
+      setDevelopers(developers);
+      setPage({ page: Number(page), total_pages });
     })
     .catch(err => {
-      dispatch({ type: "FETCH_FAIL" });
+      // dispatch({ type: "FETCH_FAIL" });
     });
 };
 
