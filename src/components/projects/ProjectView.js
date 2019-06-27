@@ -45,12 +45,9 @@ const ProjectView = ({
   email,
   image_url,
   history,
-  reload,
-  children,
   firstName,
   lastName,
-  projectOwnerAvatar,
-  user_id
+  projectOwnerAvatar
 }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -120,10 +117,10 @@ const ProjectView = ({
 
   const [projectPlans, setProjectPlans] = useState([]);
   useEffect(() => {
-    if ((match.params.project_id && !isLoading) || reload) {
+    if (match.params.project_id && !isLoading) {
       listProjectPlans(match.params.project_id, setProjectPlans);
     }
-  }, [match.params.project_id, isLoading, reload]);
+  }, [match.params.project_id, isLoading]);
 
   const [selectedPlan, setSelectedPlan] = useState([]);
   useEffect(() => {
@@ -196,7 +193,6 @@ const ProjectView = ({
       projectStatus: status === "selected" ? "in progress" : "proposal"
     }));
   };
-  const { modal } = history.location.state || false;
 
   return (
     <>

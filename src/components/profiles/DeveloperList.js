@@ -4,7 +4,6 @@ import { deepPurple } from "@material-ui/core/colors";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
-import Paper from "@material-ui/core/Paper";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
 //import Button from "@material-ui/core/Button";
@@ -85,7 +84,9 @@ const Developers = ({ history, user }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState("");
+
   const filters = ["All", "Web", "iOS", "Android"];
+
 
   useEffect(() => {
     setFilter(filters[value]);
@@ -138,7 +139,9 @@ const Developers = ({ history, user }) => {
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev =>
+
             dev.devType === filter || filter === "All" ? (
+
               <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
