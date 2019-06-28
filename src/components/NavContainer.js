@@ -135,7 +135,7 @@ const NavContainer = ({
       "https://use.fontawesome.com/releases/v5.1.0/css/all.css",
       document.querySelector("#font-awesome-css")
     );
-    if (window.innerWidth < 750) {
+    if (window.innerWidth <= 750) {
       setNavIsOpen(false);
     }
   }, []);

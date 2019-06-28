@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  ${props => props.backgroundColor ? `background-color: ${props.backgroundColor};` : `background-color: #4e72b7;`}
-  ${props => props.backgroundColor ? `border: 1px solid ${props.backgroundColor};` : `border: 1px solid #4e72b7;`}
-  ${props => props.color ? `color: ${props.color}` : `color: white;`}
+  ${props =>
+    props.backgroundColor
+      ? `background-color: ${props.backgroundColor};`
+      : `background-color: #4e72b7;`}
+  ${props =>
+    props.backgroundColor
+      ? `border: 1px solid ${props.backgroundColor};`
+      : `border: 1px solid #4e72b7;`}
+  ${props => (props.color ? `color: ${props.color}` : `color: white;`)}
   ${props => props.small && `font-size: 1.0rem; padding: 5px 15px;`}
   ${props => props.medium && `font-size: 1.2rem; padding: 7px 20px;`}
   ${props => props.large && `font-size: 1.5rem; padding: 10px 25px;`}
   ${props => props.width && `width: ${props.width};`}
-  ${props => props.center ? `margin: 25px auto;` : `margin: 25px 0;`}
+  ${props => (props.center ? `margin: 25px auto;` : `margin: 25px 0;`)}
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
@@ -17,8 +23,14 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   &:hover {
-    ${props => props.color ? `background-color: ${props.color};` : `background-color: white;`}
-    ${props => props.backgroundColor ? `color: ${props.backgroundColor}` : `color: #4e72b7;`}
+    ${props =>
+      props.color
+        ? `background-color: ${props.color};`
+        : `background-color: white;`}
+    ${props =>
+      props.backgroundColor
+        ? `color: ${props.backgroundColor}`
+        : `color: #4e72b7;`}
   }
 `;
 
@@ -162,6 +174,9 @@ export const MenuButtonClose = styled.button`
   font-size: x-large;
   margin-left: 89%;
   position: absolute;
+  background: none;
+  border: none;
+  outline: none;
   @media (max-width: 750px) {
     display: block;
   }
@@ -173,6 +188,9 @@ export const MenuButtonClose = styled.button`
 
 export const MenuButtonOpen = styled.button`
   display: none;
+  background: none;
+  border: none;
+  outline: none;
   @media (max-width: 750px) {
     cursor: pointer;
     display: block;

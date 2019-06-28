@@ -130,7 +130,10 @@ const ProjectView = ({
       maxWidth: "1000px",
       margin: "0 auto",
       justifyContent: "space-around",
-      marginTop: "5px"
+      marginTop: "5px",
+      "@media (max-width: 875px)": {
+        flexDirection: "column"
+      }
     },
     cardText: {
       fontSize: "x-large",
@@ -195,16 +198,9 @@ const ProjectView = ({
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
         />
-        <div
-          className="btn-wrap"
-          style={{
-            display: "flex",
-            minWidth: "400px",
-            justifyContent: "space-evenly"
-          }}
-        >
+        <div className="btn-wrap">
           <Button
-            small 
+            small
             variant="outlined"
             onClick={e => {
               e.preventDefault();
@@ -275,7 +271,11 @@ const ProjectView = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button onClick={handleOpen} className="create-plan" style={{margin: '25px auto'}}>
+              <Button
+                onClick={handleOpen}
+                className="create-plan"
+                style={{ margin: "25px auto" }}
+              >
                 + Apply to this project
               </Button>
               <Modal open={open}>

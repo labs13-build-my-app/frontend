@@ -95,6 +95,8 @@ span.plan-tag-title {
 }
 .skill-tag {
   margin-right: 20px;
+  display: block;
+  margin-bottom: 15px;
 }
 .skill {
   margin-right: 20px;
@@ -102,6 +104,8 @@ span.plan-tag-title {
   border-radius: 7px;
   padding: 7px;
   text-align: center;
+  display: inline-block;
+  margin-top: 10px;
 }
 
 .projects-list-wrapper {
@@ -153,6 +157,11 @@ span.plan-tag-title {
   text-decoration: "none";
   width: "35%";
 }
+.btn-wrap {
+  display: "flex";
+  min-width: "400px";
+  justify-content: "space-evenly";
+}
 
 @media (max-width: 750px) {
   .projects-list-wrapper {
@@ -166,8 +175,20 @@ span.plan-tag-title {
     width: 100%;
   }
 
+  .skill {
+    display: block;
+    margin-top: 10px;
+  }
+
   .project-link {
     width: 46%;
     text-decoration: none;
+  }
+
+  .btn-wrap {
+    display: flex;
+    min-width: 0px;
+    justify-content: stretch;
+    flex-direction: column;
   }
 }
