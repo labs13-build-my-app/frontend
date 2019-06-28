@@ -1,0 +1,116 @@
+.about-title {
+  .flex(center, center);
+}
+
+.team-title {
+  font-size: 6rem;
+  color: @san-marino;
+}
+
+.about-content {
+  //   position: relative;
+  border: 1px solid white;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  .services {
+    width: 1440px;
+  }
+
+  .team {
+    .flex(space-around, center, wrap, row);
+    margin-bottom: 30px;
+  }
+
+  .team-member {
+    .flex(flex-start, center, wrap, column);
+    width: 300px;
+    margin: 85px 5.5% 0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+    @media @desktop {
+      //   margin: 80px 9% 0;
+      padding: 50px 0;
+      padding: 10px;
+      .flex(space-around, center, wrap, column);
+    }
+
+    i {
+      margin: 15px;
+      font-size: 3rem;
+    }
+    .team-name {
+      padding: 15px;
+      margin: 5px;
+      font-size: 2.5rem;
+      text-justify: center;
+      .flex(center, center);
+    }
+
+    .team-role {
+      padding: 15px;
+      margin: 5px;
+      font-size: 2rem;
+      text-justify: center;
+      .flex(center, center);
+    }
+  }
+
+  .services-pitch {
+    .flex(center, center);
+    margin: 60px 5.5% 0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+    @media @desktop {
+      margin: 80px 7% 0;
+      padding: 50px 0;
+      padding-bottom: 53px;
+      .flex(space-around, center, wrap, column);
+    }
+
+    div {
+      @media @desktop {
+        width: 50%;
+        margin: 8px 0 0 13%;
+      }
+
+      .services-pitch-title {
+        padding: 20px;
+        margin: 10px;
+        font-size: 2rem;
+        text-justify: center;
+        .flex(center, center);
+
+        @media @desktop {
+          margin-top: 25px;
+          text-align: center;
+        }
+      }
+
+      .services-pitch-text {
+        padding: 20px;
+        margin: 10px;
+        font-size: 3rem;
+        text-justify: center;
+        .flex(center, center);
+
+        @media @desktop {
+          margin: 20px 0 0;
+          text-align: left;
+          font-size: 3rem;
+          width: 95%;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+}
