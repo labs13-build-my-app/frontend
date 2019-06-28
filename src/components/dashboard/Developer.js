@@ -14,6 +14,7 @@ import Switch from "@material-ui/core/Switch";
 import EmailDrawer from "../EmailDrawer";
 import ExpansionPanel from "../ExpansionPanel";
 import Plan from "../projects/Plan";
+import EditDeveloperDrawer from "../projects/EditDeveloperDrawer";
 
 import {
   FaGithub,
@@ -31,7 +32,14 @@ const UserInfo = styled.div`
   width: 50%;
 `;
 
-const Developer = ({ loggedInUser, user, role, history }) => {
+const Developer = ({
+  loggedInUser,
+  user,
+  role,
+  history,
+  setRefresh,
+  refresh
+}) => {
   const [state, setState] = React.useState({
     submitted: true,
     selected: true,
@@ -127,6 +135,9 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 </a>
               ) : null}
             </div>
+            {loggedInUser.id === user.id ? (
+              <EditDeveloperDrawer setRefresh={setRefresh} refresh={refresh} />
+            ) : null}
             {loggedInUser.id === user.id ? null : (
               <EmailDrawer
                 emailAddress={user.email}
