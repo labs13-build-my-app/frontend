@@ -27,11 +27,15 @@ const ProjectByProjectOwner = ({
   handleOpen,
   modalStyle,
   open,
+  openDelete,
   updateProjectStatus,
   setProjects,
   reload,
-  setReload
+  setReload,
+  handleOpenFeedback,
+  handleCloseDelete
 }) => {
+  console.log(project);
   const [projectPlans, setProjectPlans] = useState({});
 
   useEffect(() => {
@@ -75,13 +79,13 @@ const ProjectByProjectOwner = ({
       }
     }
   }));
-  const handleOpenFeedback = projectID => {
-    setOpen(true);
-    history.push({
-      pathname: `/profile/${user.id}/feedbackmodal`,
-      state: projectID
-    });
-  };
+  // const handleOpenFeedback = projectID => {
+  //   setOpen(true);
+  //   history.push({
+  //     pathname: `/profile/${user.id}/feedbackmodal`,
+  //     state: projectID
+  //   });
+  // };
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };
   };
@@ -144,6 +148,8 @@ const ProjectByProjectOwner = ({
             {project.plans.length === 0 ? null : project.plans[0].planStatus ===
                 "completed" && project.projectStatus === "in progress" ? (
               <Button
+                medium
+                center
                 style={displayOnlyOnLoggedInUser()}
                 onClick={() => {
                   updateProjectStatus(project, setProjects);
@@ -159,7 +165,7 @@ const ProjectByProjectOwner = ({
                 alignItems: "center"
               }}
             >
-              {project.projectStatus === "completed" ? (
+              {project.projectStatus === "completed" && !project.feedback ? (
                 // hide when loggedIn !== user
                 <Button
                   medium
@@ -169,17 +175,17 @@ const ProjectByProjectOwner = ({
                   + Add Feedback
                 </Button>
               ) : null}
-              {/* <Icon
+              <Icon
                 className={clsx(classes.delete, "far fa-trash-alt")}
-                // style={displayOnlyOnLoggedInUser()}
-                style={{ display: "none" }}
+                style={displayOnlyOnLoggedInUser()}
+                // style={{ display: "none" }}
                 onClick={() => handleOpen()}
-              /> */}
+              />
             </div>
-            {/* <Modal
+            <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
-              open={open}
+              open={openDelete}
               //onClose={handleClose}
             >
               <div style={modalStyle} className={classes.paper}>
@@ -197,7 +203,7 @@ const ProjectByProjectOwner = ({
                     small
                     onClick={() => {
                       deleteProject(project.id, reload, setReload);
-                      handleClose();
+                      handleCloseDelete();
                     }}
                   >
                     <Icon className={clsx("", "far fa-check-circle")} />
@@ -208,14 +214,14 @@ const ProjectByProjectOwner = ({
                     color="white"
                     width="35%"
                     small
-                    onClick={handleClose}
+                    onClick={handleCloseDelete}
                   >
                     <Icon className={clsx("", "far fa-times-circle")} />
                     <p> Cancel</p>
                   </Button>
                 </div>
               </div>
-            </Modal> */}
+            </Modal>
           </div>
         </div>
       </Card>

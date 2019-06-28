@@ -185,6 +185,10 @@ const HomeComponent = () => {
 
               <div>
                 <Button
+                  backgroundColor="#F26D5A"
+                  center
+                  large
+                  color="white"
                   onClick={() => {
                     setProjectOwnerComplete("completed");
                     localStorage.removeItem("ProjectOwnerTutorial");
@@ -309,6 +313,10 @@ const HomeComponent = () => {
 
               <div>
                 <Button
+                  backgroundColor="#F26D5A"
+                  center
+                  large
+                  color="white"
                   onClick={() => {
                     setDeveloperComplete("completed");
                     localStorage.removeItem("DeveloperTutorial");
