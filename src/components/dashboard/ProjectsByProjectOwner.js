@@ -138,8 +138,8 @@ const ProjectByProjectOwner = ({
               {project.description}
             </p>
           </div>
-          <p>Plans Available</p>
-          <h2>{project.plans.length}</h2>
+          {/* <p>Plans Available</p>
+          <h2>{project.plans.length}</h2> */}
           <div className="buttons">
             {project.plans.length === 0 ? null : project.plans[0].planStatus ===
                 "completed" && project.projectStatus === "in progress" ? (
@@ -152,22 +152,28 @@ const ProjectByProjectOwner = ({
                 <i class="fas fa-check" /> &nbsp; Mark Completed
               </Button>
             ) : null}
-            <div style={{display: 'flex', justifyContent: 'space-evenly', alignItems: 'center'}}>
-            {project.projectStatus === "completed" ? (
-              // hide when loggedIn !== user
-              <Button
-                medium 
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-evenly",
+                alignItems: "center"
+              }}
+            >
+              {project.projectStatus === "completed" ? (
+                // hide when loggedIn !== user
+                <Button
+                  medium
+                  style={displayOnlyOnLoggedInUser()}
+                  onClick={() => handleOpenFeedback(project.id)}
+                >
+                  + Add Feedback
+                </Button>
+              ) : null}
+              <Icon
+                className={clsx(classes.delete, "far fa-trash-alt")}
                 style={displayOnlyOnLoggedInUser()}
-                onClick={() => handleOpenFeedback(project.id)}
-              >
-                + Add Feedback
-              </Button>
-            ) : null}
-            <Icon
-              className={clsx(classes.delete, "far fa-trash-alt")}
-              style={displayOnlyOnLoggedInUser()}
-              onClick={() => handleOpen()}
-            />
+                onClick={() => handleOpen()}
+              />
             </div>
             <Modal
               aria-labelledby="simple-modal-title"
@@ -184,30 +190,26 @@ const ProjectByProjectOwner = ({
                   }}
                 >
                   <Button
-                      backgroundColor='green' 
-                      color='white'
-                      width='35%dd'
-                      small
-                      onClick={() => {
-                        deleteProject(project.id, reload, setReload)
-                        handleClose()
-                      }}
+                    backgroundColor="green"
+                    color="white"
+                    width="35%dd"
+                    small
+                    onClick={() => {
+                      deleteProject(project.id, reload, setReload);
+                      handleClose();
+                    }}
                   >
-                    <Icon
-                      className={clsx('', "far fa-check-circle")}
-                    />
+                    <Icon className={clsx("", "far fa-check-circle")} />
                     <p> Delete</p>
                   </Button>
                   <Button
-                      backgroundColor='red' 
-                      color='white'
-                      width='35%'
-                      small 
-                      onClick={handleClose}
+                    backgroundColor="red"
+                    color="white"
+                    width="35%"
+                    small
+                    onClick={handleClose}
                   >
-                    <Icon
-                      className={clsx('', "far fa-times-circle")}
-                    />
+                    <Icon className={clsx("", "far fa-times-circle")} />
                     <p> Cancel</p>
                   </Button>
                 </div>
