@@ -5,14 +5,9 @@ import {
   sendUpdateMessage,
   formatDate
 } from "../../store/actions";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import Select from "@material-ui/core/Select";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "../../custom-styles";
-import moment from "moment";
-// import PropTypes from "prop-types";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -51,19 +46,9 @@ const Plan = ({
   reload,
   setReload
 }) => {
-  // const { fullScreen } = props;
-  // const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [plan, setPlan] = useState({});
   const [planStatus, setPlanStatus] = useState("");
-
-  // function handleClickOpen() {
-  //   setOpen(true);
-  // }
-
-  // function handleClose() {
-  //   setOpen(false);
-  // }
 
   const changeHandler = e => {
     let planUpdate = e.target.value;
@@ -75,7 +60,7 @@ const Plan = ({
     e.preventDefault();
     let planUpdate = "completed";
     setPlanStatus(planUpdate);
-    // console.log(planStatus);
+
     updatePlan({ planStatus: planUpdate }, currentPlanID);
     setPlan(prevState => ({
       ...prevState,
@@ -96,7 +81,6 @@ const Plan = ({
 
   return (
     <div>
-      {/* <h1>Name: {plan.name}</h1> */}
       <div className="left" />
       <ul className={"plan-card-info"}>
         <li className={"plan-card-list"}>
@@ -137,24 +121,7 @@ const Plan = ({
             See Project Page
           </Button>
         </>
-      ) : // <form onSubmit={submitHandler}>
-      //   <FormControl className={classes.formControl}>
-      //     <InputLabel htmlFor="name-simple">Plan Status</InputLabel>
-      //     <Select
-      //       // className={classes.select}
-      //       value={planStatus}
-      //       onChange={e => changeHandler(e)}
-      //     >
-      //       <MenuItem value="" />
-
-      //       <MenuItem value={"completed"}>Completed</MenuItem>
-      //     </Select>
-      //     <Button type={"submit"} style={{ margin: "20px" }}>
-      //       Submit
-      //     </Button>
-      //   </FormControl>
-      // </form>
-      null}
+      ) : null}
     </div>
   );
 };

@@ -98,6 +98,10 @@ span.plan-tag-title {
 }
 .skill {
   margin-right: 20px;
+  background: lightgray;
+  border-radius: 7px;
+  padding: 7px;
+  text-align: center;
 }
 
 .projects-list-wrapper {
@@ -143,4 +147,27 @@ span.plan-tag-title {
 .project-feedback-text {
   text-align: left;
   margin-left: 40px;
+}
+
+.project-link {
+  text-decoration: "none";
+  width: "35%";
+}
+
+@media (max-width: 750px) {
+  .projects-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 100%;
+  }
+
+  .project-link {
+    width: 46%;
+    text-decoration: none;
+  }
 }

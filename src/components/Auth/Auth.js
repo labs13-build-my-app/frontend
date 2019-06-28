@@ -11,11 +11,12 @@ export default class Auth {
   auth0 = new auth0.WebAuth({
     domain: "dev-juy4gqyj.auth0.com",
     clientID: "erkAAAar4RrEqx4GcMSefhL42s2fulSu",
-    redirectUri: process.env.NODE_ENV === 'production' 
-      ? process.env.REACT_APP_TEST_DEPLOY 
-        ? 'https://build-my-app-test-deploy.onrender.com/callback'
-        : 'https://build-my-app-fe.onrender.com/callback'
-      : 'http://localhost:3000/callback',
+    redirectUri:
+      process.env.NODE_ENV === "production"
+        ? process.env.REACT_APP_TEST_DEPLOY
+          ? "https://build-my-app-test-deploy.onrender.com/callback"
+          : "https://build-my-app-fe.onrender.com/callback"
+        : "http://localhost:3000/callback",
     responseType: "token id_token",
     scope: "openid profile"
   });
@@ -44,7 +45,6 @@ export default class Auth {
         });
       } else if (err) {
         history.replace("/");
-        console.log(err);
         alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
@@ -82,8 +82,6 @@ export default class Auth {
     });
   }
   getProfile(cb) {
-    console.log("ACCESS TOKEN 2: ", this.accessToken);
-    console.log("RANDOM", this.randomVar);
     this.auth0.client.userInfo(this.accessToken, (err, profile) => {
       if (profile) {
         this.userProfile = profile;

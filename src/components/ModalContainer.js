@@ -3,16 +3,6 @@ import CreateProjectForm from "./projects/CreateProjectForm";
 import CreatePlanForm from "./projects/CreatePlanForm";
 import Signup from "./Signup";
 
-// background: green;
-// position: absolute;
-// max-width: 50%;
-// min-height: 60%;
-// top: 50%;
-// left: 50%;
-// transform: translate(-50%, -50%);
-// border-radius: 10px;
-// padding: 40px;
-
 const ModalContainer = ({
   isLoading,
   isToken,

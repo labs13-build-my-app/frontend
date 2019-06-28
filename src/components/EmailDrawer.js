@@ -51,7 +51,7 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize, center})
       name: firstName
     };
     sendEmail(emailConfig);
-    console.log(emailConfig);
+
     setState({ ...state, bottom: false });
   };
 
@@ -111,10 +111,6 @@ const EmailDrawer = ({ emailAddress, firstName, buttonText, buttonSize, center})
           rows="6"
           onClick={e => e.stopPropagation()}
         />
-        {/* <br />
-        <br />
-        <br />
-        <br /> */}
         <Button
           small
           style={{ width: "15%", margin: "15px auto", textAlign: "center" }}

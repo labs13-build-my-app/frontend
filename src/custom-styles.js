@@ -22,20 +22,6 @@ export const Button = styled.button`
   }
 `;
 
-// CARD COMPONENT MADE BY JOE
-
-// export const Card = styled.div`
-// display: flex;
-// justify-content: space-around;
-// align-items: center;
-// margin: 20px auto;
-// border: 1px solid lightgrey;
-// border-radius: 15px;
-// box-shadow: lightgrey 15px 15px 15px;
-// padding: 10px;
-// }
-// `;
-
 export const Card = styled.div`
   display: -webkit-box;
   display: -webkit-flex;
@@ -72,8 +58,12 @@ export const Background = styled.div`
   background-color: rgba(245, 245, 245, 1);
   min-height: 100vh;
   padding: 1px 0px;
-  width: 75%;
-  margin-left: 25%;
+  width: ${props => props.displayNav.width};
+  margin-left: ${props => props.displayNav.marginLeft};
+  @media (max-width: 750px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 export const Pill = styled.div`
   ${props =>
@@ -164,4 +154,30 @@ export const ListDesc = styled.div`
   flex-direction: column;
   liststyle: none;
   align-items: start;
+`;
+
+export const MenuButtonClose = styled.button`
+  display: none;
+  color: white;
+  font-size: x-large;
+  margin-left: 89%;
+  position: absolute;
+  @media (max-width: 750px) {
+    display: block;
+  }
+  @media (max-width: 450px) {
+    display: block;
+    margin-left: 84%;
+  }
+`;
+
+export const MenuButtonOpen = styled.button`
+  display: none;
+  @media (max-width: 750px) {
+    cursor: pointer;
+    display: block;
+    margin: 10px;
+    position: absolute;
+    height: 0px;
+  }
 `;

@@ -18,13 +18,7 @@ const initialState = {
       twitter: "",
       github: ""
     }
-    // project: [{}],
-    // plan: [{}],
-    // messages: {
-    //   subscribed: [{}]
-    // }
   }
-  // search: {}
 };
 
 export default initialState;

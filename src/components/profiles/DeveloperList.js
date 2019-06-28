@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
-//import Button from "@material-ui/core/Button";
+
 import { Pill, Button, PageTitle } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
 import AppBar from "@material-ui/core/AppBar";
@@ -22,10 +22,12 @@ const Developers = ({ history, user }) => {
       marginBottom: 20,
       marginLeft: "auto",
       marginRight: "auto",
-      padding: 0
-      // display: "flex",
-      // justifyContent: "space-between",
-      // alignItems: "center"
+      padding: 0,
+      "@media (max-width: 450px)": {
+        width: "150%",
+        display: "block",
+        margin: "20px auto"
+      }
     },
     divContainer: {
       display: "flex",
@@ -36,17 +38,16 @@ const Developers = ({ history, user }) => {
       flexDirection: "column",
       width: "45%",
       margin: "0% 2.5%",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      "@media (max-width: 450px)": {
+        width: "auto"
+      }
     },
     grid: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       padding: "0px 10px"
-      // marginBottom: 20,
-      // marginLeft: "auto",
-      // marginRight: "auto",
-      // padding: 0
     },
     avatar: {
       margin: 0
@@ -108,7 +109,6 @@ const Developers = ({ history, user }) => {
 
   const connectWithDeveloper = e => {
     e.stopPropagation();
-    console.log("clicked");
   };
 
   if (developers.length === 0) {
@@ -119,7 +119,9 @@ const Developers = ({ history, user }) => {
     // console.log(developers);
     return (
       <>
-        <PageTitle style={{ width: "100%", paddingLeft: "4%" }}>
+        <PageTitle
+          style={{ width: "100%", paddingLeft: "4%", textAlign: "center" }}
+        >
           Available Developers
         </PageTitle>
         <AppBar position="static" color="default">
@@ -170,9 +172,6 @@ const Developers = ({ history, user }) => {
                   </Grid>
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
-                  {/* <Button
-                    onClick={e => connectWithDeveloper(e)}
-                  >{`Connect With ${dev.firstName} `}</Button> */}
                   <EmailDrawer
                     center
                     buttonText={`Message ${dev.firstName} `}

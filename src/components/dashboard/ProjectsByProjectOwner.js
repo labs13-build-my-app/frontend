@@ -37,7 +37,7 @@ const ProjectByProjectOwner = ({
   useEffect(() => {
     listProjectPlans(project.id, setProjectPlans);
   }, [project.id]);
-  console.log(projectPlans, "<<<<<<<<<<");
+
   function getModalStyle() {
     const top = 50;
     const left = 50;
@@ -90,7 +90,7 @@ const ProjectByProjectOwner = ({
   };
 
   const classes = useStyles();
-  console.log(project);
+
   return (
     <div style={{ width: "100%" }}>
       <Card key={project.id} className={"card projectsCard"}>
@@ -141,9 +141,6 @@ const ProjectByProjectOwner = ({
           <p>Plans Available</p>
           <h2>{project.plans.length}</h2>
           <div className="buttons">
-            {/* Conditionally rendering the button for marking the project as complete */}
-            {/* Also conditionally rendering so that only the person that created the project
-              can change the status */}
             {project.plans.length === 0 ? null : project.plans[0].planStatus ===
                 "completed" && project.projectStatus === "in progress" ? (
               <Button
@@ -166,7 +163,6 @@ const ProjectByProjectOwner = ({
                 + Add Feedback
               </Button>
             ) : null}
-            {/* // hide when loggedIn !== user */}
             <Icon
               className={clsx(classes.delete, "far fa-trash-alt")}
               style={displayOnlyOnLoggedInUser()}

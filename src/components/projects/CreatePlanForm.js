@@ -12,7 +12,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 
 const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
   const { inputs: state, handleInputChange, handleSubmit } = useInput(() => {
-    const plan = { ...state, budget: state.budget * 100 }; // <<<<<< MB
+    const plan = { ...state, budget: state.budget * 100 };
 
     createPlan(plan, projectId);
     history.push(`/profile/${user.id}`);
@@ -107,7 +107,6 @@ const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
               className="exit"
               onClick={() => setOpenPlan(false)}
               style={{
-                // width: "",
                 position: "absolute",
                 right: "2%",
                 top: "2%",

@@ -51,13 +51,6 @@ const ProjectExpansionPanel = ({ component, project }) => {
           aria-controls="panel1bh-content"
           id="panel1bh-header"
         >
-          {/* <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center"
-            }}
-          > */}
           <StatusPill status={project.projectStatus}>
             {project.projectStatus}
           </StatusPill>
@@ -70,7 +63,6 @@ const ProjectExpansionPanel = ({ component, project }) => {
               ? `${project.plans.length} Plan Submitted`
               : `${project.plans.length} Plans Submitted`}
           </p>
-          {/* </div> */}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails>{component}</ExpansionPanelDetails>
       </ExpansionPanel>

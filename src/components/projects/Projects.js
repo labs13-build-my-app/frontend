@@ -18,7 +18,7 @@ const Projects = ({
   history
 }) => {
   const props = { match, role, isLoading, isSignedIn };
-  const [projects, setProjects] = useState([]); // public PO or not loggin User
+  const [projects, setProjects] = useState([]);
 
   const [pageCount, setPageCount] = useState(1);
 
@@ -44,7 +44,7 @@ const Projects = ({
       return acc;
     }
   }, []);
-  // console.log("HELOO", project.dueDate);
+
   return (
     <>
       <PageTitle className="projects-list-header">Available Projects</PageTitle>
@@ -95,7 +95,6 @@ const Projects = ({
       <div className="projects-list-wrapper">
         {filteredArr.map(project => (
           <Link
-            style={{ textDecoration: "none", width: "35%" }}
             className="project-link"
             to={`/project/${project.id}`}
             key={project.id}
