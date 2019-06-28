@@ -181,7 +181,12 @@ const NavContainer = ({
                   className={
                     active === link.label ? classes.selectedLink : classes.link
                   }
-                  onClick={() => setActive(link.label)}
+                  onClick={() => {
+                    setActive(link.label);
+                    if (window.innerWidth <= 750) {
+                      setNavIsOpen(false);
+                    }
+                  }}
                   to={{ pathname: link.route, state: link.state }}
                 >
                   <Icon
