@@ -108,14 +108,16 @@ const Plan = ({
       {plan.planStatus === "selected" ? (
         <>
           <Button
+            small
             onClick={submitHandler}
             type={"submit"}
-            style={{ margin: "20px" }}
+            style={{ margin: "20px auto" }}
           >
             Mark Completed
           </Button>
           <Button
             small
+            style={{ margin: "0 auto" }}
             onClick={() => history.push(`/project/${plan.project_id}`)}
           >
             See Project Page
