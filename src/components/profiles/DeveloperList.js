@@ -85,29 +85,38 @@ const Developers = ({ history, user }) => {
   const theme = useTheme();
   const [value, setValue] = useState(0);
   const [filter, setFilter] = useState("");
-  const filters = ["all", "web", "ios", "android"];
+
+  const filters = ["All", "Web", "iOS", "Android"];
+
 
   useEffect(() => {
     setFilter(filters[value]);
+    fetchDevelopers(setDevelopers, setPageCount, 1, filters[value]);
   }, [value]);
 
   function handleChange(event, newValue) {
+    console.log(newValue);
     setValue(newValue);
   }
 
   const [developers, setDevelopers] = useState([]);
-  const [page, setPage] = useState({});
-  useEffect(() => {
-    fetchDevelopers(setDevelopers, setPage);
-  }, []);
+  const [pageCount, setPageCount] = useState({ page: 1 });
+  // useEffect(() => {
+  //   if (developers.length === 0) {
+  //     fetchDevelopers(setDevelopers, setPageCount, pageCount.page);
+  //   }
+  // }, [developers, pageCount]);
 
   const connectWithDeveloper = e => {
     e.stopPropagation();
   };
 
   if (developers.length === 0) {
+    // console.log(developers);
     return <h1>Loading...</h1>;
   } else {
+    // console.log("render 3rd time");
+    // console.log(developers);
     return (
       <>
         <PageTitle
@@ -132,7 +141,9 @@ const Developers = ({ history, user }) => {
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev =>
-            dev.devType.toLowerCase() === filter || filter === "all" ? (
+
+            dev.devType === filter || filter === "All" ? (
+
               <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
@@ -162,6 +173,7 @@ const Developers = ({ history, user }) => {
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
                   <EmailDrawer
+                    center
                     buttonText={`Message ${dev.firstName} `}
                     emailAddress={dev.email}
                     firstName={user.firstName}
@@ -171,6 +183,38 @@ const Developers = ({ history, user }) => {
             ) : null
           )}
         </div>
+        {pageCount.page > 1 ? (
+          <Button
+            medium
+            onClick={() => {
+              if (pageCount.page >= 0)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) - 1,
+                  filter
+                );
+            }}
+          >
+            Prev
+          </Button>
+        ) : null}
+        {pageCount.page < pageCount.total_pages ? (
+          <Button
+            medium
+            onClick={() => {
+              if (pageCount.page <= pageCount.total_pages)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) + 1,
+                  filter
+                );
+            }}
+          >
+            Next
+          </Button>
+        ) : null}
       </>
     );
   }

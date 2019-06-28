@@ -1,24 +1,24 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  background-color: #4e72b7;
-  border: 1px solid #4e72b7;
-  color: white;
-  ${props => props.small && `font-size: 1.0rem, padding: 5px 15px;`}
-  ${props => (props.medium ? `font-size: 1.2rem;` : null)}
-  ${props => (props.large ? `font-size: 1.5rem;` : null)}
-  padding: 10px 25px;
-  ${props => (props.buttonSize ? `padding: 10px 20px;` : null)}
+  ${props => props.backgroundColor ? `background-color: ${props.backgroundColor};` : `background-color: #4e72b7;`}
+  ${props => props.backgroundColor ? `border: 1px solid ${props.backgroundColor};` : `border: 1px solid #4e72b7;`}
+  ${props => props.color ? `color: ${props.color}` : `color: white;`}
+  ${props => props.small && `font-size: 1.0rem; padding: 5px 15px;`}
+  ${props => props.medium && `font-size: 1.2rem; padding: 7px 20px;`}
+  ${props => props.large && `font-size: 1.5rem; padding: 10px 25px;`}
+  ${props => props.width && `width: ${props.width};`}
+  ${props => props.center ? `margin: 25px auto;` : `margin: 25px 0;`}
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
   outline: none;
-  margin-top: 25px;
-  margin-bottom: 25px
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
   &:hover {
-    background: white;
-    color: #4e72b7;
+    ${props => props.color ? `background-color: ${props.color};` : `background-color: white;`}
+    ${props => props.backgroundColor ? `color: ${props.backgroundColor}` : `color: #4e72b7;`}
   }
 `;
 

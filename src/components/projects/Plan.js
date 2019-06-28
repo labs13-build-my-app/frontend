@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  fetchPlan,
-  updatePlan,
-  sendUpdateMessage,
-  formatDate
-} from "../../store/actions";
+import { fetchPlan, updatePlan, sendUpdateMessage } from "../../store/actions";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "../../custom-styles";

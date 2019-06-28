@@ -38,7 +38,7 @@ const RouteContainer = ({
   return (
     <>
       {/* Home component  */}
-      <Route path={"/"} render={props => <Home {...props} {...state} />} />
+      {/* <Route path={"/"} render={props => <Home {...props} {...state} />} /> */}
 
       {!isSignedIn && !isLoading ? (
         <>

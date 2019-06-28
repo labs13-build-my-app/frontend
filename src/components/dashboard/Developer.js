@@ -25,6 +25,7 @@ import {
   FaBook
 } from "react-icons/fa";
 import { PageTitle, Card, FeedbackCard, Button } from "../../custom-styles";
+import EditDeveloperDrawer from "../projects/EditDeveloperDrawer";
 
 const UserInfo = styled.div`
   text-align: left;
@@ -127,9 +128,11 @@ const Developer = ({ loggedInUser, user, role, history }) => {
                 </a>
               ) : null}
             </div>
+            {loggedInUser.id === user.id ? (
+              <EditDeveloperDrawer setRefresh={setRefresh} refresh={refresh} />
+            ) : null}
             {loggedInUser.id === user.id ? null : (
               <EmailDrawer
-                buttonSize
                 emailAddress={user.email}
                 firstName={loggedInUser.firstName}
                 buttonText={`Message ${user.firstName}`}

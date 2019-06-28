@@ -21,6 +21,7 @@ import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa";
 import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
+import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
 import ProjectForm from "../../components/projects/CreateProjectForm";
 
 const UserInfo = styled.div`
@@ -141,9 +142,10 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
     );
   };
 
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     fecthProjectOwnerProjectsList(user.id, setProjects);
-  }, [user.id, history.location.state]);
+  }, [user.id, history.location.state, reload]);
 
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };
@@ -214,10 +216,14 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               />
             )}
           </List>
+          {loggedInUser.id === user.id ? (
+            <EditProjectOwnerDrawer setRefresh={setRefresh} refresh={refresh} />
+          ) : null}
         </UserInfo>
       </Card>
       <Button
         large
+        center
         style={displayOnlyOnLoggedInUser()}
         onClick={handleOpenProject}
       >
@@ -254,6 +260,8 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                   open={open}
                   updateProjectStatus={updateProjectStatus}
                   setProjects={setProjects}
+                  reload={reload}
+                  setReload={setReload}
                 />
               </>
             }
