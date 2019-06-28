@@ -157,23 +157,23 @@ export const ListDesc = styled.div`
 `;
 
 export const MenuButtonClose = styled.button`
-position: absolute,
-top: 0,
-right: 25px,
-font-size: 36px,
-margin-left: 50px
+  display: none;
+  color: white;
+  font-size: x-large;
+  margin-left: 145px;
+  position: absolute;
+  @media (max-width: 750px) {
+    display: block;
+  }
 `;
 
 export const MenuButtonOpen = styled.button`
   display: none;
-  border: 2px solid red;
   @media (max-width: 750px) {
-    font-size: 30px;
     cursor: pointer;
     display: block;
-    text-align: left;
-    margin: 15px;
+    margin: 10px;
     position: absolute;
-    display: block;
+    height: 0px;
   }
 `;

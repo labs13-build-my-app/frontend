@@ -5,7 +5,7 @@ import clsx from "clsx";
 import { loadCSS } from "fg-loadcss";
 import { makeStyles } from "@material-ui/core/styles";
 import Icon from "@material-ui/core/Icon";
-import styled from "styled-components";
+
 import { MenuButtonClose, MenuButtonOpen } from "../custom-styles";
 
 const useStyles = makeStyles(theme => ({
@@ -27,8 +27,10 @@ const useStyles = makeStyles(theme => ({
     alignItems: "flex-end"
   },
   icon: {
-    margin: theme.spacing(2)
+    margin: theme.spacing(2),
+    color: "white"
   },
+
   selectedLink: {
     display: "flex",
     alignItems: "center",
@@ -44,7 +46,10 @@ const useStyles = makeStyles(theme => ({
     position: "fixed",
     minHeight: "100vh",
     textAlign: "left",
-    backgroundImage: "linear-gradient(to top right, #001740, #001740)"
+    backgroundImage: "linear-gradient(to top right, #001740, #001740)",
+    "@media (max-width: 750px)": {
+      zIndex: "99"
+    }
   },
   closeNavBar: {
     "@media (max-width: 750px)": {
@@ -54,7 +59,10 @@ const useStyles = makeStyles(theme => ({
   logo: {
     width: " 90%",
     height: "auto",
-    padding: "10% 5%"
+    padding: "10% 5%",
+    "@media (max-width: 750px)": {
+      marginTop: "20px"
+    }
   }
 }));
 
@@ -121,31 +129,37 @@ const NavContainer = ({
     setNav(navLinks);
   }, [isSignedIn, isToken, newUser, role, user.id]);
 
+  useEffect(() => {
+    loadCSS(
+      "https://use.fontawesome.com/releases/v5.1.0/css/all.css",
+      document.querySelector("#font-awesome-css")
+    );
+    if (window.innerWidth < 750) {
+      setNavIsOpen(false);
+    }
+  }, []);
   function openNav() {
     setNavIsOpen(true);
-    // setDisplayNav(prevState => ({
-    //   ...prevState,
-    //   nav: false
-    // }));
   }
-  console.log("Frogsssssssss", displayNav);
 
   function closeNav() {
     setNavIsOpen(false);
-    // setDisplayNav(prevState => ({
-    //   ...prevState,
-    //   nav: true,
-    //   width: "100%",
-    //   marginLeft: "0%"
-    // }));
   }
 
   return (
     <>
-      <MenuButtonOpen onClick={() => openNav()}>☰</MenuButtonOpen>
+      <MenuButtonOpen onClick={() => openNav()}>
+        <img
+          src={require("../assets/images/hi_orangeBlueBlue.svg")}
+          style={{ width: "35px", height: "35px" }}
+        />
+      </MenuButtonOpen>
       {navIsOpen ? (
         <div className={navIsOpen ? classes.navBar : classes.closeNavBar}>
-          <MenuButtonClose onClick={() => closeNav()}>&times;</MenuButtonClose>
+          <MenuButtonClose onClick={() => closeNav()}>
+            <i class="far fa-times-circle" />
+          </MenuButtonClose>
+
           <img
             src={require("../assets/images/logo.png")}
             alt="logo"
