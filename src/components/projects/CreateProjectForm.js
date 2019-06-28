@@ -22,7 +22,6 @@ const CreateProjectForm = ({
 
     history.push({
       pathname: `/profile/${projectOwnerID}`
-      // state: { reload: true }
     });
   });
 
@@ -67,7 +66,6 @@ const CreateProjectForm = ({
             className="exit"
             onClick={() => setOpenProject(false)}
             style={{
-              // width: "",
               position: "absolute",
               right: "2%",
               top: "2%",
@@ -152,7 +150,7 @@ const CreateProjectForm = ({
           />
 
           <br />
-          <Button type="submit">Submit</Button>
+          <Button large center type="submit">Submit</Button>
           <br />
           <br />
         </form>

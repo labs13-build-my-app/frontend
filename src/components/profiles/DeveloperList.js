@@ -6,7 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import CardHeader from "@material-ui/core/CardHeader";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
-//import Button from "@material-ui/core/Button";
+
 import { Pill, Button, PageTitle } from "../../custom-styles";
 import { fetchDevelopers } from "../../store/actions";
 import AppBar from "@material-ui/core/AppBar";
@@ -22,10 +22,12 @@ const Developers = ({ history, user }) => {
       marginBottom: 20,
       marginLeft: "auto",
       marginRight: "auto",
-      padding: 0
-      // display: "flex",
-      // justifyContent: "space-between",
-      // alignItems: "center"
+      padding: 0,
+      "@media (max-width: 450px)": {
+        width: "100%",
+        display: "block",
+        margin: "20px auto"
+      }
     },
     divContainer: {
       display: "flex",
@@ -36,17 +38,16 @@ const Developers = ({ history, user }) => {
       flexDirection: "column",
       width: "45%",
       margin: "0% 2.5%",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      "@media (max-width: 550px)": {
+        width: "100%"
+      }
     },
     grid: {
       display: "flex",
       justifyContent: "space-between",
       alignItems: "center",
       padding: "0px 10px"
-      // marginBottom: 20,
-      // marginLeft: "auto",
-      // marginRight: "auto",
-      // padding: 0
     },
     avatar: {
       margin: 0
@@ -87,7 +88,6 @@ const Developers = ({ history, user }) => {
 
   const filters = ["All", "Web", "iOS", "Android"];
 
-
   useEffect(() => {
     setFilter(filters[value]);
     fetchDevelopers(setDevelopers, setPageCount, 1, filters[value]);
@@ -108,7 +108,6 @@ const Developers = ({ history, user }) => {
 
   const connectWithDeveloper = e => {
     e.stopPropagation();
-    console.log("clicked");
   };
 
   if (developers.length === 0) {
@@ -119,7 +118,7 @@ const Developers = ({ history, user }) => {
     // console.log(developers);
     return (
       <>
-        <PageTitle style={{ width: "100%", paddingLeft: "4%" }}>
+        <PageTitle style={{ width: "100%", textAlign: "center" }}>
           Available Developers
         </PageTitle>
         <AppBar position="static" color="default">
@@ -136,12 +135,53 @@ const Developers = ({ history, user }) => {
             <Tab label="Android" />
           </Tabs>
         </AppBar>
+        <div
+          style={{
+            display: "flex",
+            margin: "0 auto",
+            justifyContent: "space-evenly",
+            width: "25%"
+          }}
+        >
+          <Button
+            style={pageCount.page > 1 ? null : { visibility: "hidden" }}
+            medium
+            onClick={() => {
+              if (pageCount.page >= 0)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) - 1,
+                  filter
+                );
+            }}
+          >
+            Prev
+          </Button>
+          <Button
+            style={
+              pageCount.page < pageCount.total_pages
+                ? null
+                : { visibility: "hidden" }
+            }
+            medium
+            onClick={() => {
+              if (pageCount.page <= pageCount.total_pages)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) + 1,
+                  filter
+                );
+            }}
+          >
+            Next
+          </Button>
+        </div>
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev =>
-
             dev.devType === filter || filter === "All" ? (
-
               <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
@@ -170,9 +210,6 @@ const Developers = ({ history, user }) => {
                   </Grid>
                   <Divider variant="middle" />
                   <p>Skills: {dev.skills}</p>
-                  {/* <Button
-                    onClick={e => connectWithDeveloper(e)}
-                  >{`Connect With ${dev.firstName} `}</Button> */}
                   <EmailDrawer
                     center
                     buttonText={`Message ${dev.firstName} `}
@@ -184,9 +221,17 @@ const Developers = ({ history, user }) => {
             ) : null
           )}
         </div>
-        {pageCount.page > 1 ? (
+        <div
+          style={{
+            display: "flex",
+            margin: "0 auto",
+            justifyContent: "space-evenly",
+            width: "25%"
+          }}
+        >
           <Button
             medium
+            style={pageCount.page > 1 ? null : { visibility: "hidden" }}
             onClick={() => {
               if (pageCount.page >= 0)
                 fetchDevelopers(
@@ -195,13 +240,17 @@ const Developers = ({ history, user }) => {
                   Number(pageCount.page) - 1,
                   filter
                 );
+              window.scrollTo(0, 0);
             }}
           >
             Prev
           </Button>
-        ) : null}
-        {pageCount.page < pageCount.total_pages ? (
           <Button
+            style={
+              pageCount.page < pageCount.total_pages
+                ? null
+                : { visibility: "hidden" }
+            }
             medium
             onClick={() => {
               if (pageCount.page <= pageCount.total_pages)
@@ -211,11 +260,12 @@ const Developers = ({ history, user }) => {
                   Number(pageCount.page) + 1,
                   filter
                 );
+              window.scrollTo(0, 0);
             }}
           >
             Next
           </Button>
-        ) : null}
+        </div>
       </>
     );
   }

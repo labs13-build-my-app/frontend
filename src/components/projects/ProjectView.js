@@ -77,28 +77,10 @@ const ProjectView = ({
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
-    // if (!match.params.project_id && !isLoading) {
-    //   // DUEDATE IS UNDEFINED
-    //   // const newDueDate = formatDate(project.dueDate); //run res.data.date through formatter
-    //   // const newBudget = formatBudget(project.budget); //change budget from dollars to cents
-
-    //   setProject({
-    //     name,
-    //     description,
-    //     email,
-    //     image_url,
-    //     budget: newBudget,
-    //     dueDate: newDueDate,
-    //     firstName,
-    //     lastName,
-    //     projectOwnerAvatar,
-    //     user_id
-    //   });
-    // }
     if (match.params.project_id && !isLoading) {
       fetchProject(
         match.params.project_id,
-        // formatDate,
+
         formatBudget,
         setProject
       );
@@ -140,7 +122,6 @@ const ProjectView = ({
     return <h1>Loading...</h1>;
   }
 
-  ////////////////////////  MUI STYLINGS
   const getStyles = makeStyles(theme => ({
     projectCard: {
       display: "flex",
@@ -149,7 +130,10 @@ const ProjectView = ({
       maxWidth: "1000px",
       margin: "0 auto",
       justifyContent: "space-around",
-      marginTop: "5px"
+      marginTop: "5px",
+      "@media (max-width: 875px)": {
+        flexDirection: "column"
+      }
     },
     cardText: {
       fontSize: "x-large",
@@ -214,14 +198,7 @@ const ProjectView = ({
           title={project.name}
           subheader={`Project Owner: ${project.firstName} ${project.lastName}`}
         />
-        <div
-          className="btn-wrap"
-          style={{
-            display: "flex",
-            minWidth: "400px",
-            justifyContent: "space-evenly"
-          }}
-        >
+        <div className="btn-wrap">
           <Button
             small
             variant="outlined"
@@ -280,18 +257,7 @@ const ProjectView = ({
               src={project.image_url || require("../../assets/images/grey.jpg")}
             />
           </div>
-          {/* <CardMedia
-              className={classes.media}
-              image={project.image_url}
-              title={project.name}
-            /> */}
         </>
-
-        {/* <CardContent className={classes.content}>
-          <p>{project.description}</p>
-          <p>Willing to pay {project.budget}</p>
-          <p>Need by {project.dueDate}</p>
-        </CardContent> */}
 
         <div>
           {project.projectStatus === "completed" ? (
@@ -305,7 +271,11 @@ const ProjectView = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button onClick={handleOpen} className="create-plan">
+              <Button
+                onClick={handleOpen}
+                className="create-plan"
+                style={{ margin: "25px auto" }}
+              >
                 + Apply to this project
               </Button>
               <Modal open={open}>

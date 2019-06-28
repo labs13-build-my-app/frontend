@@ -1,29 +1,22 @@
 import React, { useEffect, useState, Children } from "react";
 import EmailDrawer from "../EmailDrawer.js";
 import {
-  fetchProject,
   listProjectPlans,
   acceptPlan,
-  updateProject,
-  formatDate
+  updateProject
 } from "../../store/actions";
 import ProjectPlanList from "./ProjectPlanList";
 import ProjectPlan from "./ProjectPlan";
 import { Button } from "../../custom-styles";
-// import Button from "@material-ui/core/Button";
 import moment from "moment";
 import PlanForm from "./CreatePlanForm";
-///////////////////////////////////
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
-// import Collapse from "@material-ui/core/Collapse";
 import Avatar from "@material-ui/core/Avatar";
-// import IconButton from "@material-ui/core/IconButton";
-// import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import Modal from "@material-ui/core/Modal";
 
@@ -77,19 +70,13 @@ const Project = ({
   const [project, setProject] = useState([]);
 
   useEffect(() => {
-    // const formatDate = unixDate => {
-    //   //function to format unix date
-    //   const date = new Date(Number(unixDate)); //make date string into date object
-    //   return moment(date).format("MMMM Do YYYY"); //return formatted date object
-    // };
     const formatBudget = (
       budgetInCents //function to format cents to dollars
     ) => `$${(budgetInCents / 100).toFixed(2)}`; //return a string with a $ and a . for the remaining cents
 
     if (!match.params.project_id && !isLoading) {
-      // const newDueDate = formatDate(dueDate); //run res.data.date through formatter
       const newBudget = formatBudget(budget); //change budget from dollars to cents
-      console.log(newBudget);
+
       setProject({
         name,
         description,
@@ -103,14 +90,6 @@ const Project = ({
         user_id
       });
     }
-    // if (match.params.project_id && !isLoading) {
-    //   fetchProject(
-    //     match.params.project_id,
-    //     // formatDate,
-    //     formatBudget,
-    //     setProject
-    //   );
-    // }
   }, [
     match.params.project_id,
     isLoading,
@@ -148,8 +127,6 @@ const Project = ({
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
-
-  ////////////////////////  MUI STYLINGS
 
   const getStyles = makeStyles(theme => ({
     card: {
@@ -233,7 +210,6 @@ const Project = ({
 
           <CardContent className={classes.buttonWrapper}>
             <Button
-              // style={{ marginBottom: "25px", marginTop: "25px" }}
               small
               variant="outlined"
               onClick={e => {
@@ -245,8 +221,6 @@ const Project = ({
             >
               View Profile
             </Button>
-
-            {/* added conditions to only render email option if project does not belong to current user */}
 
             {project.user_id === user.id ? null : (
               <EmailDrawer
@@ -268,16 +242,7 @@ const Project = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button
-                onClick={handleOpenPlan}
-                className="create-plan"
-                //              to={{
-                //state: {
-                //    project_id: project.id,
-                //    modal: modal === true ? false : true
-                //  }
-                //}}
-              >
+              <Button onClick={handleOpenPlan} className="create-plan">
                 + Apply to this project
               </Button>
               <Modal open={openPlan}>

@@ -12,11 +12,10 @@ const Dashboard = ({
   history,
   reload
 }) => {
-  const [refresh, setRefresh] = useState(false);
   const [user, setUser] = useState({});
   useEffect(() => {
     fetchProfile(match.params.user_id, setUser);
-  }, [setUser, history.location.state, match.params.id, refresh]);
+  }, [setUser, history.location.state, match.params.id]);
 
   const displayBasedOnRole = () => {
     if (user.role === "Project Owner") {
@@ -27,8 +26,6 @@ const Dashboard = ({
           loggedInUser={loggedInUser}
           role={role}
           reload={reload}
-          setRefresh={setRefresh}
-          refresh={refresh}
         />
       );
     } else if (user.role === "Developer" || history.location.state) {
@@ -39,8 +36,6 @@ const Dashboard = ({
           loggedInUser={loggedInUser}
           history={history}
           reload={reload}
-          setRefresh={setRefresh}
-          refresh={refresh}
         />
       );
     } else {

@@ -95,20 +95,28 @@ span.plan-tag-title {
 }
 .skill-tag {
   margin-right: 20px;
+  display: block;
+  margin-bottom: 15px;
 }
 .skill {
   margin-right: 20px;
+  background: lightgray;
+  border-radius: 7px;
+  padding: 7px;
+  text-align: center;
+  display: inline-block;
+  margin-top: 10px;
 }
 
 .projects-list-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 90%;
+  /* width: 90%; */
   align-items: center;
   justify-content: space-evenly;
   margin-top: 15px;
-  margin-left: 78px;
+  /* margin-left: 78px; */
 }
 .project-card-tag {
   text-align: center;
@@ -143,4 +151,45 @@ span.plan-tag-title {
 .project-feedback-text {
   text-align: left;
   margin-left: 40px;
+}
+
+.project-link {
+  text-decoration: none;
+  width: 35%;
+  display: block;
+}
+.btn-wrap {
+  display: "flex";
+  min-width: "400px";
+  justify-content: "space-evenly";
+}
+
+@media (max-width: 750px) {
+  .projects-list-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-top: 0px;
+    margin-left: 0px;
+    width: 100%;
+  }
+
+  .skill {
+    display: block;
+    margin-top: 10px;
+  }
+
+  .project-link {
+    width: 46%;
+    text-decoration: none;
+  }
+
+  .btn-wrap {
+    display: flex;
+    min-width: 0px;
+    justify-content: stretch;
+    flex-direction: column;
+  }
 }

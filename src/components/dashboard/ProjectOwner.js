@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
-import { Button, Card } from "../../custom-styles";
+import { Button, Card, PageTitle } from "../../custom-styles";
 import ProjectExpansionPanel from "../ProjectExpansionPanel";
 import ProjectsByProjectOwner from "./ProjectsByProjectOwner";
 import Modal from "@material-ui/core/Modal";
@@ -15,34 +15,13 @@ import {
 } from "../../store/actions";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-// import ListItemIcon from "@material-ui/core/ListItemIcon";
-// import ListItemText from "@material-ui/core/ListItemText";
+
 import Divider from "@material-ui/core/Divider";
-import {
-  FaGithub,
-  FaTwitter,
-  FaLinkedin
-  // FaUser,
-  // FaEnvelope
-  // FaDev,
-  // FaBook
-} from "react-icons/fa";
+import { FaGithub, FaTwitter, FaLinkedin } from "react-icons/fa";
 import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
-import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
 import ProjectForm from "../../components/projects/CreateProjectForm";
-
-// const Card = styled.div`
-//   display: flex;
-//   justify-content: space-around;
-//   align-items: center;
-//   margin: 20px auto;
-//   border: 1px solid lightgrey;
-//   border-radius: 15px;
-//   box-shadow: lightgrey 15px 15px 15px;
-//   padding: 10px;
-// `;
 
 const UserInfo = styled.div`
   text-align: left;
@@ -63,10 +42,6 @@ const ImageContainer = styled.div`
 function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
-
-// function rand() {
-//   return Math.round(Math.random() * 20) - 10;
-// }
 
 function getModalStyle() {
   const top = 50;
@@ -117,15 +92,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProjectOwner = ({
-  loggedInUser,
-  user,
-  role,
-  history,
-  setRefresh,
-  refresh
-}) => {
-  console.log("LOGGEDIN USER", loggedInUser, "USER", user);
+const ProjectOwner = ({ loggedInUser, user, role, history }) => {
   const [open, setOpen] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
@@ -250,9 +217,6 @@ const ProjectOwner = ({
               />
             )}
           </List>
-          {loggedInUser.id === user.id ? (
-            <EditProjectOwnerDrawer setRefresh={setRefresh} refresh={refresh} />
-          ) : null}
         </UserInfo>
       </Card>
       <Button
@@ -260,16 +224,10 @@ const ProjectOwner = ({
         center
         style={displayOnlyOnLoggedInUser()}
         onClick={handleOpenProject}
-        // onClick={() =>
-        //   history.push({
-        //     state: { modal: true, projectOwner_id: loggedInUser.id }
-        //   })
-        // }
       >
         + Create New Project
       </Button>
       <Modal open={openProject}>
-        {/*  onClose={handleClose} */}
         <div style={modalStyle} className={modalClasses.paperModal}>
           <ProjectForm
             history={history}
@@ -279,7 +237,7 @@ const ProjectOwner = ({
           />
         </div>
       </Modal>
-      {console.log(projects)}
+
       {projects.length === 0 ? (
         <Card className={"card projectsCard"}>No Projects</Card>
       ) : (
@@ -303,107 +261,9 @@ const ProjectOwner = ({
                   reload={reload}
                   setReload={setReload}
                 />
-                {/* <Button
-                  onClick={() => {
-                    updateProjectStatus(project, setProjects);
-                  }}
-                >
-                  <i class="fas fa-check" /> &nbsp; Mark Completed
-                </Button> */}
               </>
             }
           />
-
-          // <Card key={project.id} className={"card projectsCard"}>
-          //   <ImageContainer
-          //     style={{
-          //       width: "55%",
-          //       display: "flex",
-          //       alignItems: "center",
-          //       justifyContent: "end"
-          //     }}
-          //   >
-          //     {project.image_url ? (
-          //       <img
-          //         style={{ width: "100%" }}
-          //         src={project.image_url}
-          //         alt={project.name}
-          //       />
-          //     ) : null}
-          //   </ImageContainer>
-
-          //   <div
-          //     className="leftSideProjectCard"
-          //     style={{ width: "40%", display: "flex", flexDirection: "column" }}
-          //   >
-          //     <div>
-          //       <h1 onClick={() => history.push(`/project/${project.id}`)}>
-          //         {project.name}
-          //       </h1>
-          //       <p>{project.description}</p>
-          //     </div>
-          //     <p>Plans Available</p>
-          //     <h2>{project.plans.length}</h2>
-          //     <div className="buttons">
-          //       {project.projectStatus === "completed" ? (
-          //         // hide when loggedIn !== user
-          //         <Button
-          //           style={displayOnlyOnLoggedInUser()}
-          //           onClick={() => handleOpenFeedback(project.id)}
-          //         >
-          //           + Add Feedback
-          //         </Button>
-          //       ) : null}
-          //       {/* // hide when loggedIn !== user */}
-          //       <Icon
-          //         className={clsx(classes.delete, "far fa-trash-alt")}
-          //         style={displayOnlyOnLoggedInUser()}
-          //         onClick={handleOpen}
-          //       />
-          //       <Modal
-          //         aria-labelledby="simple-modal-title"
-          //         aria-describedby="simple-modal-description"
-          //         open={open}
-          //         onClose={handleClose}
-          //       >
-          //         <div style={modalStyle} className={classes.paper}>
-          //           <h3>Are you sure you want to delete this project?</h3>
-          //           <div
-          //             style={{
-          //               display: "flex",
-          //               justifyContent: "space-around"
-          //             }}
-          //           >
-          //             <div
-          //               className={classes.delete}
-          //               style={{ display: "flex", alignItems: "center" }}
-          //             >
-          //               <Icon
-          //                 className={clsx(
-          //                   classes.accept,
-          //                   "far fa-check-circle"
-          //                 )}
-          //               />
-          //               <p className={classes.accept}> Delete</p>
-          //             </div>
-          //             <div
-          //               className={classes.delete}
-          //               style={{ display: "flex", alignItems: "center" }}
-          //             >
-          //               <Icon
-          //                 className={clsx(
-          //                   classes.delete,
-          //                   "far fa-times-circle"
-          //                 )}
-          //               />
-          //               <p> Cancel</p>
-          //             </div>
-          //           </div>
-          //         </div>
-          //       </Modal>
-          //     </div>
-          //   </div>
-          // </Card>
         ))
       )}
       <Route
@@ -417,6 +277,9 @@ const ProjectOwner = ({
               onClose={handleClose}
             >
               <div style={modalStyle} className={classes.paper}>
+                <PageTitle className="projects-list-header">
+                  Your Feedback
+                </PageTitle>
                 <form onSubmit={submitHandler}>
                   <textarea
                     style={{

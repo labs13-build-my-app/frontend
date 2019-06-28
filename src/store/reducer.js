@@ -14,8 +14,6 @@ import {
   FETCH_ADMIN_SUCCESS,
   FETCH_PROJECT_OWNER_SUCCESS,
   FETCH_DEVELOPER_SUCCESS,
-  // FETCH_PROJECT_OWNERS_SUCCES,
-  // FETCH_PLANS_SUCCES,
   CREATE_PROJECT_SUCCESS,
   CREATE_PLAN_SUCCESS,
   UPDATE_PROJECT_SUCCESS,
@@ -38,11 +36,7 @@ export const usersReducer = (state, action) => {
         ...state,
         ...action.payload
       };
-    // case LOADING_COMPLETE:
-    //   return {
-    //     ...state,
-    //     isLoading: true
-    //   };
+
     case "LOADING_COMPLETE":
       return {
         ...state,
@@ -192,15 +186,9 @@ export const projectsReducer = (state, action) => {
       });
 
       return {
-        // needs to updated to include pagination in state
         projects: [...state.projects, ...paginatedProjects]
       };
-    // case FETCH_PLANS_SUCCESS:
-    //   // NOT PART OF MVP GOALS
-    //   // implement pagination???
-    //   return {
-    //     ...state
-    //   };
+
     case FETCH_PROJECT_VIEW_SUCCESS:
       return {
         projectView: {
@@ -300,12 +288,7 @@ export const profileReducer = (state, action) => {
       return {
         developers: [...state.developers, paginatedDevelopers]
       };
-    // case FETCH_PROJECT_OWNERS_SUCCESS:
-    //   // NOT PART OF MVP GOALS
-    //   // Implement pagination
-    //   return {
-    //     ...state
-    //   };
+
     case FETCH_DEVELOPER_VIEW_SUCCESS:
       return {
         developerView: {
@@ -320,7 +303,7 @@ export const profileReducer = (state, action) => {
           github: action.payload.gitHub,
           twitter: action.payload.twitter,
           role: action.payload.role,
-          feedback: [...action.payload.feedback] // this comes from projects completed, might need to be adjusted
+          feedback: [...action.payload.feedback]
         }
       };
     case FETCH_PORJECT_OWNER_VIEW_SUCCESS:
@@ -365,9 +348,9 @@ export const profileReducer = (state, action) => {
           github: "",
           twitter: "",
           role: "",
-          feedback: [] // this comes from projects completed, might need to be adjusted
+          feedback: []
         },
-        // projectOwners: [{}],
+
         projectOwnerView: {
           id: null,
           firstName: "",

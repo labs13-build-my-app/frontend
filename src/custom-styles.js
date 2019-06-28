@@ -1,14 +1,20 @@
 import styled from "styled-components";
 
 export const Button = styled.button`
-  ${props => props.backgroundColor ? `background-color: ${props.backgroundColor};` : `background-color: #4e72b7;`}
-  ${props => props.backgroundColor ? `border: 1px solid ${props.backgroundColor};` : `border: 1px solid #4e72b7;`}
-  ${props => props.color ? `color: ${props.color}` : `color: white;`}
+  ${props =>
+    props.backgroundColor
+      ? `background-color: ${props.backgroundColor};`
+      : `background-color: #4e72b7;`}
+  ${props =>
+    props.backgroundColor
+      ? `border: 1px solid ${props.backgroundColor};`
+      : `border: 1px solid #4e72b7;`}
+  ${props => (props.color ? `color: ${props.color}` : `color: white;`)}
   ${props => props.small && `font-size: 1.0rem; padding: 5px 15px;`}
   ${props => props.medium && `font-size: 1.2rem; padding: 7px 20px;`}
   ${props => props.large && `font-size: 1.5rem; padding: 10px 25px;`}
   ${props => props.width && `width: ${props.width};`}
-  ${props => props.center ? `margin: 25px auto;` : `margin: 25px 0;`}
+  ${props => (props.center ? `margin: 25px auto;` : `margin: 25px 0;`)}
   font-weight: bold;
   border-radius: 25px;
   cursor: pointer;
@@ -17,24 +23,16 @@ export const Button = styled.button`
   justify-content: center;
   align-items: center;
   &:hover {
-    ${props => props.color ? `background-color: ${props.color};` : `background-color: white;`}
-    ${props => props.backgroundColor ? `color: ${props.backgroundColor}` : `color: #4e72b7;`}
+    ${props =>
+      props.color
+        ? `background-color: ${props.color};`
+        : `background-color: white;`}
+    ${props =>
+      props.backgroundColor
+        ? `color: ${props.backgroundColor}`
+        : `color: #4e72b7;`}
   }
 `;
-
-// CARD COMPONENT MADE BY JOE
-
-// export const Card = styled.div`
-// display: flex;
-// justify-content: space-around;
-// align-items: center;
-// margin: 20px auto;
-// border: 1px solid lightgrey;
-// border-radius: 15px;
-// box-shadow: lightgrey 15px 15px 15px;
-// padding: 10px;
-// }
-// `;
 
 export const Card = styled.div`
   display: -webkit-box;
@@ -72,8 +70,12 @@ export const Background = styled.div`
   background-color: rgba(245, 245, 245, 1);
   min-height: 100vh;
   padding: 1px 0px;
-  width: 75%;
-  margin-left: 25%;
+  width: ${props => props.displayNav.width};
+  margin-left: ${props => props.displayNav.marginLeft};
+  @media (max-width: 750px) {
+    width: 100%;
+    margin-left: 0px;
+  }
 `;
 export const Pill = styled.div`
   ${props =>
@@ -164,4 +166,36 @@ export const ListDesc = styled.div`
   flex-direction: column;
   liststyle: none;
   align-items: start;
+`;
+
+export const MenuButtonClose = styled.button`
+  display: none;
+  color: white;
+  font-size: x-large;
+  margin-left: 89%;
+  position: absolute;
+  background: none;
+  border: none;
+  outline: none;
+  @media (max-width: 750px) {
+    display: block;
+  }
+  @media (max-width: 450px) {
+    display: block;
+    margin-left: 84%;
+  }
+`;
+
+export const MenuButtonOpen = styled.button`
+  display: none;
+  background: none;
+  border: none;
+  outline: none;
+  @media (max-width: 750px) {
+    cursor: pointer;
+    display: block;
+    margin: 10px;
+    position: absolute;
+    height: 0px;
+  }
 `;
