@@ -169,13 +169,14 @@ const ProjectByProjectOwner = ({
                   + Add Feedback
                 </Button>
               ) : null}
-              <Icon
+              {/* <Icon
                 className={clsx(classes.delete, "far fa-trash-alt")}
-                style={displayOnlyOnLoggedInUser()}
+                // style={displayOnlyOnLoggedInUser()}
+                style={{ display: "none" }}
                 onClick={() => handleOpen()}
-              />
+              /> */}
             </div>
-            <Modal
+            {/* <Modal
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
               open={open}
@@ -214,7 +215,7 @@ const ProjectByProjectOwner = ({
                   </Button>
                 </div>
               </div>
-            </Modal>
+            </Modal> */}
           </div>
         </div>
       </Card>
