@@ -1,0 +1,297 @@
+.topwrapper {
+  width: 100%;
+  background-image: url("../assets/header\ bg.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 100%;
+
+  @media @desktop {
+    background-image: url("../assets/header\ bg.svg");
+    background-size: auto 100%;
+  }
+}
+
+.landing-header {
+  padding-top: 115px;
+
+  @media @desktop {
+    padding-top: 0;
+    .flex(flex-start, flex-start, no-wrap, row);
+  }
+
+  .cta-content {
+    margin: 0 10%;
+
+    @media @desktop {
+      margin: 110px 0 110px 5.5%;
+      width: 54%;
+    }
+
+    .cta-title {
+      text-align: center;
+      line-height: 1.5;
+      color: @san-marino;
+      text-decoration: none;
+      font-family: "Roboto", sans-serif;
+
+      @media @desktop {
+        text-align: left;
+        width: 100%;
+        font-size: 4.1rem;
+        color: @san-marino;
+        text-decoration: none;
+        font-family: "Roboto", sans-serif;
+      }
+    }
+
+    .cta-text {
+      margin-top: 27px;
+      font-size: 2.2rem;
+      line-height: 1.75;
+      text-align: center;
+      color: @san-marino;
+      text-decoration: none;
+      font-family: "Roboto", sans-serif;
+
+      @media @desktop {
+        text-align: left;
+        font-size: 1.8rem;
+        width: 100%;
+        color: @san-marino;
+        text-decoration: none;
+        font-family: "Roboto", sans-serif;
+      }
+    }
+  }
+
+  .cta-img {
+    margin: 75px 10% 45px;
+
+    @media @desktop {
+      margin: 16px 5.5% 60px 4%;
+    }
+  }
+}
+
+.home-content {
+  position: relative;
+  border: 1px solid white;
+
+  .services-blurbs {
+    .flex(flex-start, center, no-wrap, column);
+  }
+
+  .features {
+    .flex(flex-start, center, wrap, column);
+    margin: 85px 5.5% 0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+    @media @desktop {
+      margin: 80px 9% 0;
+      padding: 50px 0;
+      padding-bottom: 53px;
+      .flex(space-around, center, wrap, column);
+    }
+
+    i {
+      margin: 20px;
+      font-size: 3rem;
+    }
+
+    .features-text {
+      padding: 20px;
+      margin: 10px;
+      font-size: 2rem;
+      text-justify: center;
+      .flex(center, center);
+    }
+  }
+
+  .services-pitch {
+    .flex(center, center);
+    margin: 60px 5.5% 0;
+    border-radius: 20px;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+    @media @desktop {
+      margin: 80px 7% 0;
+      padding: 50px 0;
+      padding-bottom: 53px;
+      .flex(space-around, center, wrap, column);
+    }
+
+    div {
+      @media @desktop {
+        width: 50%;
+        margin: 8px 0 0 13%;
+      }
+
+      .services-pitch-title {
+        padding: 20px;
+        margin: 10px;
+        font-size: 2rem;
+        text-justify: center;
+        .flex(center, center);
+
+        @media @desktop {
+          margin-top: 25px;
+          text-align: center;
+        }
+      }
+
+      .services-pitch-text {
+        padding: 20px;
+        margin: 10px;
+        font-size: 3rem;
+        text-justify: center;
+        .flex(center, center);
+
+        @media @desktop {
+          margin: 20px 0 0;
+          text-align: left;
+          font-size: 3rem;
+          width: 95%;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+
+  .about-us {
+    .flex(flex-start, center, no-wrap, column);
+    margin: 60px 5.5% 320px;
+    // border-radius: 20px;
+    background-image: url("../assets/call\ to\ action\ bg.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    // -moz-border-radius: 20px;
+    // -webkit-border-radius: 20px;
+    // -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    // box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+    @media @desktop {
+      margin: 40px 7% 355px;
+      padding: 50px 0;
+      padding-bottom: 53px;
+      .flex(space-between, center, no-wrap, row-reverse);
+      background-image: url("../assets/call\ to\ action\ bg.svg");
+      background-size: auto 70%;
+    }
+
+    .about-us-img {
+      margin-top: 90px;
+      width: 70%;
+
+      @media @desktop {
+        margin: 15px 2.5% 0 0;
+        width: 90%;
+      }
+    }
+
+    div {
+      @media @desktop {
+        width: 50%;
+        margin: 0 0 0 9.5%;
+      }
+
+      .about-us-text-title {
+        margin-top: 95px;
+        width: 100%;
+        text-align: center;
+
+        @media @desktop {
+          margin-top: 25px;
+          text-align: left;
+          text-align: center;
+        }
+      }
+
+      .about-us-text-para {
+        margin: 25px 12% 45px;
+        text-align: center;
+        font-size: 2rem;
+        line-height: 1.5;
+
+        @media @desktop {
+          margin: 20px 0 0;
+          text-align: left;
+          font-size: 1.8rem;
+          width: 42%;
+        }
+      }
+    }
+  }
+
+  .content-cta {
+    .flex(flex-start, center, wrap, column);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 94%;
+    margin: -94px 3%;
+    border-radius: 20px;
+    background: white;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+    z-index: 10;
+
+    @media @desktop {
+      width: 55.5%;
+      margin: -96px auto;
+    }
+
+    .content-cta-title {
+      font-size: 2.6rem;
+      margin: 68px 0 0;
+      text-align: center;
+
+      @media @desktop {
+        margin: 73px 0 3px;
+        font-size: 3.3rem;
+      }
+    }
+
+    .content-cta-btn {
+      display: inline-block;
+      .flex(center, center);
+      text-decoration: none;
+      font-size: 2rem;
+      font-weight: 700;
+      font-family: "Roboto", sans-serif;
+      margin: 40px 0 55px;
+      width: 56%;
+      height: 56px;
+      border-radius: 30px;
+      background: @san-marino;
+      color: @white;
+      border: @san-marino;
+      -webkit-box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+      box-shadow: 0px 0px 30px -12px rgba(0, 0, 0, 0.38);
+
+      &:hover {
+        background: @white;
+        color: @san-marino;
+        border: 1px solid @san-marino;
+      }
+
+      @media @desktop {
+        margin: 40px 0 51px;
+        height: 80px;
+        width: 50%;
+        border-radius: 40px;
+        font-size: 2rem;
+      }
+    }
+  }
+}
