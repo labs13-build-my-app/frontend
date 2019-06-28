@@ -63,7 +63,8 @@ const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
         <div
           className="createPlanFormInfo"
           style={{
-            width: "40%"
+            width: "40%",
+            marginBottom: "250px"
           }}
         >
           <ListDesc>
