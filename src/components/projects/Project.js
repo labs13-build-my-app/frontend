@@ -269,6 +269,8 @@ const Project = ({
           role === "Developer" ? (
             <div>
               <Button
+                style={{margin: '0 auto'}}
+                large
                 onClick={handleOpenPlan}
                 className="create-plan"
                 //              to={{

@@ -254,7 +254,7 @@ const Signup = ({ isToken, dispatch, history, isSignedIn, isLoading }) => {
             variant="outlined"
           />
         </div>
-        <Button type="submit">Submit</Button>
+        <Button large center type="submit">Submit</Button>
       </SignupForm>
     </div>
   );
