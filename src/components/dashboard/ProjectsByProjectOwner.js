@@ -100,8 +100,10 @@ const ProjectByProjectOwner = ({
               width: "55%",
               display: "flex",
               alignItems: "center",
-              justifyContent: "end"
+              justifyContent: "end",
+              cursor: "pointer"
             }}
+            onClick={() => history.push(`/project/${project.id}`)}
           >
             {project.image_url ? (
               <img
@@ -123,10 +125,18 @@ const ProjectByProjectOwner = ({
           }}
         >
           <div>
-            <h1 onClick={() => history.push(`/project/${project.id}`)}>
+            <h1
+              style={{ cursor: "pointer" }}
+              onClick={() => history.push(`/project/${project.id}`)}
+            >
               {project.name}
             </h1>
-            <p>{project.description}</p>
+            <p
+              style={{ cursor: "pointer" }}
+              onClick={() => history.push(`/project/${project.id}`)}
+            >
+              {project.description}
+            </p>
           </div>
           <p>Plans Available</p>
           <h2>{project.plans.length}</h2>

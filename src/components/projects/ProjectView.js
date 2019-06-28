@@ -28,7 +28,9 @@ const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(4),
-    outline: "none"
+    outline: "none",
+    height: "70vh",
+    overflow: "scroll"
   }
 }));
 
@@ -306,12 +308,14 @@ const ProjectView = ({
               <Button onClick={handleOpen} className="create-plan">
                 + Apply to this project
               </Button>
-              <Modal open={open} onClose={handleClose}>
+              <Modal open={open}>
                 <div style={modalStyle} className={modalClasses.paperModal}>
                   <PlanForm
                     projectId={project.id}
                     user={user}
                     history={history}
+                    project={project}
+                    setOpenPlan={setOpen}
                   />
                 </div>
               </Modal>
