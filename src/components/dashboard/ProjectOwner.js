@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Route } from "react-router";
 import placeholder from "../../assets/images/profile-placeholder.png";
 import styled from "styled-components";
-import { Button, Card } from "../../custom-styles";
+import { Button, Card, PageTitle } from "../../custom-styles";
 import ProjectExpansionPanel from "../ProjectExpansionPanel";
 import ProjectsByProjectOwner from "./ProjectsByProjectOwner";
 import Modal from "@material-ui/core/Modal";
@@ -277,6 +277,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               onClose={handleClose}
             >
               <div style={modalStyle} className={classes.paper}>
+                <PageTitle className="projects-list-header">
+                  Your Feedback
+                </PageTitle>
                 <form onSubmit={submitHandler}>
                   <textarea
                     style={{
