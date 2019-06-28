@@ -51,7 +51,6 @@ const Projects = ({
       <div className="projects-list-wrapper">
         {filteredArr.map(project => (
           <Link
-            style={{ textDecoration: "none", width: "35%" }}
             className="project-link"
             to={`/project/${project.id}`}
             key={project.id}

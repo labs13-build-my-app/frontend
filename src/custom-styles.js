@@ -160,10 +160,14 @@ export const MenuButtonClose = styled.button`
   display: none;
   color: white;
   font-size: x-large;
-  margin-left: 145px;
+  margin-left: 89%;
   position: absolute;
   @media (max-width: 750px) {
     display: block;
+  }
+  @media (max-width: 450px) {
+    display: block;
+    margin-left: 84%;
   }
 `;
 

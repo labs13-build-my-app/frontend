@@ -22,7 +22,12 @@ const Developers = ({ history, user }) => {
       marginBottom: 20,
       marginLeft: "auto",
       marginRight: "auto",
-      padding: 0
+      padding: 0,
+      "@media (max-width: 450px)": {
+        width: "150%",
+        display: "block",
+        margin: "20px auto"
+      }
     },
     divContainer: {
       display: "flex",
@@ -33,7 +38,10 @@ const Developers = ({ history, user }) => {
       flexDirection: "column",
       width: "45%",
       margin: "0% 2.5%",
-      flexWrap: "wrap"
+      flexWrap: "wrap",
+      "@media (max-width: 450px)": {
+        width: "auto"
+      }
     },
     grid: {
       display: "flex",
@@ -102,7 +110,9 @@ const Developers = ({ history, user }) => {
   } else {
     return (
       <>
-        <PageTitle style={{ width: "100%", paddingLeft: "4%" }}>
+        <PageTitle
+          style={{ width: "100%", paddingLeft: "4%", textAlign: "center" }}
+        >
           Available Developers
         </PageTitle>
         <AppBar position="static" color="default">

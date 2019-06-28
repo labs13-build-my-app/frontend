@@ -48,7 +48,8 @@ const useStyles = makeStyles(theme => ({
     textAlign: "left",
     backgroundImage: "linear-gradient(to top right, #001740, #001740)",
     "@media (max-width: 750px)": {
-      zIndex: "99"
+      zIndex: "99",
+      width: "60%"
     }
   },
   closeNavBar: {
