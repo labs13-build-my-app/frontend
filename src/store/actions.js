@@ -170,7 +170,6 @@ export const fetchDevelopers = (
   })
     .then(res => {
       const { developers, page, total_pages } = res.data;
-      console.log(developers, page, total_pages);
 
       setDevelopers(developers);
       setPage({ page: Number(page), total_pages });
