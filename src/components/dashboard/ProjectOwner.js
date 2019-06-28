@@ -30,6 +30,7 @@ import {
 import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
+import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
 import ProjectForm from "../../components/projects/CreateProjectForm";
 
 // const Card = styled.div`
@@ -116,7 +117,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProjectOwner = ({ loggedInUser, user, role, history }) => {
+const ProjectOwner = ({
+  loggedInUser,
+  user,
+  role,
+  history,
+  setRefresh,
+  refresh
+}) => {
   console.log("LOGGEDIN USER", loggedInUser, "USER", user);
   const [open, setOpen] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
@@ -168,9 +176,10 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
     );
   };
 
+  const [reload, setReload] = useState(false);
   useEffect(() => {
     fecthProjectOwnerProjectsList(user.id, setProjects);
-  }, [user.id, history.location.state]);
+  }, [user.id, history.location.state, reload]);
 
   const displayOnlyOnLoggedInUser = () => {
     return loggedInUser.id === user.id ? null : { display: "none" };
@@ -241,10 +250,14 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               />
             )}
           </List>
+          {loggedInUser.id === user.id ? (
+            <EditProjectOwnerDrawer setRefresh={setRefresh} refresh={refresh} />
+          ) : null}
         </UserInfo>
       </Card>
       <Button
         large
+        center
         style={displayOnlyOnLoggedInUser()}
         onClick={handleOpenProject}
         // onClick={() =>
@@ -287,6 +300,8 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
                   open={open}
                   updateProjectStatus={updateProjectStatus}
                   setProjects={setProjects}
+                  reload={reload}
+                  setReload={setReload}
                 />
                 {/* <Button
                   onClick={() => {

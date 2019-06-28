@@ -1,5 +1,4 @@
 import axios from "axios";
-import moment from "moment";
 export const FETCH_START = "FETCH_START";
 export const FETCH_FAILURE = "FETCH_FAILURE";
 export const FETCH_USER_FAILURE = "FETCH_USER_FAILURE";
@@ -31,6 +30,7 @@ export const USER_SIGNUP = "USER_SIGNUP";
 export const RECORD_URL_LOCATION = "RECORD_URL_LOCATION";
 export const TOKEN_EXIST = "TOKEN_EXIST";
 export const LOADING_COMPLETE = "LOADING_COMPLETE";
+export const UPDATE_DEV_SUCCESS = "UPDATE_DEV_SUCCESS";
 
 export const FETCH_DEVELOPER_LIST_START = "FETCH_DEVELOPER_LIST_START";
 export const FETCH_DEVELOPER_LIST_SUCCESS = "FETCH_DEVELOPER_LIST_SUCCESS";
@@ -39,6 +39,7 @@ export const FETCH_DEVELOPER_LIST_FAILURE = "FETCH_DEVELOPER_LIST_FAILURE";
 const heroku = "https://build-my-app.herokuapp.com";
 const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
+
 
 export const formatDate = (date = "") => {
   date = String(date);
@@ -59,6 +60,7 @@ export const formatDate = (date = "") => {
 //   const date = new Date(Number(unixDate)); //make date string into date object
 //   return moment(date).format("MMMM Do YYYY"); //return formatted date object
 // };
+
 
 export const completeLoadingApp = dispatch => {
   dispatch({ type: "LOADING_COMPLETE" });
@@ -156,33 +158,42 @@ export const fetchDeveloper = (developer_id, dispatch) => {
 
 // fetch list of developers
 // list are paginated
-export const fetchDevelopers = (
-  setDevelopers,
-  setPage,
-  page = 1,
-  type = "All"
-) => {
-  // setDevelopers({ type: FETCH_START });
+export const fetchDevelopers = (dispatch, setPage) => {
+  // dispatch({ type: FETCH_START });
   console.log(" in fetch Developers");
   axios({
     method: "GET",
-    url: `${connection}/api/users/list-developers?page=${page}&type=${type}`,
+    url: `${connection}/api/users/list-developers`,
     headers: {
       "content-type": "application/json",
       Authorization: localStorage.getItem("token")
     }
   })
     .then(res => {
-      const { developers, page, total_pages } = res.data;
-      console.log(developers, page, total_pages);
-
-      setDevelopers(developers);
-      setPage({ page: Number(page), total_pages });
+      // what this here? this doesn't look right
+      console.log(res);
+      dispatch(prevState => [...prevState, ...res.data.developers]);
     })
     .catch(err => {
-      // dispatch({ type: "FETCH_FAIL" });
+      dispatch({ type: "FETCH_FAIL" });
     });
 };
+
+// export const fetchDevelopers = () => dispatch => {
+//   axios({
+//     method: "GET",
+//     url: "http://localhost:8000/api/users/developers",
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: localStorage.getItem("token")
+//     }
+//   })
+//     .then(res => {
+//       console.log(res.data);
+//       dispatch(res.data);
+//     })
+//     .catch(err => console.log(err));
+// };
 
 // update user account info
 export const updateUser = (user, dispatch) => {};
@@ -222,7 +233,8 @@ export const signup = (user, dispatch) => {
 };
 
 // create a project for project owner
-export const createProject = (project, project_Owner_Id, setProjects, cb) => {
+export const createProject = (project, dispatch) => {
+  dispatch({ type: FETCH_START });
   axios({
     method: "POST",
     headers: {
@@ -233,15 +245,40 @@ export const createProject = (project, project_Owner_Id, setProjects, cb) => {
     data: project
   })
     .then(res => {
-      console.log("project owner id", project_Owner_Id);
-      console.log(res.data);
-      fecthProjectOwnerProjectsList(project_Owner_Id, setProjects);
-      cb();
+      dispatch({
+        type: CREATE_PROJECT_SUCCESS,
+        payload: res.data
+      });
     })
     .catch(error => {
+      dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };
+
+// export const updateProject = (project, id) => dispatch => {
+//   dispatch({ type: FETCH_START });
+//   axios({
+//     method: "PUT",
+//     headers: {
+//       "content-type": "application/json",
+//       Authorization: localStorage.getItem("token")
+//     },
+//     url: `${connection}/api/account/project-owner/update-profile-project-owner/${id}`,
+//     data: project
+//   })
+//     .then(res => {
+//       dispatch({
+//         type: UPDATE_PROJECT_SUCCESS
+//         // Should there be a payload? or invoke fetch list or page for plan
+//         // payload: res.data
+//       });
+//     })
+//     .catch(error => {
+//       dispatch({ type: FETCH_FAILURE });
+//       console.log(error.message);
+//     });
+// };
 
 // update a project
 export const updateProject = (project_id, project, history, dispatch) => {
@@ -262,8 +299,7 @@ export const updateProject = (project_id, project, history, dispatch) => {
 };
 
 // delete a project
-export const deleteProject = (project_id, dispatch) => {
-  dispatch({ type: FETCH_START });
+export const deleteProject = (project_id, reload, setReload) => {
   axios({
     method: "DELETE",
     headers: {
@@ -273,12 +309,10 @@ export const deleteProject = (project_id, dispatch) => {
     url: `${connection}/api/account/project-owner/delete-project/${project_id}`
   })
     .then(res => {
-      dispatch({
-        type: DELETE_PROJECT_SUCCESS
-      });
+      console.log(res);
+      setReload(!reload);
     })
     .catch(error => {
-      dispatch({ type: FETCH_FAILURE });
       console.log(error.message);
     });
 };
@@ -384,7 +418,6 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
     url: `${connection}/api/projects/project-list/${project_Owner_Id}`
   })
     .then(res => {
-      console.log("fetching projects", res.data);
       res.data.message === "No Projects" ? dispatch([]) : dispatch(res.data);
     })
     .catch(error => {
@@ -395,18 +428,25 @@ export const fecthProjectOwnerProjectsList = (project_Owner_Id, dispatch) => {
 // page view of a project
 export const fetchProject = (
   project_id,
-  // formatDate,
+  formatDate,
   formatBudget,
-  setProject
+  dispatch
 ) => {
   console.log("fetching data");
   axios
     .get(`${connection}/api/projects/project-view/${project_id}`)
     .then(res => {
-      console.log("RES in Fetch Project", setProject);
-      setProject({ ...res.data, dueDate: formatDate(res.data.dueDate) });
+      dispatch({ ...res.data });
     })
     .catch(err => console.log(err));
+  // axios
+  //   .get(`${connection}/api/projects/project-view/${projectId}`)
+  //   .then(res => {
+  //     const newDueDate = formatDate(res.data.dueDate);
+  //     const newBudget = formatBudget(res.data.budget);
+  //     dispatch({ ...res.data, budget: newBudget, dueDate: newDueDate });
+  //   })
+  //   .catch(err => console.log(err));
 };
 
 // page view of a plan
@@ -430,7 +470,6 @@ export const fetchProjectSelectedPlan = (project_id, dispatch) => {
 
 // paginated list of projects
 export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
-  // console.log(formatDate("2019-06-29T00:00:00.000+00:00"));
   if (user_id) {
     console.log("PRINT USER ID", user_id, "PAGE", page);
     axios
@@ -438,8 +477,9 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
         `${connection}/api/projects/paginated-list-of-projects?page=${page}&user_id=${user_id}`
       )
       .then(res => {
+        console.log(res.data);
         const { projects, page, total_pages } = res.data;
-
+        console.log("TEST PAGE", res.data);
         const resultedProject = projects.map(project => {
           return {
             id: project.projectID,
@@ -447,7 +487,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
             name: project.projectName,
             description: project.projectDecription,
             budget: project.projectBudget,
-            dueDate: formatDate(project.projectDueDate),
+            dueDate: project.projectDueDate,
             email: project.userEmail,
             image_url: project.projectImageUrl,
             firstName: project.userFirstName,
@@ -466,10 +506,7 @@ export const fetchProjects = (user_id, page, setProjects, setPageCount) => {
       .then(res => {
         const { projects, page, total_pages } = res.data;
 
-        const formatedProjects = projects.map(project => {
-          return { ...project, dueDate: formatDate(project.dueDate) };
-        });
-        setProjects(formatedProjects);
+        setProjects(projects);
         setPageCount({ page: Number(page), total_pages });
       })
       .catch(err => console.log(err));
@@ -521,6 +558,46 @@ export const sendEmail = email => {
     })
     .catch(err => console.log(err));
 };
+
+export const updateProjectOwner = (profileChanges, setRefresh, refresh) => {
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/developer/update-profile-project-owner/`,
+    data: profileChanges
+  })
+    .then(res => {
+      console.log(res.data);
+      setRefresh(!refresh);
+    })
+    .catch(error => {
+      // dispatch({ type: FETCH_FAILURE });
+      console.log(error.message);
+    });
+};
+
+export const updateDeveloper = (profileChanges, setRefresh, refresh) => {
+  axios({
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+      Authorization: localStorage.getItem("token")
+    },
+    url: `${connection}/api/account/developer/update-profile-developer/`,
+    data: profileChanges
+  })
+    .then(res => {
+      setRefresh(!refresh);
+    })
+    .catch(error => {
+      // dispatch({ type: FETCH_FAILURE });
+      console.log(error.message);
+    });
+};
+
 export const sendUpdateMessage = (projectID, userEmail, userName) => {
   axios({
     method: "POST",
