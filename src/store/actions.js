@@ -43,10 +43,7 @@ const connection = process.env.NODE_ENV === "development" ? local : heroku;
 export const formatDate = (date = "") => {
   date = String(date);
   date = date.includes("Z") ? date.slice(0, -1) : date;
-  date =
-    process.env.NODE_ENV === "development"
-      ? new Date(Number(date))
-      : date;
+  date = process.env.NODE_ENV === "development" ? new Date(Number(date)) : date;
 
   const someDate =
     process.env.NODE_ENV === "development"
@@ -359,6 +356,13 @@ export const fetchDeveloperPlans = (developer_id, dispatch) => {
     url: `${connection}/api/projects/plan-list-developer/${developer_id}`
   })
     .then(res => {
+      // const formattedData = res.data.map(plan => {
+      //   return {
+      //     ...plan,
+      //     dueDate: moment(plan.dueDate).format("MMMM DD YYYY")
+      //   };
+      // });
+      // console.log(formattedData);
       res.data.message === "No Plans" ? dispatch([]) : dispatch(res.data);
     })
     .catch(error => {
