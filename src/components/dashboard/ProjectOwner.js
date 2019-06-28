@@ -22,6 +22,7 @@ import EmailDrawer from "../EmailDrawer";
 import Icon from "@material-ui/core/Icon";
 import clsx from "clsx";
 import ProjectForm from "../../components/projects/CreateProjectForm";
+import EditProjectOwnerDrawer from "../projects/EditProjectOwnerDrawer";
 
 const UserInfo = styled.div`
   text-align: left;
@@ -92,7 +93,14 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const ProjectOwner = ({ loggedInUser, user, role, history }) => {
+const ProjectOwner = ({
+  loggedInUser,
+  user,
+  role,
+  history,
+  setRefresh,
+  refresh
+}) => {
   const [open, setOpen] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
@@ -217,6 +225,9 @@ const ProjectOwner = ({ loggedInUser, user, role, history }) => {
               />
             )}
           </List>
+          {loggedInUser.id === user.id ? (
+            <EditProjectOwnerDrawer setRefresh={setRefresh} refresh={refresh} />
+          ) : null}
         </UserInfo>
       </Card>
       <Button
