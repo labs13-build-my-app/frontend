@@ -27,6 +27,7 @@ const ProjectPlan = ({ project, user, clickHandler, plan, history }) => {
             ) : null}
             {user.id === plan.user_id ? null : (
               <EmailDrawer
+                center 
                 emailAddress={plan.email}
                 firstName={user.firstName}
               />

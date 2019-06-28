@@ -193,7 +193,7 @@ const CreatePlan = ({ history, user, projectId, setOpenPlan, project }) => {
             />
 
             <br />
-            <Button style={{ margin: "0 auto" }} type="submit">
+            <Button large center type="submit">
               Submit
             </Button>
             <br />

@@ -152,7 +152,7 @@ const CreateProjectForm = ({
           />
 
           <br />
-          <Button type="submit">Submit</Button>
+          <Button large center type="submit">Submit</Button>
           <br />
           <br />
         </form>

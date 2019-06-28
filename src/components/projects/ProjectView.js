@@ -223,7 +223,7 @@ const ProjectView = ({
           }}
         >
           <Button
-            small
+            small 
             variant="outlined"
             onClick={e => {
               e.preventDefault();
@@ -305,7 +305,7 @@ const ProjectView = ({
           isSignedIn &&
           role === "Developer" ? (
             <div>
-              <Button onClick={handleOpen} className="create-plan">
+              <Button onClick={handleOpen} className="create-plan" style={{margin: '25px auto'}}>
                 + Apply to this project
               </Button>
               <Modal open={open}>
