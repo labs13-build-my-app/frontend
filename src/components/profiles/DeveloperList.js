@@ -138,6 +138,48 @@ const Developers = ({ history, user }) => {
             <Tab label="Android" />
           </Tabs>
         </AppBar>
+        <div
+          style={{
+            display: "flex",
+              margin: "0 auto",
+            justifyContent: "space-evenly",
+            width: "25%"
+          }}
+        >
+          <Button
+            style={pageCount.page > 1 ? null : {visibility: "hidden"}}
+            medium
+            onClick={() => {
+              if (pageCount.page >= 0)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) - 1,
+                  filter
+                );
+            }}
+          >
+            Prev
+          </Button>
+          <Button
+            style={pageCount.page < pageCount.total_pages 
+              ? null
+              : {visibility: "hidden"}
+            }
+            medium
+            onClick={() => {
+              if (pageCount.page <= pageCount.total_pages)
+                fetchDevelopers(
+                  setDevelopers,
+                  setPageCount,
+                  Number(pageCount.page) + 1,
+                  filter
+                );
+            }}
+          >
+            Next
+          </Button>
+        </div>
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev =>
@@ -183,9 +225,17 @@ const Developers = ({ history, user }) => {
             ) : null
           )}
         </div>
-        {pageCount.page > 1 ? (
+        <div
+          style={{
+            display: "flex",
+              margin: "0 auto",
+            justifyContent: "space-evenly",
+            width: "25%"
+          }}
+        >
           <Button
             medium
+            style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
             onClick={() => {
               if (pageCount.page >= 0)
                 fetchDevelopers(
@@ -194,13 +244,13 @@ const Developers = ({ history, user }) => {
                   Number(pageCount.page) - 1,
                   filter
                 );
+              window.scrollTo(0, 0);
             }}
           >
             Prev
           </Button>
-        ) : null}
-        {pageCount.page < pageCount.total_pages ? (
           <Button
+            style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
             medium
             onClick={() => {
               if (pageCount.page <= pageCount.total_pages)
@@ -210,11 +260,12 @@ const Developers = ({ history, user }) => {
                   Number(pageCount.page) + 1,
                   filter
                 );
+              window.scrollTo(0, 0);
             }}
           >
             Next
           </Button>
-        ) : null}
+        </div>
       </>
     );
   }
