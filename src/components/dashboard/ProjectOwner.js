@@ -102,13 +102,14 @@ const ProjectOwner = ({
   refresh
 }) => {
   const [open, setOpen] = React.useState(false);
+  const [openDelete, setOpenDelete] = React.useState(false);
   const [openProject, setOpenProject] = React.useState(false);
   const [modalStyle] = React.useState(getModalStyle);
 
   const modalClasses = useStyles();
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpenDelete(true);
   };
   const handleOpenProject = () => {
     setOpenProject(true);
@@ -116,12 +117,15 @@ const ProjectOwner = ({
   const handleOpenFeedback = projectID => {
     setOpen(true);
     history.push({
-      pathname: `/profile/${user.id}/feedbackmodal`,
+      pathname: `/profile/${user.id}`,
       state: projectID
     });
   };
   const handleClose = () => {
     setOpen(false);
+  };
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
   };
   const handleCloseProject = () => {
     setOpenProject(false);
@@ -137,6 +141,7 @@ const ProjectOwner = ({
   };
   // add  axios call
   const submitHandler = e => {
+    e.stopPropagation();
     e.preventDefault();
     const user_id = user.id;
     const project_id = history.location.state;
@@ -149,6 +154,7 @@ const ProjectOwner = ({
       },
       history
     );
+    handleClose();
   };
 
   const [reload, setReload] = useState(false);
@@ -263,14 +269,17 @@ const ProjectOwner = ({
                   user={user}
                   loggedInUser={loggedInUser}
                   handleOpen={handleOpen}
+                  handleCloseDelete={handleCloseDelete}
                   modalStyle={modalStyle}
                   project={project}
                   history={history}
                   open={open}
+                  openDelete={openDelete}
                   updateProjectStatus={updateProjectStatus}
                   setProjects={setProjects}
                   reload={reload}
                   setReload={setReload}
+                  handleOpenFeedback={handleOpenFeedback}
                 />
               </>
             }
@@ -278,7 +287,7 @@ const ProjectOwner = ({
         ))
       )}
       <Route
-        path={"/profile/:id/feedbackmodal"}
+        // path={"/profile/:id/feedbackmodal"}
         render={() => {
           return (
             <Modal
