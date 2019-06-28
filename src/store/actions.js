@@ -356,6 +356,13 @@ export const fetchDeveloperPlans = (developer_id, dispatch) => {
     url: `${connection}/api/projects/plan-list-developer/${developer_id}`
   })
     .then(res => {
+      // const formattedData = res.data.map(plan => {
+      //   return {
+      //     ...plan,
+      //     dueDate: moment(plan.dueDate).format("MMMM DD YYYY")
+      //   };
+      // });
+      // console.log(formattedData);
       res.data.message === "No Plans" ? dispatch([]) : dispatch(res.data);
     })
     .catch(error => {

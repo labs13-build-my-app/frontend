@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ExpansionPanel from "@material-ui/core/ExpansionPanel";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
@@ -26,9 +26,16 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Expand = ({ component, heading, subheading, pill, complete }) => {
-  const classes = useStyles();
+const Expand = ({ component, heading, subheading, pill, complete, close }) => {
   const [expanded, setExpanded] = React.useState(false);
+  console.log(close);
+
+  useEffect(() => {
+    setExpanded(false);
+  }, [close]);
+
+  const classes = useStyles();
+
   //   const [complete, setComplete] = useState("incomplete");
   const handleChange = panel => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
@@ -59,7 +66,11 @@ const Expand = ({ component, heading, subheading, pill, complete }) => {
           </div>
           <p> </p>
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails>{component}</ExpansionPanelDetails>
+        <ExpansionPanelDetails
+          style={{ display: "flex", flexDirection: "column" }}
+        >
+          {component}
+        </ExpansionPanelDetails>
       </ExpansionPanel>
     </div>
   );
