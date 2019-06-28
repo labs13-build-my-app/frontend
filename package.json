@@ -30,6 +30,7 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "homepage": "https://build-my-app-fe.onrender.com/landing.html",
   "browserslist": {
     "production": [
       ">0.2%",
