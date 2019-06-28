@@ -24,7 +24,7 @@ const Developers = ({ history, user }) => {
       marginRight: "auto",
       padding: 0,
       "@media (max-width: 450px)": {
-        width: "150%",
+        width: "100%",
         display: "block",
         margin: "20px auto"
       }
@@ -39,8 +39,8 @@ const Developers = ({ history, user }) => {
       width: "45%",
       margin: "0% 2.5%",
       flexWrap: "wrap",
-      "@media (max-width: 450px)": {
-        width: "auto"
+      "@media (max-width: 550px)": {
+        width: "100%"
       }
     },
     grid: {
@@ -88,7 +88,6 @@ const Developers = ({ history, user }) => {
 
   const filters = ["All", "Web", "iOS", "Android"];
 
-
   useEffect(() => {
     setFilter(filters[value]);
     fetchDevelopers(setDevelopers, setPageCount, 1, filters[value]);
@@ -119,9 +118,7 @@ const Developers = ({ history, user }) => {
     // console.log(developers);
     return (
       <>
-        <PageTitle
-          style={{ width: "100%", paddingLeft: "4%", textAlign: "center" }}
-        >
+        <PageTitle style={{ width: "100%", textAlign: "center" }}>
           Available Developers
         </PageTitle>
         <AppBar position="static" color="default">
@@ -141,13 +138,13 @@ const Developers = ({ history, user }) => {
         <div
           style={{
             display: "flex",
-              margin: "0 auto",
+            margin: "0 auto",
             justifyContent: "space-evenly",
             width: "25%"
           }}
         >
           <Button
-            style={pageCount.page > 1 ? null : {visibility: "hidden"}}
+            style={pageCount.page > 1 ? null : { visibility: "hidden" }}
             medium
             onClick={() => {
               if (pageCount.page >= 0)
@@ -162,9 +159,10 @@ const Developers = ({ history, user }) => {
             Prev
           </Button>
           <Button
-            style={pageCount.page < pageCount.total_pages 
-              ? null
-              : {visibility: "hidden"}
+            style={
+              pageCount.page < pageCount.total_pages
+                ? null
+                : { visibility: "hidden" }
             }
             medium
             onClick={() => {
@@ -183,9 +181,7 @@ const Developers = ({ history, user }) => {
 
         <div className={classes.divContainer} style={{ width: "100%" }}>
           {developers.map(dev =>
-
             dev.devType === filter || filter === "All" ? (
-
               <div className={classes.cardContainer} key={dev.id}>
                 <Card
                   className={classes.root}
@@ -228,14 +224,14 @@ const Developers = ({ history, user }) => {
         <div
           style={{
             display: "flex",
-              margin: "0 auto",
+            margin: "0 auto",
             justifyContent: "space-evenly",
             width: "25%"
           }}
         >
           <Button
             medium
-            style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
+            style={pageCount.page > 1 ? null : { visibility: "hidden" }}
             onClick={() => {
               if (pageCount.page >= 0)
                 fetchDevelopers(
@@ -250,7 +246,11 @@ const Developers = ({ history, user }) => {
             Prev
           </Button>
           <Button
-            style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
+            style={
+              pageCount.page < pageCount.total_pages
+                ? null
+                : { visibility: "hidden" }
+            }
             medium
             onClick={() => {
               if (pageCount.page <= pageCount.total_pages)
