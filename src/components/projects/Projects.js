@@ -14,7 +14,8 @@ const Projects = ({
   error,
   role,
   user,
-  match
+  match,
+  history
 }) => {
   const props = { match, role, isLoading, isSignedIn };
   const [projects, setProjects] = useState([]); // public PO or not loggin User
@@ -47,9 +48,16 @@ const Projects = ({
   return (
     <>
       <PageTitle className="projects-list-header">Available Projects</PageTitle>
-      <div style={{display: 'flex', margin: '0 auto', justifyContent: 'space-evenly', width: '25%'}}>
+      <div
+        style={{
+          display: "flex",
+          margin: "0 auto",
+          justifyContent: "space-evenly",
+          width: "25%"
+        }}
+      >
         <Button
-          style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
+          style={pageCount.page > 1 ? null : { visibility: "hidden" }}
           medium
           onClick={() => {
             if (pageCount.page >= 0)
@@ -64,7 +72,11 @@ const Projects = ({
           Prev
         </Button>
         <Button
-          style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
+          style={
+            pageCount.page < pageCount.total_pages
+              ? null
+              : { visibility: "hidden" }
+          }
           medium
           onClick={() => {
             if (pageCount.page <= pageCount.total_pages)
@@ -101,13 +113,21 @@ const Projects = ({
               user={user}
               projectOwnerAvatar={project.projectOwnerAvatar}
               user_id={project.user_id}
+              history={history}
             />
           </Link>
         ))}
-        </div>
-      <div style={{display: 'flex', margin: '0 auto', justifyContent: 'space-evenly', width: '25%'}}>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          margin: "0 auto",
+          justifyContent: "space-evenly",
+          width: "25%"
+        }}
+      >
         <Button
-          style={pageCount.page > 1 ? null : {visibility: 'hidden'}}
+          style={pageCount.page > 1 ? null : { visibility: "hidden" }}
           medium
           onClick={() => {
             if (pageCount.page >= 0)
@@ -117,13 +137,17 @@ const Projects = ({
                 setProjects,
                 setPageCount
               );
-              window.scrollTo(0,0)
+            window.scrollTo(0, 0);
           }}
         >
           Prev
         </Button>
         <Button
-          style={pageCount.page < pageCount.total_pages ? null : {visibility: 'hidden'}}
+          style={
+            pageCount.page < pageCount.total_pages
+              ? null
+              : { visibility: "hidden" }
+          }
           medium
           onClick={() => {
             if (pageCount.page <= pageCount.total_pages)
@@ -133,7 +157,7 @@ const Projects = ({
                 setProjects,
                 setPageCount
               );
-              window.scrollTo(0,0)
+            window.scrollTo(0, 0);
           }}
         >
           Next

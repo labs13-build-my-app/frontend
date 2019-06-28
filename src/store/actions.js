@@ -41,11 +41,9 @@ const local = "http://localhost:8000";
 const connection = process.env.NODE_ENV === "development" ? local : heroku;
 
 export const formatDate = (date = "") => {
+  date = String(date);
   date = date.includes("Z") ? date.slice(0, -1) : date;
-  date =
-    date.includes(".") && process.env.NODE_ENV === "development"
-      ? new Date(Number(date))
-      : date;
+  date = process.env.NODE_ENV === "development" ? new Date(Number(date)) : date;
 
   const someDate =
     process.env.NODE_ENV === "development"
