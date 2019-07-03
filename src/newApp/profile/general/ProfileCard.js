@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 const ProfileCard = ({ user }) => {
   console.log(user);
@@ -12,3 +13,11 @@ const ProfileCard = ({ user }) => {
 };
 
 export default ProfileCard;
+
+ProfileCard.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number,
+    firstName: PropTypes.string,
+    lastName: PropTypes.string
+  })
+};
