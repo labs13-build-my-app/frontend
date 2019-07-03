@@ -7,6 +7,11 @@ const ProfileCard = ({ user }) => {
       <div>{user.id}</div>
       <div>{user.firstName}</div>
       <div>{user.lastName}</div>
+      <div>{user.email}</div>
+      <div>{user.profileIMG}</div>
+      <div>{user.role}</div>
+      <div>{user.skills}</div>
+      <div>{user.devType}</div>
     </>
   );
 };
