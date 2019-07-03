@@ -4,11 +4,11 @@ import Profile from "./ProfileView";
 import NotFound from "./NotFound";
 
 const ProfileContainer = ({ id, component }) => {
-  const ProfileView = component;
+  const UserProfile = component;
   return isNaN(id) ? (
     <NotFound />
   ) : (
-    <Profile id={id}>{user => <ProfileView user={user} />}</Profile>
+    <Profile id={id}>{user => <UserProfile user={user} />}</Profile>
   );
 };
 
