@@ -36,7 +36,7 @@ const ProfileContainer = ({ id }) => {
         }
       ]);
     }
-  });
+  }, [id]);
 
   if (id) {
     return <ProfileView user={userProfile} />;
