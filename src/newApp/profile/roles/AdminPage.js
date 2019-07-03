@@ -1,8 +1,8 @@
 import React from "react";
 import ProfileCard from "../ProfileCard";
 
-const Developer = ({ user }) => {
+const Admin = ({ user }) => {
   return <ProfileCard user={user} />;
 };
 
-export default Developer;
+export default Admin;
