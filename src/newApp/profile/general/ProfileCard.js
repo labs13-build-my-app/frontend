@@ -1,6 +1,7 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React from "react";
 
 const ProfileCard = ({ user }) => {
+  console.log(user);
   return (
     <>
       <div>{user.id}</div>

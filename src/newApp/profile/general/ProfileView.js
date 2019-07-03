@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState, Children } from "react";
+import React, { useEffect, useState } from "react";
 
 const ProfileView = ({ id, children }) => {
   const [userProfile, setUserProfile] = useState({});
@@ -11,7 +11,7 @@ const ProfileView = ({ id, children }) => {
       avatar: "none",
       role: "Project Owner"
     });
-  }, []);
+  }, [id]);
 
   return <>{children(userProfile)}</>;
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileCard from "../ProfileCard";
+import ProfileCard from "../general/ProfileCard";
 
 const Admin = ({ user }) => {
   return <ProfileCard user={user} />;
