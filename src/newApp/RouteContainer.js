@@ -11,6 +11,7 @@ const RouteContainer = () => {
         render={props => {
           let component = null;
           const { type } = props.match.params;
+          const { user_id } = props.match.params;
           if (type === "developer") {
             component = DeveloperPage;
           } else if (type === "project-owner") {
@@ -22,10 +23,7 @@ const RouteContainer = () => {
             return <div> 404 not found or redirect to something? </div>;
           }
           return (
-            <ProfileContainer
-              id={props.match.params.user_id}
-              component={component}
-            />
+            <ProfileContainer id={parseInt(user_id)} component={component} />
           );
         }}
       />
