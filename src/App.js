@@ -1,6 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { withRouter, Route } from "react-router";
-import ProfileContainer from "./app/ProfileContainer";
+import ProfileContainer from "./newApp/ProfileContainer";
 
 const App = () => {
   return (
