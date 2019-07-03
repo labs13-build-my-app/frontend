@@ -15,8 +15,13 @@ export default ProfileCard;
 
 ProfileCard.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.number.isRequired,
     firstName: PropTypes.string,
-    lastName: PropTypes.string
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    profileIMG: PropTypes.string,
+    role: PropTypes.string,
+    skills: PropTypes.string,
+    devType: PropTypes.string
   })
 };

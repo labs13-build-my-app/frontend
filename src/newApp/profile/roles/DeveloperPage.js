@@ -8,10 +8,15 @@ const Developer = ({ user }) => {
 
 export default Developer;
 
-ProfileCard.propTypes = {
+Developer.propTypes = {
   user: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.number.isRequired,
     firstName: PropTypes.string,
-    lastName: PropTypes.string
+    lastName: PropTypes.string,
+    email: PropTypes.string,
+    profileIMG: PropTypes.string,
+    role: PropTypes.string,
+    skills: PropTypes.string,
+    devType: PropTypes.string
   })
 };

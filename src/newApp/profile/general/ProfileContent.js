@@ -14,12 +14,16 @@ const ProfileContent = ({ id, children }) => {
     });
   }, [id]);
 
-  return <>{children(userProfile)}</>;
+  if (!userProfile.id) {
+    return null;
+  } else {
+    return <>{children(userProfile)}</>;
+  }
 };
 
 export default ProfileContent;
 
 ProfileContent.propTypes = {
-  id: PropTypes.number,
-  children: PropTypes.func
+  id: PropTypes.number.isRequired,
+  children: PropTypes.func.isRequired
 };

@@ -15,6 +15,6 @@ const ProfileContainer = ({ id, component }) => {
 export default ProfileContainer;
 
 ProfileContainer.propTypes = {
-  id: PropTypes.number,
-  component: PropTypes.func
+  id: PropTypes.number.isRequired,
+  component: PropTypes.func.isRequired
 };
