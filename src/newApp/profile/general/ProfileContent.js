@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
-const ProfileView = ({ id, children }) => {
+const ProfileContent = ({ id, children }) => {
   const [userProfile, setUserProfile] = useState({});
   useEffect(() => {
     setUserProfile({
@@ -17,9 +17,9 @@ const ProfileView = ({ id, children }) => {
   return <>{children(userProfile)}</>;
 };
 
-export default ProfileView;
+export default ProfileContent;
 
-ProfileView.propTypes = {
+ProfileContent.propTypes = {
   id: PropTypes.number,
   children: PropTypes.func
 };
