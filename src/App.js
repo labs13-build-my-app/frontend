@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { withRouter, Route } from "react-router";
-import ProfileContainer from "./newApp/ProfileContainer";
-import DeveloperPage from "./newApp/DeveloperPage";
+import ProfileContainer from "./newApp/profile/general/ProfileContainer";
+import DeveloperPage from "./newApp/profile/roles/DeveloperPage";
 
 const App = () => {
   return (
