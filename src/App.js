@@ -1,11 +1,15 @@
 import React, { useEffect, useReducer, useState } from "react";
-import { withRouter } from "react-router";
+import { withRouter, Route } from "react-router";
 import ProfileContainer from "./app/ProfileContainer";
 
 const App = () => {
   return (
     <div className="App">
-      <ProfileContainer />
+      <Route
+        path="/profile/:user_id"
+        render={props => <ProfileContainer id={props.match.params.user_id} />}
+      />
+      {/* <ProfileContainer /> */}
     </div>
   );
 };

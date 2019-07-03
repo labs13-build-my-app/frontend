@@ -1,7 +1,6 @@
 import React, { useEffect, useReducer, useState } from "react";
-import ProfileCard from "./ProfileCard";
 
-const ProfileView = ({ user }) => {
+const ProfileCard = ({ children, user }) => {
   // isSignedIn
   // -- display data specific to signed in user
   // isUser
@@ -9,11 +8,7 @@ const ProfileView = ({ user }) => {
   // roleType
   // -- display type of user
 
-  return (
-    <>
-      <ProfileCard user={user}>{word => word}</ProfileCard>
-    </>
-  );
+  return <>{children(user.id)}</>;
 };
 
-export default ProfileView;
+export default ProfileCard;
