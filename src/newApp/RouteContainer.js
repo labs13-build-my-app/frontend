@@ -1,6 +1,7 @@
 import React from "react";
 import { Route } from "react-router";
 import ProfileContainer from "./profile/general/ProfileContainer";
+import ProfileList from "./profile/ProfileList";
 import { DeveloperPage, ProjectOwnerPage, AdminPage } from "./profile/roles";
 import TestComponent from "./TestComponent";
 
@@ -8,6 +9,15 @@ const RouteContainer = () => {
   return (
     <>
       <Route path="/test" render={props => <TestComponent />} />
+
+      <Route
+        path="/:type-profile-list"
+        render={props => {
+          const { type } = props.match.params;
+          return <ProfileList type={type} />;
+        }}
+      />
+
       <Route
         path="/:type-id-:user_id"
         render={props => {

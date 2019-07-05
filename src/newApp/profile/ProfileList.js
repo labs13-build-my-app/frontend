@@ -1,6 +1,8 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
+import ProfileCard from "./general/ProfileCard";
+import PropTypes from "prop-types";
 
-const ProfileList = ({ users }) => {
+const ProfileList = ({ type }) => {
   const [profileList, setProfileList] = useState([]);
   useEffect(() => {
     setProfileList([
@@ -21,15 +23,19 @@ const ProfileList = ({ users }) => {
         role: "Project Owner"
       }
     ]);
-  });
+  }, []);
   return (
     <>
-      {users.length > 0 &&
-        users.map(user => {
-          return <div>{user.id}</div>;
+      {profileList.length > 0 &&
+        profileList.map(user => {
+          return <ProfileCard key={user.id} user={user} />;
         })}
     </>
   );
 };
 
 export default ProfileList;
+
+ProfileList.propTypes = {
+  type: PropTypes.string
+};
