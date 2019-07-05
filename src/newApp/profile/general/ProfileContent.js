@@ -10,9 +10,7 @@ const ProfileContent = ({ id, children }) => {
       lastName: "Ramos",
       email: "oramcar@gmail.com",
       profileIMG: "img.com",
-      role: "Project Owner",
-      skills: "one, two, punch",
-      devType: "mobile"
+      role: "Project Owner"
     });
   }, [id]);
 
