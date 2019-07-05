@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "./general/ProfileCard";
+import NotFound from "./general/NotFound";
 import PropTypes from "prop-types";
 
 const ProfileList = ({ type }) => {
@@ -24,14 +25,19 @@ const ProfileList = ({ type }) => {
       }
     ]);
   }, []);
-  return (
-    <>
-      {profileList.length > 0 &&
-        profileList.map(user => {
-          return <ProfileCard key={user.id} user={user} />;
-        })}
-    </>
-  );
+
+  if (type !== "developer" && type !== "project-owner" && type !== "admin") {
+    return <NotFound />;
+  } else {
+    return (
+      <>
+        {profileList.length > 0 &&
+          profileList.map(user => {
+            return <ProfileCard key={user.id} user={user} />;
+          })}
+      </>
+    );
+  }
 };
 
 export default ProfileList;
