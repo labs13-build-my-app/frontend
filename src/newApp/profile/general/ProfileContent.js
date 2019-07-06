@@ -1,20 +1,27 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import { getData } from "../../../utils/services";
 
 const ProfileContent = ({ id, children }) => {
   const [userProfile, setUserProfile] = useState({});
+  console.log(userProfile);
   useEffect(() => {
-    setUserProfile({
-      id: id,
-      firstName: "Oscar",
-      lastName: "Ramos",
-      email: "oramcar@gmail.com",
-      profileIMG: "img.com",
-      role: "Project Owner"
+    const fetchData = ({ endpoint, params, setState }) => {
+      getData({ endpoint, params, setState });
+    };
+    fetchData({
+      endpoint: `/users/profile/${id}`,
+      setState: setUserProfile
     });
+    return () => {
+      fetchData({
+        endpoint: `/users/profile/${id}`,
+        setState: setUserProfile
+      });
+    };
   }, [id]);
 
-  if (!userProfile.id) {
+  if (userProfile === undefined || !userProfile.id) {
     return null;
   } else {
     return <>{children(userProfile)}</>;

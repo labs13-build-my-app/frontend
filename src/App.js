@@ -1,11 +1,11 @@
 import React from "react";
 import { withRouter } from "react-router";
-import RouteContainer from "./newApp/RouteContainer";
+import Routes from "./newApp/Routes";
 
 const App = () => {
   return (
     <div className="App">
-      <RouteContainer />
+      <Routes />
     </div>
   );
 };

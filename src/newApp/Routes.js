@@ -5,7 +5,7 @@ import ProfileList from "./profile/ProfileList";
 import { DeveloperPage, ProjectOwnerPage, AdminPage } from "./profile/roles";
 import TestComponent from "./TestComponent";
 
-const RouteContainer = () => {
+const Routes = () => {
   return (
     <>
       <Route path="/test" render={props => <TestComponent />} />
@@ -43,4 +43,4 @@ const RouteContainer = () => {
   );
 };
 
-export default RouteContainer;
+export default Routes;

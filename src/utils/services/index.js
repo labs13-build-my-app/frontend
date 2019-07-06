@@ -8,8 +8,8 @@ export const getData = ({ endpoint, params, setState }) => {
     params
   })
     .then(res => {
-      setState(res.data.projectOwners);
       console.log(res);
+      setState(res.data);
     })
     .catch(error => {
       console.log(error);
