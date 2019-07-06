@@ -8,8 +8,14 @@ const ProfileList = ({ type }) => {
   const [profileList, setProfileList] = useState([]);
   useEffect(() => {
     const fetchData = () => {
-      axios
-        .get("http://localhost:8000/api/users/list-users")
+      axios({
+        method: "GET",
+        baseURL: "http://localhost:8000/api",
+        url: "/users/list-users",
+        params: {
+          role: type
+        }
+      })
         .then(res => {
           // setProfileList()
           console.log(res);
