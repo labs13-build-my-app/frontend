@@ -17,7 +17,7 @@ const ProfileList = ({ type }) => {
         }
       })
         .then(res => {
-          // setProfileList()
+          setProfileList(res.data.projectOwners);
           console.log(res);
         })
         .catch(error => {
@@ -25,10 +25,12 @@ const ProfileList = ({ type }) => {
         });
     };
 
-    fetchData();
+    if (type === "developer" || type === "project-owner" || type === "users") {
+      fetchData();
+    }
   }, [type]);
 
-  if (type !== "developer" && type !== "project-owner" && type !== "admin") {
+  if (type !== "developer" && type !== "project-owner" && type !== "users") {
     return <NotFound />;
   } else {
     return (
