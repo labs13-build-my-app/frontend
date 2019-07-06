@@ -26,7 +26,7 @@ const ProfileList = ({ type }) => {
     };
 
     fetchData();
-  }, []);
+  }, [type]);
 
   if (type !== "developer" && type !== "project-owner" && type !== "admin") {
     return <NotFound />;
