@@ -2,28 +2,24 @@ import React, { useEffect, useState } from "react";
 import ProfileCard from "./general/ProfileCard";
 import NotFound from "./general/NotFound";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 const ProfileList = ({ type }) => {
   const [profileList, setProfileList] = useState([]);
   useEffect(() => {
-    setProfileList([
-      {
-        id: 10,
-        firstName: "Oscar",
-        lastName: "Ramos",
-        email: "oramcar@gmail.com",
-        avatar: "none",
-        role: "Project Owner"
-      },
-      {
-        id: 11,
-        firstName: "Oscar",
-        lastName: "Ramos",
-        email: "oramcar@gmail.com",
-        avatar: "none",
-        role: "Project Owner"
-      }
-    ]);
+    const fetchData = () => {
+      axios
+        .get("http://localhost:8000/api/users/list-users")
+        .then(res => {
+          // setProfileList()
+          console.log(res);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
+
+    fetchData();
   }, []);
 
   if (type !== "developer" && type !== "project-owner" && type !== "admin") {
