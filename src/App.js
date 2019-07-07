@@ -1,5 +1,4 @@
 import React from "react";
-import { withRouter } from "react-router";
 import Routes from "./newApp/Routes";
 
 const App = () => {
@@ -10,4 +9,4 @@ const App = () => {
   );
 };
 
-export default withRouter(App);
+export default App;

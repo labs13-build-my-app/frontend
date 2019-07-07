@@ -12,6 +12,7 @@ export const getData = ({ endpoint, params, setState }) => {
       setState(res.data);
     })
     .catch(error => {
+      setState("user not found");
       console.log(error);
     });
 };

@@ -1,14 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Redirect } from "react-router";
 import Profile from "./ProfileContent";
-import NotFound from "./NotFound";
+import { DeveloperPage, ProjectOwnerPage } from "../roles";
 
-const ProfileContainer = ({ id, component }) => {
-  const UserProfile = component;
-  return isNaN(id) ? (
-    <NotFound />
+const ProfileContainer = ({ id, type, push }) => {
+  const UserProfile =
+    type === "developer"
+      ? DeveloperPage
+      : type === "project-owner"
+      ? ProjectOwnerPage
+      : null;
+  return isNaN(id) || (type !== "developer" && type !== "project-owner") ? (
+    <Redirect to={"/home"} />
   ) : (
-    <Profile id={id}>{user => <UserProfile user={user} />}</Profile>
+    <Profile id={id} {...{ type, push }}>
+      {user => <UserProfile user={user} />}
+    </Profile>
   );
 };
 
@@ -16,5 +24,6 @@ export default ProfileContainer;
 
 ProfileContainer.propTypes = {
   id: PropTypes.number.isRequired,
-  component: PropTypes.func.isRequired
+  type: PropTypes.string,
+  push: PropTypes.func
 };
