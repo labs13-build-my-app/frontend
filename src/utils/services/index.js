@@ -9,7 +9,20 @@ export const getData = ({ endpoint, params, setState }) => {
   })
     .then(res => {
       console.log(res);
-      setState(res.data);
+      if (res.data.id) {
+        setState(res.data);
+      } else {
+        const {
+          users,
+          developers,
+          projectOwners,
+          page,
+          per,
+          has_more
+        } = res.data;
+        const list = users || developers || projectOwners;
+        setState({ page, per, has_more, list });
+      }
     })
     .catch(error => {
       setState("user not found");

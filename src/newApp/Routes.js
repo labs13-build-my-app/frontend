@@ -13,7 +13,8 @@ const Routes = () => {
         path="/:type-profile-list"
         render={props => {
           const { type } = props.match.params;
-          return <ProfileList type={type} />;
+          const { search } = props.location;
+          return <ProfileList {...{ type, search }} />;
         }}
       />
 

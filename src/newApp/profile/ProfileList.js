@@ -1,39 +1,37 @@
 import React, { useEffect, useState } from "react";
 import ProfileCard from "./general/ProfileCard";
-import NotFound from "./general/NotFound";
+import { Redirect } from "react-router";
 import PropTypes from "prop-types";
 import { getData } from "../../utils/services";
 
-const ProfileList = ({ type }) => {
-  const [profileList, setProfileList] = useState([]);
+const ProfileList = ({ type, search }) => {
+  const [profileList, setProfileList] = useState({
+    page: 1,
+    per: 18,
+    list: []
+  });
+
   useEffect(() => {
     const fetchData = ({ endpoint, params, setState }) => {
       getData({ endpoint, params, setState });
     };
-
     if (type === "developer" || type === "project-owner" || type === "users") {
       fetchData({
-        endpoint: "/users/list-users",
+        endpoint: `/users/list-users${search}`,
         params: { role: type },
         setState: setProfileList
       });
     }
-    return () => {
-      fetchData({
-        endpoint: "/users/list-users",
-        params: { role: type },
-        setState: setProfileList
-      });
-    };
-  }, [type]);
+  }, [type, search]);
 
+  const { list } = profileList;
   if (type !== "developer" && type !== "project-owner" && type !== "users") {
-    return <NotFound />;
+    return <Redirect to={"/users-profile-list?page=1"} />;
   } else {
     return (
       <>
-        {profileList.length > 0 &&
-          profileList.map(user => {
+        {list.length > 0 &&
+          list.map(user => {
             return <ProfileCard key={user.id} user={user} />;
           })}
       </>
@@ -44,5 +42,6 @@ const ProfileList = ({ type }) => {
 export default ProfileList;
 
 ProfileList.propTypes = {
-  type: PropTypes.string
+  type: PropTypes.string,
+  search: PropTypes.string
 };
